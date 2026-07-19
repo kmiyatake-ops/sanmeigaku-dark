@@ -1,0 +1,7 @@
+devserver.py
+served_app.js
+test-celebrities.html
+test-divorce-check.html
+__pycache__/
+*.pyc
+.git/

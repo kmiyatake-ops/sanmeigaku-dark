@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>占いの館</title>
+    <link rel="stylesheet" href="./styles.css?v=20260719e" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="hero">
+        <div class="badge">陰陽干支・人体星図</div>
+        <h1>占いの館</h1>
+        <p>生年月日から三柱・内面のバランス・十大主星・十二大従星・天中殺を算出し、甘い言葉だけではない現実的な鑑定を返します。</p>
+      </section>
+
+      <section class="panel input-panel">
+        <form id="fortuneForm">
+          <div class="name-row">
+            <label>
+              姓（苗字）
+              <input id="lastName" type="text" placeholder="例：山田" autocomplete="family-name" />
+            </label>
+            <label>
+              名（下の名前）
+              <input id="firstName" type="text" placeholder="例：太郎" autocomplete="given-name" />
+            </label>
+          </div>
+          <div class="birth-row">
+            <label>
+              生年月日
+              <div class="birth-inputs">
+                <input id="birthYear" type="number" inputmode="numeric" placeholder="1990" min="1900" max="2100" required />
+                <span class="birth-sep">年</span>
+                <input id="birthMonth" type="number" inputmode="numeric" placeholder="1" min="1" max="12" required />
+                <span class="birth-sep">月</span>
+                <input id="birthDay" type="number" inputmode="numeric" placeholder="1" min="1" max="31" required />
+                <span class="birth-sep">日</span>
+              </div>
+            </label>
+          </div>
+          <label>
+            性別
+            <select id="gender">
+              <option value="male">男性</option>
+              <option value="female">女性</option>
+            </select>
+          </label>
+          <button type="submit">鑑定する</button>
+        </form>
+        <p class="note">簡易実装のため節入り時刻・出生時刻・流派差は補正していません。結果は娯楽・自己分析用です。</p>
+      </section>
+
+      <section id="result" class="result hidden"></section>
+
+      <section class="panel input-panel" style="margin-top:28px">
+        <h3 style="margin:0 0 14px">相性占い</h3>
+        <form id="compatForm">
+          <label>
+            人物A
+            <select id="personA" required><option value="">-- 記録から選択 --</option></select>
+          </label>
+          <label>
+            人物B
+            <select id="personB" required><option value="">-- 記録から選択 --</option></select>
+          </label>
+          <button type="submit">相性を占う</button>
+        </form>
+        <p class="note">鑑定した人物が記録に保存されます。2人以上鑑定すると相性占いが使えます。</p>
+      </section>
+
+      <section id="compatResult" class="result hidden"></section>
+
+      <section id="historySection" class="panel input-panel" style="margin-top:28px">
+        <h3 style="margin:0 0 14px">鑑定記録</h3>
+        <div id="historyList"></div>
+        <button id="clearHistory" style="margin-top:12px;background:rgba(209,75,75,0.2);color:var(--red);border:1px solid var(--red);border-radius:10px;padding:8px 16px;cursor:pointer;font:inherit">記録を全削除</button>
+      </section>
+
+      <section class="panel input-panel" style="margin-top:28px">
+        <h3 style="margin:0 0 14px">QRコードでアクセス</h3>
+        <p class="note" style="margin-bottom:14px">このページのQRコードをスマホで読み込めば、携帯からアクセスできます。</p>
+        <div id="qrCodeBox" style="display:flex;justify-content:center;padding:20px;background:#fff;border-radius:14px;width:fit-content;margin:0 auto"></div>
+      </section>
+    </main>
+    <script src="./qrcode.min.js?v=20260719e"></script>
+    <script src="./kanji-data.js?v=20260719e"></script>
+    <script src="./app.js?v=20260719e"></script>
+  </body>
+</html>
