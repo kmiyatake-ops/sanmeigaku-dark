@@ -3312,7 +3312,7 @@ function calcCompatibility(a, b) {
   if (starLovePt) loveFactors.push(`主星(${centerA}×${centerB})${starLovePt > 0 ? "+" : ""}${starLovePt}`);
   loveScore = Math.max(10, Math.min(95, loveScore));
 
-  // --- 性の相性 ---
+  // --- SEXの相性 ---
   let sexScore = 50;
   const sexFactors = [];
   // 陰陽の組み合わせ（異陰陽が高い）
@@ -3450,7 +3450,7 @@ function renderCompat(event) {
     E: "恋愛として成立するのが難しい。無理に続けると両者とも人間性が削れる。『頑張ればなんとかなる』と思っているうちは痛手が大きくなるだけ。"
   };
 
-  // 性の相性テキスト（辛口）
+  // SEXの相性テキスト（辛口）
   const sexDesc = {
     S: "身体的な相性は最高レベル。陰陽の補完が完璧で、自然な吸引力がある。ただし、これほど合うとセックスで関係を繋ぎ止めている面があり、心の問題を先送りにする危険がある。",
     A: "とても良い身体的相性。情熱と安心感のバランスも良い。ただし『体が合う＝心も合う』と勘違いすると、根本的な問題を見逃す。",
@@ -3509,7 +3509,7 @@ function renderCompat(event) {
 
       <div class="compat-cat is-sex">
         <div class="compat-cat-head">
-          <h4>性の相性</h4>
+          <h4>SEXの相性</h4>
           <div class="compat-cat-score" style="color:${scoreColor(c.sexScore)}">${c.sexScore}<small>点</small><span class="compat-cat-rank" style="background:${scoreColor(c.sexScore)}">${sexR}</span></div>
         </div>
         <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="width:${c.sexScore}%;background:linear-gradient(90deg,${scoreColor(c.sexScore)},${scoreColor(c.sexScore)})"></div></div>
