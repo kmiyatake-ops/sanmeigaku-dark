@@ -2104,9 +2104,11 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
     }
   });
 
+  // 20歳〜60歳の範囲に絞る
+  const filtered = points.filter((p) => p.age >= 20 && p.age <= 60);
   // スコア順にソートして上位2件のみ残す
-  points.sort((a, b) => b.score - a.score);
-  const top2 = points.slice(0, 2);
+  filtered.sort((a, b) => b.score - a.score);
+  const top2 = filtered.slice(0, 2);
   // 年齢順に並び直す
   top2.sort((a, b) => a.age - b.age);
   return top2;
