@@ -1983,13 +1983,17 @@ function isTenchusatsuYear(yearBranch, tenchusatsu) {
 }
 
 // === 人生のターニングポイント算出 ===
-function analyzeTurningPoints(day, pillars, taiun, tenchusatsu, birthYear, currentAge) {
+function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birthYear, currentAge) {
   const points = [];
   const dayEl = elements[stems.indexOf(day.stem)];
   const gogyoRel = { 木: { 木: "比和", 火: "相生", 土: "相剋", 金: "反剋", 水: "相生" }, 火: { 木: "相生", 火: "比和", 土: "相生", 金: "相剋", 水: "反剋" }, 土: { 木: "反剋", 火: "相生", 土: "比和", 金: "相生", 水: "相剋" }, 金: { 木: "相剋", 火: "反剋", 金: "比和", 土: "相生", 水: "相生" }, 水: { 木: "相生", 火: "相剋", 土: "反剋", 金: "相生", 水: "比和" } };
   const goodStars = ["禄存星", "司禄星", "石門星", "玉堂星", "牽牛星", "貫索星"];
   const badStars = ["調舒星", "龍高星", "車騎星"];
-  const reformStars = ["龍高星", "鳳閣星"];
+
+  // 陽占の主星リスト
+  const yangStars = [mainStars.center, mainStars.north, mainStars.south, mainStars.east, mainStars.west];
+  // 陰占の三柱の地支
+  const yinBranches = [pillars.year.branch, pillars.month.branch, pillars.day.branch];
 
   taiun.periods.forEach((p, idx) => {
     const star = getMainStar(day.stem, p.stem);
@@ -2002,7 +2006,19 @@ function analyzeTurningPoints(day, pillars, taiun, tenchusatsu, birthYear, curre
     const prevTenchu = prevP ? isTenchusatsuYear(prevP.branch, tenchusatsu) : false;
     const yearStart = birthYear + p.age;
 
-    // 大運の切り替わり（星が変わった時）
+    // 大運の位相法
+    const topoResults = analyzeBranchTopology(p.branch, pillars);
+    const topoGo = topoResults.filter((r) => r.group === "合法");
+    const topoSan = topoResults.filter((r) => r.group === "散法");
+
+    // 陽占の主星との関係（大運の主星が陽占に含まれるか）
+    const starInYang = yangStars.includes(star);
+    // 陰占の地支との関係（大運の地支が陰占に含まれるか）
+    const branchInYin = yinBranches.includes(p.branch);
+
+    // === ターニングポイント候補の抽出とスコアリング ===
+
+    // 1. 大運の切り替わり（星が変わった時）
     if (prevStar && prevStar !== star) {
       const events = [];
       if (goodStars.includes(star)) {
@@ -2018,76 +2034,64 @@ function analyzeTurningPoints(day, pillars, taiun, tenchusatsu, birthYear, curre
         if (star === "車騎星") events.push("行動力と競争心が高まるが、摩擦や衝突にも注意が必要な時期");
       }
       if (events.length > 0) {
-        points.push({
-          age: p.age,
-          year: yearStart,
-          type: "大運切り替わり",
-          star,
-          events,
-          isTenchu
-        });
+        let score = 50;
+        if (starInYang) score += 15;
+        if (topoGo.length > 0) { score += 10; events.push(`大運の地支が命式の地支と${topoGo.map((r) => r.name).join("・")}の関係（協力・好縁）`); }
+        if (topoSan.length > 0) { score += 8; events.push(`大運の地支が命式の地支と${topoSan.map((r) => r.name).join("・")}の関係（変化・注意）`); }
+        if (isTenchu) score += 10;
+        points.push({ age: p.age, year: yearStart, type: "大運切り替わり", star, events, isTenchu, score });
       }
     }
 
-    // 天中殺の開始
+    // 2. 天中殺の開始
     if (isTenchu && !prevTenchu) {
-      points.push({
-        age: p.age,
-        year: yearStart,
-        type: "天中殺開始",
-        star,
-        events: [
-          "ご縁が不安定になりやすく、大きな決断や新規スタートは避けるべき時期の始まり",
-          "これまでの成果を見直し、整理・準備に使うことで次の飛躍の土台を作る時期"
-        ],
-        isTenchu: true
-      });
+      const events = [
+        "ご縁が不安定になりやすく、大きな決断や新規スタートは避けるべき時期の始まり",
+        "これまでの成果を見直し、整理・準備に使うことで次の飛躍の土台を作る時期"
+      ];
+      let score = 60;
+      if (topoSan.length > 0) { score += 12; events.push(`大運の地支が命式と${topoSan.map((r) => r.name).join("・")}の関係を持ち、変化が大きくなる`); }
+      if (starInYang) score += 8;
+      points.push({ age: p.age, year: yearStart, type: "天中殺開始", star, events, isTenchu: true, score });
     }
 
-    // 天中殺の終了
+    // 3. 天中殺の終了
     if (!isTenchu && prevTenchu) {
-      points.push({
-        age: p.age,
-        year: yearStart,
-        type: "天中殺終了",
-        star,
-        events: [
-          "天中殺が明け、新しいご縁やチャンスが動き出す時期",
-          "準備してきたことが一気に花開きやすい、運気の再スタート時期"
-        ],
-        isTenchu: false
-      });
+      const events = [
+        "天中殺が明け、新しいご縁やチャンスが動き出す時期",
+        "準備してきたことが一気に花開きやすい、運気の再スタート時期"
+      ];
+      let score = 55;
+      if (topoGo.length > 0) { score += 12; events.push(`大運の地支が命式と${topoGo.map((r) => r.name).join("・")}の関係を持ち、好縁が後押しする`); }
+      points.push({ age: p.age, year: yearStart, type: "天中殺終了", star, events, isTenchu: false, score });
     }
 
-    // 相性関係の大きな変化（相生→相剋など）
+    // 4. 相性関係の大きな変化（相生→相剋など）
     if (prevP) {
       const prevEl = elements[stems.indexOf(prevP.stem)];
       const prevRel = gogyoRel[dayEl][prevEl];
       if (prevRel === "相生" && rel === "相剋") {
-        points.push({
-          age: p.age,
-          year: yearStart,
-          type: "運気の転換",
-          star,
-          events: ["順風満帆だった運気に摩擦が生じ始める時期。守りに徹し、無理な拡大は避ける"],
-          isTenchu
-        });
+        const events = ["順風満帆だった運気に摩擦が生じ始める時期。守りに徹し、無理な拡大は避ける"];
+        let score = 40;
+        if (topoSan.length > 0) { score += 10; events.push(`位相法${topoSan.map((r) => r.name).join("・")}も重なり、変化が大きい`); }
+        if (starInYang) score += 5;
+        points.push({ age: p.age, year: yearStart, type: "運気の転換", star, events, isTenchu, score });
       } else if (prevRel === "相剋" && rel === "相生") {
-        points.push({
-          age: p.age,
-          year: yearStart,
-          type: "運気の好転",
-          star,
-          events: ["困難だった運気が好転し、追い風が吹き始める時期。準備してきたことを形にするチャンス"],
-          isTenchu
-        });
+        const events = ["困難だった運気が好転し、追い風が吹き始める時期。準備してきたことを形にするチャンス"];
+        let score = 40;
+        if (topoGo.length > 0) { score += 10; events.push(`位相法${topoGo.map((r) => r.name).join("・")}も重なり、好縁が加速する`); }
+        if (starInYang) score += 5;
+        points.push({ age: p.age, year: yearStart, type: "運気の好転", star, events, isTenchu, score });
       }
     }
   });
 
-  // 年齢順にソート
-  points.sort((a, b) => a.age - b.age);
-  return points;
+  // スコア順にソートして上位2件のみ残す
+  points.sort((a, b) => b.score - a.score);
+  const top2 = points.slice(0, 2);
+  // 年齢順に並び直す
+  top2.sort((a, b) => a.age - b.age);
+  return top2;
 }
 
 // === 年代別運勢分析 ===
@@ -3584,7 +3588,7 @@ function render(event) {
   const yearlyFortune = analyzeYearlyFortune(day, pillars, taiun, currentAge, thisYear, balanceType);
   const healthRisk = analyzeHealthRisk(day, pillars, counts, taiun, tenchusatsu, currentAge, thisYear);
   const mote = analyzeMote(mainStars, energy, counts, day, pillars);
-  const turningPoints = analyzeTurningPoints(day, pillars, taiun, tenchusatsu, birthYear, currentAge);
+  const turningPoints = analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birthYear, currentAge);
 
   result.classList.remove("hidden");
   console.log("[render] starting, simple-mode:", document.body.classList.contains("simple-mode"));
@@ -4187,8 +4191,8 @@ function render(event) {
     <div class="result-card">
       <h3 class="expert-only">人生のターニングポイント</h3>
       <h3 class="simple-only">人生のターニングポイント</h3>
-      <p class="expert-only" style="color:var(--muted);font-size:12px;margin:0 0 14px">大運の切り替わり・天中殺の開始と終了・運気の転換点から、人生の大きな変化が起こりやすい時期を表示します。</p>
-      <p class="simple-only" style="color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.7">人生の中で大きな変化が起こりやすい時期と、その時に何が起きやすいかを表示します。</p>
+      <p class="expert-only" style="color:var(--muted);font-size:12px;margin:0 0 14px">大運の切り替わり・天中殺・位相法・陽占・陰占を総合し、最も重要なターニングポイントを最大2つ表示します。</p>
+      <p class="simple-only" style="color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.7">人生の中で特に大きな変化が起こりやすい時期を、最大2つまで表示します。</p>
       ${(() => {
         if (turningPoints.length === 0) {
           return '<p style="color:var(--muted);font-size:13px">特筆すべきターニングポイントは検出されませんでした。</p>';
