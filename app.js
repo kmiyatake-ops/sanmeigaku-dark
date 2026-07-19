@@ -3906,8 +3906,6 @@ function render(event) {
     <div class="result-card">
       <h3 class="expert-only">人体星図から見る人生の流れ</h3>
       <h3 class="simple-only">人生の流れ（十二大従星）</h3>
-      <p class="expert-only" style="color:var(--muted);font-size:12px;margin:0 0 14px">人体星図の左肩（第三従星）・左足（第二従星）・右足（第一従星）に配置された十二大従星から、幼年期・中年期・晩年期の運勢を読み解きます。</p>
-      <p class="simple-only" style="color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.7">星の配置から、人生の3つの期間（幼年期・中年期・晩年期）の運勢を読み解きます。</p>
       ${(() => {
         const positions = [
           { label: "左肩［第三従星］", stage: "幼年期", energy: energy[0], key: "childhood" },
