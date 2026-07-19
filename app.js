@@ -3433,6 +3433,7 @@ function renderCompat(event) {
   if (idxA === idxB) return alert("異なる人物を選択してください");
   const a = history[idxA];
   const b = history[idxB];
+  if (a.gender && b.gender && a.gender === b.gender) return alert("男性同士・女性同士の相性占いには対応していません。\n男性と女性のペアを選択してください。");
   const c = calcCompatibility(a, b);
   const severity = c.score < 40 ? "bad" : "good";
 
