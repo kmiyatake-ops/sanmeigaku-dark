@@ -2263,15 +2263,18 @@ function analyzeLifeStageFortune(day, pillars, taiun, tenchusatsu, currentAge) {
       adviceSimple = "良い時期と悪い時期が入り混じります。良い年は攻め、悪い年は守る。メリハリをつけて動くことがポイントです。";
     }
 
-    // 各大運の十二大従星の解釈を収集
-    const energyInterpretations = taiunDetails.map((d) => {
-      const interp = energyLifeInterpretation[d.energy];
+    // 陽占（命式）の十二大従星の解釈を収集
+    const natalEnergies = [
+      { pillar: "年柱（社会・家系）", name: getEnergyStar(day.stem, pillars.year.branch).name },
+      { pillar: "月柱（仕事・中年）", name: getEnergyStar(day.stem, pillars.month.branch).name },
+      { pillar: "日柱（本質・配偶者）", name: getEnergyStar(day.stem, pillars.day.branch).name }
+    ];
+    const energyInterpretations = natalEnergies.map((ne) => {
+      const interp = energyLifeInterpretation[ne.name];
       const stageKey = stage.key === "childhood" ? "childhood" : stage.key === "middleAge" ? "middleAge" : "lateLife";
       return {
-        age: d.age,
-        energy: d.energy,
-        star: d.star,
-        isTenchu: d.isTenchu,
+        pillar: ne.pillar,
+        energy: ne.name,
         text: interp ? interp[stageKey] : ""
       };
     });
@@ -4105,14 +4108,12 @@ function render(event) {
         ${taiun.periods.map((p) => {
           const isCurrent = currentAge >= p.age && currentAge <= p.ageTo;
           const mainStar = getMainStar(day.stem, p.stem);
-          const eStar = getEnergyStar(day.stem, p.branch);
           const topoResults = analyzeBranchTopology(p.branch, pillars);
           const topoTags = topoResults.map((r) => `<span class="topo-mini-tag${r.group === '合法' ? ' tag-go' : ' tag-san'}">${r.name}</span>`).join("");
           return `<div class="taiun-item${isCurrent ? " current" : ""}">
             <span class="age">${p.age}〜${p.ageTo}歳</span>
             <span class="pillar">${p.stem}${p.branch}</span>
             <span class="star-label">${mainStar}</span>
-            <span class="energy-label">${eStar.name} ${eStar.score}点</span>
             ${topoTags ? `<div class="taiun-topo-tags">${topoTags}</div>` : ''}
           </div>`;
         }).join("")}
@@ -4150,15 +4151,13 @@ function render(event) {
             <p class="life-stage-advice simple-only"><b>アドバイス：</b>${st.adviceSimple}</p>
             ${st.energyInterpretations && st.energyInterpretations.length > 0 ? `
               <div style="margin-top:12px;padding:12px 14px;border-radius:10px;background:rgba(100,150,200,0.06);border:1px solid rgba(100,150,200,0.15)">
-                <p class="expert-only" style="font-size:12px;font-weight:600;margin:0 0 8px;color:#7ab0d0">十二大従星から見るこの時期の特徴</p>
+                <p class="expert-only" style="font-size:12px;font-weight:600;margin:0 0 8px;color:#7ab0d0">陽占の十二大従星から見るこの時期の特徴</p>
                 <p class="simple-only" style="font-size:13px;font-weight:600;margin:0 0 8px;color:#7ab0d0">この時期の詳しい特徴</p>
                 ${st.energyInterpretations.filter((e) => e.text).map((e) => `
-                  <div style="margin-bottom:10px${e.isTenchu ? ";opacity:0.7" : ""}">
+                  <div style="margin-bottom:10px">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
-                      <span style="font-size:12px;font-weight:600;color:var(--muted)">${e.age}</span>
+                      <span style="font-size:12px;font-weight:600;color:var(--muted)">${e.pillar}</span>
                       <span style="font-size:13px;font-weight:600;color:#7ab0d0">${e.energy}</span>
-                      <span style="font-size:11px;color:var(--muted)">（主星：${e.star}）</span>
-                      ${e.isTenchu ? '<span style="font-size:11px;padding:1px 6px;border-radius:4px;background:rgba(192,80,80,0.15);color:#c05050">天中殺</span>' : ""}
                     </div>
                     <p style="font-size:13px;line-height:1.7;margin:0;color:var(--text)">${e.text}</p>
                   </div>
@@ -4173,7 +4172,6 @@ function render(event) {
                     <span class="lst-age">${d.age}</span>
                     <span class="lst-pillar">${d.stem}${d.branch}</span>
                     <span class="lst-star">${d.star}</span>
-                    <span class="lst-energy">${d.energy}</span>
                     <span class="lst-rel">${d.rel}</span>
                     ${d.isTenchu ? '<span class="lst-tenchu">天中殺</span>' : ""}
                     <span class="lst-score" style="color:${scoreColor(d.score)}">${d.score}</span>
