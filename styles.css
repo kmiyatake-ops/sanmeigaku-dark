@@ -280,16 +280,19 @@ form {
 .birth-inputs {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  max-width: 100%;
 }
 
 .birth-inputs input {
-  width: 70px;
+  width: 64px;
+  min-width: 0;
   text-align: center;
+  flex-shrink: 1;
 }
 
 .birth-inputs input:first-child {
-  width: 90px;
+  width: 84px;
 }
 
 .birth-sep {
@@ -311,9 +314,10 @@ input,
 select,
 button {
   min-height: 48px;
+  max-width: 100%;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
-  padding: 0 14px;
+  padding: 0 12px;
   font: inherit;
 }
 
@@ -1896,16 +1900,17 @@ button {
 
   .birth-inputs {
     flex-wrap: nowrap;
+    gap: 3px;
   }
 
   .birth-inputs input {
-    width: 56px;
+    width: 52px;
     flex-shrink: 1;
     min-width: 0;
   }
 
   .birth-inputs input:first-child {
-    width: 72px;
+    width: 68px;
   }
 
   .taiun-flow {
@@ -2508,17 +2513,17 @@ button {
   }
 
   .birth-inputs input {
-    width: 48px;
+    width: 46px;
     font-size: 15px;
     min-width: 0;
   }
 
   .birth-inputs input:first-child {
-    width: 64px;
+    width: 60px;
   }
 
   .birth-sep {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   input,
@@ -2779,12 +2784,16 @@ button {
   }
 
   .birth-inputs input {
-    width: 44px;
+    width: 42px;
     min-width: 0;
   }
 
   .birth-inputs input:first-child {
-    width: 56px;
+    width: 54px;
+  }
+
+  .birth-sep {
+    font-size: 11px;
   }
 
   .name-row {
