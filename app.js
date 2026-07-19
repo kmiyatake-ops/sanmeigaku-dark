@@ -2013,6 +2013,22 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
     const topoGo = topoResults.filter((r) => r.group === "合法");
     const topoSan = topoResults.filter((r) => r.group === "散法");
 
+    // 位相法の専門用語を分かりやすく変換
+    const topoExplain = (results) => {
+      return results.map((r) => {
+        const labelMap = { "年支": "実家・先祖", "月支": "親・仕事環境", "日支": "配偶者・自分自身", "宿命全体": "人生全体" };
+        const area = labelMap[r.label] || r.label;
+        if (r.name === "支合") return `「${area}」と協力関係になり、物事が順調に進みやすい`;
+        if (r.name === "対冲") return `「${area}」と正面衝突し、予期しない変化やトラブルが起きやすい`;
+        if (r.name === "害法") return `「${area}」との間でストレスが蓄積し、体調不良や人間関係の裏切りに遭いやすい`;
+        if (r.name === "破法") return `「${area}」との関係で決断が揺れやすく、重要な判断は人と相談すべき`;
+        if (r.name.includes("刑")) return `「${area}」との間で摩擦や葛藤が生じやすく、身内とぶつかりやすい`;
+        if (r.name.includes("三合会局")) return `三つの地支が協力して強力なエネルギーを生み、異業種や海外との縁で大成するチャンス`;
+        if (r.name.includes("方三位")) return `同じ分野に集中しやすく、専門知識や技術で高い評価を得るチャンス`;
+        return r.note || r.name;
+      });
+    };
+
     // 陽占の主星との関係（大運の主星が陽占に含まれるか）
     const starInYang = yangStars.includes(star);
     // 陰占の地支との関係（大運の地支が陰占に含まれるか）
@@ -2038,8 +2054,8 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
       if (events.length > 0) {
         let score = 50;
         if (starInYang) score += 15;
-        if (topoGo.length > 0) { score += 10; events.push(`大運の地支が命式の地支と${topoGo.map((r) => r.name).join("・")}の関係（協力・好縁）`); }
-        if (topoSan.length > 0) { score += 8; events.push(`大運の地支が命式の地支と${topoSan.map((r) => r.name).join("・")}の関係（変化・注意）`); }
+        if (topoGo.length > 0) { score += 10; topoExplain(topoGo).forEach((t) => events.push(t)); }
+        if (topoSan.length > 0) { score += 8; topoExplain(topoSan).forEach((t) => events.push(t)); }
         if (isTenchu) score += 10;
         points.push({ age: p.age, year: yearStart, type: "大運切り替わり", star, events, isTenchu, score });
       }
@@ -2052,7 +2068,7 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
         "これまでの成果を見直し、整理・準備に使うことで次の飛躍の土台を作る時期"
       ];
       let score = 60;
-      if (topoSan.length > 0) { score += 12; events.push(`大運の地支が命式と${topoSan.map((r) => r.name).join("・")}の関係を持ち、変化が大きくなる`); }
+      if (topoSan.length > 0) { score += 12; topoExplain(topoSan).forEach((t) => events.push(t)); }
       if (starInYang) score += 8;
       points.push({ age: p.age, year: yearStart, type: "天中殺開始", star, events, isTenchu: true, score });
     }
@@ -2064,7 +2080,7 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
         "準備してきたことが一気に花開きやすい、運気の再スタート時期"
       ];
       let score = 55;
-      if (topoGo.length > 0) { score += 12; events.push(`大運の地支が命式と${topoGo.map((r) => r.name).join("・")}の関係を持ち、好縁が後押しする`); }
+      if (topoGo.length > 0) { score += 12; topoExplain(topoGo).forEach((t) => events.push(t)); }
       points.push({ age: p.age, year: yearStart, type: "天中殺終了", star, events, isTenchu: false, score });
     }
 
@@ -2075,13 +2091,13 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
       if (prevRel === "相生" && rel === "相剋") {
         const events = ["順風満帆だった運気に摩擦が生じ始める時期。守りに徹し、無理な拡大は避ける"];
         let score = 40;
-        if (topoSan.length > 0) { score += 10; events.push(`位相法${topoSan.map((r) => r.name).join("・")}も重なり、変化が大きい`); }
+        if (topoSan.length > 0) { score += 10; topoExplain(topoSan).forEach((t) => events.push(t)); }
         if (starInYang) score += 5;
         points.push({ age: p.age, year: yearStart, type: "運気の転換", star, events, isTenchu, score });
       } else if (prevRel === "相剋" && rel === "相生") {
         const events = ["困難だった運気が好転し、追い風が吹き始める時期。準備してきたことを形にするチャンス"];
         let score = 40;
-        if (topoGo.length > 0) { score += 10; events.push(`位相法${topoGo.map((r) => r.name).join("・")}も重なり、好縁が加速する`); }
+        if (topoGo.length > 0) { score += 10; topoExplain(topoGo).forEach((t) => events.push(t)); }
         if (starInYang) score += 5;
         points.push({ age: p.age, year: yearStart, type: "運気の好転", star, events, isTenchu, score });
       }
