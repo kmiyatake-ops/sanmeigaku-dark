@@ -3903,6 +3903,33 @@ function render(event) {
         <div class="star"><small>右肩・伴星</small><b>${mainStars.companion}</b><span>${pickByBalance(starTexts[mainStars.companion], balanceType)}</span></div>
       </div>
     </div>
+    <div class="result-card">
+      <h3 class="expert-only">人体星図から見る人生の流れ</h3>
+      <h3 class="simple-only">人生の流れ（十二大従星）</h3>
+      <p class="expert-only" style="color:var(--muted);font-size:12px;margin:0 0 14px">人体星図の左肩（第三従星）・左足（第二従星）・右足（第一従星）に配置された十二大従星から、幼年期・中年期・晩年期の運勢を読み解きます。</p>
+      <p class="simple-only" style="color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.7">星の配置から、人生の3つの期間（幼年期・中年期・晩年期）の運勢を読み解きます。</p>
+      ${(() => {
+        const positions = [
+          { label: "左肩［第三従星］", stage: "幼年期", energy: energy[0], key: "childhood" },
+          { label: "左足［第二従星］", stage: "中年期", energy: energy[1], key: "middleAge" },
+          { label: "右足［第一従星］", stage: "晩年期", energy: energy[2], key: "lateLife" }
+        ];
+        return positions.map((pos) => {
+          const interp = energyLifeInterpretation[pos.energy.name];
+          const text = interp ? interp[pos.key] : "";
+          return `
+            <div style="margin-bottom:16px;padding:14px 16px;border-radius:10px;background:rgba(100,150,200,0.06);border:1px solid rgba(100,150,200,0.15)">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+                <span style="font-size:12px;color:var(--muted)">${pos.label}</span>
+                <span style="font-size:13px;font-weight:600;color:#7ab0d0">${pos.energy.name}</span>
+                <span style="font-size:12px;padding:2px 8px;border-radius:4px;background:rgba(122,176,208,0.12);color:#7ab0d0">${pos.stage}</span>
+              </div>
+              <p style="font-size:13px;line-height:1.8;margin:0;color:var(--text)">${text}</p>
+            </div>
+          `;
+        }).join("");
+      })()}
+    </div>
     <div class="result-card reading">
       <h3 class="expert-only">恋愛・結婚・離婚・浮気（不倫）傾向</h3>
       <h3 class="simple-only">恋愛・結婚の傾向</h3>
