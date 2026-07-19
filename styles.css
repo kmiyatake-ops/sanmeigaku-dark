@@ -205,6 +205,7 @@ body:not(.simple-mode) .expert-only .expert-only { display: block; }
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: hidden;
   background: radial-gradient(circle at top left, rgba(217, 164, 65, 0.2), transparent 34%), radial-gradient(circle at top right, rgba(95, 168, 211, 0.16), transparent 30%), var(--bg);
   color: var(--text);
 }
@@ -1894,16 +1895,17 @@ button {
   }
 
   .birth-inputs {
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
 
   .birth-inputs input {
-    width: 60px;
-    flex-shrink: 0;
+    width: 56px;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .birth-inputs input:first-child {
-    width: 80px;
+    width: 72px;
   }
 
   .taiun-flow {
@@ -2506,12 +2508,13 @@ button {
   }
 
   .birth-inputs input {
-    width: 52px;
+    width: 48px;
     font-size: 15px;
+    min-width: 0;
   }
 
   .birth-inputs input:first-child {
-    width: 70px;
+    width: 64px;
   }
 
   .birth-sep {
@@ -2776,10 +2779,15 @@ button {
   }
 
   .birth-inputs input {
-    width: 48px;
+    width: 44px;
+    min-width: 0;
   }
 
   .birth-inputs input:first-child {
-    width: 60px;
+    width: 56px;
+  }
+
+  .name-row {
+    grid-template-columns: 1fr;
   }
 }
