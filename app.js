@@ -3215,7 +3215,17 @@ function refreshHistoryUI() {
   if (history.length === 0) {
     list.innerHTML = '<p style="color:var(--muted);font-size:13px">まだ鑑定記録がありません。</p>';
   } else {
-    list.innerHTML = history.map((h, i) => `<div class="history-item" data-idx="${i}" style="cursor:pointer"><span class="history-name">${h.name}</span><span class="history-info">${h.birthdate} / ${h.dayStem}${h.dayBranch} / ${h.centerStar}</span><button class="history-del" data-idx="${i}">&times;</button></div>`).join("");
+    list.innerHTML = history.map((h, i) => {
+      const affair = h.affairScore != null ? h.affairScore : null;
+      const marriage = h.marriageScore != null ? h.marriageScore : null;
+      const affairColor = affair != null ? (affair >= 80 ? "#ff5050" : affair >= 65 ? "#f0a040" : affair >= 45 ? "#e0c060" : affair >= 25 ? "#80d080" : "#60c0e0") : null;
+      const marriageColor = marriage != null ? (marriage >= 80 ? "#60c0e0" : marriage >= 65 ? "#80d080" : marriage >= 45 ? "#e0c060" : marriage >= 30 ? "#f0a040" : "#ff5050") : null;
+      const scoreTags = [
+        affair != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${affairColor}22;color:${affairColor};font-weight:600">浮気${affair}</span>` : "",
+        marriage != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${marriageColor}22;color:${marriageColor};font-weight:600">結婚${marriage}</span>` : ""
+      ].filter(Boolean).join(" ");
+      return `<div class="history-item" data-idx="${i}" style="cursor:pointer"><span class="history-name">${h.name}</span><span class="history-info">${h.birthdate} / ${h.dayStem}${h.dayBranch} / ${h.centerStar}</span>${scoreTags ? `<span style="display:flex;gap:4px;margin-top:4px">${scoreTags}</span>` : ""}<button class="history-del" data-idx="${i}">&times;</button></div>`;
+    }).join("");
   }
   const opts = history.map((h, i) => `<option value="${i}">${h.name}（${h.birthdate}）</option>`).join("");
   personA.innerHTML = '<option value="">-- 記録から選択 --</option>' + opts;
@@ -4466,7 +4476,9 @@ function render(event) {
     southStar: mainStars.south,
     eastStar: mainStars.east,
     westStar: mainStars.west,
-    dayEnergy: energy[2] ? energy[2].name : ""
+    dayEnergy: energy[2] ? energy[2].name : "",
+    affairScore,
+    marriageScore
   });
   refreshHistoryUI();
   result.scrollIntoView({ behavior: "smooth", block: "start" });
