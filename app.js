@@ -2267,18 +2267,15 @@ function analyzeLifeStageFortune(day, pillars, taiun, tenchusatsu, currentAge) {
       adviceSimple = "良い時期と悪い時期が入り混じります。良い年は攻め、悪い年は守る。メリハリをつけて動くことがポイントです。";
     }
 
-    // 陽占（命式）の十二大従星の解釈を収集
-    const natalEnergies = [
-      { pillar: "年柱（社会・家系）", name: getEnergyStar(day.stem, pillars.year.branch).name },
-      { pillar: "月柱（仕事・中年）", name: getEnergyStar(day.stem, pillars.month.branch).name },
-      { pillar: "日柱（本質・配偶者）", name: getEnergyStar(day.stem, pillars.day.branch).name }
-    ];
-    const energyInterpretations = natalEnergies.map((ne) => {
-      const interp = energyLifeInterpretation[ne.name];
+    // 大運の十二大従星の解釈を収集
+    const energyInterpretations = taiunDetails.map((d) => {
+      const interp = energyLifeInterpretation[d.energy];
       const stageKey = stage.key === "childhood" ? "childhood" : stage.key === "middleAge" ? "middleAge" : "lateLife";
       return {
-        pillar: ne.pillar,
-        energy: ne.name,
+        age: d.age,
+        energy: d.energy,
+        star: d.star,
+        isTenchu: d.isTenchu,
         text: interp ? interp[stageKey] : ""
       };
     });
@@ -4126,7 +4123,7 @@ function render(event) {
     <div class="result-card">
       <h3 class="expert-only">運気の流れ</h3>
       <h3 class="simple-only">人生の流れ</h3>
-      <p class="expert-only" style="color:var(--muted);font-size:12px;margin:0 0 14px">10年周期の運気を3つのライフステージ（幼少期・中年期・晩年期）に分け、各時期の運勢スコア・総評・十二大従星による詳細解説を表示します。現在の年代はハイライトされます。</p>
+      <p class="expert-only" style="color:var(--muted);font-size:12px;margin:0 0 14px">10年周期の運気を3つのライフステージ（幼少期・中年期・晩年期）に分け、各時期の運勢スコア・総評・大運の十二大従星による詳細解説を表示します。現在の年代はハイライトされます。</p>
       <p class="simple-only" style="color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.7">人生の流れを3つの期間に分け、それぞれの時期に何が起きやすいかを詳しく解説します。</p>
       ${(() => {
         const stages = analyzeLifeStageFortune(day, pillars, taiun, tenchusatsu, currentAge);
@@ -4155,13 +4152,15 @@ function render(event) {
             <p class="life-stage-advice simple-only"><b>アドバイス：</b>${st.adviceSimple}</p>
             ${st.energyInterpretations && st.energyInterpretations.length > 0 ? `
               <div style="margin-top:12px;padding:12px 14px;border-radius:10px;background:rgba(100,150,200,0.06);border:1px solid rgba(100,150,200,0.15)">
-                <p class="expert-only" style="font-size:12px;font-weight:600;margin:0 0 8px;color:#7ab0d0">陽占の十二大従星から見るこの時期の特徴</p>
+                <p class="expert-only" style="font-size:12px;font-weight:600;margin:0 0 8px;color:#7ab0d0">大運の十二大従星から見るこの時期の特徴</p>
                 <p class="simple-only" style="font-size:13px;font-weight:600;margin:0 0 8px;color:#7ab0d0">この時期の詳しい特徴</p>
                 ${st.energyInterpretations.filter((e) => e.text).map((e) => `
-                  <div style="margin-bottom:10px">
+                  <div style="margin-bottom:10px${e.isTenchu ? ";opacity:0.7" : ""}">
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
-                      <span style="font-size:12px;font-weight:600;color:var(--muted)">${e.pillar}</span>
+                      <span style="font-size:12px;font-weight:600;color:var(--muted)">${e.age}</span>
                       <span style="font-size:13px;font-weight:600;color:#7ab0d0">${e.energy}</span>
+                      <span style="font-size:11px;color:var(--muted)">（主星：${e.star}）</span>
+                      ${e.isTenchu ? '<span style="font-size:11px;padding:1px 6px;border-radius:4px;background:rgba(192,80,80,0.15);color:#c05050">天中殺</span>' : ""}
                     </div>
                     <p style="font-size:13px;line-height:1.7;margin:0;color:var(--text)">${e.text}</p>
                   </div>
