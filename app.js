@@ -2040,16 +2040,16 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
     if (prevStar && prevStar !== star) {
       const events = [];
       if (goodStars.includes(star)) {
-        if (star === "禄存星" || star === "司禄星") events.push("家庭やパートナーシップが安定し、結婚や出産などの家庭運が高まる時期");
-        if (star === "石門星") events.push("人脈が広がり、新しいコミュニティや組織での活躍が期待できる時期");
-        if (star === "玉堂星") events.push("学びや資格取得、専門性の深化によって評価が高まる時期");
-        if (star === "牽牛星") events.push("社会的な責任や地位が上がり、名誉ある立場を任される時期");
-        if (star === "貫索星") events.push("独立や自立の意志が強まり、自分の道を切り開く決断の時期");
+        if (star === "禄存星" || star === "司禄星") events.push("家庭運・パートナーシップ運が上昇。具体的には結婚・出産・マイホーム購入のタイミングになりやすく、家族との絆が深まる時期。例：長年付き合っていた人との結婚が決まる、待望の子どもに恵まれる、住宅購入のチャンスが訪れる");
+        if (star === "石門星") events.push("人脈運が急拡大。新しいコミュニティや組織での活躍が期待できる時期。例：新しい職場で重要なプロジェクトの中心メンバーに抜擢される、業界団体やコミュニティでリーダー役を任される、SNSやネットワークを通じて影響力が広がる");
+        if (star === "玉堂星") events.push("学習運・資格運が好調。専門性を深めることで評価が高まる時期。例：難関資格（簿記・FP・司法書士など）を取得して収入アップにつながる、大学院や留学で専門性を高める、社内研修や講師として知識が評価される");
+        if (star === "牽牛星") events.push("社会的責任・名誉運が上昇。地位が上がり名誉ある立場を任される時期。例：部長や代表など管理職に昇進する、業界賞や社内表彰を受ける、公共機関や団体から要職を依頼される");
+        if (star === "貫索星") events.push("独立・自立運が旺盛。自分の道を切り開く決断の時期。例：独立してフリーランスや起業する、会社内で新規事業の責任者になる、これまでの副業を本業に切り替える決心がつく");
       }
       if (badStars.includes(star)) {
-        if (star === "調舒星") events.push("感受性が鋭くなり、芸術や精神的な深まりがある一方、人間関係で孤立しやすい時期");
-        if (star === "龍高星") events.push("現状を壊して新しい道を切り開く変革期。転職や移住など大きな変化が起こりやすい時期");
-        if (star === "車騎星") events.push("行動力と競争心が高まるが、摩擦や衝突にも注意が必要な時期");
+        if (star === "調舒星") events.push("感受性が鋭くなり芸術や精神面で深まる一方、人間関係で孤立しやすい時期。例：創作活動やスピリチュアルな探求に没頭するが、周囲と意見が合わず疎外感を感じる、職場で自分の意見が通らずストレスが溜まる、一人の時間が増えて孤独を感じやすい");
+        if (star === "龍高星") events.push("現状を壊して新しい道を切り開く変革期。転職や移住など大きな変化が起こりやすい時期。例：思い切って転職や独立を決意する、住み慣れた街を離れて新しい土地に引っ越す、長年続けてきたことを一旦手放して別の道に進む");
+        if (star === "車騎星") events.push("行動力と競争心が高まるが、摩擦や衝突に注意が必要な時期。例：営業成績でトップを争うなど競争が激化する、職場で意見対立が起きて喧嘩になりやすい、スピード重視で動くあまり周囲とぶつかる");
       }
       if (events.length > 0) {
         let score = 50;
@@ -2064,8 +2064,8 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
     // 2. 天中殺の開始
     if (isTenchu && !prevTenchu) {
       const events = [
-        "ご縁が不安定になりやすく、大きな決断や新規スタートは避けるべき時期の始まり",
-        "これまでの成果を見直し、整理・準備に使うことで次の飛躍の土台を作る時期"
+        "ご縁が不安定になりやすく、大きな決断や新規スタートは避けるべき時期の始まり。例：結婚・離婚・起業・転職・不動産購入などの重要な決断はこの時期を避けるのが無難",
+        "これまでの成果を見直し、整理・準備に使うことで次の飛躍の土台を作る時期。例：スキルアップの勉強に集中する、人脈の整理と健康管理等の内面強化に時間を使う、過去の失敗を振り返って次のステージの準備をする"
       ];
       let score = 60;
       if (topoSan.length > 0) { score += 12; topoExplain(topoSan).forEach((t) => events.push(t)); }
@@ -2076,8 +2076,8 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
     // 3. 天中殺の終了
     if (!isTenchu && prevTenchu) {
       const events = [
-        "天中殺が明け、新しいご縁やチャンスが動き出す時期",
-        "準備してきたことが一気に花開きやすい、運気の再スタート時期"
+        "天中殺が明け、新しいご縁やチャンスが動き出す時期。例：突然良いオファーが舞い込む、新しい人脈から仕事の話が進む、恋人やパートナーとのご縁ができやすい",
+        "準備してきたことが一気に花開きやすい、運気の再スタート時期。例：天中殺中に勉強していた資格が役に立って仕事が決まる、温めていた企画が承認される、出会いの場に参加すると良いご縁に恵まれる"
       ];
       let score = 55;
       if (topoGo.length > 0) { score += 12; topoExplain(topoGo).forEach((t) => events.push(t)); }
@@ -2089,13 +2089,13 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
       const prevEl = elements[stems.indexOf(prevP.stem)];
       const prevRel = gogyoRel[dayEl][prevEl];
       if (prevRel === "相生" && rel === "相剋") {
-        const events = ["順風満帆だった運気に摩擦が生じ始める時期。守りに徹し、無理な拡大は避ける"];
+        const events = ["順風満帆だった運気に摩擦が生じ始める時期。守りに徹し、無理な拡大は避ける。例：仕事で急激な売上目標を立てるよりも既存顧客を大切にする、新しい投資や大きな買い物は時期をずらす、人間関係で対立が起きやすいので穏やかに過ごす"];
         let score = 40;
         if (topoSan.length > 0) { score += 10; topoExplain(topoSan).forEach((t) => events.push(t)); }
         if (starInYang) score += 5;
         points.push({ age: p.age, year: yearStart, type: "運気の転換", star, events, isTenchu, score });
       } else if (prevRel === "相剋" && rel === "相生") {
-        const events = ["困難だった運気が好転し、追い風が吹き始める時期。準備してきたことを形にするチャンス"];
+        const events = ["困難だった運気が好転し、追い風が吹き始める時期。準備してきたことを形にするチャンス。例：転職活動を始めると良い条件のオファーが来る、長年構想していたプロジェクトを立ち上げる絶好のタイミング、新しい人脈が仕事の展開を加速させる"];
         let score = 40;
         if (topoGo.length > 0) { score += 10; topoExplain(topoGo).forEach((t) => events.push(t)); }
         if (starInYang) score += 5;
@@ -4166,8 +4166,8 @@ function render(event) {
     <div class="result-card">
       <h3 class="expert-only">人生のターニングポイント</h3>
       <h3 class="simple-only">人生のターニングポイント</h3>
-      <p class="expert-only" style="color:var(--muted);font-size:12px;margin:0 0 14px">大運の切り替わり・天中殺・位相法・陽占・陰占を総合し、最も重要なターニングポイントを最大2つ表示します。</p>
-      <p class="simple-only" style="color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.7">人生の中で特に大きな変化が起こりやすい時期を、最大2つまで表示します。</p>
+      <p class="expert-only" style="color:var(--muted);font-size:12px;margin:0 0 14px">大運の切り替わり・天中殺・位相法を総合し、人生の中で特に大きな変化が起こりやすい時期を最大2つ表示します。具体的な例とともに解説します。</p>
+      <p class="simple-only" style="color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.7">人生の中で特に大きな変化が起こりやすい時期を、具体的な例とともに最大2つまで表示します。</p>
       ${(() => {
         if (turningPoints.length === 0) {
           return '<p style="color:var(--muted);font-size:13px">特筆すべきターニングポイントは検出されませんでした。</p>';
