@@ -3671,7 +3671,7 @@ function render(event) {
     </div>
     <div class="result-card reading">
       <h3>性格と課題</h3>
-      ${reading.map((item) => { const isDetailOnly = item.title.includes("詳細") || item.title.includes("タイミング") || item.title.includes("エネルギー傾向") || item.title.includes("バランスと課題") || item.title.includes("注意が必要な時期"); const cls = (item.title.includes("長所") ? "is-good" : item.title.includes("短所") ? "is-bad" : item.title.includes("優秀度") ? "is-work-ex" : item.title.includes("仕事") ? "is-work" : item.title.includes("恋愛") ? "is-love" : item.title.includes("金銭") ? "is-money" : item.title.includes("結婚") ? "is-marriage" : item.title.includes("社交") ? "is-social" : item.title.includes("×日干") ? "is-star-detail" : item.title.includes("裏の") ? "is-hidden" : "") + (isDetailOnly ? " expert-only" : ""); const isWorkEx = item.title.includes("優秀度"); const scoreMatch = item.text.match(/スコア：(\d+)点/); const scoreNum = scoreMatch ? parseInt(scoreMatch[1]) : 0; const rankMatch = item.text.match(/（(.+?)）/); const rankText = rankMatch ? rankMatch[1] : ""; const detailText = item.text.replace(/総合仕事優秀度スコア：\d+点（.+?）\n/, ""); return `<article class="${cls}"><h4>${item.title}</h4><div>${isWorkEx && scoreNum ? `<div class="work-ex-score-wrap"><div class="work-ex-score-num">${scoreNum}<span>点</span></div><div class="work-ex-rank-badge">${rankText}</div></div><div class="work-ex-bar"><div class="work-ex-bar-fill" style="width:${scoreNum}%"></div></div><div class="work-ex-detail">${detailText}</div>` : item.text}</div></article>`; }).join("")}
+      ${reading.map((item) => { const isDetailOnly = item.title.includes("詳細") || item.title.includes("タイミング") || item.title.includes("エネルギー傾向") || item.title.includes("バランスと課題") || item.title.includes("注意が必要な時期") || item.title.includes("長所") || item.title.includes("短所"); const cls = (item.title.includes("長所") ? "is-good" : item.title.includes("短所") ? "is-bad" : item.title.includes("優秀度") ? "is-work-ex" : item.title.includes("仕事") ? "is-work" : item.title.includes("恋愛") ? "is-love" : item.title.includes("金銭") ? "is-money" : item.title.includes("結婚") ? "is-marriage" : item.title.includes("社交") ? "is-social" : item.title.includes("×日干") ? "is-star-detail" : item.title.includes("裏の") ? "is-hidden" : "") + (isDetailOnly ? " expert-only" : ""); const isWorkEx = item.title.includes("優秀度"); const scoreMatch = item.text.match(/スコア：(\d+)点/); const scoreNum = scoreMatch ? parseInt(scoreMatch[1]) : 0; const rankMatch = item.text.match(/（(.+?)）/); const rankText = rankMatch ? rankMatch[1] : ""; const detailText = item.text.replace(/総合仕事優秀度スコア：\d+点（.+?）\n/, ""); return `<article class="${cls}"><h4>${item.title}</h4><div>${isWorkEx && scoreNum ? `<div class="work-ex-score-wrap"><div class="work-ex-score-num">${scoreNum}<span>点</span></div><div class="work-ex-rank-badge">${rankText}</div></div><div class="work-ex-bar"><div class="work-ex-bar-fill" style="width:${scoreNum}%"></div></div><div class="work-ex-detail">${detailText}</div>` : item.text}</div></article>`; }).join("")}
     </div>
     ${(() => {
       if (seimeiResult.error) {
@@ -3808,8 +3808,8 @@ function render(event) {
       <p style="color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.7">生年月日から読み取れる、あなたの性格の傾向を分かりやすく説明します。</p>
       <div class="simple-summary">
         <div class="simple-summary-item">
-          <h4>基本的な性格</h4>
-          <p>あなたの中心となる性格は「${pickByBalance(starTexts[mainStars.center], balanceType)}」のタイプです。${(reading.find(r => r.title === "性格の長所")?.text || "").split("\n")[0].replace(/^【.*?】/, "")}</p>
+          <h4>性格の長所</h4>
+          <p>${pickByBalance(starP.good, balanceType)} ${dayP.good} ${strongP.good}</p>
         </div>
         <div class="simple-summary-item">
           <h4>表に出やすい面</h4>
@@ -3825,7 +3825,7 @@ function render(event) {
         </div>
         <div class="simple-summary-item">
           <h4>気をつけたい面</h4>
-          <p>${(reading.find(r => r.title === "性格の短所（隠さず直視すべき点）")?.text || "").split("\n")[0].replace(/^【.*?】/, "")}</p>
+          <p>${pickByBalance(starP.bad, balanceType)} ${dayP.bad} ${strongP.bad}</p>
         </div>
       </div>
     </div>
