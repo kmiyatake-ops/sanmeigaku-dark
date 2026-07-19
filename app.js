@@ -1674,9 +1674,11 @@ function analyzeMote(mainStars, energy, counts, day, pillars) {
   });
 
   // どんな人からモテるか（ファン層分析）
+  // 中央（本質）→北→南→東→西→伴星の順で優先度をつけてファンを収集
+  const fanPriority = [mainStars.center, mainStars.north, mainStars.south, mainStars.east, mainStars.west, mainStars.companion];
   const oppFanSet = new Set();
   const sameFanSet = new Set();
-  allStars.forEach(star => {
+  fanPriority.forEach(star => {
     const f = starFanType[star];
     if (f) {
       f.oppFans.forEach(t => oppFanSet.add(t));
@@ -4078,14 +4080,14 @@ function render(event) {
           <div class="mote-fans-col mote-fans-opp">
             <h5>異性から</h5>
             <div class="mote-fan-tags">
-              ${mote.oppFans.map(t => `<span class="mote-fan-tag mote-fan-opp">${t}</span>`).join("")}
+              ${mote.oppFans.slice(0, 3).map(t => `<span class="mote-fan-tag mote-fan-opp">${t}</span>`).join("")}
             </div>
             ${mote.gogyoFans.opp.length ? `<div class="mote-fans-gogyo"><b class="expert-only">内面の偏りが惹きつける異性</b><b class="simple-only">性格の偏りが惹きつける異性</b>${mote.gogyoFans.opp.map(t => `<p>${t}</p>`).join("")}</div>` : ''}
           </div>
           <div class="mote-fans-col mote-fans-same">
             <h5>同性から</h5>
             <div class="mote-fan-tags">
-              ${mote.sameFans.map(t => `<span class="mote-fan-tag mote-fan-same">${t}</span>`).join("")}
+              ${mote.sameFans.slice(0, 3).map(t => `<span class="mote-fan-tag mote-fan-same">${t}</span>`).join("")}
             </div>
             ${mote.gogyoFans.same.length ? `<div class="mote-fans-gogyo"><b class="expert-only">内面の偏りが惹きつける同性</b><b class="simple-only">性格の偏りが惹きつける同性</b>${mote.gogyoFans.same.map(t => `<p>${t}</p>`).join("")}</div>` : ''}
           </div>
