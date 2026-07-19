@@ -1519,6 +1519,104 @@ button {
   font-size: 12px;
 }
 
+.affair-risk-score-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 14px 0 10px;
+}
+
+.affair-risk-score-num {
+  font-size: 3.2em;
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(220, 80, 80, 0.3);
+}
+
+.affair-risk-score-num span {
+  font-size: 0.35em;
+  font-weight: 400;
+  margin-left: 2px;
+}
+
+.affair-risk-rank-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 600;
+  color: #1a1a2e;
+  white-space: nowrap;
+}
+
+.affair-risk-rank-danger {
+  background: linear-gradient(135deg, #ff6060, #d04040);
+  color: #fff;
+}
+
+.affair-risk-rank-warning {
+  background: linear-gradient(135deg, #f0a040, #d08020);
+  color: #1a1a2e;
+}
+
+.affair-risk-rank-normal {
+  background: linear-gradient(135deg, #e0c060, #c0a040);
+  color: #1a1a2e;
+}
+
+.affair-risk-rank-low {
+  background: linear-gradient(135deg, #80d080, #50b050);
+  color: #1a1a2e;
+}
+
+.affair-risk-rank-safe {
+  background: linear-gradient(135deg, #60c0e0, #4090c0);
+  color: #1a1a2e;
+}
+
+.affair-risk-bar {
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.affair-risk-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.8s ease;
+}
+
+.affair-risk-bar-fill.danger {
+  background: linear-gradient(90deg, #d04040, #ff6060);
+  box-shadow: 0 0 10px rgba(255, 80, 80, 0.4);
+}
+
+.affair-risk-bar-fill.warning {
+  background: linear-gradient(90deg, #d08020, #f0a040);
+  box-shadow: 0 0 10px rgba(240, 160, 64, 0.3);
+}
+
+.affair-risk-bar-fill.normal {
+  background: linear-gradient(90deg, #c0a040, #e0c060);
+}
+
+.affair-risk-bar-fill.low {
+  background: linear-gradient(90deg, #50b050, #80d080);
+}
+
+.affair-risk-bar-fill.safe {
+  background: linear-gradient(90deg, #4090c0, #60c0e0);
+}
+
+.affair-risk-detail {
+  font-size: 0.9em;
+  line-height: 1.7;
+  color: #b0b0c0;
+  white-space: pre-line;
+}
+
 .inyou-table {
   width: 100%;
   border-collapse: collapse;
@@ -2518,6 +2616,10 @@ button {
   }
 
   .work-ex-score-num {
+    font-size: 2.2em;
+  }
+
+  .affair-risk-score-num {
     font-size: 2.2em;
   }
 

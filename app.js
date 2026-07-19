@@ -3940,6 +3940,8 @@ function render(event) {
         });
         const affairLevel = affairScore >= 80 ? "高危険" : affairScore >= 65 ? "要注意" : affairScore >= 45 ? "普通" : affairScore >= 25 ? "低め" : "安心";
         const simpleAffairLevel = affairScore >= 80 ? "要注意" : affairScore >= 65 ? "注意が必要" : affairScore >= 45 ? "普通" : affairScore >= 25 ? "低め" : "安心";
+        const affairRankClass = affairScore >= 80 ? "danger" : affairScore >= 65 ? "warning" : affairScore >= 45 ? "normal" : affairScore >= 25 ? "low" : "safe";
+        const affairScoreColor = affairScore >= 80 ? "#ff5050" : affairScore >= 65 ? "#f0a040" : affairScore >= 45 ? "#e0c060" : affairScore >= 25 ? "#80d080" : "#60c0e0";
         const marriageAges = getMarriageAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge);
         const loveAges = getLoveAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge);
         const loveAgesHtml = loveAges.length > 0
@@ -3986,10 +3988,11 @@ function render(event) {
           <article>
             <h4>浮気・不倫の傾向</h4>
             <div>配偶者との関係性が現れやすい右手（西）の主星は「${mainStars.west}」。${pickByBalance(affairTendencyTexts[mainStars.west], balanceType)}</div>
-            <div class="affair-score">
-              <div class="affair-score-bar"><i style="width:${affairScore}%"></i></div>
-              <div class="affair-score-label"><b>浮気・不倫リスク指数：${affairScore}点</b><span>（100点満点・${affairLevel}）</span></div>
+            <div class="affair-risk-score-wrap">
+              <div class="affair-risk-score-num" style="color:${affairScoreColor}">${affairScore}<span>点</span></div>
+              <div class="affair-risk-rank-badge affair-risk-rank-${affairRankClass}">${affairLevel}</div>
             </div>
+            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${affairRankClass}" style="width:${affairScore}%"></div></div>
             <div style="font-size:12px;color:var(--muted);margin-top:6px">全主星（中央・北・南・東・西）の傾向＋配偶者宮（日支）の十二大従星＋二度縁の型＋異常干支＋日干の陰陽＋内面のバランスの偏りから総合的に算出した目安です。断定ではなく傾向として参考にしてください。</div>
           </article>
           <article>
@@ -4037,10 +4040,11 @@ function render(event) {
           <article>
             <h4>浮気・不倫の傾向</h4>
             <div>${pickByBalance(affairTendencyTexts[mainStars.west], balanceType)}</div>
-            <div class="affair-score">
-              <div class="affair-score-bar"><i style="width:${affairScore}%"></i></div>
-              <div class="affair-score-label"><b>浮気・不倫リスク：${affairScore}点</b><span>（${simpleAffairLevel}）</span></div>
+            <div class="affair-risk-score-wrap">
+              <div class="affair-risk-score-num" style="color:${affairScoreColor}">${affairScore}<span>点</span></div>
+              <div class="affair-risk-rank-badge affair-risk-rank-${affairRankClass}">${simpleAffairLevel}</div>
             </div>
+            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${affairRankClass}" style="width:${affairScore}%"></div></div>
             <div style="font-size:12px;color:var(--muted);margin-top:6px">全体的な性格・家庭運・結婚運・生まれ持った性質のバランスから総合的に算出した目安です。</div>
           </article>
           <article>
