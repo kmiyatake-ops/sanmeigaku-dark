@@ -3803,32 +3803,6 @@ function render(event) {
       <h3>内面のバランス</h3>
       <div class="bars">${Object.entries(counts).map(([key, value]) => `<div class="bar-row"><b>${key}</b><div class="bar"><i style="width:${(value / maxCount) * 100}%"></i></div><span>${value}</span></div>`).join("")}</div>
     </div>
-    <div class="result-card simple-only">
-      <h3>あなたの性格</h3>
-      <p style="color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.7">生年月日から読み取れる、あなたの性格の傾向を分かりやすく説明します。</p>
-      <div class="simple-summary">
-        <div class="simple-summary-item">
-          <h4>性格の長所</h4>
-          <p>${pickByBalance(starP.good, balanceType)} ${dayP.good} ${strongP.good}</p>
-        </div>
-        <div class="simple-summary-item">
-          <h4>表に出やすい面</h4>
-          <p>${pickByBalance(starTexts[mainStars.north], balanceType)}</p>
-        </div>
-        <div class="simple-summary-item">
-          <h4>内面に持っている面</h4>
-          <p>${pickByBalance(starTexts[mainStars.south], balanceType)}</p>
-        </div>
-        <div class="simple-summary-item">
-          <h4>人との関わり方</h4>
-          <p>${(reading.find(r => r.title === "社交性と対人関係の性格")?.text || "").replace(/^【.*?】/, "").split("\n")[0]}</p>
-        </div>
-        <div class="simple-summary-item">
-          <h4>気をつけたい面</h4>
-          <p>${pickByBalance(starP.bad, balanceType)} ${dayP.bad} ${strongP.bad}</p>
-        </div>
-      </div>
-    </div>
     <div class="result-card expert-only">
       <h3>位相法（地支の関係性）</h3>
       <p style="color:var(--muted);font-size:13px;margin:0 0 10px">年支・月支・日支の間に成立する関係を8種類の位相法で判定します。合法は結びつき・融合を、散法は衝突・ストレス・分裂を意味します。</p>
