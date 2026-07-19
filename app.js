@@ -429,6 +429,39 @@ function getAffairRiskScore({ westStar, spouseEnergyName, isDoubleEn, hasAbnorma
   return Math.max(5, Math.min(100, Math.round(((score - RAW_MIN_A) / (RAW_MAX_A - RAW_MIN_A)) * 100)));
 }
 
+// 結婚適性度のベーススコア（中央＝本質の主星）
+const marriageBaseScore = {
+  貫索星: 65, 石門星: 70, 鳳閣星: 45, 調舒星: 40, 禄存星: 80,
+  司禄星: 85, 車騎星: 42, 牽牛星: 72, 龍高星: 38, 玉堂星: 75
+};
+// 配偶者宮（日支）の十二大従星による結婚適性への加減点
+const marriageEnergyAdjust = {
+  天報星: -10, 天印星: 12, 天貴星: 10, 天恍星: -12, 天南星: -8,
+  天禄星: 12, 天将星: -5, 天堂星: 12, 天胡星: 5, 天極星: 8,
+  天庫星: 10, 天馳星: -12
+};
+// 西（右手・配偶者との関係）の主星による加減点
+const marriageWestAdjust = {
+  貫索星: 8, 石門星: 6, 鳳閣星: -8, 調舒星: -6, 禄存星: 10,
+  司禄星: 12, 車騎星: -8, 牽牛星: 8, 龍高星: -10, 玉堂星: 8
+};
+
+function getMarriageScore({ centerStar, westStar, spouseEnergyName, isDoubleEn, hasAbnormal, hasTopThreeAbnormal, affairScore, gogyoBalance }) {
+  let score = marriageBaseScore[centerStar] ?? 50;
+  score += marriageEnergyAdjust[spouseEnergyName] ?? 0;
+  score += marriageWestAdjust[westStar] ?? 0;
+  if (isDoubleEn) score -= 8;
+  if (hasAbnormal) score -= 5;
+  if (hasTopThreeAbnormal) score -= 5;
+  // 浮気リスクが高いほど結婚適性は下がる
+  score += (100 - affairScore) * 0.15;
+  // 五行バランス
+  if (gogyoBalance !== undefined && gogyoBalance <= 1) score += 6;
+  else if (gogyoBalance !== undefined && gogyoBalance >= 4) score -= 8;
+  else if (gogyoBalance !== undefined && gogyoBalance >= 3) score -= 4;
+  return Math.max(5, Math.min(100, Math.round(score)));
+}
+
 function getChongBranch(branch) {
   return branches[mod(branches.indexOf(branch) + 6, 12)];
 }
@@ -3965,6 +3998,20 @@ function render(event) {
         const simpleAffairLevel = affairScore >= 80 ? "要注意" : affairScore >= 65 ? "注意が必要" : affairScore >= 45 ? "普通" : affairScore >= 25 ? "低め" : "安心";
         const affairRankClass = affairScore >= 80 ? "danger" : affairScore >= 65 ? "warning" : affairScore >= 45 ? "normal" : affairScore >= 25 ? "low" : "safe";
         const affairScoreColor = affairScore >= 80 ? "#ff5050" : affairScore >= 65 ? "#f0a040" : affairScore >= 45 ? "#e0c060" : affairScore >= 25 ? "#80d080" : "#60c0e0";
+        const marriageScore = getMarriageScore({
+          centerStar: mainStars.center,
+          westStar: mainStars.west,
+          spouseEnergyName: spouseEnergy.name,
+          isDoubleEn,
+          hasAbnormal,
+          hasTopThreeAbnormal,
+          affairScore,
+          gogyoBalance
+        });
+        const marriageLevel = marriageScore >= 80 ? "非常に向いている" : marriageScore >= 65 ? "向いている" : marriageScore >= 45 ? "普通" : marriageScore >= 30 ? "やや向いていない" : "向いていない";
+        const marriageSimpleLevel = marriageScore >= 80 ? "とても向いている" : marriageScore >= 65 ? "向いている" : marriageScore >= 45 ? "どちらともいえない" : marriageScore >= 30 ? "少し向いていないかも" : "向いていないかも";
+        const marriageRankClass = marriageScore >= 80 ? "safe" : marriageScore >= 65 ? "low" : marriageScore >= 45 ? "normal" : marriageScore >= 30 ? "warning" : "danger";
+        const marriageScoreColor = marriageScore >= 80 ? "#60c0e0" : marriageScore >= 65 ? "#80d080" : marriageScore >= 45 ? "#e0c060" : marriageScore >= 30 ? "#f0a040" : "#ff5050";
         const marriageAges = getMarriageAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge);
         const loveAges = getLoveAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge);
         const loveAgesHtml = loveAges.length > 0
@@ -3981,6 +4028,15 @@ function render(event) {
           : "結婚に特に有利な時期は見つかりませんでした。";
         return `
           <div class="expert-only">
+          <article>
+            <h4>結婚適性度</h4>
+            <div class="affair-risk-score-wrap">
+              <div class="affair-risk-score-num" style="color:${marriageScoreColor}">${marriageScore}<span>点</span></div>
+              <div class="affair-risk-rank-badge affair-risk-rank-${marriageRankClass}">${marriageLevel}</div>
+            </div>
+            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${marriageRankClass}" style="width:${marriageScore}%"></div></div>
+            <div style="font-size:12px;color:var(--muted);margin-top:6px">中央（本質）の主星・西（配偶者との関係）の主星・配偶者宮（日支）の十二大従星・二度縁の型・異常干支・浮気リスク・五行バランスから総合的に算出した目安です。数値が高いほど結婚に向いている傾向が強いことを示します。</div>
+          </article>
           <article>
             <h4>恋愛傾向</h4>
             <div>本質を表す中央（胸）の主星は「${mainStars.center}」。${pickByBalance(loveTendencyTexts[mainStars.center], balanceType)}</div>
@@ -4034,6 +4090,15 @@ function render(event) {
           </article>
           </div>
           <div class="simple-only">
+          <article>
+            <h4>結婚適性度</h4>
+            <div class="affair-risk-score-wrap">
+              <div class="affair-risk-score-num" style="color:${marriageScoreColor}">${marriageScore}<span>点</span></div>
+              <div class="affair-risk-rank-badge affair-risk-rank-${marriageRankClass}">${marriageSimpleLevel}</div>
+            </div>
+            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${marriageRankClass}" style="width:${marriageScore}%"></div></div>
+            <div style="font-size:12px;color:var(--muted);margin-top:6px">星の配置や性格のバランスから算出した、結婚に向いている度合いの目安です。</div>
+          </article>
           <article>
             <h4>恋愛のしかた</h4>
             <div>${pickByBalance(loveTendencyTexts[mainStars.center], balanceType)}</div>
