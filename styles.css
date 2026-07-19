@@ -1778,9 +1778,13 @@ button {
 
 @media (max-width: 860px) {
   form,
-  .grid,
   .star-grid {
     grid-template-columns: 1fr;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
   }
 
   .name-row {
@@ -1837,6 +1841,49 @@ button {
 
   .result-header {
     display: block;
+  }
+
+  .star-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .seimei-gokaku {
+    grid-template-columns: 1fr;
+  }
+
+  .seimei-fortune-scores {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .seimei-overview {
+    flex-direction: column;
+  }
+
+  .mote-scores {
+    grid-template-columns: 1fr;
+  }
+
+  .mote-factors {
+    grid-template-columns: 1fr;
+  }
+
+  .mote-charm-list {
+    grid-template-columns: 1fr;
+  }
+
+  .mote-fans-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .health-risk-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .health-risk-score {
+    margin-left: 0;
   }
 }
 
@@ -1969,11 +2016,6 @@ button {
 .seimei-fs-bar i { display: block; height: 100%; border-radius: 4px; transition: width 0.5s; }
 .seimei-fs-num { font-size: 14px; font-weight: 600; color: var(--text); }
 
-@media (max-width: 600px) {
-  .seimei-gokaku { grid-template-columns: 1fr; }
-  .seimei-fortune-scores { grid-template-columns: 1fr; gap: 10px; }
-  .seimei-overview { flex-direction: column; }
-}
 
 /* === 病気リスク分析 === */
 .health-card { border-color: rgba(220,80,80,0.15); }
@@ -2147,10 +2189,6 @@ button {
   font-weight: 500;
 }
 
-@media (max-width: 600px) {
-  .health-risk-head { flex-direction: column; align-items: flex-start; gap: 4px; }
-  .health-risk-score { margin-left: 0; }
-}
 
 /* === モテ度分析 === */
 .mote-card { border-color: rgba(230,120,160,0.15); }
@@ -2325,36 +2363,44 @@ button {
 }
 
 @media (max-width: 600px) {
-  .mote-scores { grid-template-columns: 1fr; }
-  .mote-factors { grid-template-columns: 1fr; }
-  .mote-charm-list { grid-template-columns: 1fr; }
-  .mote-fans-grid { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 480px) {
   .app {
     width: calc(100% - 16px);
-    padding: 20px 0;
+    padding: 16px 0;
   }
 
   .hero {
-    padding: 20px 0 16px;
+    padding: 16px 0 12px;
   }
 
   .hero h1 {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .hero p {
     font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .panel,
+  .result-card {
+    border-radius: 16px;
   }
 
   .input-panel {
-    padding: 16px;
+    padding: 14px;
+  }
+
+  .result-card {
+    padding: 14px;
   }
 
   form {
-    gap: 12px;
+    gap: 10px;
   }
 
   .name-row {
@@ -2379,19 +2425,20 @@ button {
   button {
     min-height: 44px;
     font-size: 15px;
+    border-radius: 10px;
+  }
+
+  button {
+    padding: 0 16px;
   }
 
   .reading article {
-    padding: 14px;
+    padding: 12px;
     line-height: 1.7;
   }
 
   .reading h4 {
     font-size: 14px;
-  }
-
-  .result-card {
-    padding: 14px;
   }
 
   .result-header h2 {
@@ -2403,19 +2450,234 @@ button {
   }
 
   .star-grid {
+    grid-template-columns: 1fr;
     gap: 8px;
+  }
+
+  .star {
+    min-height: auto;
+    padding: 12px;
+  }
+
+  .star b {
+    font-size: 17px;
+  }
+
+  .kanshi {
+    padding: 10px 8px;
+    border-radius: 12px;
+  }
+
+  .kanshi span {
+    font-size: 22px;
+  }
+
+  .kanshi strong {
+    font-size: 11px;
   }
 
   .taiun-flow {
     grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .taiun-item {
+    padding: 10px 6px;
+    border-radius: 10px;
+  }
+
+  .taiun-item .pillar {
+    font-size: 18px;
   }
 
   .bar-row {
-    grid-template-columns: 48px 1fr 28px;
+    grid-template-columns: 44px 1fr 28px;
     gap: 8px;
   }
 
   .note {
     font-size: 12px;
+  }
+
+  .nenun-row {
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .nenun-pillar {
+    font-size: 18px;
+  }
+
+  .score-circle {
+    width: 90px;
+    height: 90px;
+  }
+
+  .score-circle span {
+    font-size: 32px;
+  }
+
+  .work-ex-score-num {
+    font-size: 2.2em;
+  }
+
+  .compat-cat-score {
+    font-size: 1.6em;
+  }
+
+  .mote-score-rank {
+    font-size: 28px;
+  }
+
+  .guardian-row b {
+    min-width: 80px;
+    font-size: 12px;
+  }
+
+  .guardian-row {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .view-toggle-wrap {
+    padding: 10px 12px;
+    margin-bottom: 14px;
+  }
+
+  .life-stage {
+    padding: 12px 14px;
+  }
+
+  .life-stage-score {
+    font-size: 1.4em;
+  }
+
+  .compat-cat {
+    padding: 12px 14px;
+  }
+
+  .compat-cat-head h4 {
+    font-size: 0.95em;
+  }
+
+  .seimei-overall {
+    padding: 10px 18px;
+    min-width: 100px;
+  }
+
+  .seimei-overall-rank {
+    font-size: 22px;
+  }
+
+  .inyou-table {
+    font-size: 11px;
+  }
+
+  .inyou-table th,
+  .inyou-table td {
+    padding: 6px 4px;
+  }
+
+  .topology-summary {
+    padding: 12px 14px;
+  }
+
+  .topology-item {
+    padding: 10px 12px;
+  }
+
+  .abnormal-item {
+    padding: 10px 12px;
+  }
+
+  .abnormal-head b {
+    font-size: 15px;
+  }
+
+  .fate-tenchu-item {
+    padding: 10px 12px;
+  }
+
+  .fate-tenchu-item b {
+    font-size: 13px;
+  }
+
+  .yearly-fortune-detail article h4 {
+    font-size: 13px;
+  }
+
+  .yearly-fortune-detail article div {
+    font-size: 12px;
+  }
+
+  .yf-pillar {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .health-constitution {
+    padding: 10px 12px;
+  }
+
+  .health-risk-item {
+    padding: 10px 12px;
+  }
+
+  .mote-score-item {
+    padding: 12px;
+  }
+
+  .mote-charm-item {
+    padding: 8px 10px;
+  }
+
+  .mote-fans-col {
+    padding: 10px 12px;
+  }
+
+  #qrCodeBox {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 380px) {
+  .app {
+    width: calc(100% - 8px);
+  }
+
+  .hero h1 {
+    font-size: 22px;
+  }
+
+  .input-panel {
+    padding: 10px;
+  }
+
+  .result-card {
+    padding: 10px;
+  }
+
+  .grid {
+    gap: 6px;
+  }
+
+  .kanshi {
+    padding: 8px 6px;
+  }
+
+  .kanshi span {
+    font-size: 18px;
+  }
+
+  .taiun-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .birth-inputs input {
+    width: 48px;
+  }
+
+  .birth-inputs input:first-child {
+    width: 60px;
   }
 }
