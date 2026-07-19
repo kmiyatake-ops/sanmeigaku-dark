@@ -3286,14 +3286,14 @@ function calcCompatibility(a, b) {
   // --- 恋愛の相性 ---
   let loveScore = 50;
   const loveFactors = [];
-  if (relation === "相生") { loveScore += 20; loveFactors.push("相性関係+20"); }
-  else if (relation === "比和") { loveScore += 12; loveFactors.push("同質関係+12"); }
-  else if (relation === "相剋") { loveScore -= 8; loveFactors.push("ぶつかり関係-8"); }
-  else if (relation === "反剋") { loveScore -= 15; loveFactors.push("逆風関係-15"); }
-  if (!sameYinYang) { loveScore += 10; loveFactors.push("陰陽の補完+10"); }
-  else { loveScore -= 5; loveFactors.push("同陰陽-5"); }
-  if ([4, 8].includes(branchDiff)) { loveScore += 8; loveFactors.push("地支三合+8"); }
-  if (branchDiff === 6) { loveScore -= 10; loveFactors.push("地支冲-10"); }
+  if (relation === "相生") { loveScore += 30; loveFactors.push("相性関係+30"); }
+  else if (relation === "比和") { loveScore += 18; loveFactors.push("同質関係+18"); }
+  else if (relation === "相剋") { loveScore -= 15; loveFactors.push("ぶつかり関係-15"); }
+  else if (relation === "反剋") { loveScore -= 25; loveFactors.push("逆風関係-25"); }
+  if (!sameYinYang) { loveScore += 15; loveFactors.push("陰陽の補完+15"); }
+  else { loveScore -= 8; loveFactors.push("同陰陽-8"); }
+  if ([4, 8].includes(branchDiff)) { loveScore += 12; loveFactors.push("地支三合+12"); }
+  if (branchDiff === 6) { loveScore -= 15; loveFactors.push("地支冲-15"); }
   // 星の相性（恋愛）
   const loveStarBonus = {
     "貫索星": { "石門星": 8, "鳳閣星": 3, "調舒星": 5, "禄存星": 6, "司禄星": 7, "車騎星": 4, "牽牛星": 6, "龍高星": 2, "玉堂星": 5, "貫索星": -3 },
@@ -3308,24 +3308,24 @@ function calcCompatibility(a, b) {
     "玉堂星": { "貫索星": 5, "石門星": 5, "鳳閣星": 5, "調舒星": 7, "禄存星": 6, "司禄星": 6, "車騎星": 3, "牽牛星": 7, "龍高星": 8, "玉堂星": -3 }
   };
   const starLovePt = loveStarBonus[centerA] && loveStarBonus[centerA][centerB] !== undefined ? loveStarBonus[centerA][centerB] : 0;
-  loveScore += starLovePt;
-  if (starLovePt) loveFactors.push(`主星(${centerA}×${centerB})${starLovePt > 0 ? "+" : ""}${starLovePt}`);
-  loveScore = Math.max(10, Math.min(95, loveScore));
+  loveScore += starLovePt * 1.5;
+  if (starLovePt) loveFactors.push(`主星(${centerA}×${centerB})${starLovePt > 0 ? "+" : ""}${Math.round(starLovePt * 1.5)}`);
+  loveScore = Math.max(5, Math.min(98, loveScore));
 
   // --- SEXの相性 ---
   let sexScore = 50;
   const sexFactors = [];
   // 陰陽の組み合わせ（異陰陽が高い）
-  if (!sameYinYang) { sexScore += 18; sexFactors.push("陰陽異性+18"); }
-  else { sexScore -= 8; sexFactors.push("同陰陽-8"); }
+  if (!sameYinYang) { sexScore += 25; sexFactors.push("陰陽異性+25"); }
+  else { sexScore -= 12; sexFactors.push("同陰陽-12"); }
   // 五行関係
-  if (relation === "相生") { sexScore += 15; sexFactors.push("相性関係+15"); }
-  else if (relation === "相剋") { sexScore += 8; sexFactors.push("ぶつかり関係(刺激)+8"); }
-  else if (relation === "比和") { sexScore += 5; sexFactors.push("同質関係+5"); }
-  else if (relation === "反剋") { sexScore -= 12; sexFactors.push("逆風関係-12"); }
+  if (relation === "相生") { sexScore += 22; sexFactors.push("相性関係+22"); }
+  else if (relation === "相剋") { sexScore += 12; sexFactors.push("ぶつかり関係(刺激)+12"); }
+  else if (relation === "比和") { sexScore += 8; sexFactors.push("同質関係+8"); }
+  else if (relation === "反剋") { sexScore -= 18; sexFactors.push("逆風関係-18"); }
   // 地支の関係（冲は性的緊張感としてプラス、三合は安心感）
-  if (branchDiff === 6) { sexScore += 10; sexFactors.push("地支冲(緊張感)+10"); }
-  if ([4, 8].includes(branchDiff)) { sexScore += 5; sexFactors.push("地支三合+5"); }
+  if (branchDiff === 6) { sexScore += 15; sexFactors.push("地支冲(緊張感)+15"); }
+  if ([4, 8].includes(branchDiff)) { sexScore += 8; sexFactors.push("地支三合+8"); }
   // 星の性的相性
   const sexStarBonus = {
     "車騎星": 10, "調舒星": 8, "龍高星": 8, "鳳閣星": 7, "禄存星": 6,
@@ -3333,21 +3333,21 @@ function calcCompatibility(a, b) {
   };
   const sexPtA = sexStarBonus[centerA] || 0;
   const sexPtB = sexStarBonus[centerB] || 0;
-  const sexStarPt = Math.round((sexPtA + sexPtB) / 3);
+  const sexStarPt = Math.round((sexPtA + sexPtB) / 2);
   sexScore += sexStarPt;
   if (sexStarPt) sexFactors.push(`主星の情熱度+${sexStarPt}`);
-  sexScore = Math.max(10, Math.min(95, sexScore));
+  sexScore = Math.max(5, Math.min(98, sexScore));
 
   // --- 結婚後の相性 ---
   let marriageScore = 50;
   const marriageFactors = [];
-  if (relation === "相生") { marriageScore += 22; marriageFactors.push("相性関係+22"); }
-  else if (relation === "比和") { marriageScore += 15; marriageFactors.push("同質関係+15"); }
-  else if (relation === "相剋") { marriageScore -= 12; marriageFactors.push("ぶつかり関係-12"); }
-  else if (relation === "反剋") { marriageScore -= 18; marriageFactors.push("逆風関係-18"); }
-  if ([4, 8].includes(branchDiff)) { marriageScore += 12; marriageFactors.push("地支三合+12"); }
-  if (branchDiff === 6) { marriageScore -= 12; marriageFactors.push("地支冲-12"); }
-  if (branchDiff === 0) { marriageScore += 8; marriageFactors.push("同地支+8"); }
+  if (relation === "相生") { marriageScore += 32; marriageFactors.push("相性関係+32"); }
+  else if (relation === "比和") { marriageScore += 22; marriageFactors.push("同質関係+22"); }
+  else if (relation === "相剋") { marriageScore -= 18; marriageFactors.push("ぶつかり関係-18"); }
+  else if (relation === "反剋") { marriageScore -= 28; marriageFactors.push("逆風関係-28"); }
+  if ([4, 8].includes(branchDiff)) { marriageScore += 18; marriageFactors.push("地支三合+18"); }
+  if (branchDiff === 6) { marriageScore -= 18; marriageFactors.push("地支冲-18"); }
+  if (branchDiff === 0) { marriageScore += 12; marriageFactors.push("同地支+12"); }
   // 星の結婚適性
   const marriageStarBonus = {
     "司禄星": 10, "禄存星": 9, "牽牛星": 8, "玉堂星": 7, "石門星": 6,
@@ -3355,12 +3355,12 @@ function calcCompatibility(a, b) {
   };
   const marPtA = marriageStarBonus[centerA] || 0;
   const marPtB = marriageStarBonus[centerB] || 0;
-  const marStarPt = Math.round((marPtA + marPtB) / 3);
+  const marStarPt = Math.round((marPtA + marPtB) / 2);
   marriageScore += marStarPt;
   if (marStarPt) marriageFactors.push(`主星の結婚適性+${marStarPt}`);
   // 同陰陽は安定感がある
-  if (sameYinYang) { marriageScore += 5; marriageFactors.push("同陰陽(安定)+5"); }
-  marriageScore = Math.max(10, Math.min(95, marriageScore));
+  if (sameYinYang) { marriageScore += 8; marriageFactors.push("同陰陽(安定)+8"); }
+  marriageScore = Math.max(5, Math.min(98, marriageScore));
 
   // 総合スコア
   let score = Math.round((loveScore + sexScore + marriageScore) / 3);
@@ -3386,40 +3386,40 @@ function calcCompatibility(a, b) {
   affairFactors.push(`${a.name}の不倫リスク${affairRiskA}点`);
   affairFactors.push(`${b.name}の不倫リスク${affairRiskB}点`);
   // 相剋関係は不倫リスクを高める
-  if (relation === "相剋") { affairRisk += 8; affairFactors.push("ぶつかり関係(刺激)+8"); }
-  else if (relation === "反剋") { affairRisk += 12; affairFactors.push("逆風関係+12"); }
+  if (relation === "相剋") { affairRisk += 12; affairFactors.push("ぶつかり関係(刺激)+12"); }
+  else if (relation === "反剋") { affairRisk += 18; affairFactors.push("逆風関係+18"); }
   // 龍高星×龍高星は自由奔放
-  if (centerA === "龍高星" && centerB === "龍高星") { affairRisk += 10; affairFactors.push("龍高星×龍高星(自由奔放)+10"); }
+  if (centerA === "龍高星" && centerB === "龍高星") { affairRisk += 15; affairFactors.push("龍高星×龍高星(自由奔放)+15"); }
   // 鳳閣星がいるとモテやすく誘惑多い
-  if (centerA === "鳳閣星" || centerB === "鳳閣星") { affairRisk += 5; affairFactors.push("鳳閣星の誘惑+5"); }
+  if (centerA === "鳳閣星" || centerB === "鳳閣星") { affairRisk += 8; affairFactors.push("鳳閣星の誘惑+8"); }
   // 司禄星がいると堅実
-  if (centerA === "司禄星" || centerB === "司禄星") { affairRisk -= 5; affairFactors.push("司禄星の堅実-5"); }
+  if (centerA === "司禄星" || centerB === "司禄星") { affairRisk -= 8; affairFactors.push("司禄星の堅実-8"); }
   // 地支冲は不安定
-  if (branchDiff === 6) { affairRisk += 6; affairFactors.push("地支冲(不安定)+6"); }
-  affairRisk = Math.max(5, Math.min(95, affairRisk));
+  if (branchDiff === 6) { affairRisk += 10; affairFactors.push("地支冲(不安定)+10"); }
+  affairRisk = Math.max(5, Math.min(98, affairRisk));
 
   // --- 離婚リスク ---
   let divorceRisk = 50;
   const divorceFactors = [];
   // 結婚スコアが低いほど離婚リスク高い
-  divorceRisk += Math.round((50 - marriageScore) * 0.4);
-  if (marriageScore < 40) { divorceRisk += 10; divorceFactors.push("結婚相性低+10"); }
+  divorceRisk += Math.round((50 - marriageScore) * 0.6);
+  if (marriageScore < 40) { divorceRisk += 15; divorceFactors.push("結婚相性低+15"); }
   // 五行相剋・反剋は離婚リスク高い
-  if (relation === "相剋") { divorceRisk += 8; divorceFactors.push("ぶつかり関係+8"); }
-  else if (relation === "反剋") { divorceRisk += 15; divorceFactors.push("逆風関係+15"); }
-  else if (relation === "比和") { divorceRisk -= 5; divorceFactors.push("同質関係(安定)-5"); }
+  if (relation === "相剋") { divorceRisk += 12; divorceFactors.push("ぶつかり関係+12"); }
+  else if (relation === "反剋") { divorceRisk += 22; divorceFactors.push("逆風関係+22"); }
+  else if (relation === "比和") { divorceRisk -= 8; divorceFactors.push("同質関係(安定)-8"); }
   // 地支冲は離婚リスク高い
-  if (branchDiff === 6) { divorceRisk += 12; divorceFactors.push("地支冲+12"); }
+  if (branchDiff === 6) { divorceRisk += 18; divorceFactors.push("地支冲+18"); }
   // 二度縁の人は離婚しやすい
   const aDoubleEn = a.eastStar && a.westStar && (a.eastStar === a.westStar || yinYangPairStar[a.eastStar] === a.westStar);
   const bDoubleEn = b.eastStar && b.westStar && (b.eastStar === b.westStar || yinYangPairStar[b.eastStar] === b.westStar);
-  if (aDoubleEn) { divorceRisk += 8; divorceFactors.push(`${a.name}の二度縁+8`); }
-  if (bDoubleEn) { divorceRisk += 8; divorceFactors.push(`${b.name}の二度縁+8`); }
+  if (aDoubleEn) { divorceRisk += 12; divorceFactors.push(`${a.name}の二度縁+12`); }
+  if (bDoubleEn) { divorceRisk += 12; divorceFactors.push(`${b.name}の二度縁+12`); }
   // 不倫リスクが高いと離婚リスクも高い
-  if (affairRisk >= 60) { divorceRisk += 10; divorceFactors.push("不倫リスク高+10"); }
+  if (affairRisk >= 60) { divorceRisk += 15; divorceFactors.push("不倫リスク高+15"); }
   // 同陰陽は安定
-  if (sameYinYang) { divorceRisk -= 5; divorceFactors.push("同陰陽(安定)-5"); }
-  divorceRisk = Math.max(5, Math.min(95, divorceRisk));
+  if (sameYinYang) { divorceRisk -= 8; divorceFactors.push("同陰陽(安定)-8"); }
+  divorceRisk = Math.max(5, Math.min(98, divorceRisk));
 
   return { relation, starAtoB, starBtoA, branchHarmony, score, elA, elB, loveScore, sexScore, marriageScore, loveFactors, sexFactors, marriageFactors, centerA, centerB, affairRiskA, affairRiskB, affairRisk, affairFactors, divorceRisk, divorceFactors };
 }
@@ -3437,8 +3437,8 @@ function renderCompat(event) {
   const severity = c.score < 40 ? "bad" : "good";
 
   // スコア→ランク
-  const scoreRank = (s) => s >= 80 ? "S" : s >= 70 ? "A" : s >= 60 ? "B" : s >= 50 ? "C" : s >= 40 ? "D" : "E";
-  const scoreColor = (s) => s >= 80 ? "#f0e080" : s >= 70 ? "#e0c060" : s >= 60 ? "#c0a050" : s >= 50 ? "#a09060" : s >= 40 ? "#c07060" : "#c05050";
+  const scoreRank = (s) => s >= 85 ? "S" : s >= 72 ? "A" : s >= 58 ? "B" : s >= 42 ? "C" : s >= 28 ? "D" : "E";
+  const scoreColor = (s) => s >= 85 ? "#f0e080" : s >= 72 ? "#e0c060" : s >= 58 ? "#c0a050" : s >= 42 ? "#a09060" : s >= 28 ? "#c07060" : "#c05050";
 
   // 恋愛の相性テキスト（辛口）
   const loveDesc = {
