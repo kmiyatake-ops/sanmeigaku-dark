@@ -4460,28 +4460,3 @@ document.querySelector("#historyList").addEventListener("click", (e) => {
   }
 });
 refreshHistoryUI();
-
-// QRコード生成（localhostをローカルIPに置き換えて携帯からアクセス可能にする）
-(function generateQRCode() {
-  const qrBox = document.querySelector("#qrCodeBox");
-  if (!qrBox || typeof QRCode === "undefined") return;
-  qrBox.innerHTML = "";
-  let url = window.location.href;
-  if (url.includes("localhost") || url.includes("127.0.0.1")) {
-    const port = window.location.port || "8000";
-    const lanIP = "192.168.3.9";
-    url = `http://${lanIP}:${port}/`;
-  }
-  new QRCode(qrBox, {
-    text: url,
-    width: 200,
-    height: 200,
-    colorDark: "#0b0d12",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.M
-  });
-  const urlLabel = document.createElement("p");
-  urlLabel.style.cssText = "text-align:center;margin:10px 0 0;font-size:12px;color:var(--muted);word-break:break-all";
-  urlLabel.textContent = url;
-  qrBox.parentElement.appendChild(urlLabel);
-})();
