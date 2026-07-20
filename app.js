@@ -3651,6 +3651,38 @@ function render(event) {
   const mote = analyzeMote(mainStars, energy, counts, day, pillars);
   const turningPoints = analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birthYear, currentAge);
 
+  // 浮気リスク・結婚適性度を事前計算（saveToHistoryで使用）
+  const spouseEnergyForScore = getEnergyStar(day.stem, day.branch);
+  const isDoubleEnForScore = mainStars.east === mainStars.west || yinYangPairStar[mainStars.east] === mainStars.west;
+  const abnormalMatchesForScore = ["year", "month", "day"].map((key) => getAbnormalZodiac(pillars[key].stem, pillars[key].branch)).filter(Boolean);
+  const hasAbnormalForScore = abnormalMatchesForScore.length > 0;
+  const hasTopThreeAbnormalForScore = ["year", "month", "day"].some((key) => abnormalTopThree.includes(pillars[key].stem + pillars[key].branch));
+  const gogyoValsForScore = Object.values(counts);
+  const gogyoBalanceForScore = Math.max(...gogyoValsForScore) - Math.min(...gogyoValsForScore);
+  const affairScore = getAffairRiskScore({
+    westStar: mainStars.west,
+    spouseEnergyName: spouseEnergyForScore.name,
+    isDoubleEn: isDoubleEnForScore,
+    hasAbnormal: hasAbnormalForScore,
+    hasTopThreeAbnormal: hasTopThreeAbnormalForScore,
+    centerStar: mainStars.center,
+    northStar: mainStars.north,
+    southStar: mainStars.south,
+    eastStar: mainStars.east,
+    dayStem: day.stem,
+    gogyoBalance: gogyoBalanceForScore
+  });
+  const marriageScore = getMarriageScore({
+    centerStar: mainStars.center,
+    westStar: mainStars.west,
+    spouseEnergyName: spouseEnergyForScore.name,
+    isDoubleEn: isDoubleEnForScore,
+    hasAbnormal: hasAbnormalForScore,
+    hasTopThreeAbnormal: hasTopThreeAbnormalForScore,
+    affairScore,
+    gogyoBalance: gogyoBalanceForScore
+  });
+
   result.classList.remove("hidden");
   console.log("[render] starting, simple-mode:", document.body.classList.contains("simple-mode"));
   result.innerHTML = `
