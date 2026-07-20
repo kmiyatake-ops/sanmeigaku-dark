@@ -2027,8 +2027,6 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
 
   // 陽占の主星リスト
   const yangStars = [mainStars.center, mainStars.north, mainStars.south, mainStars.east, mainStars.west];
-  // 陰占の三柱の地支
-  const yinBranches = [pillars.year.branch, pillars.month.branch, pillars.day.branch];
 
   taiun.periods.forEach((p, idx) => {
     const star = getMainStar(day.stem, p.stem);
@@ -2064,8 +2062,6 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
 
     // 陽占の主星との関係（大運の主星が陽占に含まれるか）
     const starInYang = yangStars.includes(star);
-    // 陰占の地支との関係（大運の地支が陰占に含まれるか）
-    const branchInYin = yinBranches.includes(p.branch);
 
     // === ターニングポイント候補の抽出とスコアリング ===
 
@@ -3381,14 +3377,24 @@ function calcCompatibility(a, b) {
     spouseEnergyName: a.dayEnergy || "",
     isDoubleEn: a.eastStar && a.westStar && (a.eastStar === a.westStar || yinYangPairStar[a.eastStar] === a.westStar),
     hasAbnormal: false,
-    hasTopThreeAbnormal: false
+    hasTopThreeAbnormal: false,
+    centerStar: a.centerStar || "",
+    northStar: a.northStar || "",
+    southStar: a.southStar || "",
+    eastStar: a.eastStar || "",
+    dayStem: a.dayStem || ""
   });
   const affairRiskB = getAffairRiskScore({
     westStar: b.westStar || b.centerStar || "",
     spouseEnergyName: b.dayEnergy || "",
     isDoubleEn: b.eastStar && b.westStar && (b.eastStar === b.westStar || yinYangPairStar[b.eastStar] === b.westStar),
     hasAbnormal: false,
-    hasTopThreeAbnormal: false
+    hasTopThreeAbnormal: false,
+    centerStar: b.centerStar || "",
+    northStar: b.northStar || "",
+    southStar: b.southStar || "",
+    eastStar: b.eastStar || "",
+    dayStem: b.dayStem || ""
   });
   // 相手の組み合わせによる不倫リスク調整
   let affairRisk = Math.round((affairRiskA + affairRiskB) / 2);
@@ -4013,44 +4019,10 @@ function render(event) {
         const spouseEnergy = getEnergyStar(day.stem, day.branch);
         const isDoubleEn = mainStars.east === mainStars.west || yinYangPairStar[mainStars.east] === mainStars.west;
         const isInheritEn = mainStars.north === mainStars.south || yinYangPairStar[mainStars.north] === mainStars.south;
-        const chongBranch = getChongBranch(day.branch);
-        const thisYear = 2026;
-        const divorceYears = [];
-        for (let y = thisYear; y <= thisYear + 12 && divorceYears.length < 3; y++) {
-          if (getYearPillarForYear(y).branch === chongBranch) divorceYears.push(y);
-        }
-        const abnormalMatches = ["year", "month", "day"].map((key) => getAbnormalZodiac(pillars[key].stem, pillars[key].branch)).filter(Boolean);
-        const hasAbnormal = abnormalMatches.length > 0;
-        const hasTopThreeAbnormal = ["year", "month", "day"].some((key) => abnormalTopThree.includes(pillars[key].stem + pillars[key].branch));
-        const gogyoVals = Object.values(counts);
-        const gogyoBalance = Math.max(...gogyoVals) - Math.min(...gogyoVals);
-        const affairScore = getAffairRiskScore({
-          westStar: mainStars.west,
-          spouseEnergyName: spouseEnergy.name,
-          isDoubleEn,
-          hasAbnormal,
-          hasTopThreeAbnormal,
-          centerStar: mainStars.center,
-          northStar: mainStars.north,
-          southStar: mainStars.south,
-          eastStar: mainStars.east,
-          dayStem: day.stem,
-          gogyoBalance
-        });
         const affairLevel = affairScore >= 80 ? "高危険" : affairScore >= 65 ? "要注意" : affairScore >= 45 ? "普通" : affairScore >= 25 ? "低め" : "安心";
         const simpleAffairLevel = affairScore >= 80 ? "要注意" : affairScore >= 65 ? "注意が必要" : affairScore >= 45 ? "普通" : affairScore >= 25 ? "低め" : "安心";
         const affairRankClass = affairScore >= 80 ? "danger" : affairScore >= 65 ? "warning" : affairScore >= 45 ? "normal" : affairScore >= 25 ? "low" : "safe";
         const affairScoreColor = affairScore >= 80 ? "#ff5050" : affairScore >= 65 ? "#f0a040" : affairScore >= 45 ? "#e0c060" : affairScore >= 25 ? "#80d080" : "#60c0e0";
-        const marriageScore = getMarriageScore({
-          centerStar: mainStars.center,
-          westStar: mainStars.west,
-          spouseEnergyName: spouseEnergy.name,
-          isDoubleEn,
-          hasAbnormal,
-          hasTopThreeAbnormal,
-          affairScore,
-          gogyoBalance
-        });
         const marriageLevel = marriageScore >= 80 ? "非常に向いている" : marriageScore >= 65 ? "向いている" : marriageScore >= 45 ? "普通" : marriageScore >= 30 ? "やや向いていない" : "向いていない";
         const marriageSimpleLevel = marriageScore >= 80 ? "とても向いている" : marriageScore >= 65 ? "向いている" : marriageScore >= 45 ? "どちらともいえない" : marriageScore >= 30 ? "少し向いていないかも" : "向いていないかも";
         const marriageRankClass = marriageScore >= 80 ? "safe" : marriageScore >= 65 ? "low" : marriageScore >= 45 ? "normal" : marriageScore >= 30 ? "warning" : "danger";
