@@ -3214,13 +3214,21 @@ function refreshHistoryUI() {
     list.innerHTML = history.map((h, i) => {
       const affair = h.affairScore != null ? h.affairScore : null;
       const marriage = h.marriageScore != null ? h.marriageScore : null;
+      const work = h.workScore != null ? h.workScore : null;
+      const oppMote = h.oppositeMoteScore != null ? h.oppositeMoteScore : null;
+      const sameMote = h.sameMoteScore != null ? h.sameMoteScore : null;
       const affairColor = affair != null ? (affair >= 80 ? "#ff5050" : affair >= 65 ? "#f0a040" : affair >= 45 ? "#e0c060" : affair >= 25 ? "#80d080" : "#60c0e0") : null;
       const marriageColor = marriage != null ? (marriage >= 80 ? "#60c0e0" : marriage >= 65 ? "#80d080" : marriage >= 45 ? "#e0c060" : marriage >= 30 ? "#f0a040" : "#ff5050") : null;
+      const workColor = work != null ? (work >= 80 ? "#f0e080" : work >= 65 ? "#e0c060" : work >= 45 ? "#c0a050" : work >= 25 ? "#a09060" : "#c07060") : null;
+      const moteColor = (s) => s != null ? (s >= 80 ? "#ff80c0" : s >= 65 ? "#e070a0" : s >= 45 ? "#c06080" : s >= 25 ? "#a05060" : "#804060") : null;
       const scoreTags = [
+        work != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${workColor}22;color:${workColor};font-weight:600">仕事${work}</span>` : "",
+        oppMote != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${moteColor(oppMote)}22;color:${moteColor(oppMote)};font-weight:600">異性モテ${oppMote}</span>` : "",
+        sameMote != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${moteColor(sameMote)}22;color:${moteColor(sameMote)};font-weight:600">同性モテ${sameMote}</span>` : "",
         affair != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${affairColor}22;color:${affairColor};font-weight:600">浮気${affair}</span>` : "",
         marriage != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${marriageColor}22;color:${marriageColor};font-weight:600">結婚${marriage}</span>` : ""
       ].filter(Boolean).join(" ");
-      return `<div class="history-item" data-idx="${i}" style="cursor:pointer"><span class="history-name">${h.name}</span><span class="history-info">${h.birthdate} / ${h.dayStem}${h.dayBranch} / ${h.centerStar}</span>${scoreTags ? `<span style="display:flex;gap:4px;margin-top:4px">${scoreTags}</span>` : ""}<button class="history-del" data-idx="${i}">&times;</button></div>`;
+      return `<div class="history-item" data-idx="${i}" style="cursor:pointer"><span class="history-name">${h.name}</span><span class="history-info">${h.birthdate} / ${h.dayStem}${h.dayBranch} / ${h.centerStar}</span>${scoreTags ? `<span style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap">${scoreTags}</span>` : ""}<button class="history-del" data-idx="${i}">&times;</button></div>`;
     }).join("");
   }
   const opts = history.map((h, i) => `<option value="${i}">${h.name}（${h.birthdate}）</option>`).join("");
@@ -3656,6 +3664,7 @@ function render(event) {
   const healthRisk = analyzeHealthRisk(day, pillars, counts, taiun, tenchusatsu, currentAge, thisYear);
   const mote = analyzeMote(mainStars, energy, counts, day, pillars);
   const turningPoints = analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birthYear, currentAge);
+  const workEx = calcWorkExcellence(mainStars.center, mainStars.north, mainStars.south, energy, counts, pillars);
 
   // 浮気リスク・結婚適性度を事前計算（saveToHistoryで使用）
   const spouseEnergyForScore = getEnergyStar(day.stem, day.branch);
@@ -4482,7 +4491,10 @@ function render(event) {
     westStar: mainStars.west,
     dayEnergy: energy[2] ? energy[2].name : "",
     affairScore,
-    marriageScore
+    marriageScore,
+    workScore: workEx.score,
+    oppositeMoteScore: mote.oppositeScore,
+    sameMoteScore: mote.sameScore
   });
   refreshHistoryUI();
   result.scrollIntoView({ behavior: "smooth", block: "start" });
