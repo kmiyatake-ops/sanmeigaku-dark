@@ -1346,34 +1346,38 @@ function analyzeYearlyFortune(day, pillars, taiun, currentAge, thisYear, balance
     return [yearPart, taiunPart && `大運「${taiunStar}」: ${taiunPart}`, `年運十二大従星「${yearEnergy.name}」: ${energyPart}`, tenchuPart, topoPart.length > 0 ? topoPart.join("。") + "。" : ""].filter(Boolean).join(" ");
   })();
 
-  // 総合スコア（0-100）
+  // 総合スコア（0-100）極端化
   let moneyScore = 50, loveScore = 50, workScore = 50;
   const goodStars = ["禄存星", "司禄星", "石門星", "玉堂星", "牽牛星"];
   const badStars = ["調舒星", "龍高星", "車騎星"];
-  if (goodStars.includes(yearStar)) { moneyScore += 10; loveScore += 8; workScore += 10; }
-  if (badStars.includes(yearStar)) { moneyScore -= 8; loveScore -= 5; workScore -= 8; }
-  if (taiunStar && goodStars.includes(taiunStar)) { moneyScore += 8; loveScore += 6; workScore += 8; }
-  if (taiunStar && badStars.includes(taiunStar)) { moneyScore -= 6; loveScore -= 4; workScore -= 6; }
-  if (yearRel === "相生") { moneyScore += 8; loveScore += 10; workScore += 8; }
-  if (yearRel === "比和") { moneyScore += 3; loveScore += 3; workScore += 3; }
-  if (yearRel === "相剋") { moneyScore -= 8; loveScore -= 8; workScore -= 8; }
-  if (yearRel === "反剋") { moneyScore -= 5; loveScore -= 5; workScore -= 5; }
-  if (taiunRel === "相生") { moneyScore += 5; loveScore += 6; workScore += 5; }
-  if (taiunRel === "相剋") { moneyScore -= 5; loveScore -= 5; workScore -= 5; }
+  if (goodStars.includes(yearStar)) { moneyScore += 18; loveScore += 14; workScore += 18; }
+  if (badStars.includes(yearStar)) { moneyScore -= 16; loveScore -= 12; workScore -= 16; }
+  if (taiunStar && goodStars.includes(taiunStar)) { moneyScore += 14; loveScore += 10; workScore += 14; }
+  if (taiunStar && badStars.includes(taiunStar)) { moneyScore -= 12; loveScore -= 8; workScore -= 12; }
+  if (yearRel === "相生") { moneyScore += 15; loveScore += 18; workScore += 15; }
+  if (yearRel === "比和") { moneyScore += 5; loveScore += 5; workScore += 5; }
+  if (yearRel === "相剋") { moneyScore -= 16; loveScore -= 16; workScore -= 16; }
+  if (yearRel === "反剋") { moneyScore -= 10; loveScore -= 10; workScore -= 10; }
+  if (taiunRel === "相生") { moneyScore += 10; loveScore += 12; workScore += 10; }
+  if (taiunRel === "相剋") { moneyScore -= 10; loveScore -= 10; workScore -= 10; }
   const goodEnergy = ["天貴星", "天南星", "天禄星", "天将星", "天堂星"];
   const badEnergy = ["天報星", "天胡星", "天極星", "天馳星"];
-  if (goodEnergy.includes(yearEnergy.name)) { moneyScore += 5; loveScore += 3; workScore += 5; }
-  if (badEnergy.includes(yearEnergy.name)) { moneyScore -= 5; loveScore -= 5; workScore -= 5; }
-  if (isYearTenchu) { moneyScore -= 10; loveScore -= 10; workScore -= 8; }
-  if (isTaiunTenchu) { moneyScore -= 5; loveScore -= 5; workScore -= 5; }
+  if (goodEnergy.includes(yearEnergy.name)) { moneyScore += 10; loveScore += 8; workScore += 10; }
+  if (badEnergy.includes(yearEnergy.name)) { moneyScore -= 10; loveScore -= 10; workScore -= 10; }
+  if (isYearTenchu) { moneyScore -= 20; loveScore -= 20; workScore -= 16; }
+  if (isTaiunTenchu) { moneyScore -= 10; loveScore -= 10; workScore -= 10; }
   const topoGoCount = yearTopo.filter((r) => r.group === "合法").length;
   const topoSanCount = yearTopo.filter((r) => r.group === "散法").length;
-  moneyScore += topoGoCount * 4 - topoSanCount * 4;
-  loveScore += topoGoCount * 3 - topoSanCount * 4;
-  workScore += topoGoCount * 4 - topoSanCount * 3;
-  moneyScore = Math.max(5, Math.min(95, moneyScore));
-  loveScore = Math.max(5, Math.min(95, loveScore));
-  workScore = Math.max(5, Math.min(95, workScore));
+  moneyScore += topoGoCount * 8 - topoSanCount * 8;
+  loveScore += topoGoCount * 6 - topoSanCount * 8;
+  workScore += topoGoCount * 8 - topoSanCount * 6;
+  // 天中殺+相剋のダブルパンチはさらに極端に
+  if (isYearTenchu && yearRel === "相剋") { moneyScore -= 10; loveScore -= 10; workScore -= 10; }
+  // 良い星+相生のダブルボーナス
+  if (goodStars.includes(yearStar) && yearRel === "相生") { moneyScore += 8; loveScore += 8; workScore += 8; }
+  moneyScore = Math.max(5, Math.min(98, moneyScore));
+  loveScore = Math.max(5, Math.min(98, loveScore));
+  workScore = Math.max(5, Math.min(98, workScore));
 
   return {
     thisYear,
