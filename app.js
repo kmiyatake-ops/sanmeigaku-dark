@@ -601,11 +601,20 @@ function getChongBranch(branch) {
 }
 
 // 結婚に適した時期を算出（15〜50歳、スコア順で上位2件）
-function getMarriageAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge) {
+function getMarriageAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge, counts, mainStars, gender) {
   const dayBranch = day.branch;
   const natalBranches = [pillars.year.branch, pillars.month.branch, pillars.day.branch];
   const goodMarriageStars = ["禄存星", "司禄星", "石門星", "玉堂星", "牽牛星"];
   const allYears = [];
+
+  // 統計知見に基づく追加判定要素
+  const dayElement = elements[stems.indexOf(day.stem)];
+  const gogyoValues = Object.values(counts);
+  const gogyoBalance = Math.max(...gogyoValues) - Math.min(...gogyoValues);
+  const balanceModerate = gogyoBalance >= 2 && gogyoBalance <= 3;
+  const balanceHigh = gogyoBalance <= 1;
+  const weakestGogyo = Object.entries(counts).sort((a, b) => a[1] - b[1])[0][0];
+  const isDoubleEn = mainStars.east && mainStars.west && (mainStars.east === mainStars.west || yinYangPairStar[mainStars.east] === mainStars.west);
 
   taiun.periods.forEach((p) => {
     const taiunStar = getMainStar(day.stem, p.stem);
@@ -617,6 +626,9 @@ function getMarriageAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge
     let taiunBonus = 0;
     if (shigouPair[taiunBranch] === dayBranch) { taiunBonus += 30; taiunReasons.push("大運支が日支と支合"); }
     if (goodMarriageStars.includes(taiunStar)) { taiunBonus += 20; taiunReasons.push(`大運星「${taiunStar}」が結婚に良い星`); }
+
+    // 統計知見: topo_支合は結婚保護因子 (OR=2.06, p=0.030)
+    if (shigouPair[taiunBranch] === dayBranch) { taiunBonus += 8; taiunReasons.push("統計: 支合は結婚安定性に寄与(OR=2.06)"); }
 
     const allWithTaiun = [...natalBranches, taiunBranch];
     sangoBureaus.forEach((bureau) => {
@@ -648,6 +660,23 @@ function getMarriageAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge
           score += 20; reasons.push(`三合会局（${bureau.element}局）が完成`);
         }
       });
+
+      // === 統計知見に基づく調整（166名芸能人データ、ロジスティック回帰 AUC=0.79）===
+      // day_element_水 は結婚保護因子 (OR=0.28, p=0.004)
+      if (dayElement === "水") { score += 12; reasons.push("統計: 日干五行が水・結婚保護因子(OR=0.28)"); }
+      // balance_high は保護因子 (OR=0.49, p=0.003)
+      if (balanceHigh) { score += 8; reasons.push("統計: 五行バランス良好・保護因子(OR=0.49)"); }
+      // is_double_en は保護因子 (OR=0.45, p=0.037)
+      if (isDoubleEn) { score += 6; reasons.push("統計: 二度縁の型・結婚保護因子(OR=0.45)"); }
+      // balance_moderate はリスク因子 (OR=5.19, p<0.001) → 結婚タイミングとしては減点
+      if (balanceModerate) { score -= 10; reasons.push("統計: 五行バランス中程度・リスク因子(OR=5.19)"); }
+      // weakest_水 はリスク因子 (OR=2.84, p<0.001)
+      if (weakestGogyo === "水") { score -= 6; reasons.push("統計: 水不足・リスク因子(OR=2.84)"); }
+      // male は保護因子 (OR=0.26, p<0.001) → 男性は結婚安定性高い
+      if (gender === "male") { score += 5; reasons.push("統計: 男性・結婚保護因子(OR=0.26)"); }
+      // tenchu_寅卯 はリスク因子 (OR=2.44, p=0.032)
+      if (tenchusatsu === "寅" || tenchusatsu === "卯") { score -= 5; reasons.push("統計: 寅卯天中殺・リスク因子(OR=2.44)"); }
+
       if (score > taiunBonus || taiunBonus > 0) {
         allYears.push({ age, year, star: yearStar, branch: yp.branch, taiunStar, reasons, score });
       }
@@ -659,11 +688,20 @@ function getMarriageAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge
 }
 
 // 恋愛しやすい時期を算出（15〜50歳、スコア順で上位2件）
-function getLoveAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge) {
+function getLoveAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge, counts, mainStars, gender) {
   const dayBranch = day.branch;
   const natalBranches = [pillars.year.branch, pillars.month.branch, pillars.day.branch];
   const goodLoveStars = ["鳳閣星", "調舒星", "禄存星", "車騎星", "龍高星", "石門星"];
   const allYears = [];
+
+  // 統計知見に基づく追加判定要素
+  const dayElement = elements[stems.indexOf(day.stem)];
+  const gogyoValues = Object.values(counts);
+  const gogyoBalance = Math.max(...gogyoValues) - Math.min(...gogyoValues);
+  const balanceModerate = gogyoBalance >= 2 && gogyoBalance <= 3;
+  const balanceHigh = gogyoBalance <= 1;
+  const weakestGogyo = Object.entries(counts).sort((a, b) => a[1] - b[1])[0][0];
+  const isDoubleEn = mainStars.east && mainStars.west && (mainStars.east === mainStars.west || yinYangPairStar[mainStars.east] === mainStars.west);
 
   taiun.periods.forEach((p) => {
     const taiunStar = getMainStar(day.stem, p.stem);
@@ -708,6 +746,22 @@ function getLoveAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge) {
           score += 15; reasons.push(`三合会局（${bureau.element}局）が完成`);
         }
       });
+
+      // === 統計知見に基づく調整（166名芸能人データ、ロジスティック回帰 AUC=0.79）===
+      // 恋愛タイミングには不倫リスク因子を考慮（リスク高い年は恋愛発生しやすいが結婚には注意）
+      // balance_moderate はリスク因子 (OR=5.19) → 恋愛は発生しやすいが結婚リスク
+      if (balanceModerate) { score += 5; reasons.push("統計: 五行バランス中程度・恋愛発生しやすい(OR=5.19)"); }
+      // weakest_水 はリスク因子 (OR=2.84) → 恋愛発生しやすい
+      if (weakestGogyo === "水") { score += 4; reasons.push("統計: 水不足・恋愛発生しやすい(OR=2.84)"); }
+      // tenchu_寅卯 はリスク因子 (OR=2.44) → 恋愛発生しやすい
+      if (tenchusatsu === "寅" || tenchusatsu === "卯") { score += 3; reasons.push("統計: 寅卯天中殺・恋愛発生しやすい(OR=2.44)"); }
+      // day_element_水 は保護因子 → 恋愛は安定傾向
+      if (dayElement === "水") { score += 6; reasons.push("統計: 日干五行が水・恋愛安定(OR=0.28)"); }
+      // balance_high は保護因子
+      if (balanceHigh) { score += 4; reasons.push("統計: 五行バランス良好・恋愛安定(OR=0.49)"); }
+      // is_double_en は保護因子
+      if (isDoubleEn) { score += 3; reasons.push("統計: 二度縁の型・恋愛安定(OR=0.45)"); }
+
       if (score > taiunBonus || taiunBonus > 0) {
         allYears.push({ age, year, star: yearStar, branch: yp.branch, taiunStar, reasons, score });
       }
@@ -4334,8 +4388,8 @@ function render(event) {
         const marriageSimpleLevel = marriageScore >= 80 ? "とても向いている" : marriageScore >= 65 ? "向いている" : marriageScore >= 45 ? "どちらともいえない" : marriageScore >= 30 ? "少し向いていないかも" : "向いていないかも";
         const marriageRankClass = marriageScore >= 80 ? "safe" : marriageScore >= 65 ? "low" : marriageScore >= 45 ? "normal" : marriageScore >= 30 ? "warning" : "danger";
         const marriageScoreColor = marriageScore >= 80 ? "#60c0e0" : marriageScore >= 65 ? "#80d080" : marriageScore >= 45 ? "#e0c060" : marriageScore >= 30 ? "#f0a040" : "#ff5050";
-        const marriageAges = getMarriageAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge);
-        const loveAges = getLoveAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge);
+        const marriageAges = getMarriageAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge, counts, mainStars, gender);
+        const loveAges = getLoveAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge, counts, mainStars, gender);
         const loveAgesHtml = loveAges.length > 0
           ? loveAges.map((y) => `<div style="margin-bottom:8px"><b>${y.age}歳</b>（${y.year}年）${y.reasons.length > 0 ? "：" + y.reasons.join("、") : ""}</div>`).join("")
           : "恋愛に特に有利な時期は検出されませんでした。";
@@ -4403,12 +4457,12 @@ function render(event) {
           <article>
             <h4>結婚に適した時期（結婚年齢）</h4>
             <div>${marriageAgesHtml}</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:6px">大運・年運の支合（日支との引き合い）、三合会局の完成、結婚に良い星（禄存星・司禄星・石門星・玉堂星・牽牛星）の流れを総合し、天中殺期間を除外した時期を表示しています。断定ではなく目安として参考にしてください。</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:6px">大運・年運の支合（日支との引き合い）、三合会局の完成、結婚に良い星（禄存星・司禄星・石門星・玉堂星・牽牛星）の流れに加え、166名の芸能人データの統計分析（ロジスティック回帰 AUC=0.79）に基づく保護・リスク因子（日干五行・五行バランス・二度縁・性別・天中殺）を総合し、天中殺期間を除外した時期を表示しています。断定ではなく目安として参考にしてください。</div>
           </article>
           <article>
             <h4>恋愛しやすい時期</h4>
             <div>${loveAgesHtml}</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:6px">大運・年運の支合、半会・三合会局の強まり、恋愛に良い星（鳳閣星・調舒星・禄存星・車騎星・龍高星・石門星）の流れを総合し、天中殺期間を除外した時期を表示しています。</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:6px">大運・年運の支合、半会・三合会局の強まり、恋愛に良い星（鳳閣星・調舒星・禄存星・車騎星・龍高星・石門星）の流れに加え、166名の芸能人データの統計分析に基づく因子を総合し、天中殺期間を除外した時期を表示しています。</div>
           </article>
           </div>
           <div class="simple-only">
