@@ -2569,33 +2569,58 @@ function calcWorkExcellence(center, northStar, southStar, energy, counts, pillar
   let score = 50;
   const breakdown = [];
 
-  // 十大主星（中星）の仕事適性ベース点
+  // 十大主星（中星）の仕事適性ベース点（極端化：優秀星は大幅プラス、苦手星は大幅マイナス）
   const starWorkBase = {
-    "貫索星": 8, "石門星": 6, "鳳閣星": 4, "調舒星": 5,
-    "禄存星": 6, "司禄星": 7, "車騎星": 7, "牽牛星": 8,
-    "龍高星": 5, "玉堂星": 7
+    "貫索星": 15, "石門星": 10, "鳳閣星": -5, "調舒星": -8,
+    "禄存星": 8, "司禄星": 12, "車騎星": 6, "牽牛星": 16,
+    "龍高星": -10, "玉堂星": 14
   };
   const centerPt = starWorkBase[center] || 0;
   score += centerPt;
-  if (centerPt) breakdown.push(`中星「${center}」+${centerPt}`);
+  if (centerPt) breakdown.push(`中星「${center}」${centerPt > 0 ? "+" : ""}${centerPt}`);
 
-  // 北星・南星の仕事適性
+  // 北星・南星の仕事適性（極端化）
   const subStarWorkBase = {
-    "貫索星": 5, "石門星": 6, "鳳閣星": 3, "調舒星": 3,
-    "禄存星": 5, "司禄星": 6, "車騎星": 6, "牽牛星": 7,
-    "龍高星": 4, "玉堂星": 6
+    "貫索星": 8, "石門星": 10, "鳳閣星": -6, "調舒星": -7,
+    "禄存星": 6, "司禄星": 9, "車騎星": 8, "牽牛星": 11,
+    "龍高星": -8, "玉堂星": 9
   };
   const northPt = subStarWorkBase[northStar] || 0;
   const southPt = subStarWorkBase[southStar] || 0;
-  score += Math.round((northPt + southPt) * 0.5);
-  if (northPt) breakdown.push(`北星「${northStar}」+${Math.round(northPt * 0.5)}`);
-  if (southPt) breakdown.push(`南星「${southStar}」+${Math.round(southPt * 0.5)}`);
+  const subPt = Math.round((northPt + southPt) * 0.6);
+  score += subPt;
+  if (northPt) breakdown.push(`北星「${northStar}」${northPt > 0 ? "+" : ""}${Math.round(northPt * 0.6)}`);
+  if (southPt) breakdown.push(`南星「${southStar}」${southPt > 0 ? "+" : ""}${Math.round(southPt * 0.6)}`);
 
-  // 十二大従星の仕事エネルギー
+  // 主星の相乗効果（良い組み合わせで大幅ボーナス、悪い組み合わせで大幅ペナルティ）
+  const excellentCombos = [
+    ["牽牛星", "玉堂星"], ["貫索星", "司禄星"], ["石門星", "禄存星"],
+    ["玉堂星", "司禄星"], ["牽牛星", "石門星"]
+  ];
+  const poorCombos = [
+    ["龍高星", "鳳閣星"], ["調舒星", "龍高星"], ["鳳閣星", "調舒星"]
+  ];
+  const allThreeStars = [center, northStar, southStar];
+  for (const [s1, s2] of excellentCombos) {
+    if (allThreeStars.includes(s1) && allThreeStars.includes(s2)) {
+      score += 12;
+      breakdown.push(`${s1}×${s2}の相乗+12`);
+      break;
+    }
+  }
+  for (const [s1, s2] of poorCombos) {
+    if (allThreeStars.includes(s1) && allThreeStars.includes(s2)) {
+      score -= 15;
+      breakdown.push(`${s1}×${s2}の摩擦-15`);
+      break;
+    }
+  }
+
+  // 十二大従星の仕事エネルギー（極端化）
   const energyWorkBonus = {
-    "天貴星": 6, "天南星": 5, "天禄星": 7, "天将星": 8, "天堂星": 4,
-    "天印星": 3, "天報星": 2, "天胡星": 1, "天極星": 2, "天馳星": 3,
-    "天庫星": 5, "天恍星": 4
+    "天貴星": 10, "天南星": 8, "天禄星": 12, "天将星": 14, "天堂星": 6,
+    "天印星": 4, "天報星": -4, "天胡星": -6, "天極星": -3, "天馳星": -5,
+    "天庫星": 7, "天恍星": -2
   };
   let energyPt = 0;
   energy.forEach((e) => {
@@ -2603,43 +2628,47 @@ function calcWorkExcellence(center, northStar, southStar, energy, counts, pillar
     const weighted = Math.round(bonus * (e.score / 10));
     energyPt += weighted;
   });
-  energyPt = Math.round(energyPt / energy.length * 2);
+  energyPt = Math.round(energyPt / energy.length * 2.5);
   score += energyPt;
-  if (energyPt) breakdown.push(`十二大従星+${energyPt}`);
+  if (energyPt) breakdown.push(`十二大従星${energyPt > 0 ? "+" : ""}${energyPt}`);
 
-  // 五行バランス（土・金は仕事に強い、木・火はやや強い、水はやや弱い）
-  const gogyoWorkBonus = { "木": 3, "火": 2, "土": 5, "金": 4, "水": 1 };
+  // 五行バランス（極端化：土・金は仕事に強く、水・木は弱い）
+  const gogyoWorkBonus = { "木": -2, "火": 3, "土": 10, "金": 8, "水": -5 };
   const sortedGogyo = Object.entries(counts).sort((a, b) => b[1] - a[1]);
   const strongEl = sortedGogyo[0][0];
+  const weakEl = sortedGogyo[sortedGogyo.length - 1][0];
   const gogyoPt = gogyoWorkBonus[strongEl] || 0;
-  score += gogyoPt;
-  if (gogyoPt) breakdown.push(`性質${strongEl}+${gogyoPt}`);
+  const gogyoPenalty = gogyoWorkBonus[weakEl] ? Math.round(gogyoWorkBonus[weakEl] * 0.5) : 0;
+  score += gogyoPt + gogyoPenalty;
+  if (gogyoPt) breakdown.push(`最強五行${strongEl}${gogyoPt > 0 ? "+" : ""}${gogyoPt}`);
+  if (gogyoPenalty) breakdown.push(`最弱五行${weakEl}${gogyoPenalty > 0 ? "+" : ""}${gogyoPenalty}`);
 
-  // 五行バランスの良さ（偏りが少ないほど仕事は安定）
+  // 五行バランスの良さ（極端化）
   const gogyoValues = Object.values(counts);
   const gogyoMax = Math.max(...gogyoValues);
   const gogyoMin = Math.min(...gogyoValues);
   const balance = gogyoMax - gogyoMin;
-  if (balance <= 1) { score += 5; breakdown.push("バランス良好+5"); }
-  else if (balance <= 2) { score += 2; breakdown.push("バランスやや良好+2"); }
-  else if (balance >= 4) { score -= 3; breakdown.push("偏り大-3"); }
+  if (balance <= 1) { score += 10; breakdown.push("五行バランス良好+10"); }
+  else if (balance <= 2) { score += 4; breakdown.push("五行バランスやや良好+4"); }
+  else if (balance >= 5) { score -= 12; breakdown.push("五行偏り極大-12"); }
+  else if (balance >= 4) { score -= 7; breakdown.push("五行偏り大-7"); }
+  else if (balance >= 3) { score -= 3; breakdown.push("五行偏り-3"); }
 
-  // 日干の仕事力
+  // 日干の仕事力（極端化）
   const dayStemWorkBonus = {
-    "甲": 5, "乙": 3, "丙": 4, "丁": 3, "戊": 5,
-    "己": 4, "庚": 6, "辛": 4, "壬": 4, "癸": 2
+    "甲": 8, "乙": 4, "丙": 6, "丁": 3, "戊": 9,
+    "己": 6, "庚": 10, "辛": 6, "壬": 5, "癸": -3
   };
   const dayPt = dayStemWorkBonus[pillars.day.stem] || 0;
   score += dayPt;
-  if (dayPt) breakdown.push(`日干${pillars.day.stem}+${dayPt}`);
+  if (dayPt) breakdown.push(`日干${pillars.day.stem}${dayPt > 0 ? "+" : ""}${dayPt}`);
 
-  // 正規化: 生スコアを0-100スケールに変換
-  // 実用的な範囲は約50-95（ベース50 + 各種加点）
-  const RAW_MIN_W = 50;
-  const RAW_MAX_W = 95;
+  // 正規化: 生スコアを0-100スケールに変換（極端な範囲に拡大）
+  const RAW_MIN_W = 20;
+  const RAW_MAX_W = 110;
   score = Math.max(5, Math.min(100, Math.round(((score - RAW_MIN_W) / (RAW_MAX_W - RAW_MIN_W)) * 100)));
 
-  // 評価ランク: S約10%, A約20%, B約40%, C+D+E約30%の分布を目標
+  // 評価ランク: 極端な分布を目標（SとEを明確に分離）
   let rank = "";
   if (score >= 80) rank = "S級（超優秀・エリート候補）";
   else if (score >= 65) rank = "A級（優秀・リーダー候補）";
