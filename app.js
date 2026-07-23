@@ -4189,7 +4189,7 @@ function render(event) {
       })()}
     </div>
     <div class="result-card reading">
-      <h3>性格と課題</h3>
+      <h3>性格</h3>
       <div class="simple-only" style="padding:18px;border-left:4px solid var(--accent-color);border-radius:14px;background:rgba(217,164,65,0.08);line-height:1.8;font-size:14px">
         ${pickByBalance(starP.good, balanceType)}
       </div>
