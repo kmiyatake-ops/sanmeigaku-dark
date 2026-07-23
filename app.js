@@ -1400,35 +1400,87 @@ function analyzeYearlyFortune(day, pillars, taiun, currentAge, thisYear, balance
     return [yearPart, taiunPart && `大運「${taiunStar}」: ${taiunPart}`, `年運十二大従星「${yearEnergy.name}」: ${energyPart}`, tenchuPart, topoPart.length > 0 ? topoPart.join("。") + "。" : ""].filter(Boolean).join(" ");
   })();
 
-  // 総合スコア（0-100）極端化
+  // 総合スコア（0-100）極端化・ドメイン別重み付け
   let moneyScore = 50, loveScore = 50, workScore = 50;
-  const goodStars = ["禄存星", "司禄星", "石門星", "玉堂星", "牽牛星"];
-  const badStars = ["調舒星", "龍高星", "車騎星"];
-  if (goodStars.includes(yearStar)) { moneyScore += 18; loveScore += 14; workScore += 18; }
-  if (badStars.includes(yearStar)) { moneyScore -= 16; loveScore -= 12; workScore -= 16; }
-  if (taiunStar && goodStars.includes(taiunStar)) { moneyScore += 14; loveScore += 10; workScore += 14; }
-  if (taiunStar && badStars.includes(taiunStar)) { moneyScore -= 12; loveScore -= 8; workScore -= 12; }
-  if (yearRel === "相生") { moneyScore += 15; loveScore += 18; workScore += 15; }
-  if (yearRel === "比和") { moneyScore += 5; loveScore += 5; workScore += 5; }
-  if (yearRel === "相剋") { moneyScore -= 16; loveScore -= 16; workScore -= 16; }
-  if (yearRel === "反剋") { moneyScore -= 10; loveScore -= 10; workScore -= 10; }
-  if (taiunRel === "相生") { moneyScore += 10; loveScore += 12; workScore += 10; }
-  if (taiunRel === "相剋") { moneyScore -= 10; loveScore -= 10; workScore -= 10; }
-  const goodEnergy = ["天貴星", "天南星", "天禄星", "天将星", "天堂星"];
-  const badEnergy = ["天報星", "天胡星", "天極星", "天馳星"];
-  if (goodEnergy.includes(yearEnergy.name)) { moneyScore += 10; loveScore += 8; workScore += 10; }
-  if (badEnergy.includes(yearEnergy.name)) { moneyScore -= 10; loveScore -= 10; workScore -= 10; }
-  if (isYearTenchu) { moneyScore -= 20; loveScore -= 20; workScore -= 16; }
-  if (isTaiunTenchu) { moneyScore -= 10; loveScore -= 10; workScore -= 10; }
+
+  // 星ごとのドメイン別重み（金運/恋愛/仕事）— 星によって得意不得意を分ける
+  const starDomainWeights = {
+    "貫索星": { money: 22, love: -8,  work: 18 },
+    "石門星": { money: 12, love: 18,  work: 14 },
+    "鳳閣星": { money: -6, love: 25,  work: -10 },
+    "調舒星": { money: -12, love: 20, work: -14 },
+    "禄存星": { money: 16, love: 22,  work: 8 },
+    "司禄星": { money: 24, love: -4,  work: 20 },
+    "車騎星": { money: 6,  love: 18,  work: 16 },
+    "牽牛星": { money: 18, love: -10, work: 24 },
+    "龍高星": { money: -14, love: 22, work: -16 },
+    "玉堂星": { money: 14, love: 6,   work: 22 }
+  };
+
+  // 年運星の影響
+  const yw = starDomainWeights[yearStar] || { money: 0, love: 0, work: 0 };
+  moneyScore += yw.money; loveScore += yw.love; workScore += yw.work;
+
+  // 大運星の影響（やや弱め）
+  if (taiunStar) {
+    const tw = starDomainWeights[taiunStar] || { money: 0, love: 0, work: 0 };
+    moneyScore += Math.round(tw.money * 0.7); loveScore += Math.round(tw.love * 0.7); workScore += Math.round(tw.work * 0.7);
+  }
+
+  // 五行関係性のドメイン別影響
+  if (yearRel === "相生") { moneyScore += 12; loveScore += 20; workScore += 14; }
+  if (yearRel === "比和") { moneyScore += 6; loveScore += 4; workScore += 8; }
+  if (yearRel === "相剋") { moneyScore -= 18; loveScore -= 14; workScore -= 12; }
+  if (yearRel === "反剋") { moneyScore -= 8; loveScore -= 12; workScore -= 14; }
+  if (taiunRel === "相生") { moneyScore += 8; loveScore += 14; workScore += 8; }
+  if (taiunRel === "相剋") { moneyScore -= 12; loveScore -= 8; workScore -= 12; }
+
+  // 十二大従星のドメイン別影響
+  const energyDomainWeights = {
+    "天貴星": { money: 12, love: 6,  work: 14 },
+    "天南星": { money: 8,  love: 14, work: 10 },
+    "天禄星": { money: 16, love: 8,  work: 12 },
+    "天将星": { money: 14, love: 10, work: 16 },
+    "天堂星": { money: 10, love: 16, work: 6 },
+    "天印星": { money: 4,  love: 12, work: 6 },
+    "天報星": { money: -12, love: -6, work: -10 },
+    "天胡星": { money: -8, love: -14, work: -8 },
+    "天極星": { money: -10, love: -8, work: -14 },
+    "天馳星": { money: -6, love: -12, work: -10 },
+    "天庫星": { money: 14, love: 4,  work: 12 },
+    "天恍星": { money: -4, love: -8, work: -6 }
+  };
+  const ew = energyDomainWeights[yearEnergy.name] || { money: 0, love: 0, work: 0 };
+  moneyScore += ew.money; loveScore += ew.love; workScore += ew.work;
+
+  // 天中殺のドメイン別影響（恋愛への打撃が最大）
+  if (isYearTenchu) { moneyScore -= 16; loveScore -= 28; workScore -= 14; }
+  if (isTaiunTenchu) { moneyScore -= 8; loveScore -= 14; workScore -= 8; }
+
+  // 位相法のドメイン別影響
   const topoGoCount = yearTopo.filter((r) => r.group === "合法").length;
   const topoSanCount = yearTopo.filter((r) => r.group === "散法").length;
-  moneyScore += topoGoCount * 8 - topoSanCount * 8;
-  loveScore += topoGoCount * 6 - topoSanCount * 8;
-  workScore += topoGoCount * 8 - topoSanCount * 6;
-  // 天中殺+相剋のダブルパンチはさらに極端に
-  if (isYearTenchu && yearRel === "相剋") { moneyScore -= 10; loveScore -= 10; workScore -= 10; }
+  moneyScore += topoGoCount * 10 - topoSanCount * 6;
+  loveScore += topoGoCount * 12 - topoSanCount * 10;
+  workScore += topoGoCount * 8 - topoSanCount * 8;
+
+  // 日干五行のドメイン別影響（命式の土・金は金運に強い、水は恋愛に強いなど）
+  const gogyoDomainBonus = {
+    "木": { money: -4, love: 8,  work: 6 },
+    "火": { money: 4,  love: 10, work: -4 },
+    "土": { money: 12, love: -6, work: 10 },
+    "金": { money: 10, love: -8, work: 8 },
+    "水": { money: -6, love: 14, work: 2 }
+  };
+  const gd = gogyoDomainBonus[dayEl] || { money: 0, love: 0, work: 0 };
+  moneyScore += gd.money; loveScore += gd.love; workScore += gd.work;
+
+  // 天中殺+相剋のダブルパンチ
+  if (isYearTenchu && yearRel === "相剋") { moneyScore -= 8; loveScore -= 12; workScore -= 8; }
   // 良い星+相生のダブルボーナス
-  if (goodStars.includes(yearStar) && yearRel === "相生") { moneyScore += 8; loveScore += 8; workScore += 8; }
+  const goodStars = ["禄存星", "司禄星", "石門星", "玉堂星", "牽牛星"];
+  if (goodStars.includes(yearStar) && yearRel === "相生") { moneyScore += 6; loveScore += 6; workScore += 6; }
+
   moneyScore = Math.max(5, Math.min(98, moneyScore));
   loveScore = Math.max(5, Math.min(98, loveScore));
   workScore = Math.max(5, Math.min(98, workScore));
