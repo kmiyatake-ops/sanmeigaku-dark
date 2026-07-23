@@ -4822,22 +4822,33 @@ function render(event) {
         html += '<h4 class="simple-only" style="margin:0 0 8px;font-size:15px;color:#4682b4">データから見る健康リスク</h4>';
         html += `<p class="expert-only" style="font-size:12px;color:var(--muted);margin:0 0 10px;line-height:1.6">${sp.studyNote}</p>`;
         if (sp.riskFactors.length > 0) {
-          html += '<div style="margin-bottom:10px"><b style="font-size:13px;color:#c05050">リスク亢進因子</b>';
-          html += sp.riskFactors.map(f => `<div style="font-size:12px;margin:4px 0;padding:4px 8px;background:rgba(192,80,80,0.08);border-radius:6px"><b>${f.star}</b>: ${f.note} <span style="color:var(--muted)">(OR=${f.OR}, p=${f.p})</span></div>`).join("");
+          html += '<div style="margin-bottom:10px"><b class="expert-only" style="font-size:13px;color:#c05050">リスク亢進因子</b><b class="simple-only" style="font-size:14px;color:#c05050">⚠ 注意が必要な傾向</b>';
+          html += sp.riskFactors.map(f => {
+            const diseaseMatch = f.note.match(/(.+?)でOR=/);
+            const diseaseName = diseaseMatch ? diseaseMatch[1] : f.note;
+            return `<div class="expert-only" style="font-size:12px;margin:4px 0;padding:4px 8px;background:rgba(192,80,80,0.08);border-radius:6px"><b>${f.star}</b>: ${f.note} <span style="color:var(--muted)">(OR=${f.OR}, p=${f.p})</span></div>`
+              + `<div class="simple-only" style="font-size:14px;margin:6px 0;padding:8px 12px;background:rgba(192,80,80,0.08);border-radius:8px;line-height:1.6">🔴 <b>${f.star}</b>の人は<b style="color:#c05050">${diseaseName}</b>のリスクが高くなりやすい傾向があります。定期的な健康診断と、該当する検査を早めに受けることをおすすめします。</div>`;
+          }).join("");
           html += '</div>';
         }
         if (sp.protectiveFactors.length > 0) {
-          html += '<div style="margin-bottom:10px"><b style="font-size:13px;color:#2e8b57">保護因子</b>';
-          html += sp.protectiveFactors.map(f => `<div style="font-size:12px;margin:4px 0;padding:4px 8px;background:rgba(46,139,87,0.08);border-radius:6px"><b>${f.star}</b>: ${f.note} <span style="color:var(--muted)">(OR=${f.OR}, p=${f.p})</span></div>`).join("");
+          html += '<div style="margin-bottom:10px"><b class="expert-only" style="font-size:13px;color:#2e8b57">保護因子</b><b class="simple-only" style="font-size:14px;color:#2e8b57">✓ 守られている傾向</b>';
+          html += sp.protectiveFactors.map(f => {
+            const diseaseMatch = f.note.match(/(.+?)でOR=/);
+            const diseaseName = diseaseMatch ? diseaseMatch[1] : f.note;
+            return `<div class="expert-only" style="font-size:12px;margin:4px 0;padding:4px 8px;background:rgba(46,139,87,0.08);border-radius:6px"><b>${f.star}</b>: ${f.note} <span style="color:var(--muted)">(OR=${f.OR}, p=${f.p})</span></div>`
+              + `<div class="simple-only" style="font-size:14px;margin:6px 0;padding:8px 12px;background:rgba(46,139,87,0.08);border-radius:8px;line-height:1.6">🟢 <b>${f.star}</b>の人は<b style="color:#2e8b57">${diseaseName}</b>のリスクが低い傾向があります。現在の生活リズムを維持することが大切です。</div>`;
+          }).join("");
           html += '</div>';
         }
         if (sp.diseaseSpecificRisks.length > 0) {
-          html += '<div style="margin-bottom:6px"><b class="expert-only" style="font-size:13px;color:#4682b4">病気カテゴリ別リスク</b><b class="simple-only" style="font-size:14px;color:#4682b4">特に注意したい病気</b>';
+          html += '<div style="margin-bottom:6px"><b class="expert-only" style="font-size:13px;color:#4682b4">病気カテゴリ別リスク</b><b class="simple-only" style="font-size:14px;color:#4682b4">🏥 特に注意したい病気</b>';
           html += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">';
-          html += sp.diseaseSpecificRisks.map(d => `<span style="font-size:12px;padding:4px 10px;border-radius:8px;background:rgba(192,80,80,0.1);border:1px solid rgba(192,80,80,0.2)">${d.disease} <span style="color:var(--muted)">OR=${d.OR}</span></span>`).join("");
+          html += sp.diseaseSpecificRisks.map(d => `<span class="expert-only" style="font-size:12px;padding:4px 10px;border-radius:8px;background:rgba(192,80,80,0.1);border:1px solid rgba(192,80,80,0.2)">${d.disease} <span style="color:var(--muted)">OR=${d.OR}</span></span>`).join("");
+          html += sp.diseaseSpecificRisks.map(d => `<span class="simple-only" style="font-size:14px;padding:6px 14px;border-radius:10px;background:rgba(192,80,80,0.12);border:1px solid rgba(192,80,80,0.25);font-weight:600">${d.disease}</span>`).join("");
           html += '</div></div>';
         }
-        html += `<p class="simple-only" style="font-size:12px;color:var(--muted);margin:8px 0 0;line-height:1.6">※統計データに基づく参考情報です。個人の健康状態を確定するものではありません。定期健診を推奨します。</p>`;
+        html += `<p class="simple-only" style="font-size:13px;color:var(--muted);margin:10px 0 0;line-height:1.7">※これは統計データからの参考情報です。必ず定期健康診断を受けて、自分の健康状態を確認してくださいね。</p>`;
         html += '</div>';
         return html;
       })()}
