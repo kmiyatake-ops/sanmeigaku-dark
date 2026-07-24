@@ -4351,8 +4351,8 @@ function render(event) {
     <div class="result-card yearly-fortune-card">
       <h3 class="expert-only">${yearlyFortune.thisYear}年の総合運勢（大運×年運 統合判定）</h3>
       <h3 class="simple-only">${yearlyFortune.thisYear}年の運勢</h3>
-      <div class="yearly-summary expert-only" style="padding:16px 18px;border-radius:14px;background:rgba(217,164,65,0.08);border:1px solid var(--border);margin-bottom:16px;white-space:pre-line;line-height:1.8;font-size:14px">${buildYearlySummary(yearlyFortune, false)}</div>
-      <div class="yearly-summary simple-only" style="padding:16px 18px;border-radius:14px;background:rgba(217,164,65,0.08);border:1px solid var(--border);margin-bottom:16px;white-space:pre-line;line-height:1.8;font-size:14px">${buildYearlySummary(yearlyFortune, true)}</div>
+      <div class="yearly-summary expert-only info-box is-gold" style="padding:16px 18px;border-radius:14px;margin-bottom:16px;white-space:pre-line;line-height:1.8;font-size:14px">${buildYearlySummary(yearlyFortune, false)}</div>
+      <div class="yearly-summary simple-only info-box is-gold" style="padding:16px 18px;border-radius:14px;margin-bottom:16px;white-space:pre-line;line-height:1.8;font-size:14px">${buildYearlySummary(yearlyFortune, true)}</div>
       <div class="yearly-fortune-overview expert-only">
         <div class="yearly-fortune-pillars">
           ${yearlyFortune.currentTaiun ? `<span class="yf-pillar"><b>現在の大運</b> ${yearlyFortune.currentTaiun.stem}${yearlyFortune.currentTaiun.branch}（${yearlyFortune.taiunStar}・${yearlyFortune.taiunEnergy.name}）${yearlyFortune.isTaiunTenchu ? ' <span class="tenchu-badge">天中殺</span>' : ''}</span>` : ''}
@@ -4419,32 +4419,32 @@ function render(event) {
       ${(() => {
         const la = luckyAdvice;
         return `
-          <div style="margin-bottom:16px;padding:14px 16px;border-radius:10px;background:rgba(120,200,120,0.06);border:1px solid rgba(120,200,120,0.15)">
-            <p style="font-size:14px;line-height:1.8;margin:0 0 14px;color:var(--text)">${la.advice}</p>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">ラッキーカラー</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.weakData.color}</p>
+          <div class="info-box is-green">
+            <p class="info-text" style="margin:0 0 14px;line-height:1.8">${la.advice}</p>
+            <div class="info-grid">
+              <div class="info-item">
+                <b class="info-label">ラッキーカラー</b>
+                <p>${la.weakData.color}</p>
               </div>
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">開運方角</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.weakData.direction}</p>
+              <div class="info-item">
+                <b class="info-label">開運方角</b>
+                <p>${la.weakData.direction}</p>
               </div>
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">得意な時間帯</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.weakData.time}</p>
+              <div class="info-item">
+                <b class="info-label">得意な時間帯</b>
+                <p>${la.weakData.time}</p>
               </div>
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">開運フード</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.weakData.food}</p>
+              <div class="info-item">
+                <b class="info-label">開運フード</b>
+                <p>${la.weakData.food}</p>
               </div>
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">開運アクション</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.weakData.action}</p>
+              <div class="info-item">
+                <b class="info-label">開運アクション</b>
+                <p>${la.weakData.action}</p>
               </div>
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">守護神</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.guardians.join("・")}</p>
+              <div class="info-item">
+                <b class="info-label">守護神</b>
+                <p>${la.guardians.join("・")}</p>
               </div>
             </div>
           </div>
@@ -4462,25 +4462,25 @@ function render(event) {
         const sj = specificJobs;
         if (!sj) return '<p style="color:var(--muted);font-size:13px">データがありません。</p>';
         return `
-          <div style="margin-bottom:16px;padding:14px 16px;border-radius:10px;background:rgba(100,150,200,0.06);border:1px solid rgba(100,150,200,0.15)">
-            <div style="margin-bottom:12px">
-              <b style="font-size:13px;color:var(--muted)">具体的な職業例</b>
+          <div class="info-box is-blue">
+            <div class="info-section">
+              <b class="info-label">具体的な職業例</b>
               <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
-                ${sj.jobs.map(j => `<span style="font-size:13px;padding:6px 14px;border-radius:10px;background:rgba(122,176,208,0.12);border:1px solid rgba(122,176,208,0.25);color:#7ab0d0;font-weight:600">${j}</span>`).join("")}
+                ${sj.jobs.map(j => `<span class="tag-pill is-blue">${j}</span>`).join("")}
               </div>
             </div>
-            <div style="margin-bottom:10px">
-              <b style="font-size:13px;color:var(--muted)">向いている働き方</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${sj.workStyle}</p>
+            <div class="info-section">
+              <b class="info-label">向いている働き方</b>
+              <p class="info-text">${sj.workStyle}</p>
             </div>
-            <div style="margin-bottom:10px">
-              <b style="font-size:13px;color:var(--muted)">強み・武器</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${sj.strengths}</p>
+            <div class="info-section">
+              <b class="info-label">強み・武器</b>
+              <p class="info-text">${sj.strengths}</p>
             </div>
-            <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-              <b style="font-size:12px;color:var(--muted)">仕事優秀度スコア</b>
+            <div class="info-item">
+              <b class="info-label">仕事優秀度スコア</b>
               <span style="font-size:14px;margin-left:8px">${sj.score}点（${sj.rank}）</span>
-              <span style="font-size:12px;color:var(--muted);margin-left:8px">適職傾向：${sj.jobTendency}</span>
+              <span class="note-text-sm" style="margin-left:8px">適職傾向：${sj.jobTendency}</span>
             </div>
           </div>
         `;
@@ -4916,18 +4916,18 @@ function render(event) {
         const pa = parentingAdvice;
         if (!pa) return '<p style="color:var(--muted);font-size:13px">データがありません。</p>';
         return `
-          <div style="padding:14px 16px;border-radius:10px;background:rgba(200,150,100,0.06);border:1px solid rgba(200,150,100,0.15)">
-            <div style="margin-bottom:12px">
-              <b style="font-size:13px;color:#d0a070">得意な子育てスタイル</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.strength}</p>
+          <div class="info-box is-orange">
+            <div class="info-section">
+              <b class="info-label is-orange">得意な子育てスタイル</b>
+              <p class="info-text">${pa.strength}</p>
             </div>
-            <div style="margin-bottom:12px">
-              <b style="font-size:13px;color:#e08060">注意すべき点</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.caution}</p>
+            <div class="info-section">
+              <b class="info-label is-red">注意すべき点</b>
+              <p class="info-text">${pa.caution}</p>
             </div>
-            <div>
-              <b style="font-size:13px;color:#70b080">実践のヒント</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.tip}</p>
+            <div class="info-section">
+              <b class="info-label is-green">実践のヒント</b>
+              <p class="info-text">${pa.tip}</p>
             </div>
           </div>
         `;
@@ -4964,13 +4964,13 @@ function render(event) {
           const interp = energyLifeInterpretation[pos.energy.name];
           const text = interp ? interp[pos.key] : "";
           return `
-            <div style="margin-bottom:16px;padding:14px 16px;border-radius:10px;background:rgba(100,150,200,0.06);border:1px solid rgba(100,150,200,0.15)">
+            <div class="info-box is-blue">
               <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-                <span style="font-size:12px;color:var(--muted)">${pos.label}</span>
+                <span class="note-text-sm">${pos.label}</span>
                 <span style="font-size:13px;font-weight:600;color:#7ab0d0">${pos.energy.name}</span>
-                <span style="font-size:12px;padding:2px 8px;border-radius:4px;background:rgba(122,176,208,0.12);color:#7ab0d0">${pos.stage}</span>
+                <span class="mini-badge is-blue">${pos.stage}</span>
               </div>
-              <p style="font-size:13px;line-height:1.8;margin:0;color:var(--text)">${text}</p>
+              <p class="info-text" style="font-size:13px;line-height:1.8">${text}</p>
             </div>
           `;
         }).join("");
@@ -5004,7 +5004,7 @@ function render(event) {
           <div class="turning-point${tp.isTenchu ? " tenchu" : ""}" style="padding:12px 14px;border-radius:12px;background:rgba(217,164,65,0.06);border:1px solid var(--border);margin-bottom:10px">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
               <b style="font-size:16px;color:${typeColor(tp.type)}">${tp.age}歳</b>
-              <span style="font-size:13px;color:var(--muted)">（${tp.year}年）</span>
+              <span class="note-text-sm">（${tp.year}年）</span>
               <span style="font-size:12px;padding:2px 8px;border-radius:6px;background:${typeColor(tp.type)}22;color:${typeColor(tp.type)};font-weight:600">${typeLabel(tp.type)}</span>
               ${tp.isTenchu ? '<span style="font-size:12px;padding:2px 8px;border-radius:6px;background:rgba(192,80,80,0.15);color:#c05050;font-weight:600">天中殺</span>' : ""}
             </div>
@@ -5090,11 +5090,11 @@ function render(event) {
           const topDiseaseName = topRisk.majorDiseases.length > 0
             ? topRisk.majorDiseases[0].diseases.split("・")[0]
             : "特定の疾患";
-          return `<div class="simple-only" style="padding:14px 16px;border-radius:12px;background:rgba(192,80,80,0.1);border:1px solid rgba(192,80,80,0.3);margin-bottom:12px">
+          return `<div class="simple-only info-box is-red" style="margin-bottom:12px">
             <div style="font-size:15px;line-height:1.7">
               <b style="color:#e05050">最も注意が必要なのは${topRisk.year}年（${topRisk.age}歳）の「${topDiseaseName}」</b>です。
             </div>
-            <div style="font-size:13px;color:var(--muted);margin-top:6px;line-height:1.6">
+            <div class="note-text" style="margin-top:6px">
               この年は健康リスクスコア${topRisk.riskScore}点で、特に${topDiseaseName}の検査・予防を早めに行うことをおすすめします。
             </div>
           </div>
@@ -5130,38 +5130,38 @@ function render(event) {
       ${(() => {
         const sp = healthRisk.statisticalProfile;
         if (!sp || (sp.riskFactors.length === 0 && sp.protectiveFactors.length === 0)) return '';
-        let html = '<div class="health-statistical-profile" style="margin-top:16px;padding:14px 16px;border-radius:12px;background:rgba(100,149,237,0.08);border:1px solid rgba(100,149,237,0.25)">';
+        let html = '<div class="info-box is-steel" style="margin-top:16px">';
         html += '<h4 class="expert-only" style="margin:0 0 8px;font-size:14px;color:#4682b4">統計的知見に基づく疾患リスクプロファイル</h4>';
         html += '<h4 class="simple-only" style="margin:0 0 8px;font-size:15px;color:#4682b4">データから見る健康リスク</h4>';
-        html += `<p class="expert-only" style="font-size:12px;color:var(--muted);margin:0 0 10px;line-height:1.6">${sp.studyNote}</p>`;
+        html += `<p class="expert-only note-text-sm" style="margin:0 0 10px">${sp.studyNote}</p>`;
         if (sp.riskFactors.length > 0) {
-          html += '<div style="margin-bottom:10px"><b class="expert-only" style="font-size:13px;color:#c05050">リスク亢進因子</b><b class="simple-only" style="font-size:14px;color:#c05050">⚠ 注意が必要な傾向</b>';
+          html += '<div class="info-section"><b class="expert-only info-label is-red-strong">リスク亢進因子</b><b class="simple-only info-label is-red-strong" style="font-size:14px">⚠ 注意が必要な傾向</b>';
           html += sp.riskFactors.map(f => {
             const diseaseMatch = f.note.match(/(.+?)でOR=/);
             const diseaseName = diseaseMatch ? diseaseMatch[1] : f.note;
-            return `<div class="expert-only" style="font-size:12px;margin:4px 0;padding:4px 8px;background:rgba(192,80,80,0.08);border-radius:6px"><b>${f.star}</b>: ${f.note} <span style="color:var(--muted)">(OR=${f.OR}, p=${f.p})</span></div>`
+            return `<div class="expert-only note-text-sm" style="margin:4px 0;padding:4px 8px;background:rgba(192,80,80,0.08);border-radius:6px"><b>${f.star}</b>: ${f.note} <span style="color:var(--muted)">(OR=${f.OR}, p=${f.p})</span></div>`
               + `<div class="simple-only" style="font-size:14px;margin:6px 0;padding:8px 12px;background:rgba(192,80,80,0.08);border-radius:8px;line-height:1.6">🔴 <b>${f.star}</b>の人は<b style="color:#c05050">${diseaseName}</b>のリスクが高くなりやすい傾向があります。定期的な健康診断と、該当する検査を早めに受けることをおすすめします。</div>`;
           }).join("");
           html += '</div>';
         }
         if (sp.protectiveFactors.length > 0) {
-          html += '<div style="margin-bottom:10px"><b class="expert-only" style="font-size:13px;color:#2e8b57">保護因子</b><b class="simple-only" style="font-size:14px;color:#2e8b57">✓ 守られている傾向</b>';
+          html += '<div class="info-section"><b class="expert-only info-label is-seagreen">保護因子</b><b class="simple-only info-label is-seagreen" style="font-size:14px">✓ 守られている傾向</b>';
           html += sp.protectiveFactors.map(f => {
             const diseaseMatch = f.note.match(/(.+?)でOR=/);
             const diseaseName = diseaseMatch ? diseaseMatch[1] : f.note;
-            return `<div class="expert-only" style="font-size:12px;margin:4px 0;padding:4px 8px;background:rgba(46,139,87,0.08);border-radius:6px"><b>${f.star}</b>: ${f.note} <span style="color:var(--muted)">(OR=${f.OR}, p=${f.p})</span></div>`
-              + `<div class="simple-only" style="font-size:14px;margin:6px 0;padding:8px 12px;background:rgba(46,139,87,0.08);border-radius:8px;line-height:1.6">🟢 <b>${f.star}</b>の人は<b style="color:#2e8b57">${diseaseName}</b>のリスクが低い傾向があります。現在の生活リズムを維持することが大切です。</div>`;
+            return `<div class="expert-only note-text-sm" style="margin:4px 0;padding:4px 8px;background:var(--seagreen-soft);border-radius:6px"><b>${f.star}</b>: ${f.note} <span style="color:var(--muted)">(OR=${f.OR}, p=${f.p})</span></div>`
+              + `<div class="simple-only" style="font-size:14px;margin:6px 0;padding:8px 12px;background:var(--seagreen-soft);border-radius:8px;line-height:1.6">🟢 <b>${f.star}</b>の人は<b style="color:#2e8b57">${diseaseName}</b>のリスクが低い傾向があります。現在の生活リズムを維持することが大切です。</div>`;
           }).join("");
           html += '</div>';
         }
         if (sp.diseaseSpecificRisks.length > 0) {
-          html += '<div style="margin-bottom:6px"><b class="expert-only" style="font-size:13px;color:#4682b4">病気カテゴリ別リスク</b><b class="simple-only" style="font-size:14px;color:#4682b4">🏥 特に注意したい病気</b>';
+          html += '<div class="info-section"><b class="expert-only info-label is-steel">病気カテゴリ別リスク</b><b class="simple-only info-label is-steel" style="font-size:14px">🏥 特に注意したい病気</b>';
           html += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">';
-          html += sp.diseaseSpecificRisks.map(d => `<span class="expert-only" style="font-size:12px;padding:4px 10px;border-radius:8px;background:rgba(192,80,80,0.1);border:1px solid rgba(192,80,80,0.2)">${d.disease} <span style="color:var(--muted)">OR=${d.OR}</span></span>`).join("");
-          html += sp.diseaseSpecificRisks.map(d => `<span class="simple-only" style="font-size:14px;padding:6px 14px;border-radius:10px;background:rgba(192,80,80,0.12);border:1px solid rgba(192,80,80,0.25);font-weight:600">${d.disease}</span>`).join("");
+          html += sp.diseaseSpecificRisks.map(d => `<span class="expert-only tag-pill is-red" style="font-size:12px;padding:4px 10px">${d.disease} <span style="color:var(--muted)">OR=${d.OR}</span></span>`).join("");
+          html += sp.diseaseSpecificRisks.map(d => `<span class="simple-only tag-pill is-red" style="font-size:14px;padding:6px 14px">${d.disease}</span>`).join("");
           html += '</div></div>';
         }
-        html += `<p class="simple-only" style="font-size:13px;color:var(--muted);margin:10px 0 0;line-height:1.7">※これは統計データからの参考情報です。必ず定期健康診断を受けて、自分の健康状態を確認してくださいね。</p>`;
+        html += `<p class="simple-only note-text" style="margin:10px 0 0">※これは統計データからの参考情報です。必ず定期健康診断を受けて、自分の健康状態を確認してくださいね。</p>`;
         html += '</div>';
         return html;
       })()}

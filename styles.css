@@ -10,7 +10,109 @@
   --blue: #5fa8d3;
   --green: #78b77b;
   --border: rgba(217, 164, 65, 0.25);
+  --green-soft: rgba(120, 200, 120, 0.06);
+  --green-border: rgba(120, 200, 120, 0.15);
+  --blue-soft: rgba(100, 150, 200, 0.06);
+  --blue-border: rgba(100, 150, 200, 0.15);
+  --orange-soft: rgba(200, 150, 100, 0.06);
+  --orange-border: rgba(200, 150, 100, 0.15);
+  --red-soft: rgba(220, 80, 80, 0.06);
+  --red-border: rgba(220, 80, 80, 0.15);
+  --steel-soft: rgba(100, 149, 237, 0.08);
+  --steel-border: rgba(100, 149, 237, 0.25);
+  --seagreen-soft: rgba(46, 139, 87, 0.08);
+  --seagreen-border: rgba(46, 139, 87, 0.2);
   font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, system-ui, sans-serif;
+}
+
+/* === 統一ユーティリティクラス === */
+.info-box {
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid;
+  margin-bottom: 16px;
+}
+.info-box.is-green { background: var(--green-soft); border-color: var(--green-border); }
+.info-box.is-blue { background: var(--blue-soft); border-color: var(--blue-border); }
+.info-box.is-orange { background: var(--orange-soft); border-color: var(--orange-border); }
+.info-box.is-red { background: var(--red-soft); border-color: var(--red-border); }
+.info-box.is-gold { background: rgba(217, 164, 65, 0.06); border-color: var(--border); }
+.info-box.is-steel { background: var(--steel-soft); border-color: var(--steel-border); }
+
+.info-section { margin-bottom: 12px; }
+.info-section:last-child { margin-bottom: 0; }
+.info-label {
+  font-size: 13px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 4px;
+}
+.info-label.is-orange { color: #d0a070; }
+.info-label.is-red { color: #e08060; }
+.info-label.is-green { color: #70b080; }
+.info-label.is-blue { color: #7ab0d0; }
+.info-label.is-steel { color: #4682b4; }
+.info-label.is-seagreen { color: #2e8b57; }
+.info-label.is-red-strong { color: #c05050; }
+
+.info-text {
+  margin: 4px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.info-item {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+}
+.info-item .info-label { margin-bottom: 0; }
+.info-item p { margin: 4px 0 0; font-size: 14px; }
+
+.tag-pill {
+  display: inline-block;
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  border: 1px solid;
+}
+.tag-pill.is-blue {
+  background: rgba(122, 176, 208, 0.12);
+  border-color: rgba(122, 176, 208, 0.25);
+  color: #7ab0d0;
+}
+.tag-pill.is-red {
+  background: rgba(192, 80, 80, 0.1);
+  border-color: rgba(192, 80, 80, 0.2);
+  color: #c05050;
+}
+
+.mini-badge {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.mini-badge.is-blue { background: rgba(122, 176, 208, 0.12); color: #7ab0d0; }
+
+.note-text {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.note-text-sm {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 /* === 表示モード切替 === */
