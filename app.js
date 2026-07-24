@@ -4294,6 +4294,44 @@ function render(event) {
         </div>`;
       })()}
     </div>
+    <div class="result-card">
+      <h3 class="expert-only">開運アクション・ラッキーアドバイス</h3>
+      <h3 class="simple-only">開運アドバイス・ラッキーポイント</h3>
+      ${(() => {
+        const la = luckyAdvice;
+        return `
+          <div style="margin-bottom:16px;padding:14px 16px;border-radius:10px;background:rgba(120,200,120,0.06);border:1px solid rgba(120,200,120,0.15)">
+            <p style="font-size:14px;line-height:1.8;margin:0 0 14px;color:var(--text)">${la.advice}</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">ラッキーカラー</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.weakData.color}</p>
+              </div>
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">開運方角</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.weakData.direction}</p>
+              </div>
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">得意な時間帯</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.weakData.time}</p>
+              </div>
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">開運フード</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.weakData.food}</p>
+              </div>
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">開運アクション</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.weakData.action}</p>
+              </div>
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">守護神</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.guardians.join("・")}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      })()}
+    </div>
     <div class="result-card reading">
       <h3>性格</h3>
       ${reading.map((item) => { const isDetailOnly = item.title.includes("詳細") || item.title.includes("タイミング") || item.title.includes("エネルギー傾向") || item.title.includes("バランスと課題") || item.title.includes("注意が必要な時期") || item.title.includes("長所") || item.title.includes("短所"); const cls = (item.title.includes("長所") ? "is-good" : item.title.includes("短所") ? "is-bad" : item.title.includes("優秀度") ? "is-work-ex" : item.title.includes("仕事") ? "is-work" : item.title.includes("恋愛") ? "is-love" : item.title.includes("金銭") ? "is-money" : item.title.includes("結婚") ? "is-marriage" : item.title.includes("社交") ? "is-social" : item.title.includes("×日干") ? "is-star-detail" : item.title.includes("裏の") ? "is-hidden" : "") + (isDetailOnly ? " expert-only" : ""); const isWorkEx = item.title.includes("優秀度"); const scoreMatch = item.text.match(/スコア：(\d+)点/); const scoreNum = scoreMatch ? parseInt(scoreMatch[1]) : 0; const rankMatch = item.text.match(/（(.+?)）/); const rankText = rankMatch ? rankMatch[1] : ""; const detailText = item.text.replace(/総合仕事優秀度スコア：\d+点（.+?）\n/, ""); return `<article class="${cls}"><h4>${item.title}</h4><div>${isWorkEx && scoreNum ? `<div class="work-ex-score-wrap"><div class="work-ex-score-num">${scoreNum}<span>点</span></div><div class="work-ex-rank-badge">${rankText}</div></div><div class="work-ex-bar"><div class="work-ex-bar-fill" style="width:${scoreNum}%"></div></div><div class="work-ex-detail">${detailText}</div>` : item.text}</div></article>`; }).join("")}
@@ -4983,44 +5021,6 @@ function render(event) {
         html += `<p class="simple-only" style="font-size:13px;color:var(--muted);margin:10px 0 0;line-height:1.7">※これは統計データからの参考情報です。必ず定期健康診断を受けて、自分の健康状態を確認してくださいね。</p>`;
         html += '</div>';
         return html;
-      })()}
-    </div>
-    <div class="result-card">
-      <h3 class="expert-only">開運アクション・ラッキーアドバイス</h3>
-      <h3 class="simple-only">開運アドバイス・ラッキーポイント</h3>
-      ${(() => {
-        const la = luckyAdvice;
-        return `
-          <div style="margin-bottom:16px;padding:14px 16px;border-radius:10px;background:rgba(120,200,120,0.06);border:1px solid rgba(120,200,120,0.15)">
-            <p style="font-size:14px;line-height:1.8;margin:0 0 14px;color:var(--text)">${la.advice}</p>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">ラッキーカラー</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.weakData.color}</p>
-              </div>
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">開運方角</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.weakData.direction}</p>
-              </div>
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">得意な時間帯</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.weakData.time}</p>
-              </div>
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">開運フード</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.weakData.food}</p>
-              </div>
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">開運アクション</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.weakData.action}</p>
-              </div>
-              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-                <b style="font-size:12px;color:var(--muted)">守護神</b>
-                <p style="margin:4px 0 0;font-size:14px">${la.guardians.join("・")}</p>
-              </div>
-            </div>
-          </div>
-        `;
       })()}
     </div>
     <div class="result-card">
