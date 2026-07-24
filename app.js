@@ -3524,7 +3524,7 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
     { title: `${name}さんの本質`, text: `${dayP.good}${hasSeimei ? `\n姓名判断では人格${seimei.jinkaku}画（${seimei.jinRank?.rank}）。` : ""}` },
     { title: "性格の長所", text: `【中心的な性格】${pickByBalance(starP.good, balanceType)}\n【生まれた日の性質】${dayP.good}\n【最も強い要素（${strongest}）】${strongP.good}\n【表に出やすい面】${pickByBalance(northP.good, balanceType)}\n【内面に持っている面】${pickByBalance(southP.good, balanceType)}${seimeiGood ? "\n" + seimeiGood : ""}` },
     { title: "性格の短所（隠さず直視すべき点）", text: `【中心的な性格】${pickByBalance(starP.bad, balanceType)}\n【生まれた日の性質】${dayP.bad}\n【最も強い要素（${strongest}）が強すぎる面】${strongP.bad}\n【足りない要素（${weakest}）の影響】${weakP.bad}${seimeiBad ? "\n" + seimeiBad : ""}` },
-    { title: "仕事面での性格", text: `${pickByBalance(starP.work, balanceType)}${hasSeimei ? `\n姓名判断の仕事運スコアは${seimei.workFortune}点。${seimei.workFortune >= 70 ? "姓名判断的にも仕事運は良好。" : seimei.workFortune >= 50 ? "姓名判断的には標準的。" : "姓名判断的には仕事面で苦労しやすい。"}` : ""}` },
+    { title: "仕事面での性格", text: pickByBalance(starP.work, balanceType) },
     { title: "仕事の優秀度", text: `総合仕事優秀度スコア：${workEx.score}点（${workEx.rank}）\n適職傾向：${workEx.jobTendency}\n内訳：${workEx.breakdown}${hasSeimei ? `\n姓名判断の仕事運スコア：${seimei.workFortune}点` : ""}` },
     { title: "恋愛面での性格", text: `${pickByBalance(starP.love, balanceType)}${hasSeimei ? `\n姓名判断の恋愛運スコアは${seimei.loveFortune}点。${seimei.loveFortune >= 70 ? "姓名判断的にも恋愛運は良好。" : seimei.loveFortune >= 50 ? "姓名判断的には標準的。" : "姓名判断的には恋愛面で波乱あり。"}` : ""}` },
     { title: "金銭感覚とお金の性格", text: pickByBalance(starP.money, balanceType) },
