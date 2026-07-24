@@ -4298,6 +4298,37 @@ function render(event) {
       <h3>性格</h3>
       ${reading.map((item) => { const isDetailOnly = item.title.includes("詳細") || item.title.includes("タイミング") || item.title.includes("エネルギー傾向") || item.title.includes("バランスと課題") || item.title.includes("注意が必要な時期") || item.title.includes("長所") || item.title.includes("短所"); const cls = (item.title.includes("長所") ? "is-good" : item.title.includes("短所") ? "is-bad" : item.title.includes("優秀度") ? "is-work-ex" : item.title.includes("仕事") ? "is-work" : item.title.includes("恋愛") ? "is-love" : item.title.includes("金銭") ? "is-money" : item.title.includes("結婚") ? "is-marriage" : item.title.includes("社交") ? "is-social" : item.title.includes("×日干") ? "is-star-detail" : item.title.includes("裏の") ? "is-hidden" : "") + (isDetailOnly ? " expert-only" : ""); const isWorkEx = item.title.includes("優秀度"); const scoreMatch = item.text.match(/スコア：(\d+)点/); const scoreNum = scoreMatch ? parseInt(scoreMatch[1]) : 0; const rankMatch = item.text.match(/（(.+?)）/); const rankText = rankMatch ? rankMatch[1] : ""; const detailText = item.text.replace(/総合仕事優秀度スコア：\d+点（.+?）\n/, ""); return `<article class="${cls}"><h4>${item.title}</h4><div>${isWorkEx && scoreNum ? `<div class="work-ex-score-wrap"><div class="work-ex-score-num">${scoreNum}<span>点</span></div><div class="work-ex-rank-badge">${rankText}</div></div><div class="work-ex-bar"><div class="work-ex-bar-fill" style="width:${scoreNum}%"></div></div><div class="work-ex-detail">${detailText}</div>` : item.text}</div></article>`; }).join("")}
     </div>
+    <div class="result-card">
+      <h3 class="expert-only">適職の具体化（職業名・働き方）</h3>
+      <h3 class="simple-only">向いている仕事・働き方</h3>
+      ${(() => {
+        const sj = specificJobs;
+        if (!sj) return '<p style="color:var(--muted);font-size:13px">データがありません。</p>';
+        return `
+          <div style="margin-bottom:16px;padding:14px 16px;border-radius:10px;background:rgba(100,150,200,0.06);border:1px solid rgba(100,150,200,0.15)">
+            <div style="margin-bottom:12px">
+              <b style="font-size:13px;color:var(--muted)">具体的な職業例</b>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+                ${sj.jobs.map(j => `<span style="font-size:13px;padding:6px 14px;border-radius:10px;background:rgba(122,176,208,0.12);border:1px solid rgba(122,176,208,0.25);color:#7ab0d0;font-weight:600">${j}</span>`).join("")}
+              </div>
+            </div>
+            <div style="margin-bottom:10px">
+              <b style="font-size:13px;color:var(--muted)">向いている働き方</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${sj.workStyle}</p>
+            </div>
+            <div style="margin-bottom:10px">
+              <b style="font-size:13px;color:var(--muted)">強み・武器</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${sj.strengths}</p>
+            </div>
+            <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+              <b style="font-size:12px;color:var(--muted)">仕事優秀度スコア</b>
+              <span style="font-size:14px;margin-left:8px">${sj.score}点（${sj.rank}）</span>
+              <span style="font-size:12px;color:var(--muted);margin-left:8px">適職傾向：${sj.jobTendency}</span>
+            </div>
+          </div>
+        `;
+      })()}
+    </div>
     ${(() => {
       if (seimeiResult.error) {
         return `<div class="result-card seimei-card expert-only">
@@ -4987,37 +5018,6 @@ function render(event) {
                 <b style="font-size:12px;color:var(--muted)">守護神</b>
                 <p style="margin:4px 0 0;font-size:14px">${la.guardians.join("・")}</p>
               </div>
-            </div>
-          </div>
-        `;
-      })()}
-    </div>
-    <div class="result-card">
-      <h3 class="expert-only">適職の具体化（職業名・働き方）</h3>
-      <h3 class="simple-only">向いている仕事・働き方</h3>
-      ${(() => {
-        const sj = specificJobs;
-        if (!sj) return '<p style="color:var(--muted);font-size:13px">データがありません。</p>';
-        return `
-          <div style="margin-bottom:16px;padding:14px 16px;border-radius:10px;background:rgba(100,150,200,0.06);border:1px solid rgba(100,150,200,0.15)">
-            <div style="margin-bottom:12px">
-              <b style="font-size:13px;color:var(--muted)">具体的な職業例</b>
-              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
-                ${sj.jobs.map(j => `<span style="font-size:13px;padding:6px 14px;border-radius:10px;background:rgba(122,176,208,0.12);border:1px solid rgba(122,176,208,0.25);color:#7ab0d0;font-weight:600">${j}</span>`).join("")}
-              </div>
-            </div>
-            <div style="margin-bottom:10px">
-              <b style="font-size:13px;color:var(--muted)">向いている働き方</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${sj.workStyle}</p>
-            </div>
-            <div style="margin-bottom:10px">
-              <b style="font-size:13px;color:var(--muted)">強み・武器</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${sj.strengths}</p>
-            </div>
-            <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
-              <b style="font-size:12px;color:var(--muted)">仕事優秀度スコア</b>
-              <span style="font-size:14px;margin-left:8px">${sj.score}点（${sj.rank}）</span>
-              <span style="font-size:12px;color:var(--muted);margin-left:8px">適職傾向：${sj.jobTendency}</span>
             </div>
           </div>
         `;
