@@ -5058,18 +5058,10 @@ function render(event) {
               <b style="font-size:13px;color:#e07070">性格から見るトラブル傾向</b>
               <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${tp.pattern}</p>
             </div>
-            <div style="margin-bottom:14px">
+            <div>
               <b style="font-size:13px;color:var(--muted)">天中殺期間の注意</b>
               <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${tp.tenchuPeriods}の期間中は上記の傾向が強まりやすい時期です。大きな決断や人間関係の変更は避け、整理・準備に徹してください。</p>
             </div>
-            ${tp.turningPointRisks.length > 0 ? `
-            <div>
-              <b style="font-size:13px;color:#e0a040">要注意の時期</b>
-              <ul style="margin:6px 0 0;padding-left:20px;font-size:14px;line-height:1.8">
-                ${tp.turningPointRisks.map(r => `<li>${r}</li>`).join("")}
-              </ul>
-            </div>
-            ` : ""}
           </div>
         `;
       })()}
