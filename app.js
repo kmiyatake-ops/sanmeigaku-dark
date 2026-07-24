@@ -5229,25 +5229,6 @@ function render(event) {
         return html;
       })()}
     </div>
-    <div class="result-card">
-      <h3 class="expert-only">トラブル予防ガイド</h3>
-      <h3 class="simple-only">トラブル予防ガイド</h3>
-      ${(() => {
-        const tp = troublePrevention;
-        return `
-          <div style="padding:14px 16px;border-radius:10px;background:rgba(220,80,80,0.06);border:1px solid rgba(220,80,80,0.15)">
-            <div style="margin-bottom:14px">
-              <b style="font-size:13px;color:#e07070">性格から見るトラブル傾向</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${tp.pattern}</p>
-            </div>
-            <div>
-              <b style="font-size:13px;color:var(--muted)">天中殺期間の注意</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${tp.tenchuPeriods}の期間中は上記の傾向が強まりやすい時期です。大きな決断や人間関係の変更は避け、整理・準備に徹してください。</p>
-            </div>
-          </div>
-        `;
-      })()}
-    </div>
     <div class="result-card reading expert-only">
       <h3>六親法（家系図・縁の深さ）</h3>
       <p style="color:var(--muted);font-size:12px;margin:0 0 14px;line-height:1.7">六親法とは、日干（自分）を中心に家族の干を算出し、宿命の陰占内にその干が存在するかで縁の深さを判定する技法です。<br>縦線（親→子）は「相生」関係、横線（結婚）は「干合」関係で結びます。</p>
