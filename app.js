@@ -2347,6 +2347,108 @@ function isTenchusatsuYear(yearBranch, tenchusatsu) {
   return tenchusatsu.includes(yearBranch);
 }
 
+// === 開運アクション・ラッキーアドバイス ===
+const gogyoLuckyData = {
+  "木": { color: "グリーン・青系", direction: "東", season: "春", time: "早朝（5時〜7時）", food: "野菜・豆類・酸味", action: "自然に触れる・植物を育てる・読書・学び直し" },
+  "火": { color: "レッド・オレンジ系", direction: "南", season: "夏", time: "昼（11時〜13時）", food: "果物・辛味・赤身肉", action: "人と交流する・表現活動・運動・陽の光を浴びる" },
+  "土": { color: "イエロー・ベージュ系", direction: "中央・南西", season: "土用（季節の変わり目）", time: "昼過ぎ（13時〜15時）", food: "穀物・いも類・甘味", action: "整理整頓・記録をつける・家族と過ごす・基盤を固める" },
+  "金": { color: "ホワイト・シルバー・ゴールド系", direction: "西", season: "秋", time: "夕方（15時〜17時）", food: "白い食材・辛味・豆類", action: "身だしなみを整える・ルールを見直す・断捨離・決断する" },
+  "水": { color: "ブラック・ネイビー・ブルー系", direction: "北", season: "冬", time: "夜（21時〜23時）", food: "黒い食材・塩味・海藻類", action: "静かに内省する・計画を立てる・湯船にゆっくり浸かる・情報を集める" }
+};
+
+function buildLuckyAdvice(counts, guardian, balanceType) {
+  const weakest = Object.entries(counts).sort((a, b) => a[1] - b[1])[0][0];
+  const strongest = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+  const weakData = gogyoLuckyData[weakest];
+  const strongData = gogyoLuckyData[strongest];
+  const guardianData = guardian.guardians.map(g => gogyoLuckyData[g]);
+
+  return {
+    weakest,
+    strongest,
+    weakData,
+    strongData,
+    guardianData,
+    guardians: guardian.guardians,
+    advice: `不足している「${weakest}」の性質を補うことが開運の鍵です。ラッキーカラーは${weakData.color}、開運方角は${weakData.direction}、得意な時間帯は${weakData.time}です。食事では${weakData.food}を意識的に取り入れましょう。日常では${weakData.action}を取り入れると運気が安定します。守護神（${guardian.guardians.join("・")}）の性質も意識すると、さらに効果的です。`
+  };
+}
+
+// === 適職の具体化 ===
+const starSpecificJobs = {
+  "貫索星": { jobs: ["研究員", "エンジニア", "職人", "フリーランスコンサルタント", "専門技術職"], workStyle: "独立向き・自分のペースを保てる環境がベスト", strengths: "専門性を深めることで評価される" },
+  "石門星": { jobs: ["営業マネージャー", "人事担当", "政治家の秘書", "コミュニティマネージャー", "広報"], workStyle: "組織向き・人と人を繋ぐポジションで活きる", strengths: "人脈構築力と調整力が最大の武器" },
+  "鳳閣星": { jobs: ["クリエイティブディレクター", "企画プランナー", "イベントプロデューサー", "タレント・インフルエンサー", "ブランド戦略"], workStyle: "自由度の高い環境向き・クリエイティブな裁量があると伸びる", strengths: "表現力と場を盛り上げる力で差別化" },
+  "調舒星": { jobs: ["デザイナー", "アーティスト", "写真家", "専門技術コンサルタント", "心理カウンセラー"], workStyle: "一人で深掘りできる時間が必要・感覚を活かす仕事向き", strengths: "独自の感性と審美眼が収入に直結" },
+  "禄存星": { jobs: ["教師", "看護師", "カウンセラー", "接客・サービス業", "福祉・介護コンサルタント"], workStyle: "組織向き・人を支えるポジションで信頼を蓄積", strengths: "奉仕精神と気配りでファンを作る力" },
+  "司禄星": { jobs: ["経理担当", "公務員", "管理部門", "不動産管理", "品質管理"], workStyle: "組織向き・コツコツ積み上げる安定型がベスト", strengths: "正確さと継続力で欠かせない存在に" },
+  "車騎星": { jobs: ["新規事業開発", "営業・開拓職", "起業家", "外回り営業", "スポーツ関連"], workStyle: "独立向き・スピード感を活かせる環境が最適", strengths: "行動力と決断の速さで先行者利益を取る" },
+  "牽牛星": { jobs: ["経営者", "管理職", "名誉職・顧問", "コンサルタント", "官僚"], workStyle: "組織のトップ向き・責任ある立場で本領発揮", strengths: "品格と教養で信頼を集め、上のポジションへ" },
+  "龍高星": { jobs: ["ベンチャー起業家", "企画開発", "発明家", "戦略コンサルタント", "投資家"], workStyle: "独立向き・常識に縛られない環境で才能が爆発", strengths: "型破りな発想と自由な視点で新しい市場を作る" },
+  "玉堂星": { jobs: ["研究者", "コンサルタント", "大学教授", "教育コンサルタント", "ライター・評論家"], workStyle: "組織・独立どちらも可・知的好奇心を満たせる環境が鍵", strengths: "知識の深さと教える力で権威になる" }
+};
+
+function buildSpecificJobs(centerStar, workEx) {
+  const data = starSpecificJobs[centerStar];
+  if (!data) return null;
+  return {
+    jobs: data.jobs,
+    workStyle: data.workStyle,
+    strengths: data.strengths,
+    score: workEx.score,
+    rank: workEx.rank,
+    jobTendency: workEx.jobTendency
+  };
+}
+
+// === 子育て・育児アドバイス ===
+const starParentingAdvice = {
+  "貫索星": { strength: "自立心を教えるのが上手。子供に「自分で考えさせる」姿勢が身につく。", caution: "厳しすぎると子供が心を閉ざす。たまには甘えさせて安心感を。", tip: "子供の意見を否定せず、まず聞いてからアドバイスする習慣を。" },
+  "石門星": { strength: "人との関わり方を自然に教えられる。社交性が子供にも引き継がれる。", caution: "外ばかり気にして家庭内が疎かになりやすい。家での対話時間を意識して。", tip: "家族だけの時間を週に1回は確保し、家族の絆を深めて。" },
+  "鳳閣星": { strength: "楽しい家庭を作るのが得意。子供が伸び伸び育つ環境を作れる。", caution: "ルーズさが子供の生活リズムを崩す。基本のけじめは親が示して。", tip: "楽しさとメリハリのバランスを意識。遊び時間と学習時間の切り替えを明確に。" },
+  "調舒星": { strength: "子供の感性を尊重できる。個性を伸ばす感覚的な親になれる。", caution: "感情の波が子供に伝染する。親のメンタル安定が子供の安心感に直結。", tip: "子供の感情に寄り添いすぎず、少し引いた視点で見守る練習を。" },
+  "禄存星": { strength: "奉仕精神で子供を大切に育てる。感謝の心を自然に教えられる。", caution: "過保護になりやすい。子供の自立を妨げないよう手出しを控える勇気を。", tip: "「やってあげる」より「一緒にやる」を意識。子供の自己肯定感を育てて。" },
+  "司禄星": { strength: "堅実さで安定した家庭を作る。規律正しい生活習慣が子供に身につく。", caution: "堅苦しさが子供の自由な発想を縛る。たまにはルールを緩めて。", tip: "基本の生活リズムを守りつつ、週末は少しゆるく過ごすメリハリを。" },
+  "車騎星": { strength: "行動力で子供に「やってみる勇気」を教えられる。", caution: "スピードが早すぎて子供がついていけない。子供のペースに合わせる忍耐を。", tip: "子供が失敗してもすぐ介入せず、自分でやり切る経験をさせよう。" },
+  "牽牛星": { strength: "品格と礼儀を教えられる。社会性の高い子供に育ちやすい。", caution: "期待が高すぎると子供がプレッシャーを感じる。完璧を求めすぎないで。", tip: "子供の個性を尊重し、親の理想を押し付けないバランスを大切に。" },
+  "龍高星": { strength: "自由な発想を尊重できる。子供の個性を最大限に伸ばす親になれる。", caution: "自由すぎて子供が不安になることも。最低限のルールは設定して。", tip: "「自由と責任はセット」と教え、選択の結果を自分で受け止めさせる。" },
+  "玉堂星": { strength: "知的好奇心を共有できる。学ぶ楽しさを子供に伝えられる。", caution: "理屈っぽすぎると子供が反発する。感情でも繋がる時間を作って。", tip: "一緒に本を読んだり博物館に行くなど、知的好奇心を共有する時間を。" }
+};
+
+function buildParentingAdvice(centerStar) {
+  return starParentingAdvice[centerStar] || null;
+}
+
+// === トラブル予防ガイド ===
+const starTroublePattern = {
+  "貫索星": "自分の考えに固執して人と衝突しやすい。意地を張って関係を壊すリスク。",
+  "石門星": "誰にでも良い顔をして信頼を失う。八方美人が裏目に出るリスク。",
+  "鳳閣星": "危機感が薄くて大事な時期に準備不足になる。怠慢が致命傷になるリスク。",
+  "調舒星": "感情の波で周囲を振り回す。感覚的判断で現実を見落とすリスク。",
+  "禄存星": "尽くしすぎて自分をすり減らす。依存される関係に巻き込まれるリスク。",
+  "司禄星": "堅実さが行き過ぎてチャンスを逃す。変化への抵抗が孤立を招くリスク。",
+  "車騎星": "スピード重視で周囲を置き去りにする。決断が早すぎて失敗するリスク。",
+  "牽牛星": "プライドが高すぎて人を遠ざける。面子にこだわって実質を損するリスク。",
+  "龍高星": "自由を求めて約束を破る。突発的な行動で周囲を混乱させるリスク。",
+  "玉堂星": "理屈で人を傷つける。知的な優越感が人間関係を壊すリスク。"
+};
+
+function buildTroublePrevention(centerStar, tenchusatsu, turningPoints) {
+  const pattern = starTroublePattern[centerStar] || "";
+  const tenchuPeriods = tenchusatsu || "";
+
+  const turningPointRisks = (turningPoints || []).map(tp => {
+    return `${tp.age}歳前後（${tp.type}）：${tp.description || ""}`;
+  });
+
+  return {
+    pattern,
+    tenchuPeriods,
+    turningPointRisks,
+    advice: `通常時でも「${pattern}」という傾向があります。特に${tenchuPeriods}の期間中は、この傾向が強まりやすいため、大きな決断や人間関係の変更は避け、整理・準備に徹してください。${turningPointRisks.length > 0 ? "また、以下の時期は特に注意が必要です：\n" + turningPointRisks.join("\n") : ""}`
+  };
+}
+
 // === 人生のターニングポイント算出 ===
 function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birthYear, currentAge) {
   const points = [];
@@ -4051,6 +4153,10 @@ function render(event) {
   const mote = analyzeMote(mainStars, energy, counts, day, pillars);
   const turningPoints = analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birthYear, currentAge);
   const workEx = calcWorkExcellence(mainStars.center, mainStars.north, mainStars.south, energy, counts, pillars);
+  const luckyAdvice = buildLuckyAdvice(counts, guardian, balanceType);
+  const specificJobs = buildSpecificJobs(mainStars.center, workEx);
+  const parentingAdvice = buildParentingAdvice(mainStars.center);
+  const troublePrevention = buildTroublePrevention(mainStars.center, tenchusatsu, turningPoints);
 
   // 浮気リスク・結婚適性度を事前計算（saveToHistoryで使用）
   const spouseEnergyForScore = getEnergyStar(day.stem, day.branch);
@@ -4846,6 +4952,126 @@ function render(event) {
         html += `<p class="simple-only" style="font-size:13px;color:var(--muted);margin:10px 0 0;line-height:1.7">※これは統計データからの参考情報です。必ず定期健康診断を受けて、自分の健康状態を確認してくださいね。</p>`;
         html += '</div>';
         return html;
+      })()}
+    </div>
+    <div class="result-card">
+      <h3 class="expert-only">開運アクション・ラッキーアドバイス</h3>
+      <h3 class="simple-only">開運アドバイス・ラッキーポイント</h3>
+      ${(() => {
+        const la = luckyAdvice;
+        return `
+          <div style="margin-bottom:16px;padding:14px 16px;border-radius:10px;background:rgba(120,200,120,0.06);border:1px solid rgba(120,200,120,0.15)">
+            <p style="font-size:14px;line-height:1.8;margin:0 0 14px;color:var(--text)">${la.advice}</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">ラッキーカラー</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.weakData.color}</p>
+              </div>
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">開運方角</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.weakData.direction}</p>
+              </div>
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">得意な時間帯</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.weakData.time}</p>
+              </div>
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">開運フード</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.weakData.food}</p>
+              </div>
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">開運アクション</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.weakData.action}</p>
+              </div>
+              <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+                <b style="font-size:12px;color:var(--muted)">守護神</b>
+                <p style="margin:4px 0 0;font-size:14px">${la.guardians.join("・")}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      })()}
+    </div>
+    <div class="result-card">
+      <h3 class="expert-only">適職の具体化（職業名・働き方）</h3>
+      <h3 class="simple-only">向いている仕事・働き方</h3>
+      ${(() => {
+        const sj = specificJobs;
+        if (!sj) return '<p style="color:var(--muted);font-size:13px">データがありません。</p>';
+        return `
+          <div style="margin-bottom:16px;padding:14px 16px;border-radius:10px;background:rgba(100,150,200,0.06);border:1px solid rgba(100,150,200,0.15)">
+            <div style="margin-bottom:12px">
+              <b style="font-size:13px;color:var(--muted)">具体的な職業例</b>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+                ${sj.jobs.map(j => `<span style="font-size:13px;padding:6px 14px;border-radius:10px;background:rgba(122,176,208,0.12);border:1px solid rgba(122,176,208,0.25);color:#7ab0d0;font-weight:600">${j}</span>`).join("")}
+              </div>
+            </div>
+            <div style="margin-bottom:10px">
+              <b style="font-size:13px;color:var(--muted)">向いている働き方</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${sj.workStyle}</p>
+            </div>
+            <div style="margin-bottom:10px">
+              <b style="font-size:13px;color:var(--muted)">強み・武器</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${sj.strengths}</p>
+            </div>
+            <div style="padding:10px 14px;border-radius:8px;background:rgba(255,255,255,0.03);border:1px solid var(--border)">
+              <b style="font-size:12px;color:var(--muted)">仕事優秀度スコア</b>
+              <span style="font-size:14px;margin-left:8px">${sj.score}点（${sj.rank}）</span>
+              <span style="font-size:12px;color:var(--muted);margin-left:8px">適職傾向：${sj.jobTendency}</span>
+            </div>
+          </div>
+        `;
+      })()}
+    </div>
+    <div class="result-card">
+      <h3 class="expert-only">子育て・育児アドバイス</h3>
+      <h3 class="simple-only">子育てのヒント</h3>
+      ${(() => {
+        const pa = parentingAdvice;
+        if (!pa) return '<p style="color:var(--muted);font-size:13px">データがありません。</p>';
+        return `
+          <div style="padding:14px 16px;border-radius:10px;background:rgba(200,150,100,0.06);border:1px solid rgba(200,150,100,0.15)">
+            <div style="margin-bottom:12px">
+              <b style="font-size:13px;color:#d0a070">得意な子育てスタイル</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.strength}</p>
+            </div>
+            <div style="margin-bottom:12px">
+              <b style="font-size:13px;color:#e08060">注意すべき点</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.caution}</p>
+            </div>
+            <div>
+              <b style="font-size:13px;color:#70b080">実践のヒント</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.tip}</p>
+            </div>
+          </div>
+        `;
+      })()}
+    </div>
+    <div class="result-card">
+      <h3 class="expert-only">トラブル予防ガイド</h3>
+      <h3 class="simple-only">トラブル予防ガイド</h3>
+      ${(() => {
+        const tp = troublePrevention;
+        return `
+          <div style="padding:14px 16px;border-radius:10px;background:rgba(220,80,80,0.06);border:1px solid rgba(220,80,80,0.15)">
+            <div style="margin-bottom:14px">
+              <b style="font-size:13px;color:#e07070">性格から見るトラブル傾向</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${tp.pattern}</p>
+            </div>
+            <div style="margin-bottom:14px">
+              <b style="font-size:13px;color:var(--muted)">天中殺期間の注意</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${tp.tenchuPeriods}の期間中は上記の傾向が強まりやすい時期です。大きな決断や人間関係の変更は避け、整理・準備に徹してください。</p>
+            </div>
+            ${tp.turningPointRisks.length > 0 ? `
+            <div>
+              <b style="font-size:13px;color:#e0a040">要注意の時期</b>
+              <ul style="margin:6px 0 0;padding-left:20px;font-size:14px;line-height:1.8">
+                ${tp.turningPointRisks.map(r => `<li>${r}</li>`).join("")}
+              </ul>
+            </div>
+            ` : ""}
+          </div>
+        `;
       })()}
     </div>
     <div class="result-card reading expert-only">
