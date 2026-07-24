@@ -3732,6 +3732,121 @@ function replayHistory(idx) {
   render();
 }
 
+// === 職場・親子の相性追加 ===
+
+// 星ごとの職場での役割傾向
+const starWorkRole = {
+  "貫索星": "専門・独立系", "石門星": "調整・仲介系", "鳳閣星": "企画・ムード系",
+  "調舒星": "感覚・専門系", "禄存星": "サポート・奉仕系", "司禄星": "管理・堅実系",
+  "車騎星": "行動・開拓系", "牽牛星": "管理・名誉系", "龍高星": "企画・変革系", "玉堂星": "知識・教育系"
+};
+
+// 職場相性の星ペアボーナス
+const workStarBonus = {
+  "貫索星": { "石門星": 10, "玉堂星": 8, "禄存星": 6, "牽牛星": 7, "司禄星": 5, "貫索星": -5, "車騎星": 2, "鳳閣星": 3, "調舒星": 4, "龍高星": 0 },
+  "石門星": { "貫索星": 10, "車騎星": 8, "鳳閣星": 7, "玉堂星": 6, "石門星": -3, "禄存星": 8, "司禄星": 7, "牽牛星": 8, "龍高星": 5, "調舒星": 4 },
+  "鳳閣星": { "石門星": 7, "調舒星": 8, "龍高星": 7, "禄存星": 6, "鳳閣星": -4, "車騎星": 6, "玉堂星": 5, "貫索星": 3, "司禄星": 2, "牽牛星": 3 },
+  "調舒星": { "鳳閣星": 8, "玉堂星": 7, "龍高星": 6, "貫索星": 4, "調舒星": -6, "石門星": 4, "禄存星": 5, "司禄星": 2, "車騎星": 2, "牽牛星": 3 },
+  "禄存星": { "石門星": 8, "玉堂星": 7, "司禄星": 8, "牽牛星": 7, "禄存星": -2, "貫索星": 6, "鳳閣星": 6, "調舒星": 5, "車騎星": 4, "龍高星": 3 },
+  "司禄星": { "禄存星": 8, "牽牛星": 8, "玉堂星": 6, "石門星": 7, "司禄星": -4, "貫索星": 5, "鳳閣星": 2, "調舒星": 2, "車騎星": 2, "龍高星": 0 },
+  "車騎星": { "石門星": 8, "牽牛星": 8, "貫索星": 2, "鳳閣星": 6, "車騎星": -6, "禄存星": 4, "司禄星": 2, "玉堂星": 3, "龍高星": 5, "調舒星": 2 },
+  "牽牛星": { "司禄星": 8, "禄存星": 7, "玉堂星": 7, "石門星": 8, "車騎星": 8, "牽牛星": -4, "貫索星": 6, "鳳閣星": 3, "調舒星": 3, "龍高星": 2 },
+  "龍高星": { "鳳閣星": 7, "調舒星": 6, "玉堂星": 8, "石門星": 5, "車騎星": 5, "龍高星": -6, "貫索星": 0, "禄存星": 3, "司禄星": 0, "牽牛星": 2 },
+  "玉堂星": { "龍高星": 8, "貫索星": 8, "禄存星": 7, "石門星": 6, "司禄星": 6, "牽牛星": 7, "調舒星": 7, "玉堂星": -4, "鳳閣星": 5, "車騎星": 3 }
+};
+
+const workRelationAdvice = {
+  "相生": "上司と部下、または先輩と後輩として相性抜群。育てる・育てられる関係が自然に成立する。",
+  "比和": "似た働き方をするため協力しやすいが、役割が被ると競争になる。担当を明確に分けること。",
+  "相剋": "意見対立が起きやすい。ただし衝突から新しいアイデアが生まれることも。議論のルールを決めること。",
+  "反剋": "一方がもう一方にストレスを与えやすい。物理的な距離を置くか、関わりを最小限にするのが無難。"
+};
+
+function calcWorkCompatibility(a, b) {
+  const elA = elements[stems.indexOf(a.dayStem)];
+  const elB = elements[stems.indexOf(b.dayStem)];
+  const relation = gogyoRelation[elA][elB];
+  const centerA = a.centerStar || "";
+  const centerB = b.centerStar || "";
+
+  let score = 50;
+  const factors = [];
+
+  if (relation === "相生") { score += 25; factors.push("五行相生+25"); }
+  else if (relation === "比和") { score += 12; factors.push("五行比和+12"); }
+  else if (relation === "相剋") { score -= 15; factors.push("五行相剋-15"); }
+  else if (relation === "反剋") { score -= 20; factors.push("五行反剋-20"); }
+
+  const starPt = workStarBonus[centerA] && workStarBonus[centerA][centerB] !== undefined ? workStarBonus[centerA][centerB] : 0;
+  score += starPt;
+  if (starPt) factors.push(`主星(${centerA}×${centerB})${starPt > 0 ? "+" : ""}${starPt}`);
+
+  const yinYangA = stems.indexOf(a.dayStem) % 2 === 0 ? "陽" : "陰";
+  const yinYangB = stems.indexOf(b.dayStem) % 2 === 0 ? "陽" : "陰";
+  if (yinYangA !== yinYangB) { score += 8; factors.push("陰陽補完+8"); }
+  else { score -= 4; factors.push("同陰陽-4"); }
+
+  score = Math.max(5, Math.min(98, Math.round(score)));
+
+  const roleA = starWorkRole[centerA] || "";
+  const roleB = starWorkRole[centerB] || "";
+  const advice = workRelationAdvice[relation] || "";
+
+  return { score, relation, factors, roleA, roleB, centerA, centerB, advice };
+}
+
+// 親子相性の星ペアボーナス
+const parentChildStarBonus = {
+  "貫索星": { "石門星": 12, "禄存星": 10, "玉堂星": 8, "鳳閣星": 5, "貫索星": 3, "調舒星": 4, "司禄星": 7, "車騎星": 2, "牽牛星": 6, "龍高星": 1 },
+  "石門星": { "貫索星": 10, "鳳閣星": 10, "禄存星": 8, "石門星": 5, "玉堂星": 7, "車騎星": 6, "牽牛星": 7, "龍高星": 6, "調舒星": 4, "司禄星": 6 },
+  "鳳閣星": { "石門星": 10, "調舒星": 8, "龍高星": 7, "禄存星": 7, "鳳閣星": 4, "玉堂星": 5, "貫索星": 3, "司禄星": 3, "車騎星": 5, "牽牛星": 3 },
+  "調舒星": { "鳳閣星": 8, "玉堂星": 7, "龍高星": 8, "貫索星": 4, "調舒星": 2, "石門星": 4, "禄存星": 6, "司禄星": 3, "車騎星": 2, "牽牛星": 3 },
+  "禄存星": { "貫索星": 10, "石門星": 8, "司禄星": 8, "玉堂星": 7, "禄存星": 6, "鳳閣星": 7, "調舒星": 6, "牽牛星": 7, "車騎星": 4, "龍高星": 3 },
+  "司禄星": { "禄存星": 8, "牽牛星": 8, "玉堂星": 6, "石門星": 6, "司禄星": 5, "貫索星": 7, "鳳閣星": 3, "調舒星": 3, "車騎星": 2, "龍高星": 1 },
+  "車騎星": { "石門星": 6, "牽牛星": 7, "貫索星": 2, "鳳閣星": 5, "車騎星": 3, "禄存星": 4, "司禄星": 2, "玉堂星": 3, "龍高星": 5, "調舒星": 2 },
+  "牽牛星": { "司禄星": 8, "禄存星": 7, "玉堂星": 7, "石門星": 7, "車騎星": 7, "牽牛星": 4, "貫索星": 6, "鳳閣星": 3, "調舒星": 3, "龍高星": 2 },
+  "龍高星": { "鳳閣星": 7, "調舒星": 8, "玉堂星": 8, "石門星": 6, "車騎星": 5, "龍高星": 2, "貫索星": 1, "禄存星": 3, "司禄星": 1, "牽牛星": 2 },
+  "玉堂星": { "龍高星": 8, "貫索星": 8, "禄存星": 7, "石門星": 7, "司禄星": 6, "牽牛星": 7, "調舒星": 7, "玉堂星": 4, "鳳閣星": 5, "車騎星": 3 }
+};
+
+const parentChildRelationAdvice = {
+  "相生": "親が子を育てる自然な関係。親の愛情がスムーズに伝わり、子供は素直に伸びる。",
+  "比和": "親子で似た気質。理解しやすいが、同じ欠点も共有する。親の課題が子にも受け継がれやすい。",
+  "相剋": "親子の意見が対立しやすい。特に思春期に衝突が増える。相手を変えようとせず認めることが鍵。",
+  "反剋": "親の期待が子にプレッシャーとしてのしかかる。放任気味に関わる方がかえって上手くいく関係。"
+};
+
+function calcParentChildCompatibility(parent, child) {
+  const elP = elements[stems.indexOf(parent.dayStem)];
+  const elC = elements[stems.indexOf(child.dayStem)];
+  const relation = gogyoRelation[elP][elC];
+  const centerP = parent.centerStar || "";
+  const centerC = child.centerStar || "";
+
+  let score = 50;
+  const factors = [];
+
+  if (relation === "相生") { score += 28; factors.push("五行相生+28"); }
+  else if (relation === "比和") { score += 15; factors.push("五行比和+15"); }
+  else if (relation === "相剋") { score -= 12; factors.push("五行相剋-12"); }
+  else if (relation === "反剋") { score -= 18; factors.push("五行反剋-18"); }
+
+  const starPt = parentChildStarBonus[centerP] && parentChildStarBonus[centerP][centerC] !== undefined ? parentChildStarBonus[centerP][centerC] : 0;
+  score += starPt;
+  if (starPt) factors.push(`主星(${centerP}×${centerC})${starPt > 0 ? "+" : ""}${starPt}`);
+
+  const yinYangP = stems.indexOf(parent.dayStem) % 2 === 0 ? "陽" : "陰";
+  const yinYangC = stems.indexOf(child.dayStem) % 2 === 0 ? "陽" : "陰";
+  if (yinYangP !== yinYangC) { score += 10; factors.push("陰陽補完+10"); }
+  else { score -= 5; factors.push("同陰陽-5"); }
+
+  score = Math.max(5, Math.min(98, Math.round(score)));
+
+  const advice = parentChildRelationAdvice[relation] || "";
+
+  return { score, relation, factors, centerP, centerC, advice };
+}
+
 // === 相性占い ===
 const gogyoRelation = { 木: { 木: "比和", 火: "相生", 土: "相剋", 金: "反剋", 水: "相生" }, 火: { 木: "相生", 火: "比和", 土: "相生", 金: "相剋", 水: "反剋" }, 土: { 木: "反剋", 火: "相生", 土: "比和", 金: "相生", 水: "相剋" }, 金: { 木: "相剋", 火: "反剋", 金: "比和", 土: "相生", 水: "相生" }, 水: { 木: "相生", 火: "相剋", 土: "反剋", 金: "相生", 水: "比和" } };
 
@@ -3930,8 +4045,12 @@ function renderCompat(event) {
   if (idxA === idxB) return alert("異なる人物を選択してください");
   const a = history[idxA];
   const b = history[idxB];
-  if (a.gender && b.gender && a.gender === b.gender) return alert("男性同士・女性同士の相性占いには対応していません。\n男性と女性のペアを選択してください。");
+  if (a.gender && b.gender && a.gender === b.gender) {
+    // 同性ペアの場合は恋愛相性をスキップし、職場・親子相性のみ表示
+  }
   const c = calcCompatibility(a, b);
+  const wc = calcWorkCompatibility(a, b);
+  const pc = calcParentChildCompatibility(a, b);
   const severity = c.score < 40 ? "bad" : "good";
 
   // スコア→ランク
@@ -4084,6 +4203,69 @@ function renderCompat(event) {
         <div style="font-size:12px;color:var(--muted);margin-top:4px">主星「${c.starAtoB}」が表す${b.name}の存在感</div></article>
         <article><h4>${b.name}から見た${a.name}</h4><div>${starRelationTexts[c.starBtoA]?.[severity] || starRelationTexts[c.starBtoA]?.moderate || pickByBalance(starTexts[c.starBtoA], "moderate")}</div>
         <div style="font-size:12px;color:var(--muted);margin-top:4px">主星「${c.starBtoA}」が表す${a.name}の存在感</div></article>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <h3>職場の人間関係相性</h3>
+      <div style="margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
+          <div style="text-align:center">
+            <div style="font-size:32px;font-weight:700;color:${scoreColor(wc.score)}">${wc.score}</div>
+            <div style="font-size:12px;color:var(--muted)">職場相性スコア</div>
+          </div>
+          <div style="flex:1">
+            <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="width:${wc.score}%;background:linear-gradient(90deg,${scoreColor(wc.score)},${scoreColor(wc.score)})"></div></div>
+            <div style="font-size:13px;margin-top:8px;color:var(--muted)">五行関係：<strong>${wc.relation}</strong></div>
+          </div>
+        </div>
+        <div style="padding:14px 16px;border-radius:10px;background:rgba(100,150,200,0.06);border:1px solid rgba(100,150,200,0.15);margin-bottom:12px">
+          <div style="margin-bottom:10px">
+            <b style="font-size:13px;color:var(--muted)">${a.name}の役割傾向</b>
+            <p style="margin:4px 0 0;font-size:14px">${wc.roleA}（${wc.centerA}）</p>
+          </div>
+          <div style="margin-bottom:10px">
+            <b style="font-size:13px;color:var(--muted)">${b.name}の役割傾向</b>
+            <p style="margin:4px 0 0;font-size:14px">${wc.roleB}（${wc.centerB}）</p>
+          </div>
+          <div>
+            <b style="font-size:13px;color:var(--muted)">アドバイス</b>
+            <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${wc.advice}</p>
+          </div>
+        </div>
+        <div class="compat-cat-factors">${wc.factors.map(f => `<span class="factor-tag">${f}</span>`).join("")}</div>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <h3>親子相性</h3>
+      <div style="margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
+          <div style="text-align:center">
+            <div style="font-size:32px;font-weight:700;color:${scoreColor(pc.score)}">${pc.score}</div>
+            <div style="font-size:12px;color:var(--muted)">親子相性スコア</div>
+          </div>
+          <div style="flex:1">
+            <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="width:${pc.score}%;background:linear-gradient(90deg,${scoreColor(pc.score)},${scoreColor(pc.score)})"></div></div>
+            <div style="font-size:13px;margin-top:8px;color:var(--muted)">五行関係：<strong>${pc.relation}</strong></div>
+          </div>
+        </div>
+        <div style="padding:14px 16px;border-radius:10px;background:rgba(200,150,100,0.06);border:1px solid rgba(200,150,100,0.15);margin-bottom:12px">
+          <div style="margin-bottom:10px">
+            <b style="font-size:13px;color:var(--muted)">親（${a.name}）の主星</b>
+            <p style="margin:4px 0 0;font-size:14px">${pc.centerP}</p>
+          </div>
+          <div style="margin-bottom:10px">
+            <b style="font-size:13px;color:var(--muted)">子（${b.name}）の主星</b>
+            <p style="margin:4px 0 0;font-size:14px">${pc.centerC}</p>
+          </div>
+          <div>
+            <b style="font-size:13px;color:var(--muted)">アドバイス</b>
+            <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pc.advice}</p>
+          </div>
+        </div>
+        <div class="compat-cat-factors">${pc.factors.map(f => `<span class="factor-tag">${f}</span>`).join("")}</div>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6">※ ${a.name}を親、${b.name}を子として計算しています。逆の場合は選択順序を入れ替えてください。</p>
       </div>
     </div>
   `;
