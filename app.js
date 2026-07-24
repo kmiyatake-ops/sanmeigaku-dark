@@ -4205,69 +4205,6 @@ function renderCompat(event) {
         <div style="font-size:12px;color:var(--muted);margin-top:4px">主星「${c.starBtoA}」が表す${a.name}の存在感</div></article>
       </div>
     </div>
-
-    <div class="result-card">
-      <h3>職場の人間関係相性</h3>
-      <div style="margin-bottom:16px">
-        <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
-          <div style="text-align:center">
-            <div style="font-size:32px;font-weight:700;color:${scoreColor(wc.score)}">${wc.score}</div>
-            <div style="font-size:12px;color:var(--muted)">職場相性スコア</div>
-          </div>
-          <div style="flex:1">
-            <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="width:${wc.score}%;background:linear-gradient(90deg,${scoreColor(wc.score)},${scoreColor(wc.score)})"></div></div>
-            <div style="font-size:13px;margin-top:8px;color:var(--muted)">五行関係：<strong>${wc.relation}</strong></div>
-          </div>
-        </div>
-        <div style="padding:14px 16px;border-radius:10px;background:rgba(100,150,200,0.06);border:1px solid rgba(100,150,200,0.15);margin-bottom:12px">
-          <div style="margin-bottom:10px">
-            <b style="font-size:13px;color:var(--muted)">${a.name}の役割傾向</b>
-            <p style="margin:4px 0 0;font-size:14px">${wc.roleA}（${wc.centerA}）</p>
-          </div>
-          <div style="margin-bottom:10px">
-            <b style="font-size:13px;color:var(--muted)">${b.name}の役割傾向</b>
-            <p style="margin:4px 0 0;font-size:14px">${wc.roleB}（${wc.centerB}）</p>
-          </div>
-          <div>
-            <b style="font-size:13px;color:var(--muted)">アドバイス</b>
-            <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${wc.advice}</p>
-          </div>
-        </div>
-        <div class="compat-cat-factors">${wc.factors.map(f => `<span class="factor-tag">${f}</span>`).join("")}</div>
-      </div>
-    </div>
-
-    <div class="result-card">
-      <h3>親子相性</h3>
-      <div style="margin-bottom:16px">
-        <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px">
-          <div style="text-align:center">
-            <div style="font-size:32px;font-weight:700;color:${scoreColor(pc.score)}">${pc.score}</div>
-            <div style="font-size:12px;color:var(--muted)">親子相性スコア</div>
-          </div>
-          <div style="flex:1">
-            <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="width:${pc.score}%;background:linear-gradient(90deg,${scoreColor(pc.score)},${scoreColor(pc.score)})"></div></div>
-            <div style="font-size:13px;margin-top:8px;color:var(--muted)">五行関係：<strong>${pc.relation}</strong></div>
-          </div>
-        </div>
-        <div style="padding:14px 16px;border-radius:10px;background:rgba(200,150,100,0.06);border:1px solid rgba(200,150,100,0.15);margin-bottom:12px">
-          <div style="margin-bottom:10px">
-            <b style="font-size:13px;color:var(--muted)">親（${a.name}）の主星</b>
-            <p style="margin:4px 0 0;font-size:14px">${pc.centerP}</p>
-          </div>
-          <div style="margin-bottom:10px">
-            <b style="font-size:13px;color:var(--muted)">子（${b.name}）の主星</b>
-            <p style="margin:4px 0 0;font-size:14px">${pc.centerC}</p>
-          </div>
-          <div>
-            <b style="font-size:13px;color:var(--muted)">アドバイス</b>
-            <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pc.advice}</p>
-          </div>
-        </div>
-        <div class="compat-cat-factors">${pc.factors.map(f => `<span class="factor-tag">${f}</span>`).join("")}</div>
-        <p style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6">※ ${a.name}を親、${b.name}を子として計算しています。逆の場合は選択順序を入れ替えてください。</p>
-      </div>
-    </div>
   `;
   compatResult.scrollIntoView({ behavior: "smooth", block: "start" });
 }
