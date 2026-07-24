@@ -4790,6 +4790,30 @@ function render(event) {
         </div>
       </div>
     </div>
+    <div class="result-card">
+      <h3 class="expert-only">子育て・育児アドバイス</h3>
+      <h3 class="simple-only">子育てのヒント</h3>
+      ${(() => {
+        const pa = parentingAdvice;
+        if (!pa) return '<p style="color:var(--muted);font-size:13px">データがありません。</p>';
+        return `
+          <div style="padding:14px 16px;border-radius:10px;background:rgba(200,150,100,0.06);border:1px solid rgba(200,150,100,0.15)">
+            <div style="margin-bottom:12px">
+              <b style="font-size:13px;color:#d0a070">得意な子育てスタイル</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.strength}</p>
+            </div>
+            <div style="margin-bottom:12px">
+              <b style="font-size:13px;color:#e08060">注意すべき点</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.caution}</p>
+            </div>
+            <div>
+              <b style="font-size:13px;color:#70b080">実践のヒント</b>
+              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.tip}</p>
+            </div>
+          </div>
+        `;
+      })()}
+    </div>
     <div class="result-card expert-only">
       <h3>大運（10年周期の運気）</h3>
       <p style="color:var(--muted);font-size:13px;margin:0 0 8px">${taiun.forward ? "順行" : "逆行"} / 立運${taiun.startAge}歳</p>
@@ -5021,30 +5045,6 @@ function render(event) {
         html += `<p class="simple-only" style="font-size:13px;color:var(--muted);margin:10px 0 0;line-height:1.7">※これは統計データからの参考情報です。必ず定期健康診断を受けて、自分の健康状態を確認してくださいね。</p>`;
         html += '</div>';
         return html;
-      })()}
-    </div>
-    <div class="result-card">
-      <h3 class="expert-only">子育て・育児アドバイス</h3>
-      <h3 class="simple-only">子育てのヒント</h3>
-      ${(() => {
-        const pa = parentingAdvice;
-        if (!pa) return '<p style="color:var(--muted);font-size:13px">データがありません。</p>';
-        return `
-          <div style="padding:14px 16px;border-radius:10px;background:rgba(200,150,100,0.06);border:1px solid rgba(200,150,100,0.15)">
-            <div style="margin-bottom:12px">
-              <b style="font-size:13px;color:#d0a070">得意な子育てスタイル</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.strength}</p>
-            </div>
-            <div style="margin-bottom:12px">
-              <b style="font-size:13px;color:#e08060">注意すべき点</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.caution}</p>
-            </div>
-            <div>
-              <b style="font-size:13px;color:#70b080">実践のヒント</b>
-              <p style="margin:4px 0 0;font-size:14px;line-height:1.7">${pa.tip}</p>
-            </div>
-          </div>
-        `;
       })()}
     </div>
     <div class="result-card">
