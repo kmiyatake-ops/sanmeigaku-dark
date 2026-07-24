@@ -2498,7 +2498,7 @@ button {
   }
 
   .input-panel {
-    padding: 14px;
+    padding: 12px;
   }
 
   .result-card {
@@ -2506,37 +2506,45 @@ button {
   }
 
   form {
-    gap: 10px;
-  }
-
-  .name-row {
     gap: 8px;
   }
 
+  .name-row {
+    gap: 6px;
+  }
+
   .birth-inputs input {
-    width: 46px;
-    font-size: 15px;
+    width: 42px;
+    font-size: 14px;
     min-width: 0;
+    padding: 0 6px;
   }
 
   .birth-inputs input:first-child {
-    width: 60px;
+    width: 56px;
   }
 
   .birth-sep {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   input,
   select,
   button {
-    min-height: 44px;
-    font-size: 15px;
+    min-height: 42px;
+    font-size: 14px;
     border-radius: 10px;
+    padding: 0 10px;
   }
 
   button {
-    padding: 0 16px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  label {
+    font-size: 12px;
+    gap: 6px;
   }
 
   .reading article {
