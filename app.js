@@ -2799,7 +2799,52 @@ function calcWorkExcellence(center, northStar, southStar, energy, counts, pillar
   return { score, rank, breakdown: breakdown.join(" / "), jobTendency: jobTendency[center] || "" };
 }
 
-function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, seimei) {
+function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, seimei, gender) {
+  const isFemale = gender === "female";
+  const isMale = gender === "male";
+
+  function adjustTone(text) {
+    if (!text || typeof text !== "string") return text;
+    let result = text;
+    if (isFemale) {
+      result = result
+        .replace(/する。/g, "するかもしれませんね。")
+        .replace(/なりやすい。/g, "なりやすい傾向がありますね。")
+        .replace(/なりやすいです。/g, "なりやすいですよね。")
+        .replace(/です。/g, "ですね。")
+        .replace(/ます。/g, "ますよ。")
+        .replace(/でしょう。/g, "でしょうね。")
+        .replace(/ない。/g, "ないかもしれません。")
+        .replace(/鍵です。/g, "鍵ですね。きっと良い方向に向かいますよ。")
+        .replace(/注意。/g, "注意してくださいね。")
+        .replace(/向きです。/g, "向きですね。無理をなさらないでくださいね。");
+    } else if (isMale) {
+      result = result
+        .replace(/する。/g, "すると成果が出る。")
+        .replace(/なりやすい。/g, "なりやすい。要注意。")
+        .replace(/なりやすいです。/g, "なりやすい。")
+        .replace(/です。/g, "だ。")
+        .replace(/ます。/g, "る。")
+        .replace(/でしょう。/g, "だろう。")
+        .replace(/ない。/g, "ない。")
+        .replace(/鍵です。/g, "鍵だ。ここを押さえろ。")
+        .replace(/注意。/g, "注意。")
+        .replace(/向きです。/g, "向きだ。")
+        .replace(/してください。/g, "しろ。")
+        .replace(/おすすめします。/g, "推奨する。");
+    }
+    return result;
+  }
+
+  function toneWrap(text) {
+    if (!text || typeof text !== "string") return text;
+    if (isFemale) {
+      return adjustTone(text) + "\n\nこのような傾向がありますが、あくまで参考として受け取ってくださいね。あなたらしさを大切にしていきましょう。";
+    } else if (isMale) {
+      return adjustTone(text) + "\n\n以上が傾向分析の結果だ。この情報を行動に活かすことが鍵になる。";
+    }
+    return text;
+  }
   const weakest = Object.entries(counts).sort((a, b) => a[1] - b[1])[0][0];
   const strongest = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
   const center = mainStars.center;
@@ -3521,23 +3566,23 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
   const seimeiBad = hasSeimei ? `【姓名判断・人格の性質（${seimei.jinGogyo}）】${seimeiPersonality.jinGogyo.bad}\n【姓名判断・三才配置】${seimeiPersonality.sancaiText}` : "";
 
   const reading = [
-    { title: `${name}さんの本質`, text: `${dayP.good}${hasSeimei ? `\n姓名判断では人格${seimei.jinkaku}画（${seimei.jinRank?.rank}）。` : ""}` },
-    { title: "性格の長所", text: `【中心的な性格】${pickByBalance(starP.good, balanceType)}\n【生まれた日の性質】${dayP.good}\n【最も強い要素（${strongest}）】${strongP.good}\n【表に出やすい面】${pickByBalance(northP.good, balanceType)}\n【内面に持っている面】${pickByBalance(southP.good, balanceType)}${seimeiGood ? "\n" + seimeiGood : ""}` },
-    { title: "性格の短所（隠さず直視すべき点）", text: `【中心的な性格】${pickByBalance(starP.bad, balanceType)}\n【生まれた日の性質】${dayP.bad}\n【最も強い要素（${strongest}）が強すぎる面】${strongP.bad}\n【足りない要素（${weakest}）の影響】${weakP.bad}${seimeiBad ? "\n" + seimeiBad : ""}` },
-    { title: "仕事面での性格", text: `${pickByBalance(starP.work, balanceType)}${hasSeimei ? `\n姓名判断の仕事運スコアは${seimei.workFortune}点。${seimei.workFortune >= 70 ? "姓名判断的にも仕事運は良好。" : seimei.workFortune >= 50 ? "姓名判断的には標準的。" : "姓名判断的には仕事面で苦労しやすい。"}` : ""}` },
+    { title: `${name}さんの本質`, text: toneWrap(`${dayP.good}${hasSeimei ? `\n姓名判断では人格${seimei.jinkaku}画（${seimei.jinRank?.rank}）。` : ""}`) },
+    { title: "性格の長所", text: toneWrap(`【中心的な性格】${pickByBalance(starP.good, balanceType)}\n【生まれた日の性質】${dayP.good}\n【最も強い要素（${strongest}）】${strongP.good}\n【表に出やすい面】${pickByBalance(northP.good, balanceType)}\n【内面に持っている面】${pickByBalance(southP.good, balanceType)}${seimeiGood ? "\n" + seimeiGood : ""}`) },
+    { title: "性格の短所（隠さず直視すべき点）", text: toneWrap(`【中心的な性格】${pickByBalance(starP.bad, balanceType)}\n【生まれた日の性質】${dayP.bad}\n【最も強い要素（${strongest}）が強すぎる面】${strongP.bad}\n【足りない要素（${weakest}）の影響】${weakP.bad}${seimeiBad ? "\n" + seimeiBad : ""}`) },
+    { title: "仕事面での性格", text: toneWrap(`${pickByBalance(starP.work, balanceType)}${hasSeimei ? `\n姓名判断の仕事運スコアは${seimei.workFortune}点。${seimei.workFortune >= 70 ? "姓名判断的にも仕事運は良好。" : seimei.workFortune >= 50 ? "姓名判断的には標準的。" : "姓名判断的には仕事面で苦労しやすい。"}` : ""}`) },
     { title: "仕事の優秀度", text: `総合仕事優秀度スコア：${workEx.score}点（${workEx.rank}）\n適職傾向：${workEx.jobTendency}\n内訳：${workEx.breakdown}${hasSeimei ? `\n姓名判断の仕事運スコア：${seimei.workFortune}点` : ""}` },
-    { title: "恋愛面での性格", text: `${pickByBalance(starP.love, balanceType)}${hasSeimei ? `\n姓名判断の恋愛運スコアは${seimei.loveFortune}点。${seimei.loveFortune >= 70 ? "姓名判断的にも恋愛運は良好。" : seimei.loveFortune >= 50 ? "姓名判断的には標準的。" : "姓名判断的には恋愛面で波乱あり。"}` : ""}` },
-    { title: "金銭感覚とお金の性格", text: pickByBalance(starP.money, balanceType) },
-    { title: "結婚観と家庭の性格", text: pickByBalance(starP.marriage, balanceType) },
-    { title: "社交性と対人関係の性格", text: pickByBalance(starP.social, balanceType) },
+    { title: "恋愛面での性格", text: toneWrap(`${pickByBalance(starP.love, balanceType)}${hasSeimei ? `\n姓名判断の恋愛運スコアは${seimei.loveFortune}点。${seimei.loveFortune >= 70 ? "姓名判断的にも恋愛運は良好。" : seimei.loveFortune >= 50 ? "姓名判断的には標準的。" : "姓名判断的には恋愛面で波乱あり。"}` : ""}`) },
+    { title: "金銭感覚とお金の性格", text: toneWrap(pickByBalance(starP.money, balanceType)) },
+    { title: "結婚観と家庭の性格", text: toneWrap(pickByBalance(starP.marriage, balanceType)) },
+    { title: "社交性と対人関係の性格", text: toneWrap(pickByBalance(starP.social, balanceType)) },
     { title: `中心的な性格×生まれた日の性質の詳細`, text: starP.byDayStem ? starP.byDayStem[pillars.day.stem] || "" : "" },
     { title: `表に出やすい面×生まれた日の性質の詳細`, text: northP.byDayStem ? northP.byDayStem[pillars.day.stem] || "" : "" },
     { title: `内面に持っている面×生まれた日の性質の詳細`, text: southP.byDayStem ? southP.byDayStem[pillars.day.stem] || "" : "" },
-    { title: "本人も自覚しにくい裏の性格", text: pickByBalance(starP.hidden, balanceType) },
+    { title: "本人も自覚しにくい裏の性格", text: toneWrap(pickByBalance(starP.hidden, balanceType)) },
     { title: "人生のタイミングから見る性格要素", text: energyTexts.join("　") },
-    { title: "バランスと課題", text: `内面では「${strongest}」の性質が強く、「${weakest}」の性質が不足気味。強い要素は武器ですが、過剰になると独善・偏り・視野狭窄になります。不足する「${weakest}」は、人生で意識的に鍛えないと同じ壁として何度も出ます。${strongP.good}という長所を活かしつつ、${weakP.bad}という弱点を補う環境選びが鍵です。${hasSeimei ? `\n姓名判断の総合判定は「${seimei.overallRank}」。${seimei.overallRank === "大吉" || seimei.overallRank === "吉" ? "名前の画数バランスが良く、運勢を後押しする。" : seimei.overallRank === "半吉" ? "名前の画数は標準的。努力次第で運勢を引き上げられる。" : "名前の画数に偏りがあり、意識的な努力で補う必要がある。"}` : ""}` },
-    { title: "エネルギー傾向", text: `人生のタイミングを表す星の合計エネルギーは${totalEnergy}点。${energy.map((e) => `${e.name}${e.score}点`).join("・")}。${totalEnergy >= 28 ? "強い運命ほど、怠けた時の反動も大きいです。力を持て余すと周囲への圧になります。" : "繊細な運命ほど、環境の悪さに削られます。根性論だけで突破しようとすると消耗します。"}` },
-    { title: "注意が必要な時期", text: `${tenchusatsu}の期間中は、拡大や大きな決断より整理・準備・見直し向き。無理に勝負すると、手に入れたものの維持で苦しくなりやすいです。` }
+    { title: "バランスと課題", text: toneWrap(`内面では「${strongest}」の性質が強く、「${weakest}」の性質が不足気味。強い要素は武器ですが、過剰になると独善・偏り・視野狭窄になります。不足する「${weakest}」は、人生で意識的に鍛えないと同じ壁として何度も出ます。${strongP.good}という長所を活かしつつ、${weakP.bad}という弱点を補う環境選びが鍵です。${hasSeimei ? `\n姓名判断の総合判定は「${seimei.overallRank}」。${seimei.overallRank === "大吉" || seimei.overallRank === "吉" ? "名前の画数バランスが良く、運勢を後押しする。" : seimei.overallRank === "半吉" ? "名前の画数は標準的。努力次第で運勢を引き上げられる。" : "名前の画数に偏りがあり、意識的な努力で補う必要がある。"}` : ""}`) },
+    { title: "エネルギー傾向", text: toneWrap(`人生のタイミングを表す星の合計エネルギーは${totalEnergy}点。${energy.map((e) => `${e.name}${e.score}点`).join("・")}。${totalEnergy >= 28 ? "強い運命ほど、怠けた時の反動も大きいです。力を持て余すと周囲への圧になります。" : "繊細な運命ほど、環境の悪さに削られます。根性論だけで突破しようとすると消耗します。"}`) },
+    { title: "注意が必要な時期", text: toneWrap(`${tenchusatsu}の期間中は、拡大や大きな決断より整理・準備・見直し向き。無理に勝負すると、手に入れたものの維持で苦しくなりやすいです。`) }
   ];
   return reading;
 }
@@ -4041,7 +4086,7 @@ function render(event) {
   const taiun = getTaiun(date, month, stems.indexOf(year.stem), gender);
   const currentAge = Math.floor((new Date() - date) / (365.25 * 86400000));
   const seimeiResult = analyzeSeimei(lastName, firstName);
-  const reading = buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, seimeiResult);
+  const reading = buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, seimeiResult, gender);
   const topologyResults = analyzeTopology(pillars);
   const fateTenchu = analyzeFateTenchusatsu(pillars);
   const guardian = getGuardianElements(counts);
