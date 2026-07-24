@@ -2498,53 +2498,55 @@ button {
   }
 
   .input-panel {
-    padding: 12px;
+    padding: 10px;
   }
 
   .result-card {
-    padding: 14px;
+    padding: 12px;
   }
 
   form {
-    gap: 8px;
-  }
-
-  .name-row {
     gap: 6px;
   }
 
+  .name-row {
+    gap: 5px;
+  }
+
   .birth-inputs input {
-    width: 42px;
-    font-size: 14px;
+    width: 38px;
+    font-size: 13px;
     min-width: 0;
-    padding: 0 6px;
+    padding: 0 4px;
   }
 
   .birth-inputs input:first-child {
-    width: 56px;
+    width: 52px;
   }
 
   .birth-sep {
-    font-size: 11px;
+    font-size: 10px;
+    margin: 0 1px;
   }
 
   input,
   select,
   button {
-    min-height: 42px;
-    font-size: 14px;
-    border-radius: 10px;
-    padding: 0 10px;
+    min-height: 40px;
+    font-size: 13px;
+    border-radius: 8px;
+    padding: 0 8px;
   }
 
   button {
-    padding: 0 14px;
-    font-size: 14px;
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 800;
   }
 
   label {
-    font-size: 12px;
-    gap: 6px;
+    font-size: 11px;
+    gap: 5px;
   }
 
   .reading article {
