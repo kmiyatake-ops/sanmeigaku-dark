@@ -3529,7 +3529,7 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
     { title: "恋愛面での性格", text: `${pickByBalance(starP.love, balanceType)}${hasSeimei ? `\n姓名判断の恋愛運スコアは${seimei.loveFortune}点。${seimei.loveFortune >= 70 ? "姓名判断的にも恋愛運は良好。" : seimei.loveFortune >= 50 ? "姓名判断的には標準的。" : "姓名判断的には恋愛面で波乱あり。"}` : ""}` },
     { title: "金銭感覚とお金の性格", text: pickByBalance(starP.money, balanceType) },
     { title: "結婚観と家庭の性格", text: pickByBalance(starP.marriage, balanceType) },
-    { title: "社交性と対人関係の性格", text: `【中心的な性格】${pickByBalance(starP.social, balanceType)}<br><span class="expert-only">【生まれた日の性質】${dayStemSocial[pillars.day.stem] || ""}<br></span>【最も強い要素（${strongest}）】${gogyoSocial[strongest] || ""}${hasSeimei ? `<br>姓名判断の対人運${seimei.gaiRank?.rank}：${seimeiPersonality.gaiRankText}` : ""}` },
+    { title: "社交性と対人関係の性格", text: pickByBalance(starP.social, balanceType) },
     { title: `中心的な性格×生まれた日の性質の詳細`, text: starP.byDayStem ? starP.byDayStem[pillars.day.stem] || "" : "" },
     { title: `表に出やすい面×生まれた日の性質の詳細`, text: northP.byDayStem ? northP.byDayStem[pillars.day.stem] || "" : "" },
     { title: `内面に持っている面×生まれた日の性質の詳細`, text: southP.byDayStem ? southP.byDayStem[pillars.day.stem] || "" : "" },
