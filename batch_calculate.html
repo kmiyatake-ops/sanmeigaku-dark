@@ -1,30 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>芸能人病気データ 算命学一括計算</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>芸能人病気データ 算命学一括計算 | 占いの館M</title>
+<link rel="stylesheet" href="./styles.css?v=20260726a" />
 <style>
-  body { background: #1a1a2e; color: #e0e0e0; font-family: sans-serif; padding: 20px; }
-  h1 { color: #d4a843; }
-  #status { white-space: pre-wrap; font-family: monospace; font-size: 13px; line-height: 1.6; }
-  button { background: #d4a843; color: #1a1a2e; border: none; padding: 10px 24px; font-size: 16px; cursor: pointer; border-radius: 6px; margin: 10px 0; }
-  button:hover { background: #e0b850; }
+  .batch-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
+  .batch-actions button { margin: 0; }
+  .batch-status {
+    white-space: pre-wrap;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border);
+  }
+  .batch-output {
+    width: 100%;
+    height: 320px;
+    margin-top: 16px;
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    resize: vertical;
+  }
   .done { color: #70d0a0; }
   .error { color: #ff5050; }
-  textarea { width: 100%; height: 300px; background: #111; color: #e0e0e0; border: 1px solid #333; padding: 10px; font-family: monospace; font-size: 12px; }
 </style>
 </head>
 <body>
-<h1>芸能人病気データ 算命学一括計算</h1>
-<p>168名の芸能人データに対して算命学計算を実行し、結果をJSONとして出力します。</p>
-<button id="runBtn">計算実行</button>
-<button id="moteStatsBtn">人気度統計（異性・同性）</button>
-<button id="downloadBtn" style="display:none">結果をダウンロード</button>
-<div id="status"></div>
-<textarea id="output" style="display:none" readonly></textarea>
+<main class="app">
+  <section class="hero">
+    <div class="badge">バッチ計算ツール</div>
+    <h1>芸能人病気データ 一括計算</h1>
+    <p>168名の芸能人データに対して算命学計算を実行し、結果をJSONとして出力します。</p>
+  </section>
 
-<script src="./kanji-data.js?v=20260721d"></script>
-<script src="./app.js?v=20260721d"></script>
+  <section class="panel input-panel">
+    <h3 class="panel-title">一括計算と統計</h3>
+    <div class="batch-actions">
+      <button id="runBtn">計算実行</button>
+      <button id="moteStatsBtn">人気度統計（異性・同性）</button>
+      <button id="downloadBtn" style="display:none">結果をダウンロード</button>
+    </div>
+    <p class="note">「計算実行」で全員分の算命学結果を出力。「人気度統計」で異性・同性からの人気度の分布を確認できます。</p>
+    <div id="status" class="batch-status" style="display:none"></div>
+    <textarea id="output" class="batch-output" style="display:none" readonly></textarea>
+  </section>
+</main>
+
+<script src="./kanji-data.js?v=20260726a"></script>
+<script src="./app.js?v=20260726a"></script>
 <script>
 const CELEB_DATA = [
   {
@@ -2388,6 +2423,9 @@ let lastResults = null;
 
 document.getElementById("runBtn").addEventListener("click", function() {
   const status = document.getElementById("status");
+  const output = document.getElementById("output");
+  status.style.display = "block";
+  output.style.display = "none";
   status.textContent = "計算を開始します...\n";
 
   const results = [];
@@ -2407,7 +2445,6 @@ document.getElementById("runBtn").addEventListener("click", function() {
   status.textContent += "\n計算完了! 成功:" + success + "名 / エラー:" + errors + "名\n";
   status.innerHTML += '<span class="done">結果を下のテキストエリアからコピーするか、ダウンロードボタンで保存してください。</span>';
 
-  const output = document.getElementById("output");
   output.value = JSON.stringify(results, null, 2);
   output.style.display = "block";
 
@@ -2431,6 +2468,9 @@ document.getElementById("downloadBtn").addEventListener("click", function() {
 // === 人気度（モテ度）統計 ===
 document.getElementById("moteStatsBtn").addEventListener("click", function() {
   const status = document.getElementById("status");
+  const output = document.getElementById("output");
+  status.style.display = "block";
+  output.style.display = "none";
   status.textContent = "人気度統計を計算中...\n";
 
   const records = [];
@@ -2565,7 +2605,6 @@ document.getElementById("moteStatsBtn").addEventListener("click", function() {
 
   status.textContent = out;
 
-  const output = document.getElementById("output");
   output.value = JSON.stringify(records, null, 2);
   output.style.display = "block";
 });

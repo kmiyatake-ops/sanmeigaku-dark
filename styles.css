@@ -26,6 +26,111 @@
 }
 
 /* === 統一ユーティリティクラス === */
+.section-spaced { margin-top: 28px; }
+.panel-title { margin: 0 0 14px; }
+.btn-danger {
+  margin-top: 12px;
+  background: rgba(209, 75, 75, 0.2);
+  color: var(--red);
+  border: 1px solid var(--red);
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font: inherit;
+  min-height: auto;
+}
+.btn-danger:hover { background: rgba(209, 75, 75, 0.35); }
+.history-item { cursor: pointer; }
+.history-tags {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.sex-tendency { margin-bottom: 12px; }
+.sex-tendency-head { margin-bottom: 4px; }
+.sex-tendency-keyword {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(232, 200, 112, 0.13);
+  color: #c0a040;
+  font-weight: 600;
+}
+.sex-tendency-summary {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+.sex-tendency-traits {
+  font-size: 12px;
+  margin: 0 0 6px;
+  padding-left: 20px;
+  color: var(--text);
+}
+.sex-tendency-caution {
+  font-size: 11px;
+  color: var(--muted);
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(255, 180, 80, 0.1);
+}
+.mt-4 { margin-top: 4px; }
+.mt-6 { margin-top: 6px; }
+.mt-14 { margin-top: 14px; }
+.mt-16 { margin-top: 16px; }
+.mt-18 { margin-top: 18px; }
+.m-0 { margin: 0; }
+.mb-6 { margin-bottom: 6px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-10 { margin-bottom: 10px; }
+.mb-12 { margin-bottom: 12px; }
+.text-red { color: #e05050; }
+.text-steel { color: #4682b4; }
+.text-seagreen { color: #2e8b57; }
+.text-muted { color: var(--muted); }
+.fs-14 { font-size: 14px; }
+.fs-15 { font-size: 15px; }
+.alert-lead { font-size: 15px; line-height: 1.7; }
+.risk-factor {
+  margin: 4px 0;
+  padding: 4px 8px;
+  background: rgba(192,80,80,0.08);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.risk-factor.is-protect {
+  background: var(--seagreen-soft);
+}
+.risk-factor-simple {
+  font-size: 14px;
+  margin: 6px 0;
+  padding: 8px 12px;
+  background: rgba(192,80,80,0.08);
+  border-radius: 8px;
+  line-height: 1.6;
+}
+.risk-factor-simple.is-protect {
+  background: var(--seagreen-soft);
+}
+.tag-pill.is-sm { font-size: 12px; padding: 4px 10px; }
+.tag-pill.is-lg { font-size: 14px; padding: 6px 14px; }
+.flex-wrap-gap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.six-parents-legend-color { display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 6px; }
+.six-parents-depth-comment { display: block; font-size: 0.7em; font-weight: 400; opacity: 0.7; }
+.score-badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--badge-bg, rgba(255, 255, 255, 0.08));
+  color: var(--badge-color, var(--muted));
+  font-weight: 600;
+}
 .info-box {
   padding: 14px 16px;
   border-radius: 10px;
@@ -59,6 +164,27 @@
   margin: 4px 0 0;
   font-size: 14px;
   line-height: 1.7;
+  color: var(--text);
+}
+.info-text.is-lead {
+  margin: 0 0 14px;
+  line-height: 1.8;
+}
+.info-text.is-compact {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.flex-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.tp-list {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.7;
+  font-size: 13px;
   color: var(--text);
 }
 
@@ -95,7 +221,16 @@
   border-color: rgba(192, 80, 80, 0.2);
   color: #c05050;
 }
-
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.info-inline {
+  font-size: 14px;
+  margin-left: 8px;
+}
 .mini-badge {
   font-size: 12px;
   padding: 2px 8px;
@@ -444,6 +579,11 @@ button {
   font-size: 13px;
   line-height: 1.7;
 }
+.note.mb-10 { margin: 0 0 10px; }
+.note.mb-14 { margin: 0 0 14px; }
+.note.is-small { font-size: 12px; }
+.note.lead { line-height: 1.7; }
+.mt-10 { margin-top: 10px; }
 
 .result {
   margin-top: 28px;
@@ -474,6 +614,11 @@ button {
 .result-header p {
   margin: 10px 0 0;
   color: var(--muted);
+}
+.result-version {
+  font-size: 10px;
+  color: var(--muted);
+  opacity: 0.5;
 }
 
 .grid {
@@ -524,6 +669,7 @@ button {
 .bar i {
   display: block;
   height: 100%;
+  width: var(--bar-width, 0%);
   border-radius: inherit;
   background: linear-gradient(90deg, var(--gold), var(--red));
 }
@@ -660,6 +806,7 @@ button {
 
 .work-ex-bar-fill {
   height: 100%;
+  width: var(--work-ex-width, 0%);
   border-radius: 5px;
   background: linear-gradient(90deg, #c08040, #e0c060, #f0e080);
   transition: width 0.8s ease;
@@ -922,6 +1069,7 @@ button {
   font-size: 2.2em;
   font-weight: 800;
   line-height: 1;
+  color: var(--score-color, var(--gold));
 }
 
 .compat-cat-score small {
@@ -941,6 +1089,7 @@ button {
   font-weight: 700;
   color: #1a1a2e;
   margin-left: 6px;
+  background: var(--score-color, var(--gold));
 }
 
 .compat-cat-bar {
@@ -953,9 +1102,11 @@ button {
 
 .compat-cat-bar-fill {
   height: 100%;
+  width: var(--score, 0%);
   border-radius: 4px;
   transition: width 0.8s ease;
   opacity: 0.85;
+  background: linear-gradient(90deg, var(--score-color, var(--gold)), var(--score-color, var(--gold)));
 }
 
 .compat-cat p {
@@ -1533,10 +1684,23 @@ button {
 .yf-score-bar i {
   display: block;
   height: 100%;
+  width: var(--yf-width, 0%);
   border-radius: 999px;
   transition: width 0.3s;
+  background: var(--yf-bg, linear-gradient(90deg, var(--gold), var(--red)));
 }
+.yf-score-bar i.is-money { --yf-bg: linear-gradient(90deg, #d4a843, #f0d060); }
+.yf-score-bar i.is-love { --yf-bg: linear-gradient(90deg, #e04848, #ff8080); }
+.yf-score-bar i.is-work { --yf-bg: linear-gradient(90deg, #4080e0, #80b0ff); }
 
+.yearly-summary {
+  padding: 16px 18px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  white-space: pre-line;
+  line-height: 1.8;
+  font-size: 14px;
+}
 .yf-score-num {
   margin-top: 4px;
   font-size: 13px;
@@ -1637,6 +1801,7 @@ button {
   font-size: 3.2em;
   font-weight: 800;
   line-height: 1;
+  color: var(--risk-color, var(--text));
   text-shadow: 0 0 20px rgba(220, 80, 80, 0.3);
 }
 
@@ -1691,6 +1856,7 @@ button {
 
 .affair-risk-bar-fill {
   height: 100%;
+  width: var(--affair-width, 0%);
   border-radius: 5px;
   transition: width 0.8s ease;
 }
@@ -2220,7 +2386,17 @@ button {
   overflow: hidden;
   margin-bottom: 4px;
 }
-.seimei-fs-bar i { display: block; height: 100%; border-radius: 4px; transition: width 0.5s; }
+.seimei-fs-bar i {
+  display: block;
+  height: 100%;
+  width: var(--seimei-width, 0%);
+  border-radius: 4px;
+  transition: width 0.5s;
+  background: var(--seimei-bg, linear-gradient(90deg, var(--gold), var(--red)));
+}
+.seimei-fs-bar i.is-money { --seimei-bg: linear-gradient(90deg, #d4a843, #f0d060); }
+.seimei-fs-bar i.is-love { --seimei-bg: linear-gradient(90deg, #e04848, #ff8080); }
+.seimei-fs-bar i.is-work { --seimei-bg: linear-gradient(90deg, #4080e0, #80b0ff); }
 .seimei-fs-num { font-size: 14px; font-weight: 600; color: var(--text); }
 
 
@@ -2318,6 +2494,7 @@ button {
 .health-risk-bar i {
   display: block;
   height: 100%;
+  width: var(--health-risk-width, 0%);
   border-radius: 3px;
   transition: width 0.5s;
   background: linear-gradient(90deg, #d44040, #ff6060);
@@ -2441,8 +2618,40 @@ button {
   margin-bottom: 6px;
 }
 
-.mote-opposite .mote-score-bar i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, #e66090, #ff90b0); transition: width 0.5s; }
-.mote-same .mote-score-bar i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, #4080d0, #80b0f0); transition: width 0.5s; }
+.mote-opposite .mote-score-bar i { display: block; height: 100%; width: var(--mote-width, 0%); border-radius: 4px; background: linear-gradient(90deg, #e66090, #ff90b0); transition: width 0.5s; }
+.mote-same .mote-score-bar i { display: block; height: 100%; width: var(--mote-width, 0%); border-radius: 4px; background: linear-gradient(90deg, #4080d0, #80b0f0); transition: width 0.5s; }
+
+.energy-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #7ab0d0;
+}
+
+.turning-point {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(217,164,65,0.06);
+  border: 1px solid var(--border);
+  margin-bottom: 10px;
+}
+.turning-point.tenchu {
+  border-color: rgba(192,80,80,0.5);
+}
+.tp-age {
+  font-size: 16px;
+}
+.tp-type-tag {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--tp-tag-bg, rgba(255,255,255,0.08));
+  color: var(--tp-tag-color, var(--text));
+  font-weight: 600;
+}
+.tp-type-tag.tenchu {
+  background: rgba(192,80,80,0.15);
+  color: #c05050;
+}
 
 .mote-score-num { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
 .mote-score-label { font-size: 12px; color: var(--muted); }

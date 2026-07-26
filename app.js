@@ -3670,7 +3670,7 @@ function refreshHistoryUI() {
   const personB = document.querySelector("#personB");
   if (!list) return;
   if (history.length === 0) {
-    list.innerHTML = '<p style="color:var(--muted);font-size:13px">まだ鑑定記録がありません。</p>';
+    list.innerHTML = '<p class="note">まだ鑑定記録がありません。</p>';
   } else {
     list.innerHTML = history.map((h, i) => {
       const affair = h.affairScore != null ? h.affairScore : null;
@@ -3682,14 +3682,17 @@ function refreshHistoryUI() {
       const marriageColor = marriage != null ? (marriage >= 80 ? "#60c0e0" : marriage >= 65 ? "#80d080" : marriage >= 45 ? "#e0c060" : marriage >= 30 ? "#f0a040" : "#ff5050") : null;
       const workColor = work != null ? (work >= 80 ? "#f0e080" : work >= 65 ? "#e0c060" : work >= 45 ? "#c0a050" : work >= 25 ? "#a09060" : "#c07060") : null;
       const moteColor = (s) => s != null ? (s >= 80 ? "#ff80c0" : s >= 65 ? "#e070a0" : s >= 45 ? "#c06080" : s >= 25 ? "#a05060" : "#804060") : null;
+      const toBadge = (val, color, label) => val != null
+        ? `<span class="score-badge" style="--badge-bg:${color}22;--badge-color:${color}">${label}${val}</span>`
+        : "";
       const scoreTags = [
-        work != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${workColor}22;color:${workColor};font-weight:600">仕事${work}</span>` : "",
-        oppMote != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${moteColor(oppMote)}22;color:${moteColor(oppMote)};font-weight:600">異性モテ${oppMote}</span>` : "",
-        sameMote != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${moteColor(sameMote)}22;color:${moteColor(sameMote)};font-weight:600">同性モテ${sameMote}</span>` : "",
-        affair != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${affairColor}22;color:${affairColor};font-weight:600">浮気${affair}</span>` : "",
-        marriage != null ? `<span style="font-size:11px;padding:2px 6px;border-radius:4px;background:${marriageColor}22;color:${marriageColor};font-weight:600">結婚${marriage}</span>` : ""
+        toBadge(work, workColor, "仕事"),
+        toBadge(oppMote, moteColor(oppMote), "異性モテ"),
+        toBadge(sameMote, moteColor(sameMote), "同性モテ"),
+        toBadge(affair, affairColor, "浮気"),
+        toBadge(marriage, marriageColor, "結婚")
       ].filter(Boolean).join(" ");
-      return `<div class="history-item" data-idx="${i}" style="cursor:pointer"><span class="history-name">${h.name}</span><span class="history-info">${h.birthdate} / ${h.dayStem}${h.dayBranch} / ${h.centerStar}</span>${scoreTags ? `<span style="display:flex;gap:4px;margin-top:4px;flex-wrap:wrap">${scoreTags}</span>` : ""}<button class="history-del" data-idx="${i}">&times;</button></div>`;
+      return `<div class="history-item" data-idx="${i}"><span class="history-name">${h.name}</span><span class="history-info">${h.birthdate} / ${h.dayStem}${h.dayBranch} / ${h.centerStar}</span>${scoreTags ? `<span class="history-tags">${scoreTags}</span>` : ""}<button class="history-del" data-idx="${i}">&times;</button></div>`;
     }).join("");
   }
   const opts = history.map((h, i) => `<option value="${i}">${h.name}（${h.birthdate}）</option>`).join("");
@@ -4113,9 +4116,9 @@ function renderCompat(event) {
       <div class="compat-cat is-love">
         <div class="compat-cat-head">
           <h4>恋愛の相性</h4>
-          <div class="compat-cat-score" style="color:${scoreColor(c.loveScore)}">${c.loveScore}<small>点</small><span class="compat-cat-rank" style="background:${scoreColor(c.loveScore)}">${loveR}</span></div>
+          <div class="compat-cat-score" style="--score-color:${scoreColor(c.loveScore)}">${c.loveScore}<small>点</small><span class="compat-cat-rank">${loveR}</span></div>
         </div>
-        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="width:${c.loveScore}%;background:linear-gradient(90deg,${scoreColor(c.loveScore)},${scoreColor(c.loveScore)})"></div></div>
+        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="--score:${c.loveScore}%;--score-color:${scoreColor(c.loveScore)}"></div></div>
         <p>${loveDesc[loveR]}</p>
         <div class="compat-cat-factors">${c.loveFactors.map(f => `<span class="factor-tag">${f}</span>`).join("")}</div>
         <div class="compat-cat-stars">
@@ -4127,9 +4130,9 @@ function renderCompat(event) {
       <div class="compat-cat is-sex">
         <div class="compat-cat-head">
           <h4>SEXの相性</h4>
-          <div class="compat-cat-score" style="color:${scoreColor(c.sexScore)}">${c.sexScore}<small>点</small><span class="compat-cat-rank" style="background:${scoreColor(c.sexScore)}">${sexR}</span></div>
+          <div class="compat-cat-score" style="--score-color:${scoreColor(c.sexScore)}">${c.sexScore}<small>点</small><span class="compat-cat-rank">${sexR}</span></div>
         </div>
-        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="width:${c.sexScore}%;background:linear-gradient(90deg,${scoreColor(c.sexScore)},${scoreColor(c.sexScore)})"></div></div>
+        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="--score:${c.sexScore}%;--score-color:${scoreColor(c.sexScore)}"></div></div>
         <p>${sexDesc[sexR]}</p>
         <div class="compat-cat-factors">${c.sexFactors.map(f => `<span class="factor-tag">${f}</span>`).join("")}</div>
         <div class="compat-cat-stars">
@@ -4137,13 +4140,13 @@ function renderCompat(event) {
             const renderSex = (name, star) => {
               const s = sexTendencyTexts[star];
               if (!s || typeof s === 'string') return `<div><b>${name}の性癖（${star}）</b>：${typeof s === 'string' ? s : ''}</div>`;
-              return `<div style="margin-bottom:12px">
-                <div style="margin-bottom:4px"><b>${name}の性癖</b> <span style="font-size:11px;padding:2px 8px;border-radius:4px;background:var(--accent-color, #e8c870)22;color:var(--accent-color, #c0a040);font-weight:600">${star}・${s.keyword}</span></div>
-                <div style="font-size:13px;margin-bottom:6px">${s.summary}</div>
-                <ul style="font-size:12px;margin:0 0 6px 0;padding-left:20px;color:var(--text-color)">
+              return `<div class="sex-tendency">
+                <div class="sex-tendency-head"><b>${name}の性癖</b> <span class="sex-tendency-keyword">${star}・${s.keyword}</span></div>
+                <div class="sex-tendency-summary">${s.summary}</div>
+                <ul class="sex-tendency-traits">
                   ${s.traits.map(t => `<li>${t}</li>`).join("")}
                 </ul>
-                <div style="font-size:11px;color:var(--muted);padding:3px 8px;border-radius:4px;background:rgba(255,180,80,0.1)">⚠ ${s.caution}</div>
+                <div class="sex-tendency-caution">⚠ ${s.caution}</div>
               </div>`;
             };
             return renderSex(a.name, c.centerA) + renderSex(b.name, c.centerB);
@@ -4154,9 +4157,9 @@ function renderCompat(event) {
       <div class="compat-cat is-marriage">
         <div class="compat-cat-head">
           <h4>結婚後の相性</h4>
-          <div class="compat-cat-score" style="color:${scoreColor(c.marriageScore)}">${c.marriageScore}<small>点</small><span class="compat-cat-rank" style="background:${scoreColor(c.marriageScore)}">${marR}</span></div>
+          <div class="compat-cat-score" style="--score-color:${scoreColor(c.marriageScore)}">${c.marriageScore}<small>点</small><span class="compat-cat-rank">${marR}</span></div>
         </div>
-        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="width:${c.marriageScore}%;background:linear-gradient(90deg,${scoreColor(c.marriageScore)},${scoreColor(c.marriageScore)})"></div></div>
+        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="--score:${c.marriageScore}%;--score-color:${scoreColor(c.marriageScore)}"></div></div>
         <p>${marriageDesc[marR]}</p>
         <div class="compat-cat-factors">${c.marriageFactors.map(f => `<span class="factor-tag">${f}</span>`).join("")}</div>
         <div class="compat-cat-stars">
@@ -4172,9 +4175,9 @@ function renderCompat(event) {
       <div class="compat-cat is-affair">
         <div class="compat-cat-head">
           <h4>不倫確率</h4>
-          <div class="compat-cat-score" style="color:${scoreColor(100 - c.affairRisk)}">${c.affairRisk}<small>%</small><span class="compat-cat-rank" style="background:${scoreColor(100 - c.affairRisk)}">${c.affairRisk >= 65 ? "高" : c.affairRisk >= 40 ? "中" : "低"}</span></div>
+          <div class="compat-cat-score" style="--score-color:${scoreColor(100 - c.affairRisk)}">${c.affairRisk}<small>%</small><span class="compat-cat-rank">${c.affairRisk >= 65 ? "高" : c.affairRisk >= 40 ? "中" : "低"}</span></div>
         </div>
-        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="width:${c.affairRisk}%;background:linear-gradient(90deg,${scoreColor(100 - c.affairRisk)},${scoreColor(100 - c.affairRisk)})"></div></div>
+        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="--score:${c.affairRisk}%;--score-color:${scoreColor(100 - c.affairRisk)}"></div></div>
         <p>${c.affairRisk >= 65 ? "不倫リスクが高い。刺激を求める性質と誘惑に弱い要素が重なっている。『うちは大丈夫』と思っているほど危ない。不倫は『する人』ではなく『できる状況』で起きる。この組み合わせはその状況ができやすい。" : c.affairRisk >= 40 ? "不倫リスクは中程度。油断はできない。マンネリやコミュニケーション不足がきっかけで浮気に走る可能性は十分ある。『まあうちは大丈夫』という根拠のない安心が一番危ない。" : "不倫リスクは低め。ただし『低い』は『ない』ではない。リスクが低いからこそ油断して、突発的な誘惑に弱くなるパターンもある。過信は禁物。"}</p>
         <div class="compat-cat-factors">${c.affairFactors.map(f => `<span class="factor-tag">${f}</span>`).join("")}</div>
         <div class="compat-cat-stars">
@@ -4186,9 +4189,9 @@ function renderCompat(event) {
       <div class="compat-cat is-divorce">
         <div class="compat-cat-head">
           <h4>離婚確率</h4>
-          <div class="compat-cat-score" style="color:${scoreColor(100 - c.divorceRisk)}">${c.divorceRisk}<small>%</small><span class="compat-cat-rank" style="background:${scoreColor(100 - c.divorceRisk)}">${c.divorceRisk >= 65 ? "高" : c.divorceRisk >= 40 ? "中" : "低"}</span></div>
+          <div class="compat-cat-score" style="--score-color:${scoreColor(100 - c.divorceRisk)}">${c.divorceRisk}<small>%</small><span class="compat-cat-rank">${c.divorceRisk >= 65 ? "高" : c.divorceRisk >= 40 ? "中" : "低"}</span></div>
         </div>
-        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="width:${c.divorceRisk}%;background:linear-gradient(90deg,${scoreColor(100 - c.divorceRisk)},${scoreColor(100 - c.divorceRisk)})"></div></div>
+        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="--score:${c.divorceRisk}%;--score-color:${scoreColor(100 - c.divorceRisk)}"></div></div>
         <p>${c.divorceRisk >= 65 ? "離婚リスクが高い。価値観の違いや衝突が蓄積しやすい要素が重なっている。結婚前のすり合わせを怠ると、結婚してから『こんなはずじゃなかった』になる。それでも結婚するなら、離婚時の取り決めを事前に話し合っておくのが現実的。" : c.divorceRisk >= 40 ? "離婚リスクは中程度。高いわけではないが、油断はできない。日常の小さなすれ違いを放置し続けると、ある日『もう無理』と一気に壊れる。離婚は『急に起きる』のではなく『積み重なって起きる』。" : "離婚リスクは低め。ただし『低い』は『ない』ではない。経済問題や健康問題などの外部要因で関係が揺らぐ可能性はある。困難時に互いに背中を預けられるかが、最終的な分かれ道。"}</p>
         <div class="compat-cat-factors">${c.divorceFactors.map(f => `<span class="factor-tag">${f}</span>`).join("")}</div>
       </div>
@@ -4196,13 +4199,13 @@ function renderCompat(event) {
 
     <div class="result-card">
       <h3>辛口総評</h3>
-      <div class="reading" style="margin-top:18px">
+      <div class="reading mt-18">
         <article><h4>厳しい一言</h4><div>${(() => { const s = c.score; if (s >= 80) return `総合${s}点。数値上は良い相性だが、合うことの罠を忘れるな。『合う』ことに甘えて成長を止めると、良い関係が一番腐りやすい。合うからこそ手抜きをせず、関係を磨き続けられるかが問われる。`; if (s >= 60) return `総合${s}点。悪くはないが、良いとも言い切れない。『まあまあ』で済ませ続けると、不満が静かに蓄積する。5年後に『いつの間にか気持ちが冷めていた』というパターンに入らないよう、今のうちから向き合うべき課題がある。`; if (s >= 40) return `総合${s}点。正直、厳しい。恋愛の最初の勢いで乗り切れても、日常に入るとズレが露骨になる。『愛があればなんとかなる』という根性論で突っ走ると、両者とも深傷を負う。冷静に現実を見るべき。`; return `総合${s}点。厳しい評価だが、数値は嘘をつかない。この関係を維持するには、通常以上の覚悟と労力が必要。『頑張れば変われる』という幻想を捨て、現実を受け入れるか、早めに見切りをつけるかの二択。引き延ばすほど痛手が大きくなる。`; })()}</div></article>
         <article><h4>相性の本質</h4><div>${compatTexts[c.relation][severity]}</div></article>
         <article><h4>${a.name}から見た${b.name}</h4><div>${starRelationTexts[c.starAtoB]?.[severity] || starRelationTexts[c.starAtoB]?.moderate || pickByBalance(starTexts[c.starAtoB], "moderate")}</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:4px">主星「${c.starAtoB}」が表す${b.name}の存在感</div></article>
+        <div class="note-text-sm mt-4">主星「${c.starAtoB}」が表す${b.name}の存在感</div></article>
         <article><h4>${b.name}から見た${a.name}</h4><div>${starRelationTexts[c.starBtoA]?.[severity] || starRelationTexts[c.starBtoA]?.moderate || pickByBalance(starTexts[c.starBtoA], "moderate")}</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:4px">主星「${c.starBtoA}」が表す${a.name}の存在感</div></article>
+        <div class="note-text-sm mt-4">主星「${c.starBtoA}」が表す${a.name}の存在感</div></article>
       </div>
     </div>
   `;
@@ -4333,7 +4336,7 @@ function render(event) {
     <div class="result-card result-header">
       <div>
         <h2>${name}さんの鑑定結果</h2>
-        <div style="font-size:10px;color:var(--muted);opacity:0.5">v2.0.1</div>
+        <div class="result-version">v2.0.1</div>
         <p class="expert-only">${birthdateDisplay} 生まれ / ${tenchusatsu}天中殺 / 日干 ${day.stem}（${elements[stems.indexOf(day.stem)]}・${yinYang[stems.indexOf(day.stem)]}）</p>
         <p class="simple-only">${birthdateDisplay} 生まれ / ${gender === "male" ? "男性" : "女性"}</p>
       </div>
@@ -4351,8 +4354,8 @@ function render(event) {
     <div class="result-card yearly-fortune-card">
       <h3 class="expert-only">${yearlyFortune.thisYear}年の総合運勢（大運×年運 統合判定）</h3>
       <h3 class="simple-only">${yearlyFortune.thisYear}年の運勢</h3>
-      <div class="yearly-summary expert-only info-box is-gold" style="padding:16px 18px;border-radius:14px;margin-bottom:16px;white-space:pre-line;line-height:1.8;font-size:14px">${buildYearlySummary(yearlyFortune, false)}</div>
-      <div class="yearly-summary simple-only info-box is-gold" style="padding:16px 18px;border-radius:14px;margin-bottom:16px;white-space:pre-line;line-height:1.8;font-size:14px">${buildYearlySummary(yearlyFortune, true)}</div>
+      <div class="yearly-summary expert-only info-box is-gold">${buildYearlySummary(yearlyFortune, false)}</div>
+      <div class="yearly-summary simple-only info-box is-gold">${buildYearlySummary(yearlyFortune, true)}</div>
       <div class="yearly-fortune-overview expert-only">
         <div class="yearly-fortune-pillars">
           ${yearlyFortune.currentTaiun ? `<span class="yf-pillar"><b>現在の大運</b> ${yearlyFortune.currentTaiun.stem}${yearlyFortune.currentTaiun.branch}（${yearlyFortune.taiunStar}・${yearlyFortune.taiunEnergy.name}）${yearlyFortune.isTaiunTenchu ? ' <span class="tenchu-badge">天中殺</span>' : ''}</span>` : ''}
@@ -4365,17 +4368,17 @@ function render(event) {
       <div class="yearly-fortune-scores">
         <div class="yf-score-item">
           <div class="yf-score-header"><b>金運</b></div>
-          <div class="yf-score-bar"><i style="width:${yearlyFortune.moneyScore}%;background:linear-gradient(90deg,#d4a843,#f0d060)"></i></div>
+          <div class="yf-score-bar"><i class="is-money" style="--yf-width:${yearlyFortune.moneyScore}%"></i></div>
           <div class="yf-score-num">${yearlyFortune.moneyScore}点</div>
         </div>
         <div class="yf-score-item">
           <div class="yf-score-header"><b>恋愛運</b></div>
-          <div class="yf-score-bar"><i style="width:${yearlyFortune.loveScore}%;background:linear-gradient(90deg,#e04848,#ff8080)"></i></div>
+          <div class="yf-score-bar"><i class="is-love" style="--yf-width:${yearlyFortune.loveScore}%"></i></div>
           <div class="yf-score-num">${yearlyFortune.loveScore}点</div>
         </div>
         <div class="yf-score-item">
           <div class="yf-score-header"><b>仕事運</b></div>
-          <div class="yf-score-bar"><i style="width:${yearlyFortune.workScore}%;background:linear-gradient(90deg,#4080e0,#80b0ff)"></i></div>
+          <div class="yf-score-bar"><i class="is-work" style="--yf-width:${yearlyFortune.workScore}%"></i></div>
           <div class="yf-score-num">${yearlyFortune.workScore}点</div>
         </div>
       </div>
@@ -4420,7 +4423,7 @@ function render(event) {
         const la = luckyAdvice;
         return `
           <div class="info-box is-green">
-            <p class="info-text" style="margin:0 0 14px;line-height:1.8">${la.advice}</p>
+            <p class="info-text is-lead">${la.advice}</p>
             <div class="info-grid">
               <div class="info-item">
                 <b class="info-label">ラッキーカラー</b>
@@ -4453,19 +4456,19 @@ function render(event) {
     </div>
     <div class="result-card reading">
       <h3>性格</h3>
-      ${reading.map((item) => { const isDetailOnly = item.title.includes("詳細") || item.title.includes("タイミング") || item.title.includes("エネルギー傾向") || item.title.includes("バランスと課題") || item.title.includes("注意が必要な時期") || item.title.includes("長所") || item.title.includes("短所"); const cls = (item.title.includes("長所") ? "is-good" : item.title.includes("短所") ? "is-bad" : item.title.includes("優秀度") ? "is-work-ex" : item.title.includes("仕事") ? "is-work" : item.title.includes("恋愛") ? "is-love" : item.title.includes("金銭") ? "is-money" : item.title.includes("結婚") ? "is-marriage" : item.title.includes("社交") ? "is-social" : item.title.includes("×日干") ? "is-star-detail" : item.title.includes("裏の") ? "is-hidden" : "") + (isDetailOnly ? " expert-only" : ""); const isWorkEx = item.title.includes("優秀度"); const scoreMatch = item.text.match(/スコア：(\d+)点/); const scoreNum = scoreMatch ? parseInt(scoreMatch[1]) : 0; const rankMatch = item.text.match(/（(.+?)）/); const rankText = rankMatch ? rankMatch[1] : ""; const detailText = item.text.replace(/総合仕事優秀度スコア：\d+点（.+?）\n/, ""); return `<article class="${cls}"><h4>${item.title}</h4><div>${isWorkEx && scoreNum ? `<div class="work-ex-score-wrap"><div class="work-ex-score-num">${scoreNum}<span>点</span></div><div class="work-ex-rank-badge">${rankText}</div></div><div class="work-ex-bar"><div class="work-ex-bar-fill" style="width:${scoreNum}%"></div></div><div class="work-ex-detail">${detailText}</div>` : item.text}</div></article>`; }).join("")}
+      ${reading.map((item) => { const isDetailOnly = item.title.includes("詳細") || item.title.includes("タイミング") || item.title.includes("エネルギー傾向") || item.title.includes("バランスと課題") || item.title.includes("注意が必要な時期") || item.title.includes("長所") || item.title.includes("短所"); const cls = (item.title.includes("長所") ? "is-good" : item.title.includes("短所") ? "is-bad" : item.title.includes("優秀度") ? "is-work-ex" : item.title.includes("仕事") ? "is-work" : item.title.includes("恋愛") ? "is-love" : item.title.includes("金銭") ? "is-money" : item.title.includes("結婚") ? "is-marriage" : item.title.includes("社交") ? "is-social" : item.title.includes("×日干") ? "is-star-detail" : item.title.includes("裏の") ? "is-hidden" : "") + (isDetailOnly ? " expert-only" : ""); const isWorkEx = item.title.includes("優秀度"); const scoreMatch = item.text.match(/スコア：(\d+)点/); const scoreNum = scoreMatch ? parseInt(scoreMatch[1]) : 0; const rankMatch = item.text.match(/（(.+?)）/); const rankText = rankMatch ? rankMatch[1] : ""; const detailText = item.text.replace(/総合仕事優秀度スコア：\d+点（.+?）\n/, ""); return `<article class="${cls}"><h4>${item.title}</h4><div>${isWorkEx && scoreNum ? `<div class="work-ex-score-wrap"><div class="work-ex-score-num">${scoreNum}<span>点</span></div><div class="work-ex-rank-badge">${rankText}</div></div><div class="work-ex-bar"><div class="work-ex-bar-fill" style="--work-ex-width:${scoreNum}%"></div></div><div class="work-ex-detail">${detailText}</div>` : item.text}</div></article>`; }).join("")}
     </div>
     <div class="result-card">
       <h3 class="expert-only">適職の具体化（職業名・働き方）</h3>
       <h3 class="simple-only">向いている仕事・働き方</h3>
       ${(() => {
         const sj = specificJobs;
-        if (!sj) return '<p style="color:var(--muted);font-size:13px">データがありません。</p>';
+        if (!sj) return '<p class="note">データがありません。</p>';
         return `
           <div class="info-box is-blue">
             <div class="info-section">
               <b class="info-label">具体的な職業例</b>
-              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+              <div class="tag-list">
                 ${sj.jobs.map(j => `<span class="tag-pill is-blue">${j}</span>`).join("")}
               </div>
             </div>
@@ -4479,8 +4482,8 @@ function render(event) {
             </div>
             <div class="info-item">
               <b class="info-label">仕事優秀度スコア</b>
-              <span style="font-size:14px;margin-left:8px">${sj.score}点（${sj.rank}）</span>
-              <span class="note-text-sm" style="margin-left:8px">適職傾向：${sj.jobTendency}</span>
+              <span class="info-inline">${sj.score}点（${sj.rank}）</span>
+              <span class="note-text-sm info-inline">適職傾向：${sj.jobTendency}</span>
             </div>
           </div>
         `;
@@ -4490,7 +4493,7 @@ function render(event) {
       if (seimeiResult.error) {
         return `<div class="result-card seimei-card expert-only">
           <h3>姓名判断</h3>
-          <p style="color:var(--muted);font-size:13px">${seimeiResult.error}</p>
+          <p class="note">${seimeiResult.error}</p>
         </div>`;
       }
       const r = seimeiResult;
@@ -4540,22 +4543,22 @@ function render(event) {
             <span class="seimei-rel">天格→人格: ${r.tenJinRel}</span>
             <span class="seimei-rel">人格→地格: ${r.jinChiRel}</span>
           </div>
-          <p style="color:var(--muted);font-size:12px;margin-top:6px">${r.tenJinRel === "相生" ? "天格から人格へは相生（支え合う）の流れがあり、環境から個人の運への援助が得やすい。" : r.tenJinRel === "相剋" ? "天格から人格へは相剋（ぶつかり合う）の流れがあり、家庭背景と個人の方向性に摩擦が生じやすい。" : "天格と人格は同じ性質（比和）で、安定感がある。"}${r.jinChiRel === "相生" ? "人格から地格へも相生で、内面と行動が一致しやすい。" : r.jinChiRel === "相剋" ? "人格から地格へは相剋で、思っていることと行動にズレが生じやすい。" : "人格と地格も同じ性質（比和）で、内面と外面の調和が取りやすい。"}</p>
+          <p class="note-text-sm mt-6">${r.tenJinRel === "相生" ? "天格から人格へは相生（支え合う）の流れがあり、環境から個人の運への援助が得やすい。" : r.tenJinRel === "相剋" ? "天格から人格へは相剋（ぶつかり合う）の流れがあり、家庭背景と個人の方向性に摩擦が生じやすい。" : "天格と人格は同じ性質（比和）で、安定感がある。"}${r.jinChiRel === "相生" ? "人格から地格へも相生で、内面と行動が一致しやすい。" : r.jinChiRel === "相剋" ? "人格から地格へは相剋で、思っていることと行動にズレが生じやすい。" : "人格と地格も同じ性質（比和）で、内面と外面の調和が取りやすい。"}</p>
         </div>
         <div class="seimei-fortune-scores">
           <div class="seimei-fs-item">
             <div class="seimei-fs-header"><b>金運</b></div>
-            <div class="seimei-fs-bar"><i style="width:${r.moneyFortune}%;background:linear-gradient(90deg,#d4a843,#f0d060)"></i></div>
+            <div class="seimei-fs-bar"><i class="is-money" style="--seimei-width:${r.moneyFortune}%"></i></div>
             <div class="seimei-fs-num">${r.moneyFortune}点</div>
           </div>
           <div class="seimei-fs-item">
             <div class="seimei-fs-header"><b>恋愛運</b></div>
-            <div class="seimei-fs-bar"><i style="width:${r.loveFortune}%;background:linear-gradient(90deg,#e04848,#ff8080)"></i></div>
+            <div class="seimei-fs-bar"><i class="is-love" style="--seimei-width:${r.loveFortune}%"></i></div>
             <div class="seimei-fs-num">${r.loveFortune}点</div>
           </div>
           <div class="seimei-fs-item">
             <div class="seimei-fs-header"><b>仕事運</b></div>
-            <div class="seimei-fs-bar"><i style="width:${r.workFortune}%;background:linear-gradient(90deg,#4080e0,#80b0ff)"></i></div>
+            <div class="seimei-fs-bar"><i class="is-work" style="--seimei-width:${r.workFortune}%"></i></div>
             <div class="seimei-fs-num">${r.workFortune}点</div>
           </div>
         </div>
@@ -4568,7 +4571,7 @@ function render(event) {
         <div class="kanshi"><strong>月柱 仕事・中年期</strong><span>${month.stem}${month.branch}</span></div>
         <div class="kanshi"><strong>日柱 本質・配偶者</strong><span>${day.stem}${day.branch}</span></div>
       </div>
-      <p style="color:var(--muted);font-size:12px;margin:14px 0 8px">陰占表（高尾式）</p>
+      <p class="note-text-sm mt-14 mb-8">陰占表（高尾式）</p>
       <table class="inyou-table">
         <thead>
           <tr><th></th><th>年柱</th><th>月柱</th><th>日柱</th></tr>
@@ -4591,10 +4594,10 @@ function render(event) {
           return info ? { key, stem: p.stem, branch: p.branch, info } : null;
         }).filter(Boolean);
         if (matches.length === 0) {
-          return '<p style="color:var(--muted);font-size:13px">この命式に異常干支はありません（通常干支）。</p>';
+          return '<p class="note">この命式に異常干支はありません（通常干支）。</p>';
         }
         return `
-          <p style="color:var(--muted);font-size:13px;margin:0 0 10px">異常干支とは、精神面で強い個性（鋭い感性・霊感・先見の明など）が出やすい60干支中13種の特殊な干支です。日柱にある場合が最も影響大。強烈TOP3は「丁亥・壬午・辛巳」で、この3つは月柱・年柱にあっても影響が出やすいとされます。</p>
+          <p class="note mb-10">異常干支とは、精神面で強い個性（鋭い感性・霊感・先見の明など）が出やすい60干支中13種の特殊な干支です。日柱にある場合が最も影響大。強烈TOP3は「丁亥・壬午・辛巳」で、この3つは月柱・年柱にあっても影響が出やすいとされます。</p>
           <div class="abnormal-list">
             ${matches.map((m) => {
               const isTop = abnormalTopThree.includes(m.stem + m.branch);
@@ -4614,14 +4617,14 @@ function render(event) {
     </div>
     <div class="result-card expert-only">
       <h3>内面のバランス</h3>
-      <div class="bars">${Object.entries(counts).map(([key, value]) => `<div class="bar-row"><b>${key}</b><div class="bar"><i style="width:${(value / maxCount) * 100}%"></i></div><span>${value}</span></div>`).join("")}</div>
+      <div class="bars">${Object.entries(counts).map(([key, value]) => `<div class="bar-row"><b>${key}</b><div class="bar"><i style="--bar-width:${(value / maxCount) * 100}%"></i></div><span>${value}</span></div>`).join("")}</div>
     </div>
     <div class="result-card expert-only">
       <h3>位相法（地支の関係性）</h3>
-      <p style="color:var(--muted);font-size:13px;margin:0 0 10px">年支・月支・日支の間に成立する関係を8種類の位相法で判定します。合法は結びつき・融合を、散法は衝突・ストレス・分裂を意味します。</p>
+      <p class="note mb-10">年支・月支・日支の間に成立する関係を8種類の位相法で判定します。合法は結びつき・融合を、散法は衝突・ストレス・分裂を意味します。</p>
       ${(() => {
         if (topologyResults.length === 0) {
-          return '<p style="color:var(--muted);font-size:13px">この命式の三柱間に位相法の関係は検出されませんでした。</p>';
+          return '<p class="note">この命式の三柱間に位相法の関係は検出されませんでした。</p>';
         }
         const topoSummary = topologySummary(topologyResults);
         const goNames = topologyResults.filter((r) => r.group === "合法").map((r) => r.name);
@@ -4639,7 +4642,7 @@ function render(event) {
     </div>
     <div class="result-card expert-only">
       <h3>宿命天中殺（詳細判定）</h3>
-      <p style="color:var(--muted);font-size:13px;margin:0 0 10px">宿命天中殺は、生日干支の天中殺範囲に年支・月支が含まれるか、生年干支の天中殺範囲に日支が含まれるかで判定します。日座・日居は特定の干支のみ該当します。</p>
+      <p class="note mb-10">宿命天中殺は、生日干支の天中殺範囲に年支・月支が含まれるか、生年干支の天中殺範囲に日支が含まれるかで判定します。日座・日居は特定の干支のみ該当します。</p>
       ${(() => {
         const items = [];
         if (fateTenchu.seinen) items.push({ name: "生年天中殺", note: "生日干支の天中殺範囲に年支が含まれる。常識の枠を持たず、型破りな人生になりやすい。" });
@@ -4651,7 +4654,7 @@ function render(event) {
         if (fateTenchu.shukumei2) items.push({ name: "宿命二中殺", note: "生年天中殺と生月天中殺の両方を保持。自分以外頼れるものはない状態だが、それが強さの源泉にもなる。" });
         if (fateTenchu.zenTenchusatsu) items.push({ name: "全天中殺", note: "日座天中殺＋生月天中殺＋生年天中殺の全てが成立。「参禅の行とする」と言われる特別な宿命。" });
         if (items.length === 0) {
-          return '<p style="color:var(--muted);font-size:13px">この命式に宿命天中殺の型は検出されませんでした（通常命式）。</p>';
+          return '<p class="note">この命式に宿命天中殺の型は検出されませんでした（通常命式）。</p>';
         }
         return `<div class="fate-tenchu-list">
           ${items.map((it) => `
@@ -4665,10 +4668,10 @@ function render(event) {
     </div>
     <div class="result-card expert-only">
       <h3>守護神</h3>
-      <p style="color:var(--muted);font-size:13px;margin:0 0 10px">全体守護神は、内面のバランスを整える要素です。強すぎる性質を抑え、足りない性質を補うものが守護神となります（蔵干は考慮しません）。</p>
+      <p class="note mb-10">全体守護神は、内面のバランスを整える要素です。強すぎる性質を抑え、足りない性質を補うものが守護神となります（蔵干は考慮しません）。</p>
       ${(() => {
         if (guardian.isBalanced) {
-          return '<p style="color:var(--muted);font-size:13px">バランスが均等に配置されており、特定の守護神は不要なバランスの良い命式です。</p>';
+          return '<p class="note">バランスが均等に配置されており、特定の守護神は不要なバランスの良い命式です。</p>';
         }
         const guardianNames = guardian.guardians.map((g) => `${g}（${gogyoMeaning[g]}）`).join("・");
         const strongNames = guardian.strongest.join("・");
@@ -4679,7 +4682,7 @@ function render(event) {
             <div class="guardian-row"><b>最も弱い性質</b><span>${weakNames}</span></div>
             <div class="guardian-row guardian-highlight"><b>全体守護神</b><span>${guardianNames}</span></div>
           </div>
-          <div style="font-size:12px;color:var(--muted);margin-top:10px">守護神の性質を日頃の生活や行動に取り入れることで、心のバランスを保ちやすくなります。命式内に守護神がなくても、意識的に取り入れることで効果が期待できます。</div>
+          <div class="note-text-sm mt-10">守護神の性質を日頃の生活や行動に取り入れることで、心のバランスを保ちやすくなります。命式内に守護神がなくても、意識的に取り入れることで効果が期待できます。</div>
         `;
       })()}
     </div>
@@ -4712,27 +4715,27 @@ function render(event) {
         const marriageAges = getMarriageAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge, counts, mainStars, gender);
         const loveAges = getLoveAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge, counts, mainStars, gender);
         const loveAgesHtml = loveAges.length > 0
-          ? loveAges.map((y) => `<div style="margin-bottom:8px"><b>${y.age}歳</b>（${y.year}年）${y.reasons.length > 0 ? "：" + y.reasons.join("、") : ""}</div>`).join("")
+          ? loveAges.map((y) => `<div class="mb-8"><b>${y.age}歳</b>（${y.year}年）${y.reasons.length > 0 ? "：" + y.reasons.join("、") : ""}</div>`).join("")
           : "恋愛に特に有利な時期は検出されませんでした。";
         const loveAgesHtmlSimple = loveAges.length > 0
-          ? loveAges.map((y) => `<div style="margin-bottom:8px"><b>${y.age}歳</b>（${y.year}年）</div>`).join("")
+          ? loveAges.map((y) => `<div class="mb-8"><b>${y.age}歳</b>（${y.year}年）</div>`).join("")
           : "恋愛に特に有利な時期は見つかりませんでした。";
         const marriageAgesHtml = marriageAges.length > 0
-          ? marriageAges.map((y) => `<div style="margin-bottom:8px"><b>${y.age}歳</b>（${y.year}年）${y.reasons.length > 0 ? "：" + y.reasons.join("、") : ""}</div>`).join("")
+          ? marriageAges.map((y) => `<div class="mb-8"><b>${y.age}歳</b>（${y.year}年）${y.reasons.length > 0 ? "：" + y.reasons.join("、") : ""}</div>`).join("")
           : "結婚に特に有利な時期は検出されませんでした。";
         const marriageAgesHtmlSimple = marriageAges.length > 0
-          ? marriageAges.map((y) => `<div style="margin-bottom:8px"><b>${y.age}歳</b>（${y.year}年）</div>`).join("")
+          ? marriageAges.map((y) => `<div class="mb-8"><b>${y.age}歳</b>（${y.year}年）</div>`).join("")
           : "結婚に特に有利な時期は見つかりませんでした。";
         return `
           <div class="expert-only">
           <article>
             <h4>結婚適性度</h4>
             <div class="affair-risk-score-wrap">
-              <div class="affair-risk-score-num" style="color:${marriageScoreColor}">${marriageScore}<span>点</span></div>
+              <div class="affair-risk-score-num" style="--risk-color:${marriageScoreColor}">${marriageScore}<span>点</span></div>
               <div class="affair-risk-rank-badge affair-risk-rank-${marriageRankClass}">${marriageLevel}</div>
             </div>
-            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${marriageRankClass}" style="width:${marriageScore}%"></div></div>
-            <div style="font-size:12px;color:var(--muted);margin-top:6px">中央（本質）の主星・西（配偶者との関係）の主星・配偶者宮（日支）の十二大従星・二度縁の型・異常干支・浮気リスク・五行バランス・天中殺・位相 topology から総合的に算出した目安です。166名の芸能人データ（不倫・離婚・安定結婚）の統計分析（ロジスティック回帰 AUC=0.79）に基づく重み付けを反映しています。数値が高いほど結婚に向いている傾向が強いことを示します。</div>
+            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${marriageRankClass}" style="--affair-width:${marriageScore}%"></div></div>
+            <div class="note-text-sm mt-6">中央（本質）の主星・西（配偶者との関係）の主星・配偶者宮（日支）の十二大従星・二度縁の型・異常干支・浮気リスク・五行バランス・天中殺・位相 topology から総合的に算出した目安です。166名の芸能人データ（不倫・離婚・安定結婚）の統計分析（ロジスティック回帰 AUC=0.79）に基づく重み付けを反映しています。数値が高いほど結婚に向いている傾向が強いことを示します。</div>
           </article>
           <article>
             <h4>恋愛傾向</h4>
@@ -4765,11 +4768,11 @@ function render(event) {
             <h4>浮気・不倫の傾向</h4>
             <div>配偶者との関係性が現れやすい右手（西）の主星は「${mainStars.west}」。${pickByBalance(affairTendencyTexts[mainStars.west], balanceType)}</div>
             <div class="affair-risk-score-wrap">
-              <div class="affair-risk-score-num" style="color:${affairScoreColor}">${affairScore}<span>点</span></div>
+              <div class="affair-risk-score-num" style="--risk-color:${affairScoreColor}">${affairScore}<span>点</span></div>
               <div class="affair-risk-rank-badge affair-risk-rank-${affairRankClass}">${affairLevel}</div>
             </div>
-            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${affairRankClass}" style="width:${affairScore}%"></div></div>
-            <div style="font-size:12px;color:var(--muted);margin-top:6px">全主星（中央・北・南・東・西）の傾向＋配偶者宮（日支）の十二大従星＋二度縁の型＋異常干支＋日干の陰陽＋内面のバランスの偏りから総合的に算出した目安です。166名の芸能人データの統計分析（ロジスティック回帰 AUC=0.79）に基づく重み付けを反映しています。断定ではなく傾向として参考にしてください。</div>
+            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${affairRankClass}" style="--affair-width:${affairScore}%"></div></div>
+            <div class="note-text-sm mt-6">全主星（中央・北・南・東・西）の傾向＋配偶者宮（日支）の十二大従星＋二度縁の型＋異常干支＋日干の陰陽＋内面のバランスの偏りから総合的に算出した目安です。166名の芸能人データの統計分析（ロジスティック回帰 AUC=0.79）に基づく重み付けを反映しています。断定ではなく傾向として参考にしてください。</div>
           </article>
           <article>
             <h4>天中殺と結婚・離婚</h4>
@@ -4778,23 +4781,23 @@ function render(event) {
           <article>
             <h4>結婚に適した時期（結婚年齢）</h4>
             <div>${marriageAgesHtml}</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:6px">大運・年運の支合（日支との引き合い）、三合会局の完成、結婚に良い星（禄存星・司禄星・石門星・玉堂星・牽牛星）の流れに加え、166名の芸能人データの統計分析（ロジスティック回帰 AUC=0.79）に基づく保護・リスク因子（日干五行・五行バランス・二度縁・性別・天中殺）を総合し、天中殺期間を除外した時期を表示しています。断定ではなく目安として参考にしてください。</div>
+            <div class="note-text-sm mt-6">大運・年運の支合（日支との引き合い）、三合会局の完成、結婚に良い星（禄存星・司禄星・石門星・玉堂星・牽牛星）の流れに加え、166名の芸能人データの統計分析（ロジスティック回帰 AUC=0.79）に基づく保護・リスク因子（日干五行・五行バランス・二度縁・性別・天中殺）を総合し、天中殺期間を除外した時期を表示しています。断定ではなく目安として参考にしてください。</div>
           </article>
           <article>
             <h4>恋愛しやすい時期</h4>
             <div>${loveAgesHtml}</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:6px">大運・年運の支合、半会・三合会局の強まり、恋愛に良い星（鳳閣星・調舒星・禄存星・車騎星・龍高星・石門星）の流れに加え、166名の芸能人データの統計分析に基づく因子を総合し、天中殺期間を除外した時期を表示しています。</div>
+            <div class="note-text-sm mt-6">大運・年運の支合、半会・三合会局の強まり、恋愛に良い星（鳳閣星・調舒星・禄存星・車騎星・龍高星・石門星）の流れに加え、166名の芸能人データの統計分析に基づく因子を総合し、天中殺期間を除外した時期を表示しています。</div>
           </article>
           </div>
           <div class="simple-only">
           <article>
             <h4>結婚適性度</h4>
             <div class="affair-risk-score-wrap">
-              <div class="affair-risk-score-num" style="color:${marriageScoreColor}">${marriageScore}<span>点</span></div>
+              <div class="affair-risk-score-num" style="--risk-color:${marriageScoreColor}">${marriageScore}<span>点</span></div>
               <div class="affair-risk-rank-badge affair-risk-rank-${marriageRankClass}">${marriageSimpleLevel}</div>
             </div>
-            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${marriageRankClass}" style="width:${marriageScore}%"></div></div>
-            <div style="font-size:12px;color:var(--muted);margin-top:6px">星の配置や性格のバランスから算出した、結婚に向いている度合いの目安です。</div>
+            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${marriageRankClass}" style="--affair-width:${marriageScore}%"></div></div>
+            <div class="note-text-sm mt-6">星の配置や性格のバランスから算出した、結婚に向いている度合いの目安です。</div>
           </article>
           <article>
             <h4>恋愛のしかた</h4>
@@ -4826,11 +4829,11 @@ function render(event) {
             <h4>浮気・不倫の傾向</h4>
             <div>${pickByBalance(affairTendencyTexts[mainStars.west], balanceType)}</div>
             <div class="affair-risk-score-wrap">
-              <div class="affair-risk-score-num" style="color:${affairScoreColor}">${affairScore}<span>点</span></div>
+              <div class="affair-risk-score-num" style="--risk-color:${affairScoreColor}">${affairScore}<span>点</span></div>
               <div class="affair-risk-rank-badge affair-risk-rank-${affairRankClass}">${simpleAffairLevel}</div>
             </div>
-            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${affairRankClass}" style="width:${affairScore}%"></div></div>
-            <div style="font-size:12px;color:var(--muted);margin-top:6px">全体的な性格・家庭運・結婚運・生まれ持った性質のバランスから総合的に算出した目安です。</div>
+            <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${affairRankClass}" style="--affair-width:${affairScore}%"></div></div>
+            <div class="note-text-sm mt-6">全体的な性格・家庭運・結婚運・生まれ持った性質のバランスから総合的に算出した目安です。</div>
           </article>
           <article>
             <h4>結婚に適した時期</h4>
@@ -4847,20 +4850,20 @@ function render(event) {
     <div class="result-card mote-card">
       <h3 class="expert-only">モテ度分析（異性から・同性から）</h3>
       <h3 class="simple-only">人気度チェック（異性から・同性から）</h3>
-      <p class="expert-only" style="color:var(--muted);font-size:12px;margin:0 0 14px">十大主星の魅力特性・内面のバランス・日干の陰陽・十二大従星のエネルギー・異常干支を総合して算出しています。あくまで宿命的な素質の目安です。</p>
-      <p class="simple-only" style="color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.7">生まれ持った性格や魅力の傾向から、異性・同性それぞれからの人気度を計算しています。あくまで目安です。</p>
+      <p class="expert-only note mb-14">十大主星の魅力特性・内面のバランス・日干の陰陽・十二大従星のエネルギー・異常干支を総合して算出しています。あくまで宿命的な素質の目安です。</p>
+      <p class="simple-only note mb-14">生まれ持った性格や魅力の傾向から、異性・同性それぞれからの人気度を計算しています。あくまで目安です。</p>
       <div class="mote-scores">
         <div class="mote-score-item mote-opposite">
           <div class="mote-score-header"><b>異性からのモテ度</b></div>
           <div class="mote-score-rank rank-${mote.oppositeRank.rank}">${mote.oppositeRank.rank}</div>
-          <div class="mote-score-bar"><i style="width:${mote.oppositeScore}%"></i></div>
+          <div class="mote-score-bar"><i style="--mote-width:${mote.oppositeScore}%"></i></div>
           <div class="mote-score-num">${mote.oppositeScore}点</div>
           <div class="mote-score-label">${mote.oppositeRank.label}</div>
         </div>
         <div class="mote-score-item mote-same">
           <div class="mote-score-header"><b>同性からのモテ度</b></div>
           <div class="mote-score-rank rank-${mote.sameRank.rank}">${mote.sameRank.rank}</div>
-          <div class="mote-score-bar"><i style="width:${mote.sameScore}%"></i></div>
+          <div class="mote-score-bar"><i style="--mote-width:${mote.sameScore}%"></i></div>
           <div class="mote-score-num">${mote.sameScore}点</div>
           <div class="mote-score-label">${mote.sameRank.label}</div>
         </div>
@@ -4914,7 +4917,7 @@ function render(event) {
       <h3 class="simple-only">子育てのヒント</h3>
       ${(() => {
         const pa = parentingAdvice;
-        if (!pa) return '<p style="color:var(--muted);font-size:13px">データがありません。</p>';
+        if (!pa) return '<p class="note">データがありません。</p>';
         return `
           <div class="info-box is-orange">
             <div class="info-section">
@@ -4935,7 +4938,7 @@ function render(event) {
     </div>
     <div class="result-card expert-only">
       <h3>大運（10年周期の運気）</h3>
-      <p style="color:var(--muted);font-size:13px;margin:0 0 8px">${taiun.forward ? "順行" : "逆行"} / 立運${taiun.startAge}歳</p>
+      <p class="note mb-8">${taiun.forward ? "順行" : "逆行"} / 立運${taiun.startAge}歳</p>
       <div class="taiun-flow">
         ${taiun.periods.map((p) => {
           const isCurrent = currentAge >= p.age && currentAge <= p.ageTo;
@@ -4965,12 +4968,12 @@ function render(event) {
           const text = interp ? interp[pos.key] : "";
           return `
             <div class="info-box is-blue">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div class="flex-row">
                 <span class="note-text-sm">${pos.label}</span>
-                <span style="font-size:13px;font-weight:600;color:#7ab0d0">${pos.energy.name}</span>
+                <span class="energy-name">${pos.energy.name}</span>
                 <span class="mini-badge is-blue">${pos.stage}</span>
               </div>
-              <p class="info-text" style="font-size:13px;line-height:1.8">${text}</p>
+              <p class="info-text is-compact">${text}</p>
             </div>
           `;
         }).join("");
@@ -4979,11 +4982,11 @@ function render(event) {
     <div class="result-card">
       <h3 class="expert-only">人生のターニングポイント</h3>
       <h3 class="simple-only">人生のターニングポイント</h3>
-      <p class="expert-only" style="color:var(--muted);font-size:12px;margin:0 0 14px">大運の切り替わり・天中殺・位相法を総合し、人生の中で特に大きな変化が起こりやすい時期を最大2つ表示します。具体的な例とともに解説します。</p>
-      <p class="simple-only" style="color:var(--muted);font-size:13px;margin:0 0 14px;line-height:1.7">人生の中で特に大きな変化が起こりやすい時期を、具体的な例とともに最大2つまで表示します。</p>
+      <p class="expert-only note mb-14">大運の切り替わり・天中殺・位相法を総合し、人生の中で特に大きな変化が起こりやすい時期を最大2つ表示します。具体的な例とともに解説します。</p>
+      <p class="simple-only note mb-14">人生の中で特に大きな変化が起こりやすい時期を、具体的な例とともに最大2つまで表示します。</p>
       ${(() => {
         if (turningPoints.length === 0) {
-          return '<p style="color:var(--muted);font-size:13px">特筆すべきターニングポイントは検出されませんでした。</p>';
+          return '<p class="note">特筆すべきターニングポイントは検出されませんでした。</p>';
         }
         const typeLabel = (t) => {
           if (t === "大運切り替わり") return "運気の切り替わり";
@@ -5001,14 +5004,14 @@ function render(event) {
           return "#d4a843";
         };
         return turningPoints.map((tp) => `
-          <div class="turning-point${tp.isTenchu ? " tenchu" : ""}" style="padding:12px 14px;border-radius:12px;background:rgba(217,164,65,0.06);border:1px solid var(--border);margin-bottom:10px">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-              <b style="font-size:16px;color:${typeColor(tp.type)}">${tp.age}歳</b>
+          <div class="turning-point${tp.isTenchu ? " tenchu" : ""}">
+            <div class="flex-row mb-6">
+              <b class="tp-age" style="color:${typeColor(tp.type)}">${tp.age}歳</b>
               <span class="note-text-sm">（${tp.year}年）</span>
-              <span style="font-size:12px;padding:2px 8px;border-radius:6px;background:${typeColor(tp.type)}22;color:${typeColor(tp.type)};font-weight:600">${typeLabel(tp.type)}</span>
-              ${tp.isTenchu ? '<span style="font-size:12px;padding:2px 8px;border-radius:6px;background:rgba(192,80,80,0.15);color:#c05050;font-weight:600">天中殺</span>' : ""}
+              <span class="tp-type-tag" style="--tp-tag-bg:${typeColor(tp.type)}22;--tp-tag-color:${typeColor(tp.type)}">${typeLabel(tp.type)}</span>
+              ${tp.isTenchu ? '<span class="tp-type-tag tenchu">天中殺</span>' : ""}
             </div>
-            <ul style="margin:0;padding-left:20px;line-height:1.7;font-size:13px;color:var(--text)">
+            <ul class="tp-list">
               ${tp.events.map((e) => `<li>${e}</li>`).join("")}
             </ul>
           </div>
@@ -5063,7 +5066,7 @@ function render(event) {
         <h4 class="simple-only">体質的な弱点</h4>
         ${(() => {
           if (guardian.isBalanced) {
-            return '<p class="expert-only" style="color:var(--muted);font-size:13px">バランスが均等に配置されており、特定の臓器への偏りリスクは低いバランスの良い命式です。</p><p class="simple-only" style="color:var(--muted);font-size:13px">バランスが良く、特定の臓器への偏りリスクは低いタイプです。</p>';
+            return '<p class="expert-only note">バランスが均等に配置されており、特定の臓器への偏りリスクは低いバランスの良い命式です。</p><p class="simple-only note">バランスが良く、特定の臓器への偏りリスクは低いタイプです。</p>';
           }
           let html = '';
           if (healthRisk.natalExcess.length > 0) {
@@ -5078,23 +5081,23 @@ function render(event) {
       <div class="health-major-diseases">
         <h4 class="expert-only">大病リスクがある年と内容</h4>
         <h4 class="simple-only">特に気をつけたい年</h4>
-        <p class="expert-only" style="color:var(--muted);font-size:12px;margin:0 0 12px">高危険レベル（リスクスコア50点以上）の年について、命式のバランス偏りと年運・大運の相互作用から想定される重大な疾患リスクを表示します。該当年は必ず定期健康診断を受け、該当臓器の検査を早めに行ってください。</p>
-        <p class="simple-only" style="color:var(--muted);font-size:13px;margin:0 0 12px;line-height:1.7">健康リスクが高まる年について表示します。該当年は必ず定期健康診断を受け、該当する検査を早めに行ってください。</p>
+        <p class="expert-only note-text-sm mb-12">高危険レベル（リスクスコア50点以上）の年について、命式のバランス偏りと年運・大運の相互作用から想定される重大な疾患リスクを表示します。該当年は必ず定期健康診断を受け、該当臓器の検査を早めに行ってください。</p>
+        <p class="simple-only note mb-12">健康リスクが高まる年について表示します。該当年は必ず定期健康診断を受け、該当する検査を早めに行ってください。</p>
         ${(() => {
           const major = healthRisk.majorDiseaseRisks || [];
           if (major.length === 0) {
-            return '<p class="expert-only" style="color:var(--muted);font-size:13px">現時点で大病リスクが高まる年は検出されませんでした。バランスと年運の関係から見て、比較的安定しています。ただし年齢とともに定期健診は必須です。</p><p class="simple-only" style="color:var(--muted);font-size:13px">今のところ、特に大きな健康リスクが高まる年は見つかりませんでした。比較的安定していますが、年齢とともに定期健診は必須です。</p>';
+            return '<p class="expert-only note">現時点で大病リスクが高まる年は検出されませんでした。バランスと年運の関係から見て、比較的安定しています。ただし年齢とともに定期健診は必須です。</p><p class="simple-only note">今のところ、特に大きな健康リスクが高まる年は見つかりませんでした。比較的安定していますが、年齢とともに定期健診は必須です。</p>';
           }
           const levelClass = { "高危険": "health-risk-high" };
           const topRisk = major[0];
           const topDiseaseName = topRisk.majorDiseases.length > 0
             ? topRisk.majorDiseases[0].diseases.split("・")[0]
             : "特定の疾患";
-          return `<div class="simple-only info-box is-red" style="margin-bottom:12px">
-            <div style="font-size:15px;line-height:1.7">
-              <b style="color:#e05050">最も注意が必要なのは${topRisk.year}年（${topRisk.age}歳）の「${topDiseaseName}」</b>です。
+          return `<div class="simple-only info-box is-red mb-12">
+            <div class="alert-lead">
+              <b class="text-red">最も注意が必要なのは${topRisk.year}年（${topRisk.age}歳）の「${topDiseaseName}」</b>です。
             </div>
-            <div class="note-text" style="margin-top:6px">
+            <div class="note-text mt-6">
               この年は健康リスクスコア${topRisk.riskScore}点で、特に${topDiseaseName}の検査・予防を早めに行うことをおすすめします。
             </div>
           </div>
@@ -5109,7 +5112,7 @@ function render(event) {
                   ${r.isTenchu ? '<span class="tenchu-badge expert-only">天中殺</span>' : ''}
                   <span class="health-risk-score">${r.riskScore}点</span>
                 </div>
-                <div class="health-risk-bar"><i style="width:${r.riskScore}%"></i></div>
+                <div class="health-risk-bar"><i style="--health-risk-width:${r.riskScore}%"></i></div>
                 <div class="major-disease-list">
                   ${r.majorDiseases.map(d => `
                     <div class="major-disease-item">
@@ -5130,45 +5133,45 @@ function render(event) {
       ${(() => {
         const sp = healthRisk.statisticalProfile;
         if (!sp || (sp.riskFactors.length === 0 && sp.protectiveFactors.length === 0)) return '';
-        let html = '<div class="info-box is-steel" style="margin-top:16px">';
-        html += '<h4 class="expert-only" style="margin:0 0 8px;font-size:14px;color:#4682b4">統計的知見に基づく疾患リスクプロファイル</h4>';
-        html += '<h4 class="simple-only" style="margin:0 0 8px;font-size:15px;color:#4682b4">データから見る健康リスク</h4>';
-        html += `<p class="expert-only note-text-sm" style="margin:0 0 10px">${sp.studyNote}</p>`;
+        let html = '<div class="info-box is-steel mt-16">';
+        html += '<h4 class="expert-only fs-14 text-steel mb-8">統計的知見に基づく疾患リスクプロファイル</h4>';
+        html += '<h4 class="simple-only fs-15 text-steel mb-8">データから見る健康リスク</h4>';
+        html += `<p class="expert-only note-text-sm mb-10">${sp.studyNote}</p>`;
         if (sp.riskFactors.length > 0) {
-          html += '<div class="info-section"><b class="expert-only info-label is-red-strong">リスク亢進因子</b><b class="simple-only info-label is-red-strong" style="font-size:14px">⚠ 注意が必要な傾向</b>';
+          html += '<div class="info-section"><b class="expert-only info-label is-red-strong">リスク亢進因子</b><b class="simple-only info-label is-red-strong fs-14">⚠ 注意が必要な傾向</b>';
           html += sp.riskFactors.map(f => {
             const diseaseMatch = f.note.match(/(.+?)でOR=/);
             const diseaseName = diseaseMatch ? diseaseMatch[1] : f.note;
-            return `<div class="expert-only note-text-sm" style="margin:4px 0;padding:4px 8px;background:rgba(192,80,80,0.08);border-radius:6px"><b>${f.star}</b>: ${f.note} <span style="color:var(--muted)">(OR=${f.OR}, p=${f.p})</span></div>`
-              + `<div class="simple-only" style="font-size:14px;margin:6px 0;padding:8px 12px;background:rgba(192,80,80,0.08);border-radius:8px;line-height:1.6">🔴 <b>${f.star}</b>の人は<b style="color:#c05050">${diseaseName}</b>のリスクが高くなりやすい傾向があります。定期的な健康診断と、該当する検査を早めに受けることをおすすめします。</div>`;
+            return `<div class="expert-only note-text-sm risk-factor"><b>${f.star}</b>: ${f.note} <span class="text-muted">(OR=${f.OR}, p=${f.p})</span></div>`
+              + `<div class="simple-only risk-factor-simple">🔴 <b>${f.star}</b>の人は<b class="text-red">${diseaseName}</b>のリスクが高くなりやすい傾向があります。定期的な健康診断と、該当する検査を早めに受けることをおすすめします。</div>`;
           }).join("");
           html += '</div>';
         }
         if (sp.protectiveFactors.length > 0) {
-          html += '<div class="info-section"><b class="expert-only info-label is-seagreen">保護因子</b><b class="simple-only info-label is-seagreen" style="font-size:14px">✓ 守られている傾向</b>';
+          html += '<div class="info-section"><b class="expert-only info-label is-seagreen">保護因子</b><b class="simple-only info-label is-seagreen fs-14">✓ 守られている傾向</b>';
           html += sp.protectiveFactors.map(f => {
             const diseaseMatch = f.note.match(/(.+?)でOR=/);
             const diseaseName = diseaseMatch ? diseaseMatch[1] : f.note;
-            return `<div class="expert-only note-text-sm" style="margin:4px 0;padding:4px 8px;background:var(--seagreen-soft);border-radius:6px"><b>${f.star}</b>: ${f.note} <span style="color:var(--muted)">(OR=${f.OR}, p=${f.p})</span></div>`
-              + `<div class="simple-only" style="font-size:14px;margin:6px 0;padding:8px 12px;background:var(--seagreen-soft);border-radius:8px;line-height:1.6">🟢 <b>${f.star}</b>の人は<b style="color:#2e8b57">${diseaseName}</b>のリスクが低い傾向があります。現在の生活リズムを維持することが大切です。</div>`;
+            return `<div class="expert-only note-text-sm risk-factor is-protect"><b>${f.star}</b>: ${f.note} <span class="text-muted">(OR=${f.OR}, p=${f.p})</span></div>`
+              + `<div class="simple-only risk-factor-simple is-protect">🟢 <b>${f.star}</b>の人は<b class="text-seagreen">${diseaseName}</b>のリスクが低い傾向があります。現在の生活リズムを維持することが大切です。</div>`;
           }).join("");
           html += '</div>';
         }
         if (sp.diseaseSpecificRisks.length > 0) {
-          html += '<div class="info-section"><b class="expert-only info-label is-steel">病気カテゴリ別リスク</b><b class="simple-only info-label is-steel" style="font-size:14px">🏥 特に注意したい病気</b>';
-          html += '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">';
-          html += sp.diseaseSpecificRisks.map(d => `<span class="expert-only tag-pill is-red" style="font-size:12px;padding:4px 10px">${d.disease} <span style="color:var(--muted)">OR=${d.OR}</span></span>`).join("");
-          html += sp.diseaseSpecificRisks.map(d => `<span class="simple-only tag-pill is-red" style="font-size:14px;padding:6px 14px">${d.disease}</span>`).join("");
+          html += '<div class="info-section"><b class="expert-only info-label is-steel">病気カテゴリ別リスク</b><b class="simple-only info-label is-steel fs-14">🏥 特に注意したい病気</b>';
+          html += '<div class="flex-wrap-gap">';
+          html += sp.diseaseSpecificRisks.map(d => `<span class="expert-only tag-pill is-red is-sm">${d.disease} <span class="text-muted">OR=${d.OR}</span></span>`).join("");
+          html += sp.diseaseSpecificRisks.map(d => `<span class="simple-only tag-pill is-red is-lg">${d.disease}</span>`).join("");
           html += '</div></div>';
         }
-        html += `<p class="simple-only note-text" style="margin:10px 0 0">※これは統計データからの参考情報です。必ず定期健康診断を受けて、自分の健康状態を確認してくださいね。</p>`;
+        html += `<p class="simple-only note-text mt-10">※これは統計データからの参考情報です。必ず定期健康診断を受けて、自分の健康状態を確認してくださいね。</p>`;
         html += '</div>';
         return html;
       })()}
     </div>
     <div class="result-card reading expert-only">
       <h3>六親法（家系図・縁の深さ）</h3>
-      <p style="color:var(--muted);font-size:12px;margin:0 0 14px;line-height:1.7">六親法とは、日干（自分）を中心に家族の干を算出し、宿命の陰占内にその干が存在するかで縁の深さを判定する技法です。<br>縦線（親→子）は「相生」関係、横線（結婚）は「干合」関係で結びます。</p>
+      <p class="note is-small mb-14">六親法とは、日干（自分）を中心に家族の干を算出し、宿命の陰占内にその干が存在するかで縁の深さを判定する技法です。<br>縦線（親→子）は「相生」関係、横線（結婚）は「干合」関係で結びます。</p>
       ${(() => {
         const sp = calcSixParents(day.stem, gender);
         const rel = getSixParentsRelation(sp, pillars, zoukan, tenchusatsu);
@@ -5181,7 +5184,7 @@ function render(event) {
             <div class="six-parents-row">
               <div class="six-parents-label"><b>${r.label}</b><small class="six-parents-comment">${comment}</small></div>
               <div class="six-parents-stem">${r.stem}<small>${r.star}</small></div>
-              <div class="six-parents-depth" style="color:${depthColor(r.depth)}">${r.depth}<small style="display:block;font-size:0.7em;font-weight:400;opacity:0.7">${depthComment(r.depth)}</small></div>
+              <div class="six-parents-depth" style="color:${depthColor(r.depth)}">${r.depth}<small class="six-parents-depth-comment">${depthComment(r.depth)}</small></div>
               <div class="six-parents-positions">${posText}</div>
             </div>
           `;
