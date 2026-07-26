@@ -1138,6 +1138,13 @@ function analyzeTopology(pillars) {
     const bb = pillars[b].branch;
     if (shigouPair[ba] === bb) results.push({ label, name: "支合", group: "合法", note: "この二つの地支は引き合う関係。協力関係が生まれ、物事が順調に進みやすくなる。人付き合いや仕事の提携で良い結果が出やすい。" });
     if (chongPairMap[ba] === bb) results.push({ label, name: "対冲", group: "散法", note: "この二つの地支は正面衝突する関係。予期しない変化や急な方向転換が起きやすくなる。慌てて決断せず、一旦立ち止まって検証するのが安全。" });
+    if (chongPairMap[ba] === bb && sa === sb) {
+      let natchinNote = "納音（なっちん）とは天干が同じで地支が対冲している状態です。物事が一つにまとまり、一定の範囲内で行動するため用心深く手堅い性質を強めます。";
+      if (a === "year" && b === "month") natchinNote += " 年干支と月干支が納音の場合は、頭で考えていることと行動が伴いにくく、職場では隠し事や秘め事が多くなりがちです。";
+      if (a === "month" && b === "day") natchinNote += " 月干支と日干支が納音の場合は、考えと行動が一致しにくく家庭内に隠し事が多くなる傾向があります。";
+      if (a === "year" && b === "day") natchinNote += " 年干支と日干支が納音の場合は、社会面とプライベート面を切り離し、外面と家での顔をうまく使い分けます。";
+      results.push({ label, name: "納音", group: "合法", note: natchinNote });
+    }
     if (gaiPair[ba] === bb) results.push({ label, name: "害法", group: "散法", note: "この二つの地支は害し合う関係。ストレスが蓄積しやすく、体調不良や人間関係の裏切りに遭いやすくなる。無理をせず、信頼できる人に相談するのが有効。" });
     if (haPair[ba] === bb) results.push({ label, name: "破法", group: "散法", note: "この二つの地支は破壊し合う関係。単独では影響は軽いが、他の散法（対冲・害法・刑法）と同時に出ると影響が強まる。決断が揺れやすくなるため、重要な判断は人と相談してから出す。" });
     if (ba === bb && jikeiBranches.includes(ba)) results.push({ label, name: "自刑（西方刑）", group: "散法", note: "同じ地支が重なることで自分自身と矛盾する関係。身内やパートナーと価値観がぶつかりやすくなる。同居や密な関係では摩擦が増えるため、適度な距離を保つと上手くいく。" });
@@ -1191,6 +1198,13 @@ function analyzeBranchTopology(branch, natalPillars, movingStem = null) {
     if (branch === nb) return;
     if (shigouPair[branch] === nb) results.push({ label: natalLabels[key], name: "支合", group: "合法", note: "この時期の地支と" + natalLabels[key] + "が引き合う関係。協力関係が生まれ、物事が順調に進みやすくなる。人付き合いや仕事の提携で良い結果が出やすい。" });
     if (chongPairMap[branch] === nb) results.push({ label: natalLabels[key], name: "対冲", group: "散法", note: "この時期の地支と" + natalLabels[key] + "が正面衝突する関係。" + natalLabels[key] + "が示す領域（年支＝実家・先祖、月支＝親・仕事環境、日支＝配偶者・自分自身）で予期しない変化やトラブルが起きやすくなる。慌てて決断せず、一旦立ち止まって検証するのが安全。" });
+    if (chongPairMap[branch] === nb && movingStem && movingStem === ns) {
+      let natchinNote = "納音（なっちん）の年。天干が同じで地支が対冲し、物事が一つにまとまる性質を強めます。無茶をせず用心深く行動すると、流れを良い方向に切り替えられます。";
+      if (key === "year") natchinNote += " 年干支と納音する場合は仕事面で八方塞がりになりやすく、表舞台よりも裏方で影で作戦を立てた方が得策です。";
+      if (key === "month") natchinNote += " 月干支と納音する場合は今までの立場が変わったり、内面と向き合う生まれ変わるような変化が起こります。";
+      if (key === "day") natchinNote += " 日干支と納音する場合は今までの人生に一区切りをつける急ブレーキ的な出来事が起きやすく、柔軟な対応がチャンスをつかむ鍵です。";
+      results.push({ label: natalLabels[key], name: "納音（後天運）", group: "合法", note: natchinNote });
+    }
     if (gaiPair[branch] === nb) results.push({ label: natalLabels[key], name: "害法", group: "散法", note: "この時期の地支と" + natalLabels[key] + "が害し合う関係。ストレスが蓄積しやすく、体調不良や人間関係の裏切りに遭いやすくなる。無理をせず、信頼できる人に相談するのが有効。" });
     if (haPair[branch] === nb) results.push({ label: natalLabels[key], name: "破法", group: "散法", note: "この時期の地支と" + natalLabels[key] + "が破壊し合う関係。単独では影響は軽いが、他の散法と同時に出ると影響が強まる。決断が揺れやすくなるため、重要な判断は人と相談してから出す。" });
     keiGroups.forEach((g) => {
