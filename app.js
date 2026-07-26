@@ -1141,6 +1141,15 @@ function analyzeTopology(pillars) {
     if (gaiPair[ba] === bb) results.push({ label, name: "害法", group: "散法", note: "この二つの地支は害し合う関係。ストレスが蓄積しやすく、体調不良や人間関係の裏切りに遭いやすくなる。無理をせず、信頼できる人に相談するのが有効。" });
     if (haPair[ba] === bb) results.push({ label, name: "破法", group: "散法", note: "この二つの地支は破壊し合う関係。単独では影響は軽いが、他の散法（対冲・害法・刑法）と同時に出ると影響が強まる。決断が揺れやすくなるため、重要な判断は人と相談してから出す。" });
     if (ba === bb && jikeiBranches.includes(ba)) results.push({ label, name: "自刑（西方刑）", group: "散法", note: "同じ地支が重なることで自分自身と矛盾する関係。身内やパートナーと価値観がぶつかりやすくなる。同居や密な関係では摩擦が増えるため、適度な距離を保つと上手くいく。" });
+    const sa = pillars[a].stem;
+    const sb = pillars[b].stem;
+    if (ba === bb && sa === sb) {
+      let ritsuNote = "同干支＝自分の分身ができる（いる）ということになり、変人気質で二面性があります。考えが変わりやすく裏表があると見られる一面もありますが、人には真似できないオリジナリティで勝負すれば活躍できます。一生のうちに二度、異なる人生を歩む意味もあります。";
+      if (a === "year" && b === "month") ritsuNote += " 視野が狭くなる傾向はありますが、特定の技芸や才能に専念することで成功します。親が家系の名誉や伝統を重要視していても、本人はあまり興味がなく無頓着です。";
+      if (a === "month" && b === "day") ritsuNote += " 無欲な性格で行動範囲は狭くなります。しかし、集中力がずば抜けているので一つのことに専念できれば才能を開花させます。家系との結びつきが強く、生家から離れにくい宿命です。";
+      if (a === "year" && b === "day") ritsuNote += " 無欲な性格で親との絆が深くなります。跡取りに向いており、親元を離れにくい宿命です。視野は広くなく狭くなりがちですが、一つのことに集中すれば成功できます。";
+      results.push({ label, name: "律音", group: "合法", note: ritsuNote });
+    }
     keiGroups.forEach((g) => {
       if (g.branches.includes(ba) && g.branches.includes(bb) && ba !== bb) {
         results.push({ label, name: g.name, group: "散法", note: g.note });
@@ -1165,11 +1174,20 @@ function analyzeTopology(pillars) {
   return results;
 }
 
-function analyzeBranchTopology(branch, natalPillars) {
+function analyzeBranchTopology(branch, natalPillars, movingStem = null) {
   const natalLabels = { year: "年支", month: "月支", day: "日支" };
   const results = [];
   ["year", "month", "day"].forEach((key) => {
     const nb = natalPillars[key].branch;
+    const ns = natalPillars[key].stem;
+    if (branch === nb && movingStem === ns && movingStem) {
+      let ritsuNote = "律音になる年は道が２つに別れやすい分岐点です。物事をガラリと変えるチャンスの時期であり、その年の十二支が強調されます。";
+      if (key === "year") ritsuNote += " 年干支と後天運が律音する場合は仕事に変化が起こりやすく、同じ志を持つ仲間やライバルが現れやすい時期です。現在の境遇から抜け出したくなり、新しい目標を掲げてスタートする時期です。";
+      if (key === "month") ritsuNote += " 月干支と後天運が律音する場合は信念が強固になり自己確立し、出世しやすい時期です。家族と離れて暮らしたり引越しなど、置かれた状況から抜け出したい欲求が強まります。";
+      if (key === "day") ritsuNote += " 日干支と後天運が律音する場合はパーソナルな部分が強化され、自分の時代が来るチャンスです。ただし反発や揉め事、離婚にも注意が必要です。固定観念を捨てて進化すれば大きく飛躍できます。";
+      results.push({ label: natalLabels[key], name: "律音（後天運）", group: "合法", note: ritsuNote });
+      return;
+    }
     if (branch === nb) return;
     if (shigouPair[branch] === nb) results.push({ label: natalLabels[key], name: "支合", group: "合法", note: "この時期の地支と" + natalLabels[key] + "が引き合う関係。協力関係が生まれ、物事が順調に進みやすくなる。人付き合いや仕事の提携で良い結果が出やすい。" });
     if (chongPairMap[branch] === nb) results.push({ label: natalLabels[key], name: "対冲", group: "散法", note: "この時期の地支と" + natalLabels[key] + "が正面衝突する関係。" + natalLabels[key] + "が示す領域（年支＝実家・先祖、月支＝親・仕事環境、日支＝配偶者・自分自身）で予期しない変化やトラブルが起きやすくなる。慌てて決断せず、一旦立ち止まって検証するのが安全。" });
@@ -1390,8 +1408,8 @@ function analyzeYearlyFortune(day, pillars, taiun, currentAge, thisYear, balance
   const isTaiunTenchu = currentTaiun ? isTenchusatsuYear(currentTaiun.branch, tenchusatsu) : false;
 
   // 位相法（年運の地支と宿命）
-  const yearTopo = analyzeBranchTopology(yp.branch, pillars);
-  const taiunTopo = currentTaiun ? analyzeBranchTopology(currentTaiun.branch, pillars) : [];
+  const yearTopo = analyzeBranchTopology(yp.branch, pillars, yp.stem);
+  const taiunTopo = currentTaiun ? analyzeBranchTopology(currentTaiun.branch, pillars, currentTaiun.stem) : [];
 
   // 五行関係（日干と年運・大運の天干）
   const dayEl = elements[stems.indexOf(day.stem)];
@@ -2530,7 +2548,7 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
     const yearStart = birthYear + p.age;
 
     // 大運の位相法
-    const topoResults = analyzeBranchTopology(p.branch, pillars);
+    const topoResults = analyzeBranchTopology(p.branch, pillars, p.stem);
     const topoGo = topoResults.filter((r) => r.group === "合法");
     const topoSan = topoResults.filter((r) => r.group === "散法");
 
@@ -2727,7 +2745,7 @@ function analyzeLifeStageFortune(day, pillars, taiun, tenchusatsu, currentAge) {
       const taiunEl = elements[stems.indexOf(p.stem)];
       const rel = gogyoRel[dayEl][taiunEl];
       const isTenchu = isTenchusatsuYear(p.branch, tenchusatsu);
-      const topoResults = analyzeBranchTopology(p.branch, pillars);
+      const topoResults = analyzeBranchTopology(p.branch, pillars, p.stem);
 
       let periodScore = 50;
       const periodFactors = [];
@@ -5001,7 +5019,7 @@ function render(event) {
         ${taiun.periods.map((p) => {
           const isCurrent = currentAge >= p.age && currentAge <= p.ageTo;
           const mainStar = getMainStar(day.stem, p.stem);
-          const topoResults = analyzeBranchTopology(p.branch, pillars);
+          const topoResults = analyzeBranchTopology(p.branch, pillars, p.stem);
           const topoTags = topoResults.map((r) => `<span class="topo-mini-tag${r.group === '合法' ? ' tag-go' : ' tag-san'}">${r.name}</span>`).join("");
           return `<div class="taiun-item${isCurrent ? " current" : ""}">
             <span class="age">${p.age}〜${p.ageTo}歳</span>
@@ -5090,7 +5108,7 @@ function render(event) {
             const isCurrent = y === thisYear;
             const comment = nenunComments[star][isTenchu ? 1 : 0];
             const age = y - date.getFullYear();
-            const topoResults = analyzeBranchTopology(yp.branch, pillars);
+            const topoResults = analyzeBranchTopology(yp.branch, pillars, yp.stem);
             const topoTags = topoResults.map((r) => `<span class="topo-mini-tag${r.group === '合法' ? ' tag-go' : ' tag-san'}">${r.name}</span>`).join("");
             html += `<div class="nenun-row${isCurrent ? ' current' : ''}${isTenchu ? ' tenchu' : ''}">
               <div class="nenun-year">
