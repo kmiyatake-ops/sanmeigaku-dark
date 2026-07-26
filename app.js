@@ -1126,6 +1126,17 @@ const keiGroups = [
 ];
 const jikeiBranches = ["辰", "午", "酉", "亥"];
 
+function isSameParityOvercome(aStem, bStem) {
+  const a = stems.indexOf(aStem);
+  const b = stems.indexOf(bStem);
+  if (a < 0 || b < 0) return false;
+  if ((a % 2) !== (b % 2)) return false;
+  const cycle = ["木", "火", "土", "金", "水"];
+  const aE = cycle.indexOf(elements[a]);
+  const bE = cycle.indexOf(elements[b]);
+  return bE === (aE + 2) % 5;
+}
+
 function analyzeTopology(pillars) {
   const pairDefs = [
     { a: "year", b: "month", label: "年支×月支" },
@@ -1136,6 +1147,8 @@ function analyzeTopology(pillars) {
   pairDefs.forEach(({ a, b, label }) => {
     const ba = pillars[a].branch;
     const bb = pillars[b].branch;
+    const sa = pillars[a].stem;
+    const sb = pillars[b].stem;
     if (shigouPair[ba] === bb) results.push({ label, name: "支合", group: "合法", note: "この二つの地支は引き合う関係。協力関係が生まれ、物事が順調に進みやすくなる。人付き合いや仕事の提携で良い結果が出やすい。" });
     if (chongPairMap[ba] === bb) results.push({ label, name: "対冲", group: "散法", note: "この二つの地支は正面衝突する関係。予期しない変化や急な方向転換が起きやすくなる。慌てて決断せず、一旦立ち止まって検証するのが安全。" });
     if (chongPairMap[ba] === bb && sa === sb) {
@@ -1145,11 +1158,12 @@ function analyzeTopology(pillars) {
       if (a === "year" && b === "day") natchinNote += " 年干支と日干支が納音の場合は、社会面とプライベート面を切り離し、外面と家での顔をうまく使い分けます。";
       results.push({ label, name: "納音", group: "合法", note: natchinNote });
     }
+    if (chongPairMap[ba] === bb && (isSameParityOvercome(sa, sb) || isSameParityOvercome(sb, sa))) {
+      results.push({ label, name: "天剋地冲", group: "散法", note: "天剋地冲（てんこくちちゅう）は、天干が陽同士・陰同士の相剋で地支が対冲する状態です。なんとか成功したい・勝ちたいという強い意志を持ち、負けない戦い方ができます。人生の曲がり角でびっくりするような変化が起きやすく、周囲への影響にも注意が必要です。" });
+    }
     if (gaiPair[ba] === bb) results.push({ label, name: "害法", group: "散法", note: "この二つの地支は害し合う関係。ストレスが蓄積しやすく、体調不良や人間関係の裏切りに遭いやすくなる。無理をせず、信頼できる人に相談するのが有効。" });
     if (haPair[ba] === bb) results.push({ label, name: "破法", group: "散法", note: "この二つの地支は破壊し合う関係。単独では影響は軽いが、他の散法（対冲・害法・刑法）と同時に出ると影響が強まる。決断が揺れやすくなるため、重要な判断は人と相談してから出す。" });
     if (ba === bb && jikeiBranches.includes(ba)) results.push({ label, name: "自刑（西方刑）", group: "散法", note: "同じ地支が重なることで自分自身と矛盾する関係。身内やパートナーと価値観がぶつかりやすくなる。同居や密な関係では摩擦が増えるため、適度な距離を保つと上手くいく。" });
-    const sa = pillars[a].stem;
-    const sb = pillars[b].stem;
     if (ba === bb && sa === sb) {
       let ritsuNote = "同干支＝自分の分身ができる（いる）ということになり、変人気質で二面性があります。考えが変わりやすく裏表があると見られる一面もありますが、人には真似できないオリジナリティで勝負すれば活躍できます。一生のうちに二度、異なる人生を歩む意味もあります。";
       if (a === "year" && b === "month") ritsuNote += " 視野が狭くなる傾向はありますが、特定の技芸や才能に専念することで成功します。親が家系の名誉や伝統を重要視していても、本人はあまり興味がなく無頓着です。";
@@ -1204,6 +1218,13 @@ function analyzeBranchTopology(branch, natalPillars, movingStem = null) {
       if (key === "month") natchinNote += " 月干支と納音する場合は今までの立場が変わったり、内面と向き合う生まれ変わるような変化が起こります。";
       if (key === "day") natchinNote += " 日干支と納音する場合は今までの人生に一区切りをつける急ブレーキ的な出来事が起きやすく、柔軟な対応がチャンスをつかむ鍵です。";
       results.push({ label: natalLabels[key], name: "納音（後天運）", group: "合法", note: natchinNote });
+    }
+    if (chongPairMap[branch] === nb && movingStem && (isSameParityOvercome(movingStem, ns) || isSameParityOvercome(ns, movingStem))) {
+      let tenkokuNote = "天剋地冲（てんこくちちゅう）の年。天干が陽同士・陰同士の相剋で地支が対冲し、人生の曲がり角となる大きな変化が起きやすい年です。無理を避け、状況を見極めてから行動しましょう。";
+      if (key === "year") tenkokuNote += " 年干支と天剋地冲する場合は職場や組織でメンバーが総入れ替えになったり、自分を取り巻く環境が大きく変化する時期です。";
+      if (key === "month") tenkokuNote += " 月干支と天剋地冲する場合は今まで信じてきたことや常識が覆ることが起こりやすく、心が折れやすくなります。スルー力を大切にしましょう。";
+      if (key === "day") tenkokuNote += " 日干支と天剋地冲する場合は身の回りの断捨離やリセットをしたくなり、今までのこだわりを捨てる時期です。";
+      results.push({ label: natalLabels[key], name: "天剋地冲（後天運）", group: "散法", note: tenkokuNote });
     }
     if (gaiPair[branch] === nb) results.push({ label: natalLabels[key], name: "害法", group: "散法", note: "この時期の地支と" + natalLabels[key] + "が害し合う関係。ストレスが蓄積しやすく、体調不良や人間関係の裏切りに遭いやすくなる。無理をせず、信頼できる人に相談するのが有効。" });
     if (haPair[branch] === nb) results.push({ label: natalLabels[key], name: "破法", group: "散法", note: "この時期の地支と" + natalLabels[key] + "が破壊し合う関係。単独では影響は軽いが、他の散法と同時に出ると影響が強まる。決断が揺れやすくなるため、重要な判断は人と相談してから出す。" });
