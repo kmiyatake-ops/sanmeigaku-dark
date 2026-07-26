@@ -1137,6 +1137,10 @@ function isSameParityOvercome(aStem, bStem) {
   return bE === (aE + 2) % 5;
 }
 
+function isHanKaiPair(aBranch, bBranch) {
+  return sangoBureaus.some((bureau) => bureau.branches.includes(aBranch) && bureau.branches.includes(bBranch) && aBranch !== bBranch);
+}
+
 function analyzeTopology(pillars) {
   const pairDefs = [
     { a: "year", b: "month", label: "年支×月支" },
@@ -1150,6 +1154,9 @@ function analyzeTopology(pillars) {
     const sa = pillars[a].stem;
     const sb = pillars[b].stem;
     if (shigouPair[ba] === bb) results.push({ label, name: "支合", group: "合法", note: "この二つの地支は引き合う関係。協力関係が生まれ、物事が順調に進みやすくなる。人付き合いや仕事の提携で良い結果が出やすい。" });
+    if (sa === sb && isHanKaiPair(ba, bb)) {
+      results.push({ label, name: "大半会", group: "合法", note: "大半会（だいはんかい）は、天干が同じで地支が半会している状態です。考え方に一貫性があり、果敢にチャレンジする冒険的な性質を強めます。シーソーのように「進みすぎる」か「物事を壊してしまう」かの2つの作用があり、家の恩恵と因縁を同時に引き受けやすい関係です。" });
+    }
     if (chongPairMap[ba] === bb) results.push({ label, name: "対冲", group: "散法", note: "この二つの地支は正面衝突する関係。予期しない変化や急な方向転換が起きやすくなる。慌てて決断せず、一旦立ち止まって検証するのが安全。" });
     if (chongPairMap[ba] === bb && sa === sb) {
       let natchinNote = "納音（なっちん）とは天干が同じで地支が対冲している状態です。物事が一つにまとまり、一定の範囲内で行動するため用心深く手堅い性質を強めます。";
@@ -1211,6 +1218,13 @@ function analyzeBranchTopology(branch, natalPillars, movingStem = null) {
     }
     if (branch === nb) return;
     if (shigouPair[branch] === nb) results.push({ label: natalLabels[key], name: "支合", group: "合法", note: "この時期の地支と" + natalLabels[key] + "が引き合う関係。協力関係が生まれ、物事が順調に進みやすくなる。人付き合いや仕事の提携で良い結果が出やすい。" });
+    if (movingStem && movingStem === ns && isHanKaiPair(branch, nb)) {
+      let daikaiNote = "大半会（だいはんかい）の年。天干が同じで地支が半会し、考えが一貫して広がりのある展開を迎えやすい年です。謙虚に行動し、忌神や天中殺・対冲などのブレーキには注意しましょう。";
+      if (key === "year") daikaiNote += " 年干支と大半会する場合は仕事面や社交で異業種の交流が広がり、事業規模が拡大しやすい大飛躍の年です。";
+      if (key === "month") daikaiNote += " 月干支と大半会する場合は自信がつき気分がノリノリになり、新しい分野へのチャレンジや目標の規模が大きくなります。";
+      if (key === "day") daikaiNote += " 日干支と大半会する場合はこれまでの努力が実を結び、実りある年になります。家庭も明るくなり、結婚に向いている時期でもあります。";
+      results.push({ label: natalLabels[key], name: "大半会（後天運）", group: "合法", note: daikaiNote });
+    }
     if (chongPairMap[branch] === nb) results.push({ label: natalLabels[key], name: "対冲", group: "散法", note: "この時期の地支と" + natalLabels[key] + "が正面衝突する関係。" + natalLabels[key] + "が示す領域（年支＝実家・先祖、月支＝親・仕事環境、日支＝配偶者・自分自身）で予期しない変化やトラブルが起きやすくなる。慌てて決断せず、一旦立ち止まって検証するのが安全。" });
     if (chongPairMap[branch] === nb && movingStem && movingStem === ns) {
       let natchinNote = "納音（なっちん）の年。天干が同じで地支が対冲し、物事が一つにまとまる性質を強めます。無茶をせず用心深く行動すると、流れを良い方向に切り替えられます。";
