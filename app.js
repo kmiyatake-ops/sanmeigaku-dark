@@ -1030,6 +1030,64 @@ function getEnergyStar(dayStem, branch) {
   return energyStars[stage];
 }
 
+function getShiGan(dayStem, targetStem) {
+  const d = stems.indexOf(dayStem);
+  const t = stems.indexOf(targetStem);
+  const dayEl = elements[d];
+  const targetEl = elements[t];
+  const sameYin = (d % 2) === (t % 2);
+  const cycle = ["木", "火", "土", "金", "水"];
+  const dayIdx = cycle.indexOf(dayEl);
+  const targetIdx = cycle.indexOf(targetEl);
+  const next = (dayIdx + 1) % 5;
+  const prev = (dayIdx + 5 - 1) % 5;
+  const overcome = cycle[(dayIdx + 2) % 5];
+  if (dayEl === targetEl) return sameYin ? "比肩" : "劫財";
+  if (targetIdx === next) return sameYin ? "食神" : "傷官";
+  if (targetIdx === prev) return sameYin ? "偏印" : "正印";
+  if (targetEl === overcome) return sameYin ? "偏財" : "正財";
+  return sameYin ? "偏官（七殺）" : "正官";
+}
+
+function buildFourPillarsComparison(pillars, zoukan, day) {
+  const rows = ["year", "month", "day"].map((key) => {
+    const p = pillars[key];
+    const z = zoukan[key];
+    const label = key === "year" ? "年柱" : key === "month" ? "月柱" : "日柱";
+    const mainStar = getMainStar(day.stem, p.stem);
+    const energy = getEnergyStar(day.stem, p.branch);
+    const shiGan = getShiGan(day.stem, p.stem);
+    const shiGanZoukan = getShiGan(day.stem, z);
+    return `<tr>
+      <th>${label}</th>
+      <td>${p.stem}<br><small>十神：${shiGan}</small></td>
+      <td>${p.branch}<br><small>蔵干：${z}（${shiGanZoukan}）</small></td>
+      <td>${energy.name}</td>
+      <td>${mainStar}<br><small>${energy.name}</small></td>
+    </tr>`;
+  }).join("");
+  return `
+    <div class="result-card expert-only">
+      <h3>四柱推命（三柱）と算命学の比較</h3>
+      <p class="note is-small mb-12">簡易表示のため出生時刻は使用せず、年月日の三柱で比較しています。</p>
+      <div class="comparison-table-wrap">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>柱</th>
+              <th>四柱推命・天干（十神）</th>
+              <th>四柱推命・地支（蔵干）</th>
+              <th>十二運</th>
+              <th>算命学・主星（従星）</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
 function countElements(pillars) {
   const counts = { 木: 0, 火: 0, 土: 0, 金: 0, 水: 0 };
   pillars.forEach((p) => {
@@ -5235,6 +5293,7 @@ function render(event) {
         `;
       })()}
     </div>
+    ${buildFourPillarsComparison(pillars, zoukan, day)}
   `;
   saveToHistory({
     name,
