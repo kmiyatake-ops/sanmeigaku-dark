@@ -5268,6 +5268,7 @@ function render(event) {
       <p class="view-toggle-hint expert-only">専門用語を含む詳細表示中。切り替えると分かりやすい表示になります。</p>
       <p class="view-toggle-hint simple-only">分かりやすい表示中。切り替えると専門的な詳細が見られます。</p>
     </div>
+    <div class="section-group-header expert-only">運勢の全体像<span class="sg-sub">今年の運勢・開運アクション</span></div>
     <div class="result-card yearly-fortune-card">
       <h3 class="expert-only">${yearlyFortune.thisYear}年の総合運勢（大運×年運 統合判定）</h3>
       <h3 class="simple-only">${yearlyFortune.thisYear}年の運勢</h3>
@@ -5380,6 +5381,7 @@ function render(event) {
         `;
       })()}
     </div>
+    <div class="section-group-header expert-only">性格・才能・適職<span class="sg-sub">本質の分析と仕事の方向性</span></div>
     <div class="result-card reading">
       <h3>性格</h3>
       ${reading.map((item) => { const isDetailOnly = item.title.includes("詳細") || item.title.includes("タイミング") || item.title.includes("エネルギー傾向") || item.title.includes("バランスと課題") || item.title.includes("注意が必要な時期") || item.title.includes("長所") || item.title.includes("短所"); const cls = (item.title.includes("長所") ? "is-good" : item.title.includes("短所") ? "is-bad" : item.title.includes("優秀度") ? "is-work-ex" : item.title.includes("仕事") ? "is-work" : item.title.includes("恋愛") ? "is-love" : item.title.includes("金銭") ? "is-money" : item.title.includes("結婚") ? "is-marriage" : item.title.includes("社交") ? "is-social" : item.title.includes("×日干") ? "is-star-detail" : item.title.includes("裏の") ? "is-hidden" : "") + (isDetailOnly ? " expert-only" : ""); const isWorkEx = item.title.includes("優秀度"); const scoreMatch = item.text.match(/スコア：(\d+)点/); const scoreNum = scoreMatch ? parseInt(scoreMatch[1]) : 0; const rankMatch = item.text.match(/（(.+?)）/); const rankText = rankMatch ? rankMatch[1] : ""; const detailText = item.text.replace(/総合仕事優秀度スコア：\d+点（.+?）\n/, ""); return `<article class="${cls}"><h4>${item.title}</h4><div>${isWorkEx && scoreNum ? `<div class="work-ex-score-wrap"><div class="work-ex-score-num">${scoreNum}<span>点</span></div><div class="work-ex-rank-badge">${rankText}</div></div><div class="work-ex-bar"><div class="work-ex-bar-fill" style="--work-ex-width:${scoreNum}%"></div></div><div class="work-ex-detail">${detailText}</div>` : item.text}</div></article>`; }).join("")}
@@ -5415,6 +5417,7 @@ function render(event) {
         `;
       })()}
     </div>
+    <div class="section-group-header expert-only">命式の基本情報<span class="sg-sub">姓名判断・陰占・特殊干支</span></div>
     ${(() => {
       if (seimeiResult.error) {
         return `<div class="result-card seimei-card expert-only">
@@ -5541,6 +5544,7 @@ function render(event) {
         `;
       })()}
     </div>
+    <div class="section-group-header expert-only">占技詳細分析<span class="sg-sub">意識・位相法・守護神・星の配置など</span></div>
     ${(() => {
       const ishiki = analyzeIshiki(pillars, day);
       return `<div class="result-card expert-only">
@@ -5944,6 +5948,7 @@ function render(event) {
         </div>
       </div>`;
     })()}
+    <div class="section-group-header expert-only">恋愛・対人関係<span class="sg-sub">恋愛傾向・結婚適性度・モテ度分析</span></div>
     <div class="result-card reading">
       <h3 class="expert-only">恋愛・結婚・離婚・浮気（不倫）傾向</h3>
       <h3 class="simple-only">恋愛・結婚の傾向</h3>
@@ -6159,6 +6164,7 @@ function render(event) {
         </div>
       </div>
     </div>
+    <div class="section-group-header expert-only">運気の波と人生の流れ<span class="sg-sub">大運・年運・ターニングポイント・健康・注意点</span></div>
     <div class="result-card expert-only">
       <h3>大運（10年周期の運気）</h3>
       <p class="note mb-8">${taiun.forward ? "順行" : "逆行"} / 立運${taiun.startAge}歳</p>
