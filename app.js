@@ -5666,18 +5666,6 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
       events.push({ icon: "health", text: `${hy.year}年（${hy.age}歳）頃に健康リスク上昇：${disease}に注意` });
     });
 
-    if (seimeiResult && !seimeiResult.error) {
-      if (ageFrom >= 20 && ageTo <= 35) {
-        events.push({ icon: "name", text: `姓名判断・地格${seimeiResult.chikaku}画（${seimeiResult.chiRank.rank}）：恋愛・感受性への影響が強い` });
-      }
-      if (ageFrom >= 25 && ageTo <= 50) {
-        events.push({ icon: "name", text: `姓名判断・人格${seimeiResult.jinkaku}画（${seimeiResult.jinRank.rank}）：性格の核・人生の方向性` });
-      }
-      if (ageFrom >= 50) {
-        events.push({ icon: "name", text: `姓名判断・総格${seimeiResult.soukaku}画（${seimeiResult.souRank.rank}）：晩年の運勢` });
-      }
-    }
-
     stages.push({
       ageFrom, ageTo, yearFrom, yearTo, star, isTenchu, events,
       isCurrent: currentAge >= ageFrom && currentAge <= ageTo
