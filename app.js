@@ -1525,9 +1525,9 @@ function analyzeEnergyBias(energyStarsArr) {
 // === 三分法 ===
 // 参考: https://sanmei-stock.com/basic/yang/trichotomy/
 const sanbunPeriodMap = {
-  year: { label: "初年期（若年期）", ageRange: "生誕〜成人" },
-  month: { label: "中年期（壮年期）", ageRange: "成人〜引退" },
-  day: { label: "晩年期", ageRange: "引退〜死" }
+  year: { label: "初年期（若年期）", ageRange: "生誕〜成人", starKey: "north" },
+  month: { label: "中年期（壮年期）", ageRange: "成人〜引退", starKey: "south" },
+  day: { label: "晩年期", ageRange: "引退〜死", starKey: "west" }
 };
 
 const realityStars = ["貫索星", "石門星", "禄存星", "司禄星", "車騎星", "牽牛星"];
@@ -1547,7 +1547,8 @@ const mismatchTexts = {
 function analyzeSanbun(mainStars, energyStarsArr) {
   const periods = ["year", "month", "day"];
   const results = periods.map(key => {
-    const mainStar = mainStars[key];
+    const periodInfo = sanbunPeriodMap[key];
+    const mainStar = mainStars[periodInfo.starKey];
     const energyStar = energyStarsArr.find(e => e.pillar === key);
     const energyName = energyStar ? energyStar.name : "";
     const isRealityMain = realityStars.includes(mainStar);
