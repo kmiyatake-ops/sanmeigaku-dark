@@ -5937,7 +5937,6 @@ function render(event) {
             <div class="tyf-desc">${taiunInfo.desc}</div>
             ${taiunEnergyTitle ? `<div class="tyf-energy">ライフテーマ：${taiunEnergyTitle}</div>` : ''}
             <div class="tyf-rel">あなたとの相性：${taiunInfo.relText || "影響範囲外"}</div>
-            ${sameStar ? '' : `<div class="tyf-example">${taiunInfo.example}</div>`}
             ${yearlyFortune.isTaiunTenchu ? '<div class="tyf-tenchu-note">天中殺中：大きな決断は避け、整理と準備に徹するのが正解。転職や結婚は時期が明けてからにする</div>' : ''}
           </div>`;
         }
@@ -5948,7 +5947,6 @@ function render(event) {
             <div class="tyf-desc">${yearInfo.desc}</div>
             ${yearEnergyTitle ? `<div class="tyf-energy">今年のテーマ：${yearEnergyTitle}</div>` : ''}
             <div class="tyf-rel">あなたとの相性：${yearInfo.relText || "影響範囲外"}</div>
-            <div class="tyf-example">${yearInfo.example}</div>
             ${yearlyFortune.isYearTenchu ? '<div class="tyf-tenchu-note">天中殺の年：新しいスタートは来年に回し、準備と体力作りに専念する。新プロジェクトの立ち上げは避ける</div>' : ''}
           </div>`;
         }
@@ -5966,7 +5964,6 @@ function render(event) {
               <div class="tyf-header"><span class="tyf-period">今の10年間の運気</span>${yearlyFortune.isTaiunTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
               <div class="tyf-title">${taiunInfo.title}</div>
               <div class="tyf-desc">${taiunInfo.desc}</div>
-              ${sameStar ? '' : `<div class="tyf-example">${taiunInfo.example}</div>`}
               ${yearlyFortune.isTaiunTenchu ? '<div class="tyf-tenchu-note">注意が必要な時期：大きな決断は避け、整理と準備に徹するのが正解。転職や結婚は時期が明けてからにする</div>' : ''}
             </div>`;
           }
@@ -5975,7 +5972,6 @@ function render(event) {
               <div class="tyf-header"><span class="tyf-period">今年1年の運気</span>${yearlyFortune.isYearTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
               <div class="tyf-title">${yearInfo.title}</div>
               <div class="tyf-desc">${yearInfo.desc}</div>
-              <div class="tyf-example">${yearInfo.example}</div>
               ${yearlyFortune.isYearTenchu ? '<div class="tyf-tenchu-note">注意が必要な年：新しいことを始めるより、準備と体力作りに専念しましょう</div>' : ''}
             </div>`;
           }
