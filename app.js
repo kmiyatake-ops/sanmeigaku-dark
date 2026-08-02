@@ -3262,61 +3262,55 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
   const gogyoRel = { 木: { 木: "比和", 火: "相生", 土: "相剋", 金: "反剋", 水: "相生" }, 火: { 木: "相生", 火: "比和", 土: "相生", 金: "相剋", 水: "反剋" }, 土: { 木: "反剋", 火: "相生", 土: "比和", 金: "相生", 水: "相剋" }, 金: { 木: "相剋", 火: "反剋", 金: "比和", 土: "相生", 水: "相生" }, 水: { 木: "相生", 火: "相剋", 土: "反剋", 金: "相生", 水: "比和" } };
   const goodStars = ["禄存星", "司禄星", "石門星", "玉堂星", "牽牛星", "貫索星"];
   const badStars = ["調舒星", "龍高星", "車騎星"];
-
-  // 陽占の主星リスト
   const yangStars = [mainStars.center, mainStars.north, mainStars.south, mainStars.east, mainStars.west];
 
+  // 位相法の専門用語を分かりやすく変換
+  const topoExplain = (results) => {
+    return results.map((r) => {
+      const labelMap = { "年支": "実家・先祖", "月支": "親・仕事環境", "日支": "配偶者・自分自身", "宿命全体": "人生全体" };
+      const area = labelMap[r.label] || r.label;
+      if (r.name === "支合") return `「${area}」と協力関係になり、物事が順調に進みやすい`;
+      if (r.name === "対冲") return `「${area}」と正面衝突し、予期しない変化やトラブルが起きやすい`;
+      if (r.name === "害法") return `「${area}」との間でストレスが蓄積し、体調不良や人間関係の裏切りに遭いやすい`;
+      if (r.name === "破法") return `「${area}」との関係で決断が揺れやすく、重要な判断は人と相談すべき`;
+      if (r.name.includes("刑")) return `「${area}」との間で摩擦や葛藤が生じやすく、身内とぶつかりやすい`;
+      if (r.name.includes("三合会局")) return `三つの地支が協力して強力なエネルギーを生み、異業種や海外との縁で大成するチャンス`;
+      if (r.name.includes("方三位")) return `同じ分野に集中しやすく、専門知識や技術で高い評価を得るチャンス`;
+      if (r.name.includes("律音")) return `同じ干支が重なる分岐点。道が2つに別れやすい重要な岐道`;
+      if (r.name.includes("大半会")) return `天干が同じで地支が半会し、広がりのある展開を迎える飛躍の年`;
+      if (r.name.includes("納音")) return `物事が一つにまとまる性質が強まり、用心深く行動すると流れを良い方向に変えられる`;
+      if (r.name.includes("天剋地冲")) return `人生の曲がり角となる大きな変化が起きやすい年`;
+      return r.note || r.name;
+    });
+  };
+
+  // === 大運レベルの判定 ===
   taiun.periods.forEach((p, idx) => {
     const star = getMainStar(day.stem, p.stem);
-    const eStar = getEnergyStar(day.stem, p.branch);
-    const taiunEl = elements[stems.indexOf(p.stem)];
-    const rel = gogyoRel[dayEl][taiunEl];
     const isTenchu = isTenchusatsuYear(p.branch, tenchusatsu);
     const prevP = idx > 0 ? taiun.periods[idx - 1] : null;
     const prevStar = prevP ? getMainStar(day.stem, prevP.stem) : null;
     const prevTenchu = prevP ? isTenchusatsuYear(prevP.branch, tenchusatsu) : false;
     const yearStart = birthYear + p.age;
-
-    // 大運の位相法
     const topoResults = analyzeBranchTopology(p.branch, pillars, p.stem);
     const topoGo = topoResults.filter((r) => r.group === "合法");
     const topoSan = topoResults.filter((r) => r.group === "散法");
-
-    // 位相法の専門用語を分かりやすく変換
-    const topoExplain = (results) => {
-      return results.map((r) => {
-        const labelMap = { "年支": "実家・先祖", "月支": "親・仕事環境", "日支": "配偶者・自分自身", "宿命全体": "人生全体" };
-        const area = labelMap[r.label] || r.label;
-        if (r.name === "支合") return `「${area}」と協力関係になり、物事が順調に進みやすい`;
-        if (r.name === "対冲") return `「${area}」と正面衝突し、予期しない変化やトラブルが起きやすい`;
-        if (r.name === "害法") return `「${area}」との間でストレスが蓄積し、体調不良や人間関係の裏切りに遭いやすい`;
-        if (r.name === "破法") return `「${area}」との関係で決断が揺れやすく、重要な判断は人と相談すべき`;
-        if (r.name.includes("刑")) return `「${area}」との間で摩擦や葛藤が生じやすく、身内とぶつかりやすい`;
-        if (r.name.includes("三合会局")) return `三つの地支が協力して強力なエネルギーを生み、異業種や海外との縁で大成するチャンス`;
-        if (r.name.includes("方三位")) return `同じ分野に集中しやすく、専門知識や技術で高い評価を得るチャンス`;
-        return r.note || r.name;
-      });
-    };
-
-    // 陽占の主星との関係（大運の主星が陽占に含まれるか）
     const starInYang = yangStars.includes(star);
-
-    // === ターニングポイント候補の抽出とスコアリング ===
 
     // 1. 大運の切り替わり（星が変わった時）
     if (prevStar && prevStar !== star) {
       const events = [];
       if (goodStars.includes(star)) {
-        if (star === "禄存星" || star === "司禄星") events.push("家庭運・パートナーシップ運が上昇。具体的には結婚・出産・マイホーム購入のタイミングになりやすく、家族との絆が深まる時期。例：長年付き合っていた人との結婚が決まる、待望の子どもに恵まれる、住宅購入のチャンスが訪れる");
-        if (star === "石門星") events.push("人脈運が急拡大。新しいコミュニティや組織での活躍が期待できる時期。例：新しい職場で重要なプロジェクトの中心メンバーに抜擢される、業界団体やコミュニティでリーダー役を任される、SNSやネットワークを通じて影響力が広がる");
-        if (star === "玉堂星") events.push("学習運・資格運が好調。専門性を深めることで評価が高まる時期。例：難関資格（簿記・FP・司法書士など）を取得して収入アップにつながる、大学院や留学で専門性を高める、社内研修や講師として知識が評価される");
-        if (star === "牽牛星") events.push("社会的責任・名誉運が上昇。地位が上がり名誉ある立場を任される時期。例：部長や代表など管理職に昇進する、業界賞や社内表彰を受ける、公共機関や団体から要職を依頼される");
-        if (star === "貫索星") events.push("独立・自立運が旺盛。自分の道を切り開く決断の時期。例：独立してフリーランスや起業する、会社内で新規事業の責任者になる、これまでの副業を本業に切り替える決心がつく");
+        if (star === "禄存星" || star === "司禄星") events.push("家庭運・パートナーシップ運が上昇。結婚・出産・マイホーム購入のタイミング。例：長年付き合っていた人との結婚が決まる、待望の子どもに恵まれる、住宅購入のチャンスが訪れる");
+        if (star === "石門星") events.push("人脈運が急拡大。新しいコミュニティや組織での活躍が期待できる。例：新しい職場で重要プロジェクトの中心メンバーに抜擢される、業界団体でリーダー役を任される");
+        if (star === "玉堂星") events.push("学習運・資格運が好調。専門性を深めることで評価が高まる。例：難関資格を取得して収入アップにつながる、大学院や留学で専門性を高める");
+        if (star === "牽牛星") events.push("社会的責任・名誉運が上昇。地位が上がり名誉ある立場を任される。例：管理職に昇進する、業界賞や社内表彰を受ける");
+        if (star === "貫索星") events.push("独立・自立運が旺盛。自分の道を切り開く決断の時期。例：独立してフリーランスや起業する、新規事業の責任者になる");
       }
       if (badStars.includes(star)) {
-        if (star === "調舒星") events.push("感受性が鋭くなり芸術や精神面で深まる一方、人間関係で孤立しやすい時期。例：創作活動やスピリチュアルな探求に没頭するが、周囲と意見が合わず疎外感を感じる、職場で自分の意見が通らずストレスが溜まる、一人の時間が増えて孤独を感じやすい");
-        if (star === "龍高星") events.push("現状を壊して新しい道を切り開く変革期。転職や移住など大きな変化が起こりやすい時期。例：思い切って転職や独立を決意する、住み慣れた街を離れて新しい土地に引っ越す、長年続けてきたことを一旦手放して別の道に進む");
-        if (star === "車騎星") events.push("行動力と競争心が高まるが、摩擦や衝突に注意が必要な時期。例：営業成績でトップを争うなど競争が激化する、職場で意見対立が起きて喧嘩になりやすい、スピード重視で動くあまり周囲とぶつかる");
+        if (star === "調舒星") events.push("感受性が鋭くなり芸術や精神面で深まる一方、人間関係で孤立しやすい。例：創作活動に没頭するが周囲と意見が合わず疎外感を感じる、職場で自分の意見が通らずストレスが溜まる");
+        if (star === "龍高星") events.push("現状を壊して新しい道を切り開く変革期。例：思い切って転職や独立を決意する、住み慣れた街を離れて新しい土地に引っ越す");
+        if (star === "車騎星") events.push("行動力と競争心が高まるが、摩擦や衝突に注意。例：営業成績でトップを争うなど競争が激化する、職場で意見対立が起きやすい");
       }
       if (events.length > 0) {
         let score = 50;
@@ -3328,57 +3322,171 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
       }
     }
 
-    // 2. 天中殺の開始
+    // 2. 天中殺の開始・終了（大運レベル）
     if (isTenchu && !prevTenchu) {
       const events = [
-        "ご縁が不安定になりやすく、大きな決断や新規スタートは避けるべき時期の始まり。例：結婚・離婚・起業・転職・不動産購入などの重要な決断はこの時期を避けるのが無難",
-        "これまでの成果を見直し、整理・準備に使うことで次の飛躍の土台を作る時期。例：スキルアップの勉強に集中する、人脈の整理と健康管理等の内面強化に時間を使う、過去の失敗を振り返って次のステージの準備をする"
+        "ご縁が不安定になりやすく、大きな決断や新規スタートは避けるべき時期の始まり。例：結婚・離婚・起業・転職などの重要な決断はこの時期を避けるのが無難",
+        "これまでの成果を見直し、整理・準備に使うことで次の飛躍の土台を作る時期。例：スキルアップの勉強に集中する、人脈の整理と健康管理に時間を使う"
       ];
       let score = 60;
       if (topoSan.length > 0) { score += 12; topoExplain(topoSan).forEach((t) => events.push(t)); }
       if (starInYang) score += 8;
       points.push({ age: p.age, year: yearStart, type: "天中殺開始", star, events, isTenchu: true, score });
     }
-
-    // 3. 天中殺の終了
     if (!isTenchu && prevTenchu) {
       const events = [
         "天中殺が明け、新しいご縁やチャンスが動き出す時期。例：突然良いオファーが舞い込む、新しい人脈から仕事の話が進む、恋人やパートナーとのご縁ができやすい",
-        "準備してきたことが一気に花開きやすい、運気の再スタート時期。例：天中殺中に勉強していた資格が役に立って仕事が決まる、温めていた企画が承認される、出会いの場に参加すると良いご縁に恵まれる"
+        "準備してきたことが一気に花開きやすい時期。例：天中殺中に勉強していた資格が役に立って仕事が決まる、温めていた企画が承認される"
       ];
       let score = 55;
       if (topoGo.length > 0) { score += 12; topoExplain(topoGo).forEach((t) => events.push(t)); }
       points.push({ age: p.age, year: yearStart, type: "天中殺終了", star, events, isTenchu: false, score });
     }
+  });
 
-    // 4. 相性関係の大きな変化（相生→相剋など）
-    if (prevP) {
-      const prevEl = elements[stems.indexOf(prevP.stem)];
-      const prevRel = gogyoRel[dayEl][prevEl];
-      if (prevRel === "相生" && rel === "相剋") {
-        const events = ["順風満帆だった運気に摩擦が生じ始める時期。守りに徹し、無理な拡大は避ける。例：仕事で急激な売上目標を立てるよりも既存顧客を大切にする、新しい投資や大きな買い物は時期をずらす、人間関係で対立が起きやすいので穏やかに過ごす"];
-        let score = 40;
-        if (topoSan.length > 0) { score += 10; topoExplain(topoSan).forEach((t) => events.push(t)); }
-        if (starInYang) score += 5;
-        points.push({ age: p.age, year: yearStart, type: "運気の転換", star, events, isTenchu, score });
-      } else if (prevRel === "相剋" && rel === "相生") {
-        const events = ["困難だった運気が好転し、追い風が吹き始める時期。準備してきたことを形にするチャンス。例：転職活動を始めると良い条件のオファーが来る、長年構想していたプロジェクトを立ち上げる絶好のタイミング、新しい人脈が仕事の展開を加速させる"];
-        let score = 40;
-        if (topoGo.length > 0) { score += 10; topoExplain(topoGo).forEach((t) => events.push(t)); }
-        if (starInYang) score += 5;
-        points.push({ age: p.age, year: yearStart, type: "運気の好転", star, events, isTenchu, score });
+  // === 年運レベルの判定（ピンポイント） ===
+  for (let age = 20; age <= 60; age++) {
+    const year = birthYear + age;
+    const yp = getYearPillarForYear(year);
+    const yearStar = getMainStar(day.stem, yp.stem);
+    const yearEl = elements[stems.indexOf(yp.stem)];
+    const yearRel = gogyoRel[dayEl][yearEl];
+    const isYearTenchu = isTenchusatsuYear(yp.branch, tenchusatsu);
+
+    // その年の大運を取得
+    const currentTaiunP = taiun.periods.find((p) => age >= p.age && age <= p.ageTo);
+    const taiunStar = currentTaiunP ? getMainStar(day.stem, currentTaiunP.stem) : null;
+
+    // 年運の位相法
+    const yearTopo = analyzeBranchTopology(yp.branch, pillars, yp.stem);
+    const yearTopoGo = yearTopo.filter((r) => r.group === "合法");
+    const yearTopoSan = yearTopo.filter((r) => r.group === "散法");
+
+    // 特殊な位相法（律音・大半会・納音・天剋地冲・三合会局完成）を検出
+    const specialTopo = yearTopo.filter((r) =>
+      r.name.includes("律音") || r.name.includes("大半会") || r.name.includes("納音") ||
+      r.name.includes("天剋地冲") || r.name.includes("三合会局") || r.name.includes("方三位")
+    );
+
+    // 3. 特殊な位相法が成立する年（ピンポイント）
+    if (specialTopo.length > 0) {
+      const events = [];
+      let score = 45;
+      specialTopo.forEach((r) => {
+        const labelMap = { "年支": "実家・先祖", "月支": "親・仕事環境", "日支": "配偶者・自分自身", "宿命全体": "人生全体" };
+        const area = labelMap[r.label] || r.label;
+        if (r.name.includes("律音")) {
+          events.push(`「${area}」と同じ干支が重なる分岐点（${r.name}）。道が2つに別れる重要な岐道。例：仕事の方向転換を迫られる、人生の大きな選択を迫られる`);
+          score += 20;
+        }
+        if (r.name.includes("大半会")) {
+          events.push(`「${area}」と大半会する飛躍の年。天干が同じで地支が半会し、広がりのある展開が期待できる。例：事業規模が拡大する、異業種交流で大きなチャンスを掴む`);
+          score += 18;
+        }
+        if (r.name.includes("納音")) {
+          events.push(`「${area}」と納音する年。物事が一つにまとまる性質が強まる。用心深く行動すると流れを良い方向に変えられる。例：それまでの経験を一つに統合して新しいステージに進む`);
+          score += 15;
+        }
+        if (r.name.includes("天剋地冲")) {
+          events.push(`「${area}」と天剋地冲する年。人生の曲がり角となる大きな変化が起きやすい。例：職場環境が総入れ替えになる、信じてきた常識が覆る、身の回りの断捨離を迫られる`);
+          score += 22;
+        }
+        if (r.name.includes("三合会局")) {
+          events.push(`三つの地支が協力して強力なエネルギーを生む年（${r.name}）。異業種や海外との縁で大成するチャンス。例：海外事業を立ち上げる、異分野のコラボで大成功する`);
+          score += 20;
+        }
+        if (r.name.includes("方三位")) {
+          events.push(`同じ季節の地支が揃い一つの分野に集中する年（${r.name}）。専門知識や技術で高い評価を得るチャンス。例：専門性が認められて業界の権威になる、研究が成果として認められる`);
+          score += 16;
+        }
+      });
+      if (isYearTenchu) { score += 10; events.push("この年は天中殺でもあるため、変化がより劇的になりやすい。無理を避け、状況を見極めてから行動するのが安全"); }
+      if (events.length > 0) {
+        points.push({ age, year, type: specialTopo[0].name.includes("天剋地冲") ? "天剋地冲" : specialTopo[0].name.includes("律音") ? "律音" : specialTopo[0].name.includes("大半会") ? "大半会" : specialTopo[0].name.includes("納音") ? "納音" : specialTopo[0].name.includes("三合会局") ? "三合会局" : "方三位", star: yearStar, events, isTenchu: isYearTenchu, score });
+      }
+    }
+
+    // 4. 天中殺の開始・終了（年運レベル：天中殺範囲の境界年）
+    const prevYp = getYearPillarForYear(year - 1);
+    const prevYearTenchu = isTenchusatsuYear(prevYp.branch, tenchusatsu);
+    if (isYearTenchu && !prevYearTenchu && !points.some(pt => pt.age === age && pt.type === "天中殺開始")) {
+      const events = [
+        `${year}年（${age}歳）から天中殺に入る。ご縁が不安定になりやすく、大きな決断は避けるべき時期の始まり。例：結婚・離婚・起業・転職などの重要な決断はこの年を避ける`,
+        "この年から約5年間は整理・準備に使うことで次の飛躍の土台を作る時期。例：スキルアップの勉強に集中する、健康管理や人脈の整理に時間を使う"
+      ];
+      let score = 55;
+      if (yearTopoSan.length > 0) { score += 10; topoExplain(yearTopoSan).forEach((t) => events.push(t)); }
+      points.push({ age, year, type: "天中殺開始", star: yearStar, events, isTenchu: true, score });
+    }
+    if (!isYearTenchu && prevYearTenchu && !points.some(pt => pt.age === age && pt.type === "天中殺終了")) {
+      const events = [
+        `${year}年（${age}歳）で天中殺が明ける。新しいご縁やチャンスが動き出す時期。例：突然良いオファーが舞い込む、新しい人脈から仕事の話が進む、恋人とのご縁ができやすい`,
+        "準備してきたことが一気に花開きやすい時期。例：天中殺中に勉強していた資格が役に立って仕事が決まる、温めていた企画が承認される"
+      ];
+      let score = 50;
+      if (yearTopoGo.length > 0) { score += 10; topoExplain(yearTopoGo).forEach((t) => events.push(t)); }
+      points.push({ age, year, type: "天中殺終了", star: yearStar, events, isTenchu: false, score });
+    }
+
+    // 5. 日干支と同じ年（60年周期の大転換点）
+    if (yp.stem === day.stem && yp.branch === day.branch) {
+      const events = [
+        `${year}年（${age}歳）は日干支と同じ干支が巡る60年周期の大転換点。人生の大きな区切りとなる年。例：これまでの人生を総括し、次のステージの方向性が決まる`,
+        "生死に関わるような重大な転換点になりやすく、健康面でも要注意。例：大病を機に生活習慣を変える、人生観が大きく変わる出来事が起きる"
+      ];
+      let score = 65;
+      if (yearTopoGo.length > 0) { score += 8; topoExplain(yearTopoGo).forEach((t) => events.push(t)); }
+      if (yearTopoSan.length > 0) { score += 8; topoExplain(yearTopoSan).forEach((t) => events.push(t)); }
+      points.push({ age, year, type: "60年周期の大転換", star: yearStar, events, isTenchu: isYearTenchu, score });
+    }
+
+    // 6. 年運星が陽占の主星と一致＋位相法の強力な関係
+    const starInYang = yangStars.includes(yearStar);
+    if (starInYang && (yearTopoGo.length >= 2 || yearTopoSan.length >= 2)) {
+      const events = [];
+      let score = 42;
+      if (yearTopoGo.length >= 2) {
+        events.push(`この年は「${yearStar}」があなたの命式の星と一致し、複数の協力関係が同時に成立する強運の年。例：複数の人からの支援が同時に届き、大きなプロジェクトが実現する`);
+        score += 15;
+        topoExplain(yearTopoGo).forEach((t) => events.push(t));
+      }
+      if (yearTopoSan.length >= 2) {
+        events.push(`この年は「${yearStar}」があなたの命式の星と一致するが、複数の摩擦要素も同時に出る変化の年。例：チャンスと壁が同時に訪れ、乗り越えれば大きく成長する`);
+        score += 12;
+        topoExplain(yearTopoSan).forEach((t) => events.push(t));
+      }
+      if (events.length > 0) {
+        points.push({ age, year, type: yearTopoGo.length >= 2 ? "運気の好転" : "運気の転換", star: yearStar, events, isTenchu: isYearTenchu, score });
+      }
+    }
+  }
+
+  // 重複する年をマージ（同じ年齢のポイントを統合）
+  const merged = {};
+  points.forEach((p) => {
+    if (!merged[p.age]) {
+      merged[p.age] = p;
+    } else {
+      // よりスコアの高い方をベースにしつつ、イベントを統合
+      const existing = merged[p.age];
+      if (p.score > existing.score) {
+        merged[p.age] = { ...p, events: [...new Set([...existing.events, ...p.events])] };
+      } else {
+        existing.events = [...new Set([...existing.events, ...p.events])];
+        existing.score = Math.max(existing.score, p.score);
       }
     }
   });
 
+  const mergedPoints = Object.values(merged);
   // 20歳〜60歳の範囲に絞る
-  const filtered = points.filter((p) => p.age >= 20 && p.age <= 60);
-  // スコア順にソートして上位2件のみ残す
+  const filtered = mergedPoints.filter((p) => p.age >= 20 && p.age <= 60);
+  // スコア順にソートして上位3件のみ残す
   filtered.sort((a, b) => b.score - a.score);
-  const top2 = filtered.slice(0, 2);
+  const top = filtered.slice(0, 3);
   // 年齢順に並び直す
-  top2.sort((a, b) => a.age - b.age);
-  return top2;
+  top.sort((a, b) => a.age - b.age);
+  return top;
 }
 
 // === 年代別運勢分析 ===
@@ -6101,8 +6209,8 @@ function render(event) {
     <div class="result-card">
       <h3 class="expert-only">人生のターニングポイント</h3>
       <h3 class="simple-only">人生のターニングポイント</h3>
-      <p class="expert-only note mb-14">大運の切り替わり・天中殺・位相法を総合し、人生の中で特に大きな変化が起こりやすい時期を最大2つ表示します。具体的な例とともに解説します。</p>
-      <p class="simple-only note mb-14">人生の中で特に大きな変化が起こりやすい時期を、具体的な例とともに最大2つまで表示します。</p>
+      <p class="expert-only note mb-14">大運の切り替わり・天中殺・年運の位相法（律音・大半会・納音・天剋地冲・三合会局など）を総合し、人生の中で特に大きな変化が起こりやすい年をピンポイントで最大3つ表示します。具体的な例とともに解説します。</p>
+      <p class="simple-only note mb-14">人生の中で特に大きな変化が起こりやすい年を、具体的な例とともに最大3つまで表示します。</p>
       ${(() => {
         if (turningPoints.length === 0) {
           return '<p class="note">特筆すべきターニングポイントは検出されませんでした。</p>';
@@ -6113,6 +6221,13 @@ function render(event) {
           if (t === "天中殺終了") return "天中殺の終了（明け）";
           if (t === "運気の転換") return "運気の転換";
           if (t === "運気の好転") return "運気の好転";
+          if (t === "60年周期の大転換") return "60年周期の大転換";
+          if (t === "律音") return "律音（分岐点）";
+          if (t === "大半会") return "大半会（飛躍）";
+          if (t === "納音") return "納音（統合）";
+          if (t === "天剋地冲") return "天剋地冲（大変化）";
+          if (t === "三合会局") return "三合会局（大成）";
+          if (t === "方三位") return "方三位（専門性）";
           return t;
         };
         const typeColor = (t) => {
@@ -6120,6 +6235,13 @@ function render(event) {
           if (t === "天中殺終了") return "#70d0a0";
           if (t === "運気の好転") return "#70d0a0";
           if (t === "運気の転換") return "#c0a050";
+          if (t === "60年周期の大転換") return "#e06060";
+          if (t === "天剋地冲") return "#e06060";
+          if (t === "律音") return "#c0a050";
+          if (t === "大半会") return "#70a0e0";
+          if (t === "三合会局") return "#70a0e0";
+          if (t === "納音") return "#a080d0";
+          if (t === "方三位") return "#80c0a0";
           return "#d4a843";
         };
         return turningPoints.map((tp) => `
@@ -6128,6 +6250,7 @@ function render(event) {
               <b class="tp-age" style="color:${typeColor(tp.type)}">${tp.age}歳</b>
               <span class="note-text-sm">（${tp.year}年）</span>
               <span class="tp-type-tag" style="--tp-tag-bg:${typeColor(tp.type)}22;--tp-tag-color:${typeColor(tp.type)}">${typeLabel(tp.type)}</span>
+              ${tp.star ? `<span class="tp-type-tag" style="--tp-tag-bg:#88888822;--tp-tag-color:#aaa">${tp.star}</span>` : ""}
               ${tp.isTenchu ? '<span class="tp-type-tag tenchu">天中殺</span>' : ""}
             </div>
             <ul class="tp-list">
