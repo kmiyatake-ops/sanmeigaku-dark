@@ -5926,6 +5926,48 @@ function render(event) {
         : r.tenJinRel === "相剋" || r.jinChiRel === "相剋"
         ? "名前の各部分に少し摩擦があり、家庭環境と自分の方向性にズレを感じやすいタイプです。"
         : "名前の各部分が同じ傾向で、安定感がありますが、柔軟性に欠ける面があります。";
+      // 姓名判断から見る性格概要
+      const jinGogyoPersonalityText = {
+        "木": "向上心があり自分を磨き続ける努力家。ただし頑固な面も。",
+        "火": "情熱的で表現力があり人を惹きつける。感情の波には注意。",
+        "土": "誠実で信頼され人を支える。心配性で干渉しすぎる面も。",
+        "金": "意志が強く潔くルールを重んじる。冷たさが出ることも。",
+        "水": "柔軟で適応力があり洞察力が鋭い。流されやすい面も。"
+      };
+      const jinRankPersonalityText = {
+        "大吉": "芯が強く周囲から信頼される。自分を曲げない意志の強さが長所。",
+        "吉": "基本的に安定した性格。努力を続ければ大成する素質がある。",
+        "半吉": "普段は安定しているが、ストレスが溜まると性格の偏りが出やすい。",
+        "凶": "自己肯定感が揺らぎやすい。自分を過小評価する癖がある。",
+        "大凶": "内面に不安を抱えやすく、人間関係で摩擦が出やすい。"
+      };
+      const chiRankPersonalityText = {
+        "大吉": "感受性が豊かで素直。感情表現が自然で人に好かれる。",
+        "吉": "感情が安定しており素直な心持ち。",
+        "半吉": "感受性はあるがムラが出やすい。",
+        "凶": "感情の起伏が激しく傷つきやすい。",
+        "大凶": "内面が不安定で感情的になりやすい。"
+      };
+      const gaiRankPersonalityText = {
+        "大吉": "社交性が高く人付き合いが上手い。初対面でも打ち解けやすい。",
+        "吉": "人当たりが良く基本的に対人関係はスムーズ。",
+        "半吉": "親しい人には素直だが初対面では警戒する。",
+        "凶": "人付き合いが苦手で壁を作りやすい。",
+        "大凶": "対人関係で摩擦が起きやすく孤立しやすい。"
+      };
+      const seimeiPersonalitySummary = !seimeiResult.error ? [
+        jinGogyoPersonalityText[r.jinGogyo] || "",
+        jinRankPersonalityText[r.jinRank?.rank] || "",
+        chiRankPersonalityText[r.chiRank?.rank] || "",
+        gaiRankPersonalityText[r.gaiRank?.rank] || ""
+      ].filter(Boolean).join(" ") : "";
+      // 簡易版（専門用語なし）
+      const seimeiPersonalitySimple = !seimeiResult.error ? [
+        jinGogyoPersonalityText[r.jinGogyo] || "",
+        jinRankPersonalityText[r.jinRank?.rank] || "",
+        chiRankPersonalityText[r.chiRank?.rank] || "",
+        gaiRankPersonalityText[r.gaiRank?.rank] || ""
+      ].filter(Boolean).join(" ") : "";
       return `<div class="result-card seimei-card expert-only">
         <h3>姓名判断（${r.lastName} ${r.firstName}）</h3>
         <div class="seimei-overview">
@@ -5938,6 +5980,9 @@ function render(event) {
             <div class="seimei-stroke-row"><b>姓</b> ${r.lastChars.map((ch, i) => `${ch}(${r.lastStrokes[i]})`).join(" ＋ ")} = <strong>${r.tenkaku}画</strong></div>
             <div class="seimei-stroke-row"><b>名</b> ${r.firstChars.map((ch, i) => `${ch}(${r.firstStrokes[i]})`).join(" ＋ ")} = <strong>${r.chikaku}画</strong></div>
           </div>
+        </div>
+        <div class="info-box is-gold mt-10">
+          <p class="info-text is-lead">${seimeiPersonalitySummary}</p>
         </div>
         <div class="seimei-gokaku">
           ${gokakuList.map((g) => `
@@ -5995,6 +6040,9 @@ function render(event) {
             <div class="seimei-stroke-row"><b>名</b> ${r.firstChars.map((ch, i) => `${ch}(${r.firstStrokes[i]})`).join(" ＋ ")} = <strong>${r.chikaku}画</strong></div>
           </div>
         </div>
+        <div class="info-box is-gold mt-10">
+          <p class="info-text is-lead">${seimeiPersonalitySimple}</p>
+        </div>
         <div class="seimei-gokaku">
           ${gokakuSimple.map((g) => `
             <div class="seimei-gokaku-item ${rankClass[g.rank.rank] || ''}">
@@ -6030,6 +6078,123 @@ function render(event) {
             <div class="seimei-fs-bar"><i class="is-work" style="--seimei-width:${r.workFortune}%"></i></div>
             <div class="seimei-fs-num">${r.workFortune}点</div>
           </div>
+        </div>
+      </div>`;
+    })()}
+    <div class="section-group-header expert-only">命式の基本情報<span class="sg-sub">陰占・特殊干支</span></div>
+    <div class="section-group-header simple-only">命式の基本情報</div>
+    ${(() => {
+      const yinYin = analyzeYinYang(pillars);
+      return `<div class="result-card expert-only">
+        <h3>陰陽配列（性格のベース）</h3>
+        <p class="note mb-10">四柱（年・月・日・時）の陰陽バランスから基本的な性格の傾向を見ます。陽が多い＝積極的、陰が多い＝受動的、バランス型＝柔軟。</p>
+        <div class="info-box is-steel">
+          <div class="yin-yang-row"><b>年柱</b> ${pillars.year.stem}${pillars.year.branch}（${yinYang[stems.indexOf(pillars.year.stem)]}/${yinYang[branches.indexOf(pillars.year.branch)]}）</div>
+          <div class="yin-yang-row"><b>月柱</b> ${pillars.month.stem}${pillars.month.branch}（${yinYang[stems.indexOf(pillars.month.stem)]}/${yinYang[branches.indexOf(pillars.month.branch)]}）</div>
+          <div class="yin-yang-row"><b>日柱</b> ${pillars.day.stem}${pillars.day.branch}（${yinYang[stems.indexOf(pillars.day.stem)]}/${yinYang[branches.indexOf(pillars.day.branch)]}）</div>
+          <div class="yin-yang-row"><b>時柱</b> ${pillars.hour.stem}${pillars.hour.branch}（${yinYang[stems.indexOf(pillars.hour.stem)]}/${yinYang[branches.indexOf(pillars.hour.branch)]}）</div>
+          <p class="info-text mt-6">${yinYin.summary}</p>
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const specialRels = analyzeSpecialRelations(pillars);
+      if (specialRels.length === 0) return '';
+      return `<div class="result-card expert-only">
+        <h3>特殊干支（生まれ持った特別な性質）</h3>
+        <p class="note mb-10">四柱の干支の特定の組み合わせから、生まれ持った特別な性質や傾向を読み取ります。</p>
+        <div class="special-rel-list">
+          ${specialRels.map(rel => `
+            <div class="special-rel-item">
+              <div class="special-rel-head"><b>${rel.name}</b> <span class="special-rel-type">${rel.type}</span></div>
+              <div class="special-rel-text">${rel.text}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const kizu = analyzeKizu(counts);
+      if (!kizu) return '';
+      return `<div class="result-card expert-only">
+        <h3>木・火・土・金・水の位置バランス（木図）</h3>
+        <p class="note mb-10">内面の5つのエネルギー（木・火・土・金・水）を自然界の定位置に配置し、縦線（精神性）と横線（行動力）のどちらが強いかを比較します。縦線が強い＝感受性豊か、横線が強い＝実行力があるタイプです。</p>
+        <div class="info-box is-steel">
+          <div class="kizu-type"><b>タイプ：</b>${kizu.type}</div>
+          <div class="kizu-bars">
+            <div class="kizu-bar-row"><span>縦線（北・水＋南・火）</span><div class="kizu-bar"><i style="--kizu-width:${Math.min(kizu.vertical / 6 * 100, 100)}%"></i></div><b>${kizu.vertical}</b></div>
+            <div class="kizu-bar-row"><span>横線（東・木＋西・金）</span><div class="kizu-bar"><i class="is-horiz" style="--kizu-width:${Math.min(kizu.horizontal / 6 * 100, 100)}%"></i></div><b>${kizu.horizontal}</b></div>
+          </div>
+          <p class="info-text mt-6">${kizu.text}</p>
+          <p class="note-text-sm mt-6">${kizu.schoolAdvice}</p>
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const hachimon = analyzeHachimon(day.stem, counts);
+      if (!hachimon) return '';
+      const dirLabels = { north: "北", south: "南", east: "東", west: "西", center: "中央" };
+      return `<div class="result-card expert-only">
+        <h3>八門法（あなたの器の型）</h3>
+        <p class="note mb-10">自分を中心にしたエネルギーの流れから、どんな「器」のタイプかを判定します。縦線が強い＝感受性・直感型、横線が強い＝論理・行動型で、合計8パターンの器の型があります。</p>
+        <div class="info-box is-purple">
+          <div class="hachimon-type"><b>器の型：</b><span class="hachimon-type-name">${hachimon.type.name}</span></div>
+          <div class="hachimon-positions">
+            ${Object.entries(hachimon.positions).map(([dir, val]) => `<span class="hachimon-pos${dir === hachimon.maxDir ? " is-max" : ""}">${dirLabels[dir]}：${val}</span>`).join("")}
+          </div>
+          <p class="info-text mt-6">${hachimon.type.text}</p>
+          <div class="hachimon-sub">
+            <div class="hachimon-sub-row"><b>陰陽分類：</b><span class="hachimon-sub-val">${hachimon.yinYang}</span> − ${hachimon.yinYangText}</div>
+            <div class="hachimon-sub-row"><b>順逆分類：</b><span class="hachimon-sub-val">${hachimon.junGyo}</span> − ${hachimon.junGyoText}</div>
+          </div>
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const combos = analyzeStarCombos(mainStars, [energyYear, energyMonth, energyDay]);
+      if (combos.length === 0) return '';
+      return `<div class="result-card expert-only">
+        <h3>星の組み合わせ（起こりやすい現象）</h3>
+        <p class="note mb-10">性格を表す星と心の状態を表す星の特定の組み合わせから、その人に起こりやすい現象や傾向を読み取ります。</p>
+        <div class="combo-list">
+          ${combos.map(c => `
+            <div class="combo-item">
+              <div class="combo-head"><span class="combo-type">${c.type}</span><b>${c.name}</b></div>
+              <div class="combo-note">${c.note}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const triples = analyzeTripleStar(mainStars);
+      if (triples.length === 0) return '';
+      return `<div class="result-card expert-only">
+        <h3>同星3連変化（天才・変人タイプ）</h3>
+        <p class="note mb-10">同じ性格の星が3つ以上ある場合、その性質が極端に強くなります。一般的な常識に当てはまらない、独特の個性を持つ天才型・変人型が多いと言われます。</p>
+        <div class="triple-list">
+          ${triples.map(t => `
+            <div class="triple-item">
+              <div class="triple-head"><b>${t.star}</b><span class="triple-count">${t.count}つ</span><span class="triple-dir">${t.dir}</span></div>
+              <div class="triple-text">${t.text}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const biases = analyzeEnergyBias([energyYear, energyMonth, energyDay]);
+      if (biases.length === 0) return '';
+      return `<div class="result-card expert-only">
+        <h3>十二大従星の偏り（強く現れる性質）</h3>
+        <p class="note mb-10">十二大従星（月・日・年）の偏りから、性格的に強く現れる性質を読み取ります。</p>
+        <div class="bias-list">
+          ${biases.map(b => `
+            <div class="bias-item">
+              <div class="bias-head"><b>${b.star}</b> <span class="bias-count">${b.count}つ</span></div>
+              <div class="bias-text">${b.text}</div>
+            </div>
+          `).join("")}
         </div>
       </div>`;
     })()}
