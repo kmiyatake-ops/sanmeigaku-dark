@@ -5498,6 +5498,102 @@ function buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, i
   };
 }
 
+function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, affairScore, workEx, seimeiResult, tenchusatsu, birthYear, gender, day, currentAge) {
+  const stages = [];
+
+  taiun.periods.forEach((p, idx) => {
+    const ageFrom = p.age;
+    const ageTo = p.ageTo;
+    const yearFrom = birthYear + ageFrom;
+    const yearTo = birthYear + ageTo;
+    const star = getMainStar(day.stem, p.stem);
+    const isTenchu = isTenchusatsuYear(p.branch, tenchusatsu);
+
+    const events = [];
+
+    if (idx === 0 && ageFrom <= 20) {
+      events.push({ icon: "school", text: "学生時代・人格形成期" });
+    }
+
+    const starEvents = {
+      "禄存星": "家庭運・パートナーシップ運が上昇。結婚や家庭を築くのに良い時期",
+      "司禄星": "堅実に積み重ねる時期。地道な努力が財産になる",
+      "石門星": "人脈が広がる時期。新しいコミュニティで活躍",
+      "玉堂星": "学習・資格運が好調。専門性を深めて評価アップ",
+      "牽牛星": "社会的責任・名誉運が上昇。地位が上がる",
+      "貫索星": "独立・自立運。自分の道を切り開く",
+      "調舒星": "感受性が鋭くなる一方、人間関係で孤立しやすい",
+      "龍高星": "現状を壊して新しい道を切り開く変革期",
+      "車騎星": "行動力が高まるが、摩擦や衝突に注意"
+    };
+    if (starEvents[star]) {
+      events.push({ icon: "star", text: starEvents[star] });
+    }
+
+    if (isTenchu) {
+      events.push({ icon: "warning", text: "天中殺期間。大きな決断（結婚・転職・起業）は避け、整理と準備に徹する" });
+    }
+
+    if (ageFrom >= 25 && ageTo <= 35 && marriageScore >= 45) {
+      events.push({ icon: "heart", text: "結婚に適した時期。良縁に恵まれやすい" });
+    }
+    if (ageFrom >= 25 && ageTo <= 40 && affairScore >= 65) {
+      events.push({ icon: "alert", text: "浮気リスクが高まりやすい時期。パートナーとの信頼関係を意識して" });
+    }
+    if (ageFrom >= 25 && ageTo <= 45) {
+      events.push({ icon: "work", text: `仕事運：${workEx.rank}（${workEx.score}点）。${workEx.jobTendency || ""}` });
+    }
+    if (ageFrom >= 30 && ageTo <= 50) {
+      events.push({ icon: "money", text: "転職や独立を検討するなら、天中殺以外の時期が有利" });
+    }
+
+    turningPoints.filter(tp => tp.age >= ageFrom && tp.age <= ageTo).forEach(tp => {
+      const labelMap = {
+        "大運切り替わり": "運気の切り替わり",
+        "天中殺開始": "天中殺の開始",
+        "天中殺終了": "天中殺の明け（チャンスが動き出す）",
+        "運気の好転": "運気の好転",
+        "運気の転換": "運気の転換",
+        "60年周期の大転換": "60年周期の大転換",
+        "律音": "人生の分岐点（律音）",
+        "大半会": "飛躍の年（大半会）",
+        "納音": "統合の年（納音）",
+        "天剋地冲": "大変化の年（天剋地冲）",
+        "三合会局": "大成のチャンス（三合会局）",
+        "方三位": "専門性が評価される年（方三位）"
+      };
+      const label = labelMap[tp.type] || tp.type;
+      const evText = tp.events ? tp.events[0] : "";
+      events.push({ icon: "turning", text: `${tp.age}歳（${tp.year}年）${label}${evText ? "：" + evText : ""}` });
+    });
+
+    const healthYears = (healthRisk.yearRisks || []).filter(r => r.year >= yearFrom && r.year <= yearTo && r.level === "高危険");
+    healthYears.forEach(hy => {
+      const disease = hy.majorDiseases && hy.majorDiseases[0] ? hy.majorDiseases[0].diseases.split("・")[0] : "健康リスク";
+      events.push({ icon: "health", text: `${hy.year}年（${hy.age}歳）頃に健康リスク上昇：${disease}に注意` });
+    });
+
+    if (seimeiResult && !seimeiResult.error) {
+      if (ageFrom >= 20 && ageTo <= 35) {
+        events.push({ icon: "name", text: `姓名判断・地格${seimeiResult.chikaku}画（${seimeiResult.chiRank.rank}）：恋愛・感受性への影響が強い` });
+      }
+      if (ageFrom >= 25 && ageTo <= 50) {
+        events.push({ icon: "name", text: `姓名判断・人格${seimeiResult.jinkaku}画（${seimeiResult.jinRank.rank}）：性格の核・人生の方向性` });
+      }
+      if (ageFrom >= 50) {
+        events.push({ icon: "name", text: `姓名判断・総格${seimeiResult.soukaku}画（${seimeiResult.souRank.rank}）：晩年の運勢` });
+      }
+    }
+
+    stages.push({
+      ageFrom, ageTo, yearFrom, yearTo, star, isTenchu, events,
+      isCurrent: currentAge >= ageFrom && currentAge <= ageTo
+    });
+  });
+
+  return stages;
+}
+
 function render(event) {
   if (event) event.preventDefault();
   const result = document.querySelector("#result");
@@ -5621,6 +5717,7 @@ function render(event) {
     gender
   });
   const lifeSummary = buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk);
+  const lifeChronology = buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, affairScore, workEx, seimeiResult, tenchusatsu, birthYear, gender, day, currentAge);
 
   result.classList.remove("hidden");
   console.log("[render] starting, simple-mode:", document.body.classList.contains("simple-mode"));
@@ -5664,6 +5761,28 @@ function render(event) {
         <h4 class="expert-only">人生のワンポイントアドバイス</h4>
         <h4 class="simple-only">あなたへのアドバイス</h4>
         <div class="life-advice-text">${lifeSummary.onePointAdvice.split("\n\n").map(p => `<p>${p}</p>`).join("")}</div>
+      </div>
+    </div>
+    <div class="result-card life-chronology-card">
+      <h3 class="expert-only">自分年表（姓名判断×算命学 総合人生予測）</h3>
+      <h3 class="simple-only">あなたの人生年表</h3>
+      <p class="expert-only note mb-14">大運（10年周期）の星・天中殺・ターニングポイント・健康リスク・姓名判断の各格の影響を統合し、年代別に具体的にどんなことが起きるかを表示します。</p>
+      <p class="simple-only note mb-14">年代別に、仕事・結婚・浮気・転職・健康などどんなことが起きやすいかを表示します。</p>
+      <div class="life-chronology-timeline">
+        ${lifeChronology.map((s) => `
+          <div class="chronology-stage${s.isCurrent ? " current" : ""}${s.isTenchu ? " tenchu" : ""}">
+            <div class="chronology-stage-header">
+              <span class="chronology-age">${s.ageFrom}〜${s.ageTo}歳</span>
+              <span class="chronology-year">（${s.yearFrom}〜${s.yearTo}年）</span>
+              <span class="chronology-star">${s.star}</span>
+              ${s.isTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}
+              ${s.isCurrent ? '<span class="chronology-current-tag">現在</span>' : ''}
+            </div>
+            <div class="chronology-events">
+              ${s.events.map((e) => `<div class="chronology-event chronology-icon-${e.icon}">${e.text}</div>`).join("")}
+            </div>
+          </div>
+        `).join("")}
       </div>
     </div>
     <div class="section-group-header expert-only">運勢の全体像<span class="sg-sub">今年の運勢・開運アクション</span></div>
