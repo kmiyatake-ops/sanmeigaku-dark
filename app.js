@@ -5570,7 +5570,6 @@ function render(event) {
   const troublePrevention = buildTroublePrevention(mainStars.center, tenchusatsu, turningPoints);
   const ishiki = analyzeIshiki(pillars, day);
   const sanbun = analyzeSanbun(mainStars, [energyYear, energyMonth, energyDay]);
-  const lifeSummary = buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk);
 
   // 浮気リスク・結婚適性度を事前計算（saveToHistoryで使用）
   const spouseEnergyForScore = getEnergyStar(day.stem, day.branch);
@@ -5621,6 +5620,7 @@ function render(event) {
     balanceType,
     gender
   });
+  const lifeSummary = buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk);
 
   result.classList.remove("hidden");
   console.log("[render] starting, simple-mode:", document.body.classList.contains("simple-mode"));
