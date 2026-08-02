@@ -5582,56 +5582,57 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
       events.push({ icon: "warning", text: "天中殺期間。大きな決断（結婚・転職・起業）は避け、整理と準備に徹する" });
     }
 
-    // 結婚の時期（モテ度と二度縁を加味して判定）
+    // 結婚の時期（20〜50歳の範囲で判定）
     const moteScore = mote ? mote.oppositeScore : 50;
     const canMarry = moteScore >= 35 && marriageScore >= 35;
     const easyMarry = moteScore >= 60 && marriageScore >= 55;
+    const inMarriageRange = ageTo >= 20 && ageFrom <= 50;
 
-    if (canMarry) {
-      if (isDoubleEn) {
-        if (easyMarry) {
-          // 二度縁＋モテ度高：1回目も2回目も結婚する
-          if (starInfo && starInfo.marriage && !isTenchu) {
-            events.push({ icon: "heart", text: "【1回目の結婚】のベストタイミング。若い頃の縁を大切に" });
-          }
-          if (ageFrom >= 20 && ageTo <= 28 && !isTenchu) {
-            events.push({ icon: "heart", text: "【1回目の結婚】早めの結婚適齢期。出会いのチャンスが多い" });
-          }
-          if (ageFrom >= 30 && ageTo <= 45 && !isTenchu) {
-            events.push({ icon: "heart", text: "【2回目の結婚】のチャンス。一度目の経験を活かし、価値観の合う相手と再婚しやすい時期" });
+    if (inMarriageRange) {
+      if (canMarry) {
+        if (isDoubleEn) {
+          if (easyMarry) {
+            // 二度縁＋モテ度高：1回目も2回目も結婚する
+            if (starInfo && starInfo.marriage && !isTenchu) {
+              events.push({ icon: "heart", text: "【1回目の結婚】のベストタイミング。若い頃の縁を大切に" });
+            }
+            if (ageFrom <= 29 && !isTenchu) {
+              events.push({ icon: "heart", text: "【1回目の結婚】早めの結婚適齢期。出会いのチャンスが多い" });
+            }
+            if (ageFrom >= 30 && ageFrom <= 45 && !isTenchu) {
+              events.push({ icon: "heart", text: "【2回目の結婚】のチャンス。一度目の経験を活かし、価値観の合う相手と再婚しやすい時期" });
+            }
+          } else {
+            // 二度縁＋モテ度普通：1回目は実現せず、2回目のみ結婚
+            if (ageFrom >= 30 && ageFrom <= 45 && !isTenchu) {
+              events.push({ icon: "heart", text: "【2回目の結婚】のチャンス。若い頃の縁は実らなかったが、30代以降に価値観の合う相手と結婚しやすい時期" });
+            }
           }
         } else {
-          // 二度縁＋モテ度普通：1回目は実現せず、2回目のみ結婚
-          if (ageFrom >= 30 && ageTo <= 45 && !isTenchu) {
-            events.push({ icon: "heart", text: "【2回目の結婚】のチャンス。若い頃の縁は実らなかったが、30代以降に価値観の合う相手と結婚しやすい時期" });
+          // 通常：1回の結婚時期
+          if (easyMarry) {
+            if (starInfo && starInfo.marriage && !isTenchu) {
+              events.push({ icon: "heart", text: "結婚のベストタイミング。良縁に恵まれやすく、家庭を築くのに最適な時期" });
+            }
+            if (ageFrom <= 29 && !isTenchu) {
+              events.push({ icon: "heart", text: "早めの結婚適齢期。出会いのチャンスが多く、若くして結婚に至りやすい" });
+            }
+            if (ageFrom >= 28 && ageFrom <= 35 && !isTenchu) {
+              events.push({ icon: "heart", text: "結婚のチャンス続行。理想の相手に出会いやすい時期" });
+            }
+          } else {
+            if (starInfo && starInfo.marriage && !isTenchu) {
+              events.push({ icon: "heart", text: "結婚のチャンス。縁を大切にすれば家庭を築ける時期" });
+            }
+            if (ageFrom >= 25 && ageFrom <= 35 && !isTenchu) {
+              events.push({ icon: "heart", text: "結婚を意識する時期。自分から積極的に出会いの場に出ることで縁が結ばれる" });
+            }
+            if (ageFrom >= 35 && ageFrom <= 45 && !isTenchu) {
+              events.push({ icon: "heart", text: "遅めの結婚のチャンス。焦らず、価値観の合う相手を見つける時期" });
+            }
           }
         }
       } else {
-        // 通常：1回の結婚時期
-        if (easyMarry) {
-          if (starInfo && starInfo.marriage && !isTenchu) {
-            events.push({ icon: "heart", text: "結婚のベストタイミング。良縁に恵まれやすく、家庭を築くのに最適な時期" });
-          }
-          if (ageFrom >= 20 && ageTo <= 28 && !isTenchu) {
-            events.push({ icon: "heart", text: "早めの結婚適齢期。出会いのチャンスが多く、若くして結婚に至りやすい" });
-          }
-          if (ageFrom >= 28 && ageTo <= 35 && !isTenchu) {
-            events.push({ icon: "heart", text: "結婚のチャンス続行。理想の相手に出会いやすい時期" });
-          }
-        } else {
-          if (starInfo && starInfo.marriage && !isTenchu) {
-            events.push({ icon: "heart", text: "結婚のチャンス。縁を大切にすれば家庭を築ける時期" });
-          }
-          if (ageFrom >= 25 && ageTo <= 35 && !isTenchu) {
-            events.push({ icon: "heart", text: "結婚を意識する時期。自分から積極的に出会いの場に出ることで縁が結ばれる" });
-          }
-          if (ageFrom >= 28 && ageTo <= 42 && !isTenchu) {
-            events.push({ icon: "heart", text: "遅めの結婚のチャンス。焦らず、価値観の合う相手を見つける時期" });
-          }
-        }
-      }
-    } else {
-      if (ageFrom >= 30 && ageTo <= 50) {
         events.push({ icon: "heart", text: "結婚は縁遠い時期。趣味や仕事に打ち込み、自分磨きに専念するのが吉" });
       }
     }
