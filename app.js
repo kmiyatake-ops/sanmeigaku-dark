@@ -5919,68 +5919,6 @@ function render(event) {
           <span><b>日干との相性関係</b> 年運: ${yearlyFortune.yearRel}${yearlyFortune.taiunRel ? ` / 大運: ${yearlyFortune.taiunRel}` : ''}</span>
         </div>
       </div>
-      ${(() => {
-        const taiunInfo = yearlyFortune.taiunStar ? starToPlainDesc(yearlyFortune.taiunStar, yearlyFortune.isTaiunTenchu, yearlyFortune.taiunRel, "大運") : null;
-        const yearInfo = starToPlainDesc(yearlyFortune.yearStar, yearlyFortune.isYearTenchu, yearlyFortune.yearRel, "年運");
-        const energyDescMap = {
-          "天貴星": "品性と役割意識を磨く時期", "天南星": "内なる想いを形にする時期", "天禄星": "コツコツ積み重ねて安定を築く時期",
-          "天将星": "大きな変化を生み出す時期", "天堂星": "一歩下がって協調する時期", "天恍星": "現状を打破し飛び込む時期",
-          "天印星": "目の前の現実に集中する時期", "天報星": "前例のない道を切り開く時期", "天胡星": "感受性と集中力が高まる時期",
-          "天極星": "環境に合わせて持続する時期", "天庫星": "一つのことに集中して探究する時期", "天馳星": "動きの中で変化を受け入れる時期"
-        };
-        const taiunEnergyTitle = taiunInfo && yearlyFortune.taiunEnergy ? energyDescMap[yearlyFortune.taiunEnergy.name] : "";
-        const yearEnergyTitle = yearInfo && yearlyFortune.yearEnergy ? energyDescMap[yearlyFortune.yearEnergy.name] : "";
-        let html = '<div class="taiun-year-friendly">';
-        if (taiunInfo) {
-          const sameStar = yearlyFortune.taiunStar === yearlyFortune.yearStar;
-          html += `<div class="tyf-block tyf-taiun${yearlyFortune.isTaiunTenchu ? " is-tenchu" : ""}">
-            <div class="tyf-header"><span class="tyf-period">大運（10年周期）</span>${yearlyFortune.isTaiunTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
-            <div class="tyf-title">${taiunInfo.title}</div>
-            <div class="tyf-desc">${taiunInfo.desc}</div>
-            ${taiunEnergyTitle ? `<div class="tyf-energy">ライフテーマ：${taiunEnergyTitle}</div>` : ''}
-            <div class="tyf-rel">あなたとの相性：${taiunInfo.relText || "影響範囲外"}</div>
-            ${yearlyFortune.isTaiunTenchu ? '<div class="tyf-tenchu-note">天中殺中：大きな決断は避け、整理と準備に徹するのが正解。転職や結婚は時期が明けてからにする</div>' : ''}
-          </div>`;
-        }
-        if (yearInfo) {
-          html += `<div class="tyf-block tyf-year${yearlyFortune.isYearTenchu ? " is-tenchu" : ""}">
-            <div class="tyf-header"><span class="tyf-period">年運（今年1年）</span>${yearlyFortune.isYearTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
-            <div class="tyf-title">${yearInfo.title}</div>
-            <div class="tyf-desc">${yearInfo.desc}</div>
-            ${yearEnergyTitle ? `<div class="tyf-energy">今年のテーマ：${yearEnergyTitle}</div>` : ''}
-            <div class="tyf-rel">あなたとの相性：${yearInfo.relText || "影響範囲外"}</div>
-            ${yearlyFortune.isYearTenchu ? '<div class="tyf-tenchu-note">天中殺の年：新しいスタートは来年に回し、準備と体力作りに専念する。新プロジェクトの立ち上げは避ける</div>' : ''}
-          </div>`;
-        }
-        html += '</div>';
-        return html;
-      })()}
-      <div class="yearly-fortune-overview simple-only">
-        ${(() => {
-          const taiunInfo = yearlyFortune.taiunStar ? starToPlainDesc(yearlyFortune.taiunStar, yearlyFortune.isTaiunTenchu, yearlyFortune.taiunRel, "大運") : null;
-          const yearInfo = starToPlainDesc(yearlyFortune.yearStar, yearlyFortune.isYearTenchu, yearlyFortune.yearRel, "年運");
-          let html = '<div class="taiun-year-friendly">';
-          if (taiunInfo) {
-            const sameStar = yearlyFortune.taiunStar === yearlyFortune.yearStar;
-            html += `<div class="tyf-block tyf-taiun${yearlyFortune.isTaiunTenchu ? " is-tenchu" : ""}">
-              <div class="tyf-header"><span class="tyf-period">今の10年間の運気</span>${yearlyFortune.isTaiunTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
-              <div class="tyf-title">${taiunInfo.title}</div>
-              <div class="tyf-desc">${taiunInfo.desc}</div>
-              ${yearlyFortune.isTaiunTenchu ? '<div class="tyf-tenchu-note">注意が必要な時期：大きな決断は避け、整理と準備に徹するのが正解。転職や結婚は時期が明けてからにする</div>' : ''}
-            </div>`;
-          }
-          if (yearInfo) {
-            html += `<div class="tyf-block tyf-year${yearlyFortune.isYearTenchu ? " is-tenchu" : ""}">
-              <div class="tyf-header"><span class="tyf-period">今年1年の運気</span>${yearlyFortune.isYearTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
-              <div class="tyf-title">${yearInfo.title}</div>
-              <div class="tyf-desc">${yearInfo.desc}</div>
-              ${yearlyFortune.isYearTenchu ? '<div class="tyf-tenchu-note">注意が必要な年：新しいことを始めるより、準備と体力作りに専念しましょう</div>' : ''}
-            </div>`;
-          }
-          html += '</div>';
-          return html;
-        })()}
-      </div>
       <div class="yearly-fortune-scores">
         <div class="yf-score-item">
           <div class="yf-score-header"><b>金運</b></div>
