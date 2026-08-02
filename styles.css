@@ -3861,3 +3861,41 @@ button {
   color: var(--muted);
   margin-left: 10px;
 }
+
+/* === 今年の具体的な運勢内容 === */
+.yearly-concrete-desc {
+  margin: 16px 0 8px;
+  padding: 14px 16px;
+  background: rgba(217,164,65,0.06);
+  border: 1px solid rgba(217,164,65,0.15);
+  border-radius: 8px;
+}
+.yearly-concrete-desc h4 {
+  margin: 0 0 10px;
+  font-size: 1em;
+  color: var(--gold);
+}
+.concrete-year-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.concrete-year-list li {
+  padding: 8px 0 8px 20px;
+  position: relative;
+  font-size: 0.9em;
+  line-height: 1.7;
+  color: var(--text);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.concrete-year-list li:last-child {
+  border-bottom: none;
+}
+.concrete-year-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  color: var(--gold);
+  font-size: 0.85em;
+}

@@ -2314,6 +2314,158 @@ function analyzeYearlyFortune(day, pillars, taiun, currentAge, thisYear, balance
   };
 }
 
+function buildYearlyConcreteDescription(yf, simple) {
+  const parts = [];
+  const yearStarName = yf.yearStar;
+  const taiunStarName = yf.taiunStar || "";
+
+  // 大運×年運の星の組み合わせで「今年はこんな年」を生成
+  const starComboMeaning = {
+    "貫索星": {
+      good: "自分の信念を貫いて新しい道を切り開く年。例：独立や転職を決断し、周囲の反対を押し切って自分の方向性を貫く。",
+      bad: "頑固さが裏目に出て孤立しがちな年。例：周囲のアドバイスを聞かず自分のやり方に固執して人間関係が悪化する。",
+      neutral: "自分のペースでコツコツ進めるのが正解の年。例：大きな変化を求めず、今の仕事や関係を深めることに集中する。"
+    },
+    "石門星": {
+      good: "人とのつながりが拡がり、協力して大きな成果を出せる年。例：新しいコミュニティに参加し、そこで出会った人と共同プロジェクトを立ち上げる。",
+      bad: "人間関係のトラブルに巻き込まれやすい年。例：友人の喧嘩に巻き込まれたり、グループ内の対立で板挟みになる。",
+      neutral: "人脈を広める基礎作りの年。例：業界の交流会に参加し、名刺交換を重ねて来年に向けた人脈を蓄える。"
+    },
+    "鳳閣星": {
+      good: "表現力が光り、楽しさが運を呼ぶ年。例：SNSで発信した内容がバズったり、趣味が仕事につながる。",
+      bad: "遊びすぎて生活が乱れる年。例：毎週飲み会で健康を損ねたり、交際費がかさんで貯金が減る。",
+      neutral: "バランス良く楽しみながら成果も出せる年。例：週末は趣味を楽しみつつ、平日はしっかり仕事をこなす。"
+    },
+    "調舒星": {
+      good: "感受性が鋭くなり、クリエイティブな成果が出せる年。例：ひらめきで新しいアイデアを提案し、評価される。",
+      bad: "感情の波が激しく、人と衝突しやすい年。例：些細なことで怒って上司に反発し、評価を下げる。",
+      neutral: "自分の感情と向き合う内省の年。例：日記をつけたり、カウンセリングを受けて自分を見つめ直す。"
+    },
+    "禄存星": {
+      good: "愛情と奉仕が好循環を生む年。例：後輩を親身に指導し、その後輩が成果を出して自分の評価も上がる。",
+      bad: "人に尽くしすぎて自分が疲弊する年。例：同僚の仕事を手伝いすぎて自分の仕事が回らなくなる。",
+      neutral: "人への感謝を形にする年。例：お世話になった人に挨拶回りをし、関係を深める。"
+    },
+    "司禄星": {
+      good: "蓄積した努力が実を結ぶ年。例：何年も続けた勉強が認められ、資格試験に一発で合格する。",
+      bad: "変化を恐れてチャンスを逃す年。例：転職の誘いがあるのに「今の職場が安心」と断り、後で後悔する。",
+      neutral: "堅実に基盤を固める年。例：貯金を着実に増やし、保険を見直して万全の体制を作る。"
+    },
+    "車騎星": {
+      good: "行動力が爆発し、勝負に出るのに最適な年。例：コンテストに応募して入賞、または営業成績でトップを取る。",
+      bad: "焦って失敗しやすい年。例：勢いで契約して後で条件が悪いことに気づく、スピード違反で捕まる。",
+      neutral: "体力作りから始める年。例：ジムに通い始め、体力をつけてから来年の勝負に備える。"
+    },
+    "牽牛星": {
+      good: "名誉と責任が同時に訪れ、ステップアップの年。例：昇進して役職がつき、やりがいとプレッシャーを同時に感じる。",
+      bad: "責任が重すぎて潰されそうになる年。例：プロジェクトリーダーに任命されるが、スケジュール管理ができずチームが混乱する。",
+      neutral: "実績を積み上げて評価を得る年。例：地道に成果を出し続け、上司から「次は任せよう」と言われる。"
+    },
+    "龍高星": {
+      good: "変革のチャンスが訪れ、冒険が成功する年。例：未経験の業界に転職し、新しいスキルを覚えて活躍し始める。",
+      bad: "変化が多すぎて落ち着かない年。例：引っ越し、転職、別れが同時に起きて心の余裕がなくなる。",
+      neutral: "小さな変化から始める年。例：趣味を一つ変えてみる、通勤ルートを変えてみるなど、小さな冒険を楽しむ。"
+    },
+    "玉堂星": {
+      good: "学びが評価につながり、知恵を活かせる年。例：取得した資格が活きる部署に異動し、専門性を発揮する。",
+      bad: "理屈ばかりで行動が遅れる年。例：あれこれ考えすぎてチャンスを逃し、結局何も始められない。",
+      neutral: "知識を蓄える勉強の年。例：オンライン講座を受講し、来年に向けたスキルを身につける。"
+    }
+  };
+
+  // 年運星と相性関係からgood/bad/neutralを判定
+  const yearRel = yf.yearRel;
+  const taiunRel = yf.taiunRel;
+  const isTenchu = yf.isYearTenchu || yf.isTaiunTenchu;
+  let tone = "neutral";
+  if (isTenchu) {
+    tone = "bad";
+  } else if ((yearRel === "相生" || yearRel === "比和") && (taiunRel === "相生" || taiunRel === "比和" || !taiunRel)) {
+    tone = "good";
+  } else if (yearRel === "相剋" || yearRel === "反剋" || taiunRel === "相剋" || taiunRel === "反剋") {
+    tone = "bad";
+  }
+
+  const starInfo = starComboMeaning[yearStarName];
+  if (starInfo) {
+    const desc = starInfo[tone];
+    if (desc) parts.push(desc);
+  }
+
+  // 位相法から具体的な出来事を追加
+  const allTopo = [...(yf.taiunTopo || []).map((r) => ({ ...r, source: "大運" })), ...yf.yearTopo.map((r) => ({ ...r, source: "年運" }))];
+  const goResults = allTopo.filter((r) => r.group === "合法");
+  const sanResults = allTopo.filter((r) => r.group === "散法");
+
+  if (goResults.length > 0) {
+    const goNames = goResults.map((r) => r.name);
+    const topoExamples = [];
+    if (goNames.includes("支合")) topoExamples.push("特定の人と強い縁で結ばれる（例：仕事で意気投合するパートナーに出会う）");
+    if (goNames.includes("三合会局")) topoExamples.push("三方から協力が集まり大きなことが成就する（例：複数の支援者に後押しされて独立する）");
+    if (goNames.includes("大半会")) topoExamples.push("グループや組織の力で飛躍する（例：チーム全体が表彰され、自分も評価される）");
+    if (goNames.includes("納音")) topoExamples.push("異なる要素が融合して新しい形になる（例：別々の趣味を組み合わせて新しい仕事を生み出す）");
+    if (goNames.includes("律音")) topoExamples.push("過去と同じパターンが再び巡り、今度はうまくいく（例：以前失敗した企画を改良して成功させる）");
+    if (goNames.includes("方三位")) topoExamples.push("専門性が認められる（例：特定分野の知識が求められ、コンサル依頼が来る）");
+    if (topoExamples.length) {
+      parts.push(simple ? `人との縁：${topoExamples.slice(0, 2).join("／")}` : `位相法の協力関係から：${topoExamples.join("／")}`);
+    }
+  }
+
+  if (sanResults.length > 0) {
+    const sanNames = sanResults.map((r) => r.name);
+    const sanExamples = [];
+    if (sanNames.includes("対冲")) sanExamples.push("予期しない変化や対立が起きる（例：突然の人事異動、あるいは親しい人と意見が対立する）");
+    if (sanNames.includes("天剋地冲")) sanExamples.push("天と地の両方で変化が起きる大転換（例：仕事と家庭が同時に大きく変わる）");
+    if (sanNames.includes("害法")) sanExamples.push("誤解や損失に注意（例：言葉の行き違いで取引先を怒らせる）");
+    if (sanNames.includes("破法")) sanExamples.push("関係の亀裂や約束の破れ（例：契約寸前で相手が白紙にする）");
+    if (sanNames.includes("自刑")) sanExamples.push("自分自身との葛藤（例：やりたいことが複数あって決断できない）");
+    if (sanExamples.length) {
+      parts.push(simple ? `注意ポイント：${sanExamples.slice(0, 2).join("／")}` : `位相法の摩擦要素から：${sanExamples.join("／")}`);
+    }
+  }
+
+  // 天中殺の具体的な内容
+  if (isTenchu) {
+    const tenchuParts = [];
+    if (yf.isTaiunTenchu && yf.isYearTenchu) {
+      tenchuParts.push(simple
+        ? "大運も年運も天中殺なので、特に何も始めない年。例：転職や結婚などの大きな決断は避け、整理と準備に徹する。"
+        : "大運・年運ともに天中殺で、運気の空白期間。例：転職・結婚・独立などの大きな決断は避け、身辺整理と準備に徹する。過去の未整理事項（契約の見直し、人間関係の断捨離）を片付けるのに適した時期。");
+    } else if (yf.isYearTenchu) {
+      tenchuParts.push(simple
+        ? "今年は年運が天中殺なので、新しいことを始めるには不向きな年。例：新しいプロジェクトの立ち上げは来年に回し、今は準備と体力作りに専念する。"
+        : "年運が天中殺で、ご縁が不安定になりやすい年。例：新しいプロジェクトの立ち上げは来年に回し、今は準備と体力作りに専念する。既存の関係を見直し、本当に信頼できる人を再確認する時期。");
+    } else if (yf.isTaiunTenchu) {
+      tenchuParts.push(simple
+        ? "大運が天中殺の時期なので、大きな変化は避ける年。例：独立や転職は時期が明けてからにし、今は基礎固めに集中する。"
+        : "大運が天中殺の時期で、10年周期の運気が空白状態。例：独立や転職は時期が明けてからにし、今は基礎固めに集中する。この時期に蓄えた力が、天中殺明けと同時に一気に花開く。");
+    }
+    if (tenchuParts.length) parts.push(tenchuParts.join(""));
+  }
+
+  // 大運と年運の星の組み合わせによる相乗効果
+  if (taiunStarName && taiunStarName !== yearStarName && !isTenchu) {
+    const comboAdvice = {
+      "貫索星|石門星": "自立心と協調性のバランスが問われる年。自分の意見を持ちつつ、人の意見も取り入れることで成果が出る。",
+      "石門星|貫索星": "人脈を活かしつつ自分の軸を保つ年。周囲に流されず、自分の信念に合う人だけと深く関わるのが成功の鍵。",
+      "鳳閣星|玉堂星": "楽しさと学びが両立する年。趣味から学びにつながるような展開が期待できる。",
+      "玉堂星|鳳閣星": "知識を楽しく活かせる年。学んだことを発表したり教えたりすることで評価が高まる。",
+      "禄存星|司禄星": "奉仕と蓄積がセットで報われる年。人に親切にしながら、自分の資産も着実に増える。",
+      "司禄星|禄存星": "堅実な蓄積の上に愛情が乗る年。貯金や基盤作りをしつつ、周囲に感謝を伝えることで運が上がる。",
+      "車騎星|牽牛星": "行動力が名誉につながる年。動いて成果を出すことで、周囲から評価される。",
+      "牽牛星|車騎星": "責任ある立場で行動力を発揮する年。リーダーとして先頭に立つことで結果を出せる。",
+      "龍高星|調舒星": "変革と感受性が組み合わさる年。環境の変化を感性で乗り越え、新しい自分を発見する。",
+      "調舒星|龍高星": "感性の変化が行動変化を生む年。今まで感じなかったことに興味を持ち、新しい世界に踏み出す。"
+    };
+    const key1 = `${taiunStarName}|${yearStarName}`;
+    const key2 = `${yearStarName}|${taiunStarName}`;
+    if (comboAdvice[key1]) parts.push(comboAdvice[key1]);
+    else if (comboAdvice[key2]) parts.push(comboAdvice[key2]);
+  }
+
+  return parts;
+}
+
 function buildYearlySummary(yf, simple) {
   const parts = [];
 
@@ -5300,6 +5452,16 @@ function render(event) {
           <div class="yf-score-num">${yearlyFortune.workScore}点</div>
         </div>
       </div>
+      <div class="yearly-concrete-desc">
+        <h4 class="expert-only">今年はこんな年になります</h4>
+        <h4 class="simple-only">今年はこんな年になりそう</h4>
+        ${(() => {
+          const concreteParts = buildYearlyConcreteDescription(yearlyFortune, false);
+          const concretePartsSimple = buildYearlyConcreteDescription(yearlyFortune, true);
+          return `<div class="expert-only"><ul class="concrete-year-list">${concreteParts.map((p) => `<li>${p}</li>`).join("")}</ul></div>
+                  <div class="simple-only"><ul class="concrete-year-list">${concretePartsSimple.map((p) => `<li>${p}</li>`).join("")}</ul></div>`;
+        })()}
+      </div>
       <div class="yearly-fortune-detail expert-only">
         <article>
           <h4>金運</h4>
@@ -6483,7 +6645,6 @@ function render(event) {
         `;
       })()}
     </div>
-    ${buildFourPillarsComparison(pillars, zoukan, day)}
   `;
   saveToHistory({
     name,
