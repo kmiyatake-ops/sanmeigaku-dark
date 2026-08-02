@@ -1321,6 +1321,207 @@ function analyzeChoukou(dayStem, birthMonth) {
   return { dayStem, season, element: s.el, reason: s.reason };
 }
 
+// === 八門法 ===
+// 参考: https://sanmei-stock.com/basic/mathematical-technique/hachimon/
+const hachimonLayout = {
+  "木": { north: "水", south: "火", east: "土", west: "金", center: "木" },
+  "火": { north: "木", south: "土", east: "金", west: "水", center: "火" },
+  "土": { north: "火", south: "金", east: "水", west: "木", center: "土" },
+  "金": { north: "土", south: "水", east: "木", west: "火", center: "金" },
+  "水": { north: "金", south: "木", east: "火", west: "土", center: "水" }
+};
+
+function analyzeHachimon(dayStem, counts) {
+  const dayEl = elements[stems.indexOf(dayStem)];
+  const layout = hachimonLayout[dayEl];
+  if (!layout) return null;
+  const positions = {
+    north: counts[layout.north] || 0,
+    south: counts[layout.south] || 0,
+    east: counts[layout.east] || 0,
+    west: counts[layout.west] || 0,
+    center: counts[layout.center] || 0
+  };
+  const maxDir = Object.entries(positions).reduce((a, b) => b[1] > a[1] ? b : a)[0];
+  const typeMap = {
+    north: { name: "玄武型", text: "どんなに過保護にされても自分の本質を見失わない強さを持っています。学ぶ意欲が強く、生きていく上で必要な知識が十分にあります。人から頼りにされやすいでしょう。学者や芸術家に多いタイプです。" },
+    east: { name: "青龍型", text: "攻撃精神が強く前進力があります。失敗してもへこたれない強さを持っています。後退することを知らないような性格です。サラリーマンやOLよりも商人的な世界が向いています。" },
+    south: { name: "朱雀型", text: "「人を助けたい」という欲望が強くあります。誰かの役に立てるなら、環境に沿って自分を変化させることができます。必要とされることで生きがいを感じます。医者や人助けの世界に向いています。" },
+    west: { name: "白虎型", text: "褒められるよりも厳しくされる方が伸びるタイプです。人から攻撃されることで成長していきます。自尊心が強く、プライドを傷つけられることで更に上へ上がろうと努力します。エンジニアや弁護士、会計士などが向いています。" },
+    center: { name: "螣陀型", text: "自分自身が一番強いと感じており、何があっても動じない強さを持っています。自分自身の意思によってしか行動しません。ただし、助けられると助けられるままに流れていくため、助けられない状態に身を置くことが成功への近道です。政治家に向いています。" }
+  };
+  const yinYang = (positions.east + positions.south) > (positions.west + positions.north) ? "陽型" : "陰型";
+  const yinYangText = yinYang === "陽型"
+    ? "現実的な世界、生産的な世界で成功しやすいです。実利主義なので、実業家や起業家として大きな財を成す可能性が高いでしょう。"
+    : "学者や芸術家、クリエイターなど、生産性に直結しない世界に向いています。自分の感性やインスピレーションを発信、表現することに重きをおきます。";
+  const junGyo = (positions.north + positions.south) > (positions.east + positions.west) ? "順型" : "逆型";
+  const junGyoText = junGyo === "順型"
+    ? "前進力は弱めですが、理性が働く理論派です。"
+    : "前進力が強い、行動派・攻撃派です。";
+  return { layout, positions, maxDir, type: typeMap[maxDir], yinYang, yinYangText, junGyo, junGyoText };
+}
+
+// === 意識と無意識 ===
+// 参考: https://sanmei-stock.com/applied/conscious-and-unconscious/
+function analyzeIshiki(pillars, day) {
+  const dayEl = elements[stems.indexOf(day.stem)];
+  const targets = [];
+  ["year", "month", "day"].forEach(key => {
+    const p = pillars[key];
+    if (key === "day") return; // 日干自身は除外
+    const stemEl = elements[stems.indexOf(p.stem)];
+    const branchEl = branchElements[p.branch];
+    const stemRel = getGogyoRelation(dayEl, stemEl);
+    const branchRel = getGogyoRelation(dayEl, branchEl);
+    targets.push({ pillar: key === "year" ? "年柱" : "月柱", stem: p.stem, branch: p.branch, stemEl, branchEl, stemRel, branchRel });
+  });
+  let conscious = 0, unconscious = 0;
+  targets.forEach(t => {
+    if (t.stemRel === "相生(→)" || t.stemRel === "相生(←)") unconscious++;
+    else conscious++;
+    if (t.branchRel === "相生(→)" || t.branchRel === "相生(←)") unconscious++;
+    else conscious++;
+  });
+  const monthBranchEl = branchElements[pillars.month.branch];
+  const monthBranchRel = getGogyoRelation(dayEl, monthBranchEl);
+  const monthConflict = (monthBranchRel === "相生(→)" || monthBranchRel === "相生(←)") ? "低い" : "高い";
+  let summary;
+  if (conscious > unconscious) {
+    summary = "意識（相剋・比和）が多いため、葛藤が多い苦労人タイプです。常に何かを意識し、感じながら人生を歩むため心が休まりにくいですが、精神的な成長は早くなります。早咲きの傾向です。";
+  } else if (unconscious > conscious) {
+    summary = "無意識（相生）が多いため、周りに助けられながら自然に発展するタイプです。物事を深く考える必要がなく、記憶力は抜群ですが、深みのない人間形成になりがちです。遅咲きの傾向です。";
+  } else {
+    summary = "意識と無意識のバランスが取れており、苦労と恩恵の両方を経験するタイプです。";
+  }
+  return { targets, conscious, unconscious, summary, monthBranchRel, monthConflict };
+}
+
+// === 二行干支 ===
+// 参考: https://sanmei-stock.com/applied/applied-divination/two-lines-of-zodiac/
+function analyzeNiko(pillars) {
+  const elementSet = new Set();
+  const kanshiSet = new Set();
+  ["year", "month", "day"].forEach(key => {
+    const p = pillars[key];
+    elementSet.add(elements[stems.indexOf(p.stem)]);
+    elementSet.add(branchElements[p.branch]);
+    kanshiSet.add(p.stem + p.branch);
+  });
+  const isTwoElements = elementSet.size === 2;
+  const isTwoKanshi = kanshiSet.size === 2;
+  if (!isTwoElements && !isTwoKanshi) return null;
+  return {
+    isTwoElements,
+    isTwoKanshi,
+    elements: Array.from(elementSet),
+    kanshi: Array.from(kanshiSet),
+    note: "二行干支に該当します。感情のみで行動しやすくフィーリング重視で、非常に行動力があります。周囲からは勘が鋭くて頭の回転が速く見えます。結婚して子供を持つと至って普通の人に戻ります。子供がいなければ、感情で動き、行動力抜群です。"
+  };
+}
+
+// === 星の組み合わせ（十態）===
+// 参考: https://sanmei-stock.com/basic/star-combinations-and-bias/
+const juttaiConditions = [
+  { name: "傷相", cond: (stars, energies) => stars.includes("龍高星") && stars.includes("鳳閣星") && energies.includes("天極星"), note: "成人するまで（20歳まで）は怪我をしやすいです。" },
+  { name: "病相", cond: (stars, energies) => (stars.includes("龍高星") || stars.includes("玉堂星")) && stars.includes("調舒星") && energies.includes("天馳星"), note: "故障が多くなります。※大病ではありません。" },
+  { name: "罪相", cond: (stars, energies) => stars.includes("龍高星") && stars.includes("石門星") && energies.includes("天堂星"), note: "騙したり騙されやすくなります。無実の罪を着せられる可能性があります。" },
+  { name: "抗相", cond: (stars, energies) => stars.includes("車騎星") && stars.includes("調舒星") && (energies.includes("天極星") || energies.includes("天庫星")), note: "神経質になりやすく、ノイローゼ気味になります。周囲の人と争うと傷付きます。" },
+  { name: "独相", cond: (stars, energies) => stars.filter(s => s === "貫索星").length >= 2 && energies.includes("天馳星"), note: "人を受け入れられない頑なな心を持ちやすくなります。実直で義理堅いですが、視野が狭くなりがちです。" },
+  { name: "情相", cond: (stars, energies) => stars.includes("禄存星") && (stars.includes("調舒星") || stars.includes("龍高星")) && energies.includes("天恍星"), note: "異性の許容度が高くなり、結婚・恋愛の相手がよりどりみどりになります。" },
+  { name: "色相", cond: (stars, energies) => (stars.includes("司禄星") && stars.includes("龍高星")) || (stars.includes("禄存星") && energies.includes("天恍星")), note: "歳を取っても若々しく見られます。恋愛対象となる相手が多すぎて、選り好みしているうちに婚期を逃すことがあります。" },
+  { name: "団相", cond: (stars, energies) => stars.includes("調舒星") && stars.includes("龍高星") && stars.includes("石門星") && energies.includes("天堂星"), note: "現存する団体や組織に反対するようになり、車騎星があるとリーダー的存在になります。" },
+  { name: "破相", cond: (stars, energies) => stars.includes("禄存星") && stars.includes("司禄星") && energies.includes("天将星"), note: "結婚した場合に最初の10年間は幸せに過ごせても、それ以降は夫婦ともに相手の運を下げてしまう可能性があります。" },
+  { name: "消相", cond: (stars, energies) => stars.includes("石門星") && stars.includes("司禄星") && energies.includes("天恍星"), note: "目上から譲り受けた財産を全て失う傾向があります。自分の力で稼いだ分の財産は残ります。" }
+];
+
+const sankishiCond = { cond: (stars, energies) => stars.includes("調舒星") && stars.includes("車騎星") && stars.includes("龍高星") && energies.includes("天堂星"), note: "三奇星：心の葛藤が多くなり奇人・変人（良ければ天才）になります。" };
+const shichisatsuConds = [
+  { cond: (stars) => stars.includes("龍高星") && stars.includes("鳳閣星"), note: "七殺（龍高＋鳳閣）：表面的には穏やかでも内面は葛藤が大きくなります。" },
+  { cond: (stars) => stars.includes("車騎星") && stars.includes("調舒星"), note: "七殺（車騎＋調舒）：心の葛藤が顕著で、ある時期に病気を患う可能性が高いため注意が必要です。" }
+];
+
+function analyzeStarCombos(mainStars, energyStarsArr) {
+  const allStars = Object.values(mainStars);
+  const allEnergies = energyStarsArr.map(e => e.name);
+  const results = [];
+  juttaiConditions.forEach(j => {
+    if (j.cond(allStars, allEnergies)) results.push({ type: "十態", name: j.name, note: j.note });
+  });
+  if (sankishiCond.cond(allStars, allEnergies)) results.push({ type: "特殊", name: "三奇星", note: sankishiCond.note });
+  shichisatsuConds.forEach(s => {
+    if (s.cond(allStars)) results.push({ type: "特殊", name: "七殺", note: s.note });
+  });
+  return results;
+}
+
+// === 同星3連変化 ===
+// 参考: https://sanmei-stock.com/basic/ten-main-stars/triple-variation/
+const tripleStarTexts = {
+  "貫索星": { dir: "東方定位置", text3: "表面は穏やかですが、中身がとても激しい人です。いざとなった時の集中力や実現力は凄まじいものがあります。感情が大きくなりやすく、視野も狭くなりがちです。柔軟性にかけますが、一度感謝の気持ちが生まれると一生薄れることはありません。", text4: "表面は柔らかく見えますが、意外とバランスを崩しやすい傾向があります。" },
+  "石門星": { dir: "東方定位置", text3: "かなり頑固で考えを変えない、信念が確立した人ですが、その頑固さは内に秘め表には出しません。人を感化していく人で、知らぬ間に主従関係が出来上がっている状況を作ります。", text4: "表面はソフトに見えても、人の話を受け入れることはありません。社交性はずば抜けて高いため、団体交渉に強い人です。" },
+  "鳳閣星": { dir: "南方定位置", text3: "明るく社交的で太陽のように暖かい人ですが、ふとした時に薄情な面を見せます。のんびり星が多いために逆転現象が起きて精神的に不安定にもなりやすい人です。人の好き嫌いが多くなります。", text4: "表面は暖かそうですが、実はかなりクールで徹底した冷たさを併せ持ちます。晩年になっても子供に囚われることなく潔く死ねる人です。" },
+  "調舒星": { dir: "南方定位置", text3: "「破壊の型」とも呼ばれ、理想の美に到達するまでのふっきりが早い人です。デリケートさには拍車がかかり、感性も研ぎ澄まされて色んな事に敏感になるため、傷つきやすさも倍増します。自意識が強く使命感も強いため、人からの期待で頑張れる人です。", text4: "" },
+  "禄存星": { dir: "中央定位置", text3: "自意識がかなり強くなり、不動の人で権力欲が強い人です。堅実で用心深い性格も現れ、頑固さも加わって目上の言うことにもなかなか聞く耳を持ちません。交渉が巧みで、慕ってくる人には親切心強く、強引なところが目立ちます。", text4: "" },
+  "司禄星": { dir: "中央定位置", text3: "大変良く気が利く人で、要領がよくなんでも出来る人です。頭の回転が早く、世渡りも上手です。堅実で慎重なところは司禄の本質がそのままありますが、行動力もあり、その分無駄も多くなります。本心が見えにくい人でもあり、隠れ財を作り出すのが上手です。", text4: "" },
+  "車騎星": { dir: "西方定位置", text3: "精神的な戦闘本能が強く、攻撃性が増します。物事の発想が動的になり、考えが固定されず、変化の激しい発想が生まれます。周囲からは精神が安定しない人のように見えますが、本人は動きの中で考えているため、不安定さを感じていません。", text4: "" },
+  "牽牛星": { dir: "西方定位置", text3: "車騎星と同様に精神的な戦闘本能が強く、攻撃性が増します。発想が動的で変化が激しく、前進と後退が頭の中を巡っています。", text4: "" },
+  "龍高星": { dir: "北方定位置", text3: "お人好しな人で、義理人情に厚い人です。普段はクールなのに、3つ揃うとお節介な人になります。放浪性も強くなり、単独行動が目立ちます。孤独にも強い人で、安住すると良さは発揮されず、時代の変わり目に実力を発揮できます。", text4: "義理人情が厚くなります。お人好しさに磨きがかかり、情に流されやすくなりますが、その分人に助けてもらう機会も増えます。" },
+  "玉堂星": { dir: "北方定位置", text3: "頑固だが人との輪を広げるのが上手い人です。社交性に長けており、人脈を繋げるのが上手です。甘え上手でピンチの時には人から助けてもらえるラッキーな人です。頭は良いですが考えすぎてまとまらず、行動に移せないことも多々あります。", text4: "" }
+};
+
+function analyzeTripleStar(mainStars) {
+  const allStars = Object.values(mainStars);
+  const counts = {};
+  allStars.forEach(s => { counts[s] = (counts[s] || 0) + 1; });
+  const results = [];
+  Object.entries(counts).forEach(([star, count]) => {
+    if (count >= 3) {
+      const info = tripleStarTexts[star];
+      if (info) {
+        results.push({
+          star,
+          count,
+          dir: info.dir,
+          text: count >= 4 && info.text4 ? info.text4 : info.text3
+        });
+      }
+    }
+  });
+  return results;
+}
+
+// === 十二大従星の偏り ===
+// 参考: https://sanmei-stock.com/basic/star-combinations-and-bias/
+const energyBiasTexts = {
+  "天将星": {
+    count2: "天将星が2つある人は、一つだけの人よりも天将星の良さがとても発揮されます。きちんとした目的を持つことができれば、迷うことなく凄まじい前進力を発揮します。表面上が優しく見られがちですが、人生に一貫性があり、現実エネルギーが高くとても逞しい人です。",
+    count3: "天将星が3つある場合は、弱さと脆さがありますが、一度最悪の時期を経験して乗り越えることができれば、天将星の良さが出てくるようになります。両極端な人で、落ちこぼれになる可能性も十分あります。天才か狂人のどちらかになれます。"
+  },
+  "天庫星": { count3: "天庫星が3つある人は、5歳を超えるまでは危険ですが、5歳を超えると長寿の人になれます。" },
+  "天胡星": { count3: "天胡星が3つある人は、無欲になれますが、義理人情もなく、世の中の常識や習わしを軽視する傾向があります。弱々しく見えても短命ではありません。" },
+  "天極星": { count3: "天極星が3つある人は、天将星が3つある人も敵わないほど変人・奇人です。この場合の変人・奇人度は「死を恐れない」ほどです。" },
+  "天馳星": { count3: "天馳星が3つある人は、天将星一つと同じ強さになります。成功するしないに関わらず、常に忙しく動き回り、汗水流して働きまくります。この性質は天馳星が2つの場合も同じです。" }
+};
+
+function analyzeEnergyBias(energyStarsArr) {
+  const counts = {};
+  energyStarsArr.forEach(e => { counts[e.name] = (counts[e.name] || 0) + 1; });
+  const results = [];
+  Object.entries(counts).forEach(([star, count]) => {
+    if (count >= 2) {
+      const info = energyBiasTexts[star];
+      if (info) {
+        let text = "";
+        if (count >= 3 && info.count3) text = info.count3;
+        else if (count === 2 && info.count2) text = info.count2;
+        else if (count >= 3 && info.count3) text = info.count3;
+        if (text) results.push({ star, count, text });
+      }
+    }
+  });
+  return results;
+}
+
 function countElements(pillars) {
   const counts = { 木: 0, 火: 0, 土: 0, 金: 0, 水: 0 };
   pillars.forEach((p) => {
@@ -4973,6 +5174,45 @@ function render(event) {
         `;
       })()}
     </div>
+    ${(() => {
+      const ishiki = analyzeIshiki(pillars, day);
+      return `<div class="result-card expert-only">
+        <h3>意識と無意識（陰占の五行関係）</h3>
+        <p class="note mb-10">日干に対する他の干支の五行関係から、意識（相剋・比和）と無意識（相生）の割合を分析します。意識が多い＝苦労人・早咲き、無意識が多い＝恩恵型・遅咲き。</p>
+        <div class="info-box is-steel">
+          <div class="ishiki-counts">
+            <span class="ishiki-count is-conscious">意識（相剋・比和）：<b>${ishiki.conscious}</b></span>
+            <span class="ishiki-count is-unconscious">無意識（相生）：<b>${ishiki.unconscious}</b></span>
+          </div>
+          <div class="ishiki-list">
+            ${ishiki.targets.map(t => `
+              <div class="ishiki-item">
+                <span class="ishiki-pillar">${t.pillar}</span>
+                <span>${t.stem}（${t.stemEl}）→${t.stemRel}</span>
+                <span>${t.branch}（${t.branchEl}）→${t.branchRel}</span>
+              </div>
+            `).join("")}
+          </div>
+          <p class="info-text mt-6">${ishiki.summary}</p>
+          <p class="note-text-sm mt-6">日干と月支の関係：${ishiki.monthBranchRel}（心の葛藤度合い：${ishiki.monthConflict}）。月支は中年期の場所なので、中年期に大きく現れます。</p>
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const niko = analyzeNiko(pillars);
+      if (!niko) return '';
+      return `<div class="result-card expert-only">
+        <h3>二行干支</h3>
+        <p class="note mb-10">陰占の三柱が五行2行のみ、または2種類の干支のみで構成される場合、感情のみで行動しやすくフィーリング重視の行動力があるタイプになります。</p>
+        <div class="info-box is-purple">
+          <div class="niko-pattern">
+            ${niko.isTwoElements ? `<span class="niko-tag">五行2行のみ：${niko.elements.join("・")}</span>` : ''}
+            ${niko.isTwoKanshi ? `<span class="niko-tag">干支2種類のみ：${niko.kanshi.join("・")}</span>` : ''}
+          </div>
+          <p class="info-text mt-6">${niko.note}</p>
+        </div>
+      </div>`;
+    })()}
     <div class="result-card expert-only">
       <h3>内面のバランス</h3>
       <div class="bars">${Object.entries(counts).map(([key, value]) => `<div class="bar-row"><b>${key}</b><div class="bar"><i style="--bar-width:${(value / maxCount) * 100}%"></i></div><span>${value}</span></div>`).join("")}</div>
@@ -5159,6 +5399,74 @@ function render(event) {
           </div>
           <p class="info-text mt-6">${kizu.text}</p>
           <p class="note-text-sm mt-6">${kizu.schoolAdvice}</p>
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const hachimon = analyzeHachimon(day.stem, counts);
+      if (!hachimon) return '';
+      const dirLabels = { north: "北", south: "南", east: "東", west: "西", center: "中央" };
+      return `<div class="result-card expert-only">
+        <h3>八門法（気の流れと器の型）</h3>
+        <p class="note mb-10">日干を中心に配置した気の流れ（気図五行）から、器の型を判定します。縦線が相生（無意識）、横線が相剋（意識）を表します。</p>
+        <div class="info-box is-purple">
+          <div class="hachimon-type"><b>器の型：</b><span class="hachimon-type-name">${hachimon.type.name}</span></div>
+          <div class="hachimon-positions">
+            ${Object.entries(hachimon.positions).map(([dir, val]) => `<span class="hachimon-pos${dir === hachimon.maxDir ? " is-max" : ""}">${dirLabels[dir]}：${val}</span>`).join("")}
+          </div>
+          <p class="info-text mt-6">${hachimon.type.text}</p>
+          <div class="hachimon-sub">
+            <div class="hachimon-sub-row"><b>陰陽分類：</b><span class="hachimon-sub-val">${hachimon.yinYang}</span> − ${hachimon.yinYangText}</div>
+            <div class="hachimon-sub-row"><b>順逆分類：</b><span class="hachimon-sub-val">${hachimon.junGyo}</span> − ${hachimon.junGyoText}</div>
+          </div>
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const combos = analyzeStarCombos(mainStars, [energyYear, energyMonth, energyDay]);
+      if (combos.length === 0) return '';
+      return `<div class="result-card expert-only">
+        <h3>星の組み合わせ（十態・特殊）</h3>
+        <p class="note mb-10">十大主星と十二大従星の組み合わせから、その人に起こり得る現象を読み取ります。</p>
+        <div class="combo-list">
+          ${combos.map(c => `
+            <div class="combo-item">
+              <div class="combo-head"><span class="combo-type">${c.type}</span><b>${c.name}</b></div>
+              <div class="combo-note">${c.note}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const triples = analyzeTripleStar(mainStars);
+      if (triples.length === 0) return '';
+      return `<div class="result-card expert-only">
+        <h3>同星3連変化（十大主星の偏り）</h3>
+        <p class="note mb-10">同じ十大主星が3つ以上命式にある場合、精神的な偏りが生じ、奇人・変人・天才型が多いと言われます。</p>
+        <div class="triple-list">
+          ${triples.map(t => `
+            <div class="triple-item">
+              <div class="triple-head"><b>${t.star}</b><span class="triple-count">${t.count}つ</span><span class="triple-dir">${t.dir}</span></div>
+              <div class="triple-text">${t.text}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const biases = analyzeEnergyBias([energyYear, energyMonth, energyDay]);
+      if (biases.length === 0) return '';
+      return `<div class="result-card expert-only">
+        <h3>十二大従星の偏り</h3>
+        <p class="note mb-10">同じ十二大従星が2つ以上ある場合、星の性質が強く現れます。</p>
+        <div class="bias-list">
+          ${biases.map(b => `
+            <div class="bias-item">
+              <div class="bias-head"><b>${b.star}</b><span class="bias-count">${b.count}つ</span></div>
+              <div class="bias-text">${b.text}</div>
+            </div>
+          `).join("")}
         </div>
       </div>`;
     })()}
