@@ -1,0 +1,1626 @@
+[
+  {
+    "name": "Becky",
+    "real_name": "ベッキー",
+    "birth_date": "1984-03-06",
+    "gender": "female",
+    "group": "affair_case",
+    "notes": "2016年GW不倫騒動",
+    "source": "curated",
+    "id": 1
+  },
+  {
+    "name": "川谷絵音",
+    "real_name": "川谷絵音",
+    "birth_date": "1989-09-23",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "2016年GW不倫騒動",
+    "source": "curated",
+    "id": 2
+  },
+  {
+    "name": "東出昌大",
+    "real_name": "東出昌大",
+    "birth_date": "1988-02-01",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "2020年唐田えりかとの不倫",
+    "source": "curated",
+    "id": 3
+  },
+  {
+    "name": "唐田えりか",
+    "real_name": "唐田えりか",
+    "birth_date": "1997-01-04",
+    "gender": "female",
+    "group": "affair_case",
+    "notes": "2020年東出昌大との不倫",
+    "source": "curated",
+    "id": 4
+  },
+  {
+    "name": "渡部建",
+    "real_name": "渡部建",
+    "birth_date": "1972-09-19",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "2020年複数女性と不倫",
+    "source": "curated",
+    "id": 5
+  },
+  {
+    "name": "矢口真里",
+    "real_name": "矢口真里",
+    "birth_date": "1983-01-20",
+    "gender": "female",
+    "group": "affair_case",
+    "notes": "2013年不倫騒動で離婚",
+    "source": "curated",
+    "id": 6
+  },
+  {
+    "name": "中島知子",
+    "real_name": "中島知子",
+    "birth_date": "1979-04-03",
+    "gender": "female",
+    "group": "affair_case",
+    "notes": "不倫報道",
+    "source": "curated",
+    "id": 7
+  },
+  {
+    "name": "山本圭壱",
+    "real_name": "山本圭壱",
+    "birth_date": "1970-09-27",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "極楽とんぼ不倫騒動",
+    "source": "curated",
+    "id": 8
+  },
+  {
+    "name": "陣内智則",
+    "real_name": "陣内智則",
+    "birth_date": "1974-02-22",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "不倫報道で離婚",
+    "source": "curated",
+    "id": 9
+  },
+  {
+    "name": "宮迫博之",
+    "real_name": "宮迫博之",
+    "birth_date": "1976-07-28",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "不倫報道",
+    "source": "curated",
+    "id": 10
+  },
+  {
+    "name": "加藤茶",
+    "real_name": "加藤茶",
+    "birth_date": "1943-03-04",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "複数不倫報道",
+    "source": "curated",
+    "id": 11
+  },
+  {
+    "name": "島田紳助",
+    "real_name": "島田紳助",
+    "birth_date": "1956-07-28",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "不倫スキャンダル",
+    "source": "curated",
+    "id": 12
+  },
+  {
+    "name": "上島竜兵",
+    "real_name": "上島竜兵",
+    "birth_date": "1961-05-20",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "不倫報道多数",
+    "source": "curated",
+    "id": 13
+  },
+  {
+    "name": "田中みな実",
+    "real_name": "田中みな実",
+    "birth_date": "1986-10-12",
+    "gender": "female",
+    "group": "affair_case",
+    "notes": "不倫疑惑報道",
+    "source": "curated",
+    "id": 14
+  },
+  {
+    "name": "梨花",
+    "real_name": "梨花",
+    "birth_date": "1973-05-23",
+    "gender": "female",
+    "group": "affair_case",
+    "notes": "不倫疑惑報道",
+    "source": "curated",
+    "id": 15
+  },
+  {
+    "name": "稲垣吾郎",
+    "real_name": "稲垣吾郎",
+    "birth_date": "1973-12-08",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "不倫スキャンダル",
+    "source": "curated",
+    "id": 16
+  },
+  {
+    "name": "ヒカル",
+    "real_name": "ヒカル",
+    "birth_date": "1993-06-25",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "YouTuber不倫騒動",
+    "source": "curated",
+    "id": 17
+  },
+  {
+    "name": "清水アキラ",
+    "real_name": "清水アキラ",
+    "birth_date": "1958-09-10",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "不倫報道",
+    "source": "curated",
+    "id": 18
+  },
+  {
+    "name": "小林麻央",
+    "real_name": "小林麻央",
+    "birth_date": "1982-01-23",
+    "gender": "female",
+    "group": "affair_case",
+    "notes": "不倫疑惑報道",
+    "source": "curated",
+    "id": 19
+  },
+  {
+    "name": "中村蒼",
+    "real_name": "中村蒼",
+    "birth_date": "1991-03-02",
+    "gender": "male",
+    "group": "affair_case",
+    "notes": "不倫報道",
+    "source": "curated",
+    "id": 20
+  },
+  {
+    "name": "松嶋尚美",
+    "real_name": "松嶋尚美",
+    "birth_date": "1975-05-13",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 21
+  },
+  {
+    "name": "鈴木奈々",
+    "real_name": "鈴木奈々",
+    "birth_date": "1989-07-27",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 22
+  },
+  {
+    "name": "藤原紀香",
+    "real_name": "藤原紀香",
+    "birth_date": "1971-06-10",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 23
+  },
+  {
+    "name": "山口もえ",
+    "real_name": "山口もえ",
+    "birth_date": "1977-10-08",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 24
+  },
+  {
+    "name": "小倉優子",
+    "real_name": "小倉優子",
+    "birth_date": "1983-08-07",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 25
+  },
+  {
+    "name": "杉本彩",
+    "real_name": "杉本彩",
+    "birth_date": "1968-07-19",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 26
+  },
+  {
+    "name": "奥菜恵",
+    "real_name": "奥菜恵",
+    "birth_date": "1979-11-28",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 27
+  },
+  {
+    "name": "矢田亜希子",
+    "real_name": "矢田亜希子",
+    "birth_date": "1978-12-23",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 28
+  },
+  {
+    "name": "水野美紀",
+    "real_name": "水野美紀",
+    "birth_date": "1974-03-22",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 29
+  },
+  {
+    "name": "内田有紀",
+    "real_name": "内田有紀",
+    "birth_date": "1975-11-16",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 30
+  },
+  {
+    "name": "酒井法子",
+    "real_name": "酒井法子",
+    "birth_date": "1971-02-14",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 31
+  },
+  {
+    "name": "菊川怜",
+    "real_name": "菊川怜",
+    "birth_date": "1978-02-25",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 32
+  },
+  {
+    "name": "中山エミリ",
+    "real_name": "中山エミリ",
+    "birth_date": "1975-01-13",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 33
+  },
+  {
+    "name": "雛形あきこ",
+    "real_name": "雛形あきこ",
+    "birth_date": "1974-12-29",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 34
+  },
+  {
+    "name": "榎本加奈子",
+    "real_name": "榎本加奈子",
+    "birth_date": "1979-11-26",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 35
+  },
+  {
+    "name": "遠野なぎこ",
+    "real_name": "遠野なぎこ",
+    "birth_date": "1973-08-07",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 36
+  },
+  {
+    "name": "岩城滉一",
+    "real_name": "岩城滉一",
+    "birth_date": "1951-09-13",
+    "gender": "male",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 37
+  },
+  {
+    "name": "柳葉敏郎",
+    "real_name": "柳葉敏郎",
+    "birth_date": "1963-01-03",
+    "gender": "male",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 38
+  },
+  {
+    "name": "石橋貴明",
+    "real_name": "石橋貴明",
+    "birth_date": "1962-04-03",
+    "gender": "male",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 39
+  },
+  {
+    "name": "東野幸治",
+    "real_name": "東野幸治",
+    "birth_date": "1967-08-03",
+    "gender": "male",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 40
+  },
+  {
+    "name": "中山美穂",
+    "real_name": "中山美穂",
+    "birth_date": "1971-03-01",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 41
+  },
+  {
+    "name": "宮沢りえ",
+    "real_name": "宮沢りえ",
+    "birth_date": "1973-04-06",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 42
+  },
+  {
+    "name": "菊池桃子",
+    "real_name": "菊池桃子",
+    "birth_date": "1967-11-18",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 43
+  },
+  {
+    "name": "森昌子",
+    "real_name": "森昌子",
+    "birth_date": "1958-06-19",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 44
+  },
+  {
+    "name": "山口達也",
+    "real_name": "山口達也",
+    "birth_date": "1972-01-10",
+    "gender": "male",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 45
+  },
+  {
+    "name": "石田えり",
+    "real_name": "石田えり",
+    "birth_date": "1965-09-15",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 46
+  },
+  {
+    "name": "大沢たかお",
+    "real_name": "大沢たかお",
+    "birth_date": "1968-03-11",
+    "gender": "male",
+    "group": "divorce_case",
+    "notes": "離婚歴なし参考",
+    "source": "curated",
+    "id": 47
+  },
+  {
+    "name": "永作博美",
+    "real_name": "永作博美",
+    "birth_date": "1970-03-21",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴なし参考",
+    "source": "curated",
+    "id": 48
+  },
+  {
+    "name": "石田ひかり",
+    "real_name": "石田ひかり",
+    "birth_date": "1972-05-25",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 49
+  },
+  {
+    "name": "鈴木杏樹",
+    "real_name": "鈴木杏樹",
+    "birth_date": "1969-04-22",
+    "gender": "female",
+    "group": "divorce_case",
+    "notes": "離婚歴あり",
+    "source": "curated",
+    "id": 50
+  },
+  {
+    "name": "明石家さんま",
+    "real_name": "明石家さんま",
+    "birth_date": "1955-07-01",
+    "gender": "male",
+    "group": "control",
+    "notes": "安定",
+    "source": "curated",
+    "id": 51
+  },
+  {
+    "name": "タモリ",
+    "real_name": "タモリ",
+    "birth_date": "1945-08-22",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 52
+  },
+  {
+    "name": "所ジョージ",
+    "real_name": "所ジョージ",
+    "birth_date": "1955-01-26",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 53
+  },
+  {
+    "name": "笑福亭鶴瓶",
+    "real_name": "笑福亭鶴瓶",
+    "birth_date": "1953-12-23",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 54
+  },
+  {
+    "name": "大竹まこと",
+    "real_name": "大竹まこと",
+    "birth_date": "1965-04-04",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 55
+  },
+  {
+    "name": "久本雅美",
+    "real_name": "久本雅美",
+    "birth_date": "1958-07-09",
+    "gender": "female",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 56
+  },
+  {
+    "name": "柴田理恵",
+    "real_name": "柴田理恵",
+    "birth_date": "1959-02-14",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 57
+  },
+  {
+    "name": "室井滋",
+    "real_name": "室井滋",
+    "birth_date": "1960-12-15",
+    "gender": "female",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 58
+  },
+  {
+    "name": "浅野温子",
+    "real_name": "浅野温子",
+    "birth_date": "1961-03-04",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 59
+  },
+  {
+    "name": "浅野ゆう子",
+    "real_name": "浅野ゆう子",
+    "birth_date": "1960-03-10",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 60
+  },
+  {
+    "name": "石野真子",
+    "real_name": "石野真子",
+    "birth_date": "1961-01-31",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 61
+  },
+  {
+    "name": "渡辺徹",
+    "real_name": "渡辺徹",
+    "birth_date": "1957-12-19",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 62
+  },
+  {
+    "name": "榊原郁恵",
+    "real_name": "榊原郁恵",
+    "birth_date": "1959-05-12",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 63
+  },
+  {
+    "name": "研ナオコ",
+    "real_name": "研ナオコ",
+    "birth_date": "1953-02-13",
+    "gender": "female",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 64
+  },
+  {
+    "name": "五木ひろし",
+    "real_name": "五木ひろし",
+    "birth_date": "1948-03-12",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 65
+  },
+  {
+    "name": "細川たかし",
+    "real_name": "細川たかし",
+    "birth_date": "1950-06-15",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 66
+  },
+  {
+    "name": "三浦友和",
+    "real_name": "三浦友和",
+    "birth_date": "1952-01-28",
+    "gender": "male",
+    "group": "control",
+    "notes": "山口百恵と結婚安定",
+    "source": "curated",
+    "id": 67
+  },
+  {
+    "name": "山口百恵",
+    "real_name": "山口百恵",
+    "birth_date": "1959-01-17",
+    "gender": "female",
+    "group": "control",
+    "notes": "三浦友和と結婚安定",
+    "source": "curated",
+    "id": 68
+  },
+  {
+    "name": "田原俊彦",
+    "real_name": "田原俊彦",
+    "birth_date": "1961-02-24",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 69
+  },
+  {
+    "name": "武田鉄矢",
+    "real_name": "武田鉄矢",
+    "birth_date": "1949-04-23",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 70
+  },
+  {
+    "name": "西田敏行",
+    "real_name": "西田敏行",
+    "birth_date": "1947-11-04",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 71
+  },
+  {
+    "name": "風間杜夫",
+    "real_name": "風間杜夫",
+    "birth_date": "1949-04-23",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 72
+  },
+  {
+    "name": "古舘伊知郎",
+    "real_name": "古舘伊知郎",
+    "birth_date": "1955-11-06",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 73
+  },
+  {
+    "name": "黒柳徹子",
+    "real_name": "黒柳徹子",
+    "birth_date": "1933-08-11",
+    "gender": "female",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 74
+  },
+  {
+    "name": "古手川祐子",
+    "real_name": "古手川祐子",
+    "birth_date": "1959-07-09",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 75
+  },
+  {
+    "name": "樹木希林",
+    "real_name": "樹木希林",
+    "birth_date": "1943-01-15",
+    "gender": "female",
+    "group": "control",
+    "notes": "別居婚安定",
+    "source": "curated",
+    "id": 76
+  },
+  {
+    "name": "牧瀬里穂",
+    "real_name": "牧瀬里穂",
+    "birth_date": "1971-12-11",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 77
+  },
+  {
+    "name": "高橋由美子",
+    "real_name": "高橋由美子",
+    "birth_date": "1972-01-07",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 78
+  },
+  {
+    "name": "南野陽子",
+    "real_name": "南野陽子",
+    "birth_date": "1967-06-23",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 79
+  },
+  {
+    "name": "斉藤由貴",
+    "real_name": "斉藤由貴",
+    "birth_date": "1966-09-13",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 80
+  },
+  {
+    "name": "浅香唯",
+    "real_name": "浅香唯",
+    "birth_date": "1969-12-04",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 81
+  },
+  {
+    "name": "井森美幸",
+    "real_name": "井森美幸",
+    "birth_date": "1965-02-18",
+    "gender": "female",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 82
+  },
+  {
+    "name": "森口博子",
+    "real_name": "森口博子",
+    "birth_date": "1968-06-13",
+    "gender": "female",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 83
+  },
+  {
+    "name": "山瀬まみ",
+    "real_name": "山瀬まみ",
+    "birth_date": "1968-11-09",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 84
+  },
+  {
+    "name": "城島茂",
+    "real_name": "城島茂",
+    "birth_date": "1970-11-17",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 85
+  },
+  {
+    "name": "国分太一",
+    "real_name": "国分太一",
+    "birth_date": "1974-09-02",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 86
+  },
+  {
+    "name": "松岡昌宏",
+    "real_name": "松岡昌宏",
+    "birth_date": "1977-01-11",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 87
+  },
+  {
+    "name": "長瀬智也",
+    "real_name": "長瀬智也",
+    "birth_date": "1978-11-07",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 88
+  },
+  {
+    "name": "堂本光一",
+    "real_name": "堂本光一",
+    "birth_date": "1979-01-21",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 89
+  },
+  {
+    "name": "堂本剛",
+    "real_name": "堂本剛",
+    "birth_date": "1979-04-10",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 90
+  },
+  {
+    "name": "滝沢秀明",
+    "real_name": "滝沢秀明",
+    "birth_date": "1982-03-29",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 91
+  },
+  {
+    "name": "上田晋也",
+    "real_name": "上田晋也",
+    "birth_date": "1970-05-10",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 92
+  },
+  {
+    "name": "有吉弘行",
+    "real_name": "有吉弘行",
+    "birth_date": "1974-05-15",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 93
+  },
+  {
+    "name": "博多華丸",
+    "real_name": "博多華丸",
+    "birth_date": "1970-06-05",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 94
+  },
+  {
+    "name": "千原せいじ",
+    "real_name": "千原せいじ",
+    "birth_date": "1972-02-23",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 95
+  },
+  {
+    "name": "川島明",
+    "real_name": "川島明",
+    "birth_date": "1979-02-14",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 96
+  },
+  {
+    "name": "後藤輝基",
+    "real_name": "後藤輝基",
+    "birth_date": "1975-06-18",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 97
+  },
+  {
+    "name": "西田幸治",
+    "real_name": "西田幸治",
+    "birth_date": "1974-02-23",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 98
+  },
+  {
+    "name": "中田敦彦",
+    "real_name": "中田敦彦",
+    "birth_date": "1982-09-27",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 99
+  },
+  {
+    "name": "小木博明",
+    "real_name": "小木博明",
+    "birth_date": "1975-10-14",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 100
+  },
+  {
+    "name": "矢作兼",
+    "real_name": "矢作兼",
+    "birth_date": "1975-09-28",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 101
+  },
+  {
+    "name": "福田充徳",
+    "real_name": "福田充徳",
+    "birth_date": "1975-12-18",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 102
+  },
+  {
+    "name": "小杉竜一",
+    "real_name": "小杉竜一",
+    "birth_date": "1979-02-15",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 103
+  },
+  {
+    "name": "黒瀬純",
+    "real_name": "黒瀬純",
+    "birth_date": "1979-08-22",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 104
+  },
+  {
+    "name": "近藤真彦",
+    "real_name": "近藤真彦",
+    "birth_date": "1964-07-19",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 105
+  },
+  {
+    "name": "工藤静香",
+    "real_name": "工藤静香",
+    "birth_date": "1970-04-13",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 106
+  },
+  {
+    "name": "山田優",
+    "real_name": "山田優",
+    "birth_date": "1984-07-05",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 107
+  },
+  {
+    "name": "優香",
+    "real_name": "優香",
+    "birth_date": "1980-06-22",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 108
+  },
+  {
+    "name": "安めぐみ",
+    "real_name": "安めぐみ",
+    "birth_date": "1982-09-27",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 109
+  },
+  {
+    "name": "乙葉",
+    "real_name": "乙葉",
+    "birth_date": "1980-03-24",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 110
+  },
+  {
+    "name": "石田ゆり子",
+    "real_name": "石田ゆり子",
+    "birth_date": "1969-09-25",
+    "gender": "female",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 111
+  },
+  {
+    "name": "夏目雅子",
+    "real_name": "夏目雅子",
+    "birth_date": "1957-12-17",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 112
+  },
+  {
+    "name": "岡田有希子",
+    "real_name": "岡田有希子",
+    "birth_date": "1967-08-22",
+    "gender": "female",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 113
+  },
+  {
+    "name": "本田美奈子",
+    "real_name": "本田美奈子",
+    "birth_date": "1967-07-31",
+    "gender": "female",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 114
+  },
+  {
+    "name": "阿部寛",
+    "real_name": "阿部寛",
+    "birth_date": "1964-06-22",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 115
+  },
+  {
+    "name": "木梨憲武",
+    "real_name": "木梨憲武",
+    "birth_date": "1962-07-09",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 116
+  },
+  {
+    "name": "三宅裕司",
+    "real_name": "三宅裕司",
+    "birth_date": "1957-04-04",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 117
+  },
+  {
+    "name": "今田耕司",
+    "real_name": "今田耕司",
+    "birth_date": "1966-03-16",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 118
+  },
+  {
+    "name": "松本人志",
+    "real_name": "松本人志",
+    "birth_date": "1963-09-08",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 119
+  },
+  {
+    "name": "浜田雅功",
+    "real_name": "浜田雅功",
+    "birth_date": "1963-05-11",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 120
+  },
+  {
+    "name": "蛍原徹",
+    "real_name": "蛍原徹",
+    "birth_date": "1970-10-21",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 121
+  },
+  {
+    "name": "千原ジュニア",
+    "real_name": "千原ジュニア",
+    "birth_date": "1974-08-14",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 122
+  },
+  {
+    "name": "宮川大輔",
+    "real_name": "宮川大輔",
+    "birth_date": "1976-10-19",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 123
+  },
+  {
+    "name": "みのもんた",
+    "real_name": "みのもんた",
+    "birth_date": "1955-03-13",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 124
+  },
+  {
+    "name": "岡江久美子",
+    "real_name": "岡江久美子",
+    "birth_date": "1956-10-17",
+    "gender": "female",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 125
+  },
+  {
+    "name": "小林旭",
+    "real_name": "小林旭",
+    "birth_date": "1938-04-11",
+    "gender": "male",
+    "group": "control",
+    "notes": "再婚安定",
+    "source": "curated",
+    "id": 126
+  },
+  {
+    "name": "山下智久",
+    "real_name": "山下智久",
+    "birth_date": "1985-04-09",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 127
+  },
+  {
+    "name": "亀梨和也",
+    "real_name": "亀梨和也",
+    "birth_date": "1986-02-23",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 128
+  },
+  {
+    "name": "中丸雄一",
+    "real_name": "中丸雄一",
+    "birth_date": "1983-09-18",
+    "gender": "male",
+    "group": "control",
+    "notes": "未婚安定",
+    "source": "curated",
+    "id": 129
+  },
+  {
+    "name": "澤部佑",
+    "real_name": "澤部佑",
+    "birth_date": "1986-05-17",
+    "gender": "male",
+    "group": "control",
+    "notes": "結婚安定",
+    "source": "curated",
+    "id": 130
+  },
+  {
+    "name": "ヒカル (YouTuber)",
+    "real_name": "ヒカル (YouTuber)",
+    "birth_date": "1991-05-29",
+    "gender": "male",
+    "group": "affair_case",
+    "id": 131,
+    "source": "api"
+  },
+  {
+    "name": "髙橋真梨子",
+    "real_name": "髙橋真梨子",
+    "birth_date": "1949-03-06",
+    "gender": "female",
+    "group": "affair_case",
+    "id": 132,
+    "source": "api"
+  },
+  {
+    "name": "室屋光一郎",
+    "real_name": "室屋光一郎",
+    "birth_date": "1980-11-04",
+    "gender": "male",
+    "group": "affair_case",
+    "id": 133,
+    "source": "api"
+  },
+  {
+    "name": "今井美樹",
+    "real_name": "今井美樹",
+    "birth_date": "1963-04-14",
+    "gender": "female",
+    "group": "affair_case",
+    "id": 134,
+    "source": "api"
+  },
+  {
+    "name": "森山良子",
+    "real_name": "森山良子",
+    "birth_date": "1948-01-18",
+    "gender": "female",
+    "group": "affair_case",
+    "id": 135,
+    "source": "api"
+  },
+  {
+    "name": "サリー・イップ",
+    "real_name": "サリー・イップ",
+    "birth_date": "1961-09-30",
+    "gender": "female",
+    "group": "affair_case",
+    "id": 136,
+    "source": "api"
+  },
+  {
+    "name": "東村アキコ",
+    "real_name": "東村アキコ",
+    "birth_date": "1975-10-15",
+    "gender": "female",
+    "group": "affair_case",
+    "id": 137,
+    "source": "api"
+  },
+  {
+    "name": "片岡鶴太郎",
+    "real_name": "片岡鶴太郎",
+    "birth_date": "1954-12-21",
+    "gender": "male",
+    "group": "affair_case",
+    "id": 138,
+    "source": "api"
+  },
+  {
+    "name": "梅沢富美男",
+    "real_name": "梅沢富美男",
+    "birth_date": "1950-11-09",
+    "gender": "male",
+    "group": "affair_case",
+    "id": 139,
+    "source": "api"
+  },
+  {
+    "name": "上野優花",
+    "real_name": "上野優花",
+    "birth_date": "1988-08-09",
+    "gender": "male",
+    "group": "affair_case",
+    "id": 140,
+    "source": "api"
+  },
+  {
+    "name": "テレサ・テン",
+    "real_name": "テレサ・テン",
+    "birth_date": "1953-01-29",
+    "gender": "female",
+    "group": "affair_case",
+    "id": 141,
+    "source": "api"
+  },
+  {
+    "name": "酒井政利",
+    "real_name": "酒井政利",
+    "birth_date": "1935-11-17",
+    "gender": "male",
+    "group": "affair_case",
+    "id": 142,
+    "source": "api"
+  },
+  {
+    "name": "岩崎宏美",
+    "real_name": "岩崎宏美",
+    "birth_date": "1958-11-12",
+    "gender": "female",
+    "group": "divorce_case",
+    "id": 143,
+    "source": "api"
+  },
+  {
+    "name": "水前寺清子",
+    "real_name": "水前寺清子",
+    "birth_date": "1945-10-09",
+    "gender": "female",
+    "group": "divorce_case",
+    "id": 144,
+    "source": "api"
+  },
+  {
+    "name": "たむらけんじ",
+    "real_name": "たむらけんじ",
+    "birth_date": "1973-05-04",
+    "gender": "male",
+    "group": "divorce_case",
+    "id": 145,
+    "source": "api"
+  },
+  {
+    "name": "安藤なつ",
+    "real_name": "安藤なつ",
+    "birth_date": "1981-01-31",
+    "gender": "female",
+    "group": "divorce_case",
+    "id": 146,
+    "source": "api"
+  },
+  {
+    "name": "梅田えりか",
+    "real_name": "梅田えりか",
+    "birth_date": "1991-05-24",
+    "gender": "female",
+    "group": "divorce_case",
+    "id": 147,
+    "source": "api"
+  },
+  {
+    "name": "大石真翔",
+    "real_name": "大石真翔",
+    "birth_date": "1979-02-16",
+    "gender": "male",
+    "group": "divorce_case",
+    "id": 148,
+    "source": "api"
+  },
+  {
+    "name": "二谷友里恵",
+    "real_name": "二谷友里恵",
+    "birth_date": "1964-11-16",
+    "gender": "female",
+    "group": "divorce_case",
+    "id": 149,
+    "source": "api"
+  },
+  {
+    "name": "谷川とむ",
+    "real_name": "谷川とむ",
+    "birth_date": "1976-04-27",
+    "gender": "male",
+    "group": "divorce_case",
+    "id": 150,
+    "source": "api"
+  },
+  {
+    "name": "コン・リー",
+    "real_name": "コン・リー",
+    "birth_date": "1965-12-31",
+    "gender": "female",
+    "group": "divorce_case",
+    "id": 151,
+    "source": "api"
+  },
+  {
+    "name": "CHARA",
+    "real_name": "CHARA",
+    "birth_date": "1968-01-13",
+    "gender": "female",
+    "group": "divorce_case",
+    "id": 152,
+    "source": "api"
+  },
+  {
+    "name": "佐野瑞樹 (アナウンサー)",
+    "real_name": "佐野瑞樹 (アナウンサー)",
+    "birth_date": "1971-12-09",
+    "gender": "male",
+    "group": "divorce_case",
+    "id": 153,
+    "source": "api"
+  },
+  {
+    "name": "森麻季 (アナウンサー)",
+    "real_name": "森麻季 (アナウンサー)",
+    "birth_date": "1981-02-19",
+    "gender": "male",
+    "group": "divorce_case",
+    "id": 154,
+    "source": "api"
+  },
+  {
+    "name": "金沢明子",
+    "real_name": "金沢明子",
+    "birth_date": "1954-10-25",
+    "gender": "female",
+    "group": "divorce_case",
+    "id": 155,
+    "source": "api"
+  },
+  {
+    "name": "YUKI (歌手)",
+    "real_name": "YUKI (歌手)",
+    "birth_date": "1972-02-17",
+    "gender": "female",
+    "group": "control",
+    "id": 156,
+    "source": "api"
+  },
+  {
+    "name": "川奈まり子",
+    "real_name": "川奈まり子",
+    "birth_date": "1967-11-09",
+    "gender": "female",
+    "group": "control",
+    "id": 157,
+    "source": "api"
+  },
+  {
+    "name": "福山雅治",
+    "real_name": "福山雅治",
+    "birth_date": "1969-02-06",
+    "gender": "male",
+    "group": "control",
+    "id": 158,
+    "source": "api"
+  },
+  {
+    "name": "石川秀美",
+    "real_name": "石川秀美",
+    "birth_date": "1966-07-13",
+    "gender": "female",
+    "group": "control",
+    "id": 159,
+    "source": "api"
+  },
+  {
+    "name": "湯原昌幸",
+    "real_name": "湯原昌幸",
+    "birth_date": "1947-03-05",
+    "gender": "male",
+    "group": "control",
+    "id": 160,
+    "source": "api"
+  },
+  {
+    "name": "中島めぐみ (アナウンサー)",
+    "real_name": "中島めぐみ (アナウンサー)",
+    "birth_date": "1987-06-05",
+    "gender": "female",
+    "group": "control",
+    "id": 161,
+    "source": "api"
+  },
+  {
+    "name": "ISSA (歌手)",
+    "real_name": "ISSA (歌手)",
+    "birth_date": "1978-12-09",
+    "gender": "male",
+    "group": "control",
+    "id": 162,
+    "source": "api"
+  },
+  {
+    "name": "ささきいさお",
+    "real_name": "ささきいさお",
+    "birth_date": "1942-05-16",
+    "gender": "male",
+    "group": "control",
+    "id": 163,
+    "source": "api"
+  },
+  {
+    "name": "若旦那 (ミュージシャン)",
+    "real_name": "若旦那 (ミュージシャン)",
+    "birth_date": "1976-04-06",
+    "gender": "male",
+    "group": "control",
+    "id": 164,
+    "source": "api"
+  },
+  {
+    "name": "プリンス (ミュージシャン)",
+    "real_name": "プリンス (ミュージシャン)",
+    "birth_date": "1958-06-07",
+    "gender": "male",
+    "group": "control",
+    "id": 165,
+    "source": "api"
+  },
+  {
+    "name": "羽鳥慎一",
+    "real_name": "羽鳥慎一",
+    "birth_date": "1971-03-24",
+    "gender": "male",
+    "group": "control",
+    "id": 166,
+    "source": "api"
+  }
+]

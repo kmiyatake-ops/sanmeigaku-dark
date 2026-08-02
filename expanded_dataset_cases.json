@@ -1,67 +1,4 @@
-<!doctype html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>芸能人病気データ 算命学一括計算 | 占いの館M</title>
-<link rel="stylesheet" href="./styles.css?v=20260802a" />
-<style>
-  .batch-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; }
-  .batch-actions button { margin: 0; }
-  .batch-status {
-    white-space: pre-wrap;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-    font-size: 13px;
-    line-height: 1.7;
-    margin-top: 20px;
-    padding: 16px;
-    border-radius: 14px;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid var(--border);
-  }
-  .batch-output {
-    width: 100%;
-    height: 320px;
-    margin-top: 16px;
-    padding: 14px;
-    border-radius: 14px;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-    font-size: 12px;
-    line-height: 1.5;
-    resize: vertical;
-  }
-  .done { color: #70d0a0; }
-  .error { color: #ff5050; }
-</style>
-</head>
-<body>
-<main class="app">
-  <section class="hero">
-    <div class="badge">バッチ計算ツール</div>
-    <h1>芸能人病気データ 一括計算</h1>
-    <p>168名の芸能人データに対して算命学計算を実行し、結果をJSONとして出力します。</p>
-  </section>
-
-  <section class="panel input-panel">
-    <h3 class="panel-title">一括計算と統計</h3>
-    <div class="batch-actions">
-      <button id="runBtn">計算実行</button>
-      <button id="moteStatsBtn">人気度統計（異性・同性）</button>
-      <button id="downloadBtn" style="display:none">結果をダウンロード</button>
-    </div>
-    <p class="note">「計算実行」で全員分の算命学結果を出力。「人気度統計」で異性・同性からの人気度の分布を確認できます。</p>
-    <div id="status" class="batch-status" style="display:none"></div>
-    <textarea id="output" class="batch-output" style="display:none" readonly></textarea>
-  </section>
-</main>
-
-<script src="./kanji-data.js?v=20260802a"></script>
-<script src="./app.js?v=20260802a"></script>
-<script>
-const CELEB_DATA = [
+[
   {
     "id": 1,
     "name": "坂本龍一",
@@ -2245,369 +2182,380 @@ const CELEB_DATA = [
     "illness_category": "がん（乳がん）",
     "onset_year": 1995,
     "notes": "Wikipedia「麻倉未稀」より抽出"
+  },
+  {
+    "name": "いとうあさこ",
+    "real_name": "伊藤 麻子（読み同じ）",
+    "last_name": "伊藤",
+    "first_name": "麻子（読み同じ）",
+    "birth_date": "1970-06-10",
+    "gender": "female",
+    "illness": "脳梗塞",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 2023,
+    "notes": "Wikipedia「いとうあさこ」より抽出",
+    "source": "Wikipedia",
+    "id": 169,
+    "group": "case"
+  },
+  {
+    "name": "いときん",
+    "real_name": "いときん",
+    "last_name": "いと",
+    "first_name": "きん",
+    "birth_date": "1979-03-03",
+    "gender": "male",
+    "illness": "肺腺がん",
+    "illness_category": "がん（呼吸器）",
+    "onset_year": 2017,
+    "notes": "Wikipedia「いときん」より抽出",
+    "source": "Wikipedia",
+    "id": 170,
+    "group": "case"
+  },
+  {
+    "name": "しばゆー",
+    "real_name": "しばゆー",
+    "last_name": "しば",
+    "first_name": "ゆー",
+    "birth_date": "1993-12-30",
+    "gender": "male",
+    "illness": "パニック障害",
+    "illness_category": "精神疾患（パニック障害）",
+    "onset_year": 2024,
+    "notes": "Wikipedia「しばゆー」より抽出",
+    "source": "Wikipedia",
+    "id": 171,
+    "group": "case"
+  },
+  {
+    "name": "アグネス・チャン",
+    "real_name": "アグネス・チャン",
+    "last_name": "アグ",
+    "first_name": "ネス・チャン",
+    "birth_date": "1955-08-20",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2009,
+    "notes": "Wikipedia「アグネス・チャン」より抽出",
+    "source": "Wikipedia",
+    "id": 172,
+    "group": "case"
+  },
+  {
+    "name": "サンプラザ中野くん",
+    "real_name": "サンプラザ中野くん",
+    "last_name": "サン",
+    "first_name": "プラザ中野くん",
+    "birth_date": "1960-08-15",
+    "gender": "male",
+    "illness": "ALS",
+    "illness_category": "神経疾患",
+    "onset_year": 2024,
+    "notes": "Wikipedia「サンプラザ中野くん」より抽出",
+    "source": "Wikipedia",
+    "id": 173,
+    "group": "case"
+  },
+  {
+    "name": "ジェローム・ロビンズ",
+    "real_name": "ジェローム・ロビンズ",
+    "last_name": "ジェ",
+    "first_name": "ローム・ロビンズ",
+    "birth_date": "1918-10-11",
+    "gender": "female",
+    "illness": "パーキンソン病",
+    "illness_category": "神経疾患",
+    "onset_year": 1994,
+    "notes": "Wikipedia「ジェローム・ロビンズ」より抽出",
+    "source": "Wikipedia",
+    "id": 174,
+    "group": "case"
+  },
+  {
+    "name": "ペギー葉山",
+    "real_name": "ペギー葉山",
+    "last_name": "ペギ",
+    "first_name": "ー葉山",
+    "birth_date": "1933-11-09",
+    "gender": "female",
+    "illness": "脳梗塞",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 1998,
+    "notes": "Wikipedia「ペギー葉山」より抽出",
+    "source": "Wikipedia",
+    "id": 175,
+    "group": "case"
+  },
+  {
+    "name": "マキシマム ザ ホルモン",
+    "real_name": "マキシマム ザ ホルモン",
+    "last_name": "マキシマム",
+    "first_name": "ザホルモン",
+    "birth_date": "1978-12-13",
+    "gender": "female",
+    "illness": "ALS",
+    "illness_category": "神経疾患",
+    "onset_year": 2021,
+    "notes": "Wikipedia「マキシマム ザ ホルモン」より抽出",
+    "source": "Wikipedia",
+    "id": 176,
+    "group": "case"
+  },
+  {
+    "name": "マヤ片岡",
+    "real_name": "マヤ片岡",
+    "last_name": "マヤ",
+    "first_name": "片岡",
+    "birth_date": "1909-03-08",
+    "gender": "female",
+    "illness": "脳梗塞",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 1999,
+    "notes": "Wikipedia「マヤ片岡」より抽出",
+    "source": "Wikipedia",
+    "id": 177,
+    "group": "case"
+  },
+  {
+    "name": "中山麻紀子",
+    "real_name": "中山麻紀子",
+    "last_name": "中山",
+    "first_name": "麻紀子",
+    "birth_date": "1975-11-20",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2013,
+    "notes": "Wikipedia「中山麻紀子」より抽出",
+    "source": "Wikipedia",
+    "id": 178,
+    "group": "case"
+  },
+  {
+    "name": "小林銅蟲",
+    "real_name": "小林銅蟲",
+    "last_name": "小林",
+    "first_name": "銅蟲",
+    "birth_date": "1979-09-04",
+    "gender": "female",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 1979,
+    "notes": "Wikipedia「小林銅蟲」より抽出",
+    "source": "Wikipedia",
+    "id": 179,
+    "group": "case"
+  },
+  {
+    "name": "本田美奈子.",
+    "real_name": "本田美奈子.",
+    "last_name": "本田",
+    "first_name": "美奈子.",
+    "birth_date": "1967-07-31",
+    "gender": "female",
+    "illness": "白血病",
+    "illness_category": "血液疾患",
+    "onset_year": 2004,
+    "notes": "Wikipedia「本田美奈子.」より抽出",
+    "source": "Wikipedia",
+    "id": 180,
+    "group": "case"
+  },
+  {
+    "name": "本田美奈子.",
+    "real_name": "本田美奈子.",
+    "last_name": "本田",
+    "first_name": "美奈子.",
+    "birth_date": "1967-07-31",
+    "gender": "female",
+    "illness": "急性骨髄性白血病",
+    "illness_category": "血液疾患",
+    "onset_year": 1986,
+    "notes": "Wikipedia「本田美奈子.」より抽出",
+    "source": "Wikipedia",
+    "id": 181,
+    "group": "case"
+  },
+  {
+    "name": "林紀恵",
+    "real_name": "林紀恵",
+    "last_name": "林",
+    "first_name": "紀恵",
+    "birth_date": "1964-08-31",
+    "gender": "female",
+    "illness": "パニック障害",
+    "illness_category": "精神疾患（パニック障害）",
+    "onset_year": 2019,
+    "notes": "Wikipedia「林紀恵」より抽出",
+    "source": "Wikipedia",
+    "id": 182,
+    "group": "case"
+  },
+  {
+    "name": "桑原征平",
+    "real_name": "桑原征平",
+    "last_name": "桑原",
+    "first_name": "征平",
+    "birth_date": "1944-05-14",
+    "gender": "female",
+    "illness": "心筋梗塞",
+    "illness_category": "循環器疾患",
+    "onset_year": 2018,
+    "notes": "Wikipedia「桑原征平」より抽出",
+    "source": "Wikipedia",
+    "id": 183,
+    "group": "case"
+  },
+  {
+    "name": "桑田佳祐",
+    "real_name": "桑田佳祐",
+    "last_name": "桑田",
+    "first_name": "佳祐",
+    "birth_date": "1956-02-26",
+    "gender": "male",
+    "illness": "食道がん",
+    "illness_category": "がん（頭頸部・消化器）",
+    "onset_year": 2010,
+    "notes": "Wikipedia「桑田佳祐」より抽出",
+    "source": "Wikipedia",
+    "id": 184,
+    "group": "case"
+  },
+  {
+    "name": "桑田佳祐",
+    "real_name": "桑田佳祐",
+    "last_name": "桑田",
+    "first_name": "佳祐",
+    "birth_date": "1956-02-26",
+    "gender": "male",
+    "illness": "心筋梗塞",
+    "illness_category": "循環器疾患",
+    "onset_year": 1994,
+    "notes": "Wikipedia「桑田佳祐」より抽出",
+    "source": "Wikipedia",
+    "id": 185,
+    "group": "case"
+  },
+  {
+    "name": "泉アキ",
+    "real_name": "泉アキ",
+    "last_name": "泉ア",
+    "first_name": "キ",
+    "birth_date": "1950-02-04",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 1998,
+    "notes": "Wikipedia「泉アキ」より抽出",
+    "source": "Wikipedia",
+    "id": 186,
+    "group": "case"
+  },
+  {
+    "name": "菊池桃子",
+    "real_name": "菊池桃子",
+    "last_name": "菊池",
+    "first_name": "桃子",
+    "birth_date": "1968-05-04",
+    "gender": "female",
+    "illness": "脳梗塞",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 2001,
+    "notes": "Wikipedia「菊池桃子」より抽出",
+    "source": "Wikipedia",
+    "id": 187,
+    "group": "case"
+  },
+  {
+    "name": "藤波辰爾",
+    "real_name": "藤波 辰巳",
+    "last_name": "藤波",
+    "first_name": "辰巳",
+    "birth_date": "1953-12-28",
+    "gender": "male",
+    "illness": "肝細胞がん",
+    "illness_category": "がん（消化器）",
+    "onset_year": 1990,
+    "notes": "Wikipedia「藤波辰爾」より抽出",
+    "source": "Wikipedia",
+    "id": 188,
+    "group": "case"
+  },
+  {
+    "name": "鈴木愛理 (歌手)",
+    "real_name": "鈴木愛理 (歌手)",
+    "last_name": "鈴木愛理",
+    "first_name": "(歌手)",
+    "birth_date": "1994-04-12",
+    "gender": "female",
+    "illness": "ALS",
+    "illness_category": "神経疾患",
+    "onset_year": 2022,
+    "notes": "Wikipedia「鈴木愛理 (歌手)」より抽出",
+    "source": "Wikipedia",
+    "id": 189,
+    "group": "case"
+  },
+  {
+    "name": "長渕剛",
+    "real_name": "長渕剛",
+    "last_name": "長渕",
+    "first_name": "剛",
+    "birth_date": "1956-09-07",
+    "gender": "male",
+    "illness": "心不全",
+    "illness_category": "循環器疾患",
+    "onset_year": 2000,
+    "notes": "Wikipedia「長渕剛」より抽出",
+    "source": "Wikipedia",
+    "id": 190,
+    "group": "case"
+  },
+  {
+    "name": "降谷建志",
+    "real_name": "降谷建志",
+    "last_name": "降谷",
+    "first_name": "建志",
+    "birth_date": "1979-02-09",
+    "gender": "male",
+    "illness": "狭心症",
+    "illness_category": "循環器疾患",
+    "onset_year": 2018,
+    "notes": "Wikipedia「降谷建志」より抽出",
+    "source": "Wikipedia",
+    "id": 191,
+    "group": "case"
+  },
+  {
+    "name": "降谷建志",
+    "real_name": "降谷建志",
+    "last_name": "降谷",
+    "first_name": "建志",
+    "birth_date": "1979-02-09",
+    "gender": "male",
+    "illness": "心不全",
+    "illness_category": "循環器疾患",
+    "onset_year": 2012,
+    "notes": "Wikipedia「降谷建志」より抽出",
+    "source": "Wikipedia",
+    "id": 192,
+    "group": "case"
+  },
+  {
+    "name": "電気グルーヴ",
+    "real_name": "電気グルーヴ",
+    "last_name": "電気",
+    "first_name": "グルーヴ",
+    "birth_date": "1971-04-15",
+    "gender": "male",
+    "illness": "心不全",
+    "illness_category": "循環器疾患",
+    "onset_year": 2010,
+    "notes": "Wikipedia「電気グルーヴ」より抽出",
+    "source": "Wikipedia",
+    "id": 193,
+    "group": "case"
   }
-];
-
-function calculateSanmeigaku(celeb) {
-  const parts = celeb.birth_date.split("-").map(Number);
-  const by = parts[0], bm = parts[1], bd = parts[2];
-  const date = new Date(by, bm - 1, bd);
-  const gender = celeb.gender;
-
-  const year = getYearPillar(date);
-  const month = getMonthPillar(date, stems.indexOf(year.stem));
-  const day = getDayPillar(date);
-  const pillars = { year, month, day };
-  const allPillars = [year, month, day];
-
-  const counts = countElements(allPillars);
-  const balanceType = getBalanceType(counts);
-
-  const daysSinceSetsuiri = getDaysSinceSetsuiri(date);
-  const zoukan = {
-    year: getZoukan(year.branch, daysSinceSetsuiri),
-    month: getZoukan(month.branch, daysSinceSetsuiri),
-    day: getZoukan(day.branch, daysSinceSetsuiri),
-  };
-
-  const mainStars = {
-    north: getMainStar(day.stem, year.stem),
-    south: getMainStar(day.stem, month.stem),
-    east: getMainStar(day.stem, zoukan.year),
-    west: getMainStar(day.stem, zoukan.day),
-    center: getMainStar(day.stem, zoukan.month),
-    companion: getMainStar(day.stem, stems[mod(stems.indexOf(year.stem) + 5, 10)]),
-  };
-
-  const energy = [
-    getEnergyStar(day.stem, year.branch),
-    getEnergyStar(day.stem, month.branch),
-    getEnergyStar(day.stem, day.branch),
-  ];
-
-  const tenchusatsu = getTenchusatsu(day.index);
-  const taiun = getTaiun(date, month, stems.indexOf(year.stem), gender);
-  const topologyResults = analyzeTopology(pillars);
-  const fateTenchu = analyzeFateTenchusatsu(pillars);
-  const guardian = getGuardianElements(counts);
-
-  // 発症年時のデータ
-  const onsetYear = celeb.onset_year;
-  const onsetAge = onsetYear - by;
-  const onsetYp = getYearPillarForYear(onsetYear);
-  const onsetYearStar = getMainStar(day.stem, onsetYp.stem);
-  const onsetYearEnergy = getEnergyStar(day.stem, onsetYp.branch);
-  const onsetIsTenchu = isTenchusatsuYear(onsetYp.branch, tenchusatsu);
-  const onsetTaiun = taiun.periods.find(p => onsetAge >= p.age && onsetAge <= p.ageTo);
-  const onsetTaiunStar = onsetTaiun ? getMainStar(day.stem, onsetTaiun.stem) : null;
-  const onsetTaiunEnergy = onsetTaiun ? getEnergyStar(day.stem, onsetTaiun.branch) : null;
-  const onsetIsTaiunTenchu = onsetTaiun ? isTenchusatsuYear(onsetTaiun.branch, tenchusatsu) : false;
-  const onsetTopology = analyzeBranchTopology(onsetYp.branch, pillars);
-
-  // 発症年の健康リスク
-  const healthRisk = analyzeHealthRisk(day, pillars, counts, taiun, tenchusatsu, onsetAge, onsetYear);
-  const onsetHealthRisk = healthRisk.yearRisks.find(r => r.year === onsetYear);
-
-  // 姓名判断（last_name, first_nameを使用）
-  let seimeiResult = null;
-  if (celeb.last_name && celeb.first_name) {
-    seimeiResult = analyzeSeimei(celeb.last_name, celeb.first_name);
-    if (seimeiResult && seimeiResult.error) {
-      seimeiResult = { error: seimeiResult.error, missingChars: seimeiResult.missingChars };
-    }
-  }
-
-  const gogyoVals = Object.values(counts);
-  const gogyoMax = Math.max(...gogyoVals);
-  const gogyoMin = Math.min(...gogyoVals);
-  const gogyoBalance = gogyoMax - gogyoMin;
-  const gogyoEntries = Object.entries(counts);
-  const strongestGogyo = gogyoEntries.filter(([, v]) => v === gogyoMax).map(([k]) => k);
-  const weakestGogyo = gogyoEntries.filter(([, v]) => v === gogyoMin).map(([k]) => k);
-
-  const mote = analyzeMote(mainStars, energy, counts, day, pillars);
-
-  return {
-    id: celeb.id,
-    name: celeb.name,
-    real_name: celeb.real_name,
-    birth_date: celeb.birth_date,
-    gender: celeb.gender,
-    illness: celeb.illness,
-    illness_category: celeb.illness_category,
-    onset_year: celeb.onset_year,
-    notes: celeb.notes,
-    pillars: {
-      year: year.stem + year.branch,
-      month: month.stem + month.branch,
-      day: day.stem + day.branch,
-    },
-    day_stem: day.stem,
-    day_branch: day.branch,
-    day_element: elements[stems.indexOf(day.stem)],
-    day_yin_yang: yinYang[stems.indexOf(day.stem)],
-    zoukan: zoukan,
-    gogyo_counts: counts,
-    gogyo_balance: gogyoBalance,
-    balance_type: balanceType,
-    strongest_gogyo: strongestGogyo,
-    weakest_gogyo: weakestGogyo,
-    main_stars: mainStars,
-    energy_stars: energy.map(e => ({ name: e.name, score: e.score })),
-    tenchusatsu: tenchusatsu,
-    fate_tenchusatsu: fateTenchu,
-    taiun: {
-      start_age: taiun.startAge,
-      forward: taiun.forward,
-      periods: taiun.periods.map(p => ({
-        age: p.age, ageTo: p.ageTo,
-        pillar: p.stem + p.branch,
-        stem: p.stem, branch: p.branch,
-      })),
-    },
-    topology: topologyResults.map(r => ({ label: r.label, name: r.name, group: r.group })),
-    guardian: guardian,
-    onset_data: {
-      age: onsetAge,
-      year_pillar: onsetYp.stem + onsetYp.branch,
-      year_star: onsetYearStar,
-      year_energy: onsetYearEnergy ? { name: onsetYearEnergy.name, score: onsetYearEnergy.score } : null,
-      is_tenchu_year: onsetIsTenchu,
-      taiun: onsetTaiun ? {
-        age_range: onsetTaiun.age + "-" + onsetTaiun.ageTo,
-        pillar: onsetTaiun.stem + onsetTaiun.branch,
-        stem: onsetTaiun.stem,
-        branch: onsetTaiun.branch,
-        star: onsetTaiunStar,
-        energy: onsetTaiunEnergy ? { name: onsetTaiunEnergy.name, score: onsetTaiunEnergy.score } : null,
-        is_tenchu: onsetIsTaiunTenchu,
-      } : null,
-      topology: onsetTopology.map(r => ({ label: r.label, name: r.name, group: r.group })),
-      health_risk: onsetHealthRisk ? {
-        risk_score: onsetHealthRisk.riskScore,
-        level: onsetHealthRisk.level,
-        factors: onsetHealthRisk.factors,
-        major_diseases: onsetHealthRisk.majorDiseases,
-      } : null,
-    },
-    health_risk_summary: {
-      day_element: healthRisk.dayElement,
-      constitution: healthRisk.constitution,
-      natal_weakness: healthRisk.natalWeakness,
-      natal_excess: healthRisk.natalExcess,
-      major_disease_risks: healthRisk.majorDiseaseRisks.map(r => ({
-        year: r.year, age: r.age, pillar: r.pillar,
-        risk_score: r.riskScore, level: r.level, is_tenchu: r.isTenchu,
-        major_diseases: r.majorDiseases,
-      })),
-    },
-    seimei: seimeiResult && !seimeiResult.error ? {
-      tenkaku: seimeiResult.tenkaku, jinkaku: seimeiResult.jinkaku,
-      chikaku: seimeiResult.chikaku, soukaku: seimeiResult.soukaku,
-      gaikaku: seimeiResult.gaikaku, sancai: seimeiResult.sancai,
-      ten_rank: seimeiResult.tenRank?.rank, jin_rank: seimeiResult.jinRank?.rank,
-      chi_rank: seimeiResult.chiRank?.rank, gai_rank: seimeiResult.gaiRank?.rank,
-      sou_rank: seimeiResult.souRank?.rank,
-      overall_rank: seimeiResult.overallRank,
-    } : (seimeiResult && seimeiResult.error ? { error: seimeiResult.error } : null),
-    mote: {
-      opposite_score: mote.oppositeScore,
-      same_score: mote.sameScore,
-      opposite_rank: mote.oppositeRank.rank,
-      same_rank: mote.sameRank.rank,
-    },
-  };
-}
-
-let lastResults = null;
-
-document.getElementById("runBtn").addEventListener("click", function() {
-  const status = document.getElementById("status");
-  const output = document.getElementById("output");
-  status.style.display = "block";
-  output.style.display = "none";
-  status.textContent = "計算を開始します...\n";
-
-  const results = [];
-  for (const celeb of CELEB_DATA) {
-    try {
-      const result = calculateSanmeigaku(celeb);
-      results.push(result);
-      status.textContent += "[" + celeb.id + "] " + celeb.name + " - " + celeb.illness + " (発症:" + celeb.onset_year + "年) -> 完了\n";
-    } catch (err) {
-      status.textContent += "[" + celeb.id + "] " + celeb.name + " - エラー: " + err.message + "\n";
-      results.push({ id: celeb.id, name: celeb.name, error: err.message });
-    }
-  }
-
-  const success = results.filter(r => !r.error).length;
-  const errors = results.filter(r => r.error).length;
-  status.textContent += "\n計算完了! 成功:" + success + "名 / エラー:" + errors + "名\n";
-  status.innerHTML += '<span class="done">結果を下のテキストエリアからコピーするか、ダウンロードボタンで保存してください。</span>';
-
-  output.value = JSON.stringify(results, null, 2);
-  output.style.display = "block";
-
-  const dlBtn = document.getElementById("downloadBtn");
-  dlBtn.style.display = "inline-block";
-
-  lastResults = results;
-});
-
-document.getElementById("downloadBtn").addEventListener("click", function() {
-  if (!lastResults) return;
-  const blob = new Blob([JSON.stringify(lastResults, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "celebrity_sanmeigaku_results.json";
-  a.click();
-  URL.revokeObjectURL(url);
-});
-
-// === 人気度（モテ度）統計 ===
-document.getElementById("moteStatsBtn").addEventListener("click", function() {
-  const status = document.getElementById("status");
-  const output = document.getElementById("output");
-  status.style.display = "block";
-  output.style.display = "none";
-  status.textContent = "人気度統計を計算中...\n";
-
-  const records = [];
-  for (const celeb of CELEB_DATA) {
-    try {
-      const parts = celeb.birth_date.split("-").map(Number);
-      const date = new Date(parts[0], parts[1] - 1, parts[2]);
-      const year = getYearPillar(date);
-      const month = getMonthPillar(date, stems.indexOf(year.stem));
-      const day = getDayPillar(date);
-      const pillars = { year, month, day };
-      const counts = countElements([year, month, day]);
-      const daysSinceSetsuiri = getDaysSinceSetsuiri(date);
-      const zoukan = {
-        year: getZoukan(year.branch, daysSinceSetsuiri),
-        month: getZoukan(month.branch, daysSinceSetsuiri),
-        day: getZoukan(day.branch, daysSinceSetsuiri),
-      };
-      const mainStars = {
-        north: getMainStar(day.stem, year.stem),
-        south: getMainStar(day.stem, month.stem),
-        east: getMainStar(day.stem, zoukan.year),
-        west: getMainStar(day.stem, zoukan.day),
-        center: getMainStar(day.stem, zoukan.month),
-        companion: getMainStar(day.stem, stems[mod(stems.indexOf(year.stem) + 5, 10)]),
-      };
-      const energy = [
-        getEnergyStar(day.stem, year.branch),
-        getEnergyStar(day.stem, month.branch),
-        getEnergyStar(day.stem, day.branch),
-      ];
-      const mote = analyzeMote(mainStars, energy, counts, day, pillars);
-      records.push({
-        name: celeb.name,
-        gender: celeb.gender,
-        opp: mote.oppositeScore,
-        same: mote.sameScore,
-        oppRank: mote.oppositeRank.rank,
-        sameRank: mote.sameRank.rank,
-      });
-    } catch (err) {
-      status.textContent += "[" + celeb.id + "] " + celeb.name + " - エラー: " + err.message + "\n";
-    }
-  }
-
-  const stat = (arr) => {
-    const sorted = [...arr].sort((a, b) => a - b);
-    const n = sorted.length;
-    const mean = arr.reduce((s, v) => s + v, 0) / n;
-    const median = n % 2 ? sorted[(n - 1) / 2] : (sorted[n / 2 - 1] + sorted[n / 2]) / 2;
-    const sd = Math.sqrt(arr.reduce((s, v) => s + (v - mean) ** 2, 0) / n);
-    return { n, mean: mean.toFixed(1), median, sd: sd.toFixed(1), min: sorted[0], max: sorted[n - 1] };
-  };
-
-  const rankDist = (arr) => {
-    const dist = { S: 0, A: 0, B: 0, C: 0, D: 0 };
-    arr.forEach(r => dist[r]++);
-    return dist;
-  };
-
-  const histogram = (arr) => {
-    const bins = {};
-    arr.forEach(v => {
-      const bin = Math.min(9, Math.floor(v / 10)) * 10;
-      bins[bin] = (bins[bin] || 0) + 1;
-    });
-    let out = "";
-    for (let b = 0; b <= 90; b += 10) {
-      const cnt = bins[b] || 0;
-      out += `  ${String(b).padStart(2)}〜${b + 9}点: ${"█".repeat(cnt)} ${cnt}名\n`;
-    }
-    return out;
-  };
-
-  const fmtRank = (d, n) => ["S", "A", "B", "C", "D"].map(r => `${r}:${d[r]}名(${(d[r] / n * 100).toFixed(1)}%)`).join(" / ");
-
-  const oppAll = records.map(r => r.opp);
-  const sameAll = records.map(r => r.same);
-  const males = records.filter(r => r.gender === "male");
-  const females = records.filter(r => r.gender === "female");
-
-  const so = stat(oppAll);
-  const ss = stat(sameAll);
-
-  let out = "";
-  out += "═══ 人気度チェック（異性から・同性から）統計 ═══\n";
-  out += `対象: ${records.length}名（男性${males.length}名 / 女性${females.length}名）\n\n`;
-
-  out += "【異性からの人気度】\n";
-  out += `  平均: ${so.mean}点 / 中央値: ${so.median}点 / 標準偏差: ${so.sd} / 最小: ${so.min}点 / 最大: ${so.max}点\n`;
-  out += `  ランク分布: ${fmtRank(rankDist(records.map(r => r.oppRank)), records.length)}\n`;
-  out += histogram(oppAll) + "\n";
-
-  out += "【同性からの人気度】\n";
-  out += `  平均: ${ss.mean}点 / 中央値: ${ss.median}点 / 標準偏差: ${ss.sd} / 最小: ${ss.min}点 / 最大: ${ss.max}点\n`;
-  out += `  ランク分布: ${fmtRank(rankDist(records.map(r => r.sameRank)), records.length)}\n`;
-  out += histogram(sameAll) + "\n";
-
-  out += "【男女別 平均】\n";
-  if (males.length) {
-    const mo = stat(males.map(r => r.opp));
-    const ms = stat(males.map(r => r.same));
-    out += `  男性: 異性から ${mo.mean}点 / 同性から ${ms.mean}点\n`;
-  }
-  if (females.length) {
-    const fo = stat(females.map(r => r.opp));
-    const fs = stat(females.map(r => r.same));
-    out += `  女性: 異性から ${fo.mean}点 / 同性から ${fs.mean}点\n`;
-  }
-  out += "\n";
-
-  const topOpp = [...records].sort((a, b) => b.opp - a.opp).slice(0, 10);
-  const topSame = [...records].sort((a, b) => b.same - a.same).slice(0, 10);
-  const lowOpp = [...records].sort((a, b) => a.opp - b.opp).slice(0, 10);
-
-  out += "【異性からの人気度 TOP10】\n";
-  topOpp.forEach((r, i) => { out += `  ${i + 1}. ${r.name} ${r.opp}点(${r.oppRank}) / 同性${r.same}点(${r.sameRank})\n`; });
-  out += "\n【同性からの人気度 TOP10】\n";
-  topSame.forEach((r, i) => { out += `  ${i + 1}. ${r.name} 同性${r.same}点(${r.sameRank}) / 異性${r.opp}点(${r.oppRank})\n`; });
-  out += "\n【異性からの人気度 WORST10】\n";
-  lowOpp.forEach((r, i) => { out += `  ${i + 1}. ${r.name} ${r.opp}点(${r.oppRank}) / 同性${r.same}点(${r.sameRank})\n`; });
-
-  const corr = (() => {
-    const n = records.length;
-    const mx = oppAll.reduce((s, v) => s + v, 0) / n;
-    const my = sameAll.reduce((s, v) => s + v, 0) / n;
-    let num = 0, dx = 0, dy = 0;
-    records.forEach(r => { num += (r.opp - mx) * (r.same - my); dx += (r.opp - mx) ** 2; dy += (r.same - my) ** 2; });
-    return (num / Math.sqrt(dx * dy)).toFixed(3);
-  })();
-  out += `\n【異性スコアと同性スコアの相関係数】 r = ${corr}\n`;
-
-  status.textContent = out;
-
-  output.value = JSON.stringify(records, null, 2);
-  output.style.display = "block";
-});
-</script>
-</body>
-</html>
+]

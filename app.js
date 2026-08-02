@@ -1088,6 +1088,239 @@ function buildFourPillarsComparison(pillars, zoukan, day) {
   `;
 }
 
+// === 陽占法・数理法 ===
+// 十大主星の五行マッピング
+const starElementMap = ["木", "木", "火", "火", "土", "土", "金", "金", "水", "水"];
+function getStarElement(starName) { return starElementMap[starNames.indexOf(starName)]; }
+
+// 五行相生相剋の方向判定
+const gogyoCycle = ["木", "火", "土", "金", "水"];
+function getGogyoRelation(a, b) {
+  if (a === b) return "比和";
+  const ai = gogyoCycle.indexOf(a);
+  const bi = gogyoCycle.indexOf(b);
+  if ((ai + 1) % 5 === bi) return "相生(→)"; // a生b
+  if ((bi + 1) % 5 === ai) return "相生(←)"; // b生a
+  if ((ai + 2) % 5 === bi) return "相剋(→)"; // a剋b
+  return "相剋(←)"; // b剋a
+}
+
+// === 流動法 ===
+// 参考: https://sanmei-stock.com/basic/yang/flow-technique/
+function analyzeRyudo(mainStars) {
+  const centerEl = getStarElement(mainStars.center);
+  const dirs = [
+    { key: "north", label: "北（目上・親・上司）", naturalRels: ["相剋(→)", "相剋(←)", "比和"] },
+    { key: "east", label: "東（社会・友人・兄弟）", naturalRels: ["相剋(→)", "相剋(←)", "比和"] },
+    { key: "south", label: "南（目下・部下・子供）", naturalRels: ["相生(→)", "相生(←)"] },
+    { key: "west", label: "西（配偶者・パートナー）", naturalRels: ["相生(→)", "相生(←)"] }
+  ];
+  return dirs.map(d => {
+    const otherEl = getStarElement(mainStars[d.key]);
+    const rel = getGogyoRelation(centerEl, otherEl);
+    const isNatural = d.naturalRels.includes(rel);
+    let advice;
+    if (d.key === "north") {
+      advice = isNatural
+        ? "目上を意識し、気遣いできる自然な関係。目上の運に恵まれやすい。"
+        : "目上に対して不自然な関係。目上に依存しすぎず、自分の力で道を切り開く意識が大切。";
+    } else if (d.key === "east") {
+      advice = isNatural
+        ? "社会・友人との自然な関係。社会で苦労しながらも成長できる。"
+        : "社会に対して不自然な関係。社会から生じられる（甘える）傾向があり、自力で立ち上がる訓練が必要。";
+    } else if (d.key === "south") {
+      advice = isNatural
+        ? "目下から自然にサポートされる関係。目下に恵まれやすい。"
+        : "目下との関係が不自然。目下と比和したり剋し合ったりしやすく、目下の運に注意が必要。";
+    } else {
+      advice = isNatural
+        ? "配偶者に自然に尽くせる、または配偶者から支えられる関係。"
+        : "配偶者と比和したり剋し合ったりする不自然な関係。適度な距離感を保つことが大切。";
+    }
+    return { dir: d.label, myStar: mainStars.center, myEl: centerEl, otherStar: mainStars[d.key], otherEl, rel, isNatural, advice };
+  });
+}
+
+// === 循環法 ===
+// 参考: https://sanmei-stock.com/basic/yang/circular-law/
+function analyzeJunkan(mainStars) {
+  const starKeys = ["center", "north", "south", "east", "west"];
+  const stars = starKeys.map(k => mainStars[k]);
+  const els = stars.map(s => getStarElement(s));
+
+  let bestChain = [];
+  let bestEnd = -1;
+
+  for (let start = 0; start < 5; start++) {
+    const chain = [start];
+    let current = start;
+    for (let step = 0; step < 5; step++) {
+      let next = -1;
+      for (let i = 0; i < 5; i++) {
+        if (chain.includes(i)) continue;
+        const rel = getGogyoRelation(els[current], els[i]);
+        if (rel === "相生(→)") { next = i; break; }
+      }
+      if (next === -1) break;
+      chain.push(next);
+      current = next;
+    }
+    if (chain.length > bestChain.length) {
+      bestChain = chain;
+      bestEnd = current;
+    }
+  }
+
+  if (bestChain.length <= 1) {
+    return { poleStar: mainStars.center, chain: [], note: "陽占に相生の循環が見つからないため、中央の星を精神の中心（極）とします。" };
+  }
+  const chainStars = bestChain.map(idx => stars[idx]);
+  const poleStar = stars[bestEnd];
+  return {
+    poleStar,
+    chain: chainStars,
+    note: `相生の循環が「${chainStars.join(" → ")}」の順で進み、「${poleStar}」で止まります。この星が精神の中心（極）であり、ものの考え方の根幹を表します。`
+  };
+}
+
+// === 東方星と南方星の関係 ===
+// 参考: https://sanmei-stock.com/basic/yang/east-and-south/
+function analyzeEastSouth(mainStars) {
+  const eastEl = getStarElement(mainStars.east);
+  const southEl = getStarElement(mainStars.south);
+  const rel = getGogyoRelation(eastEl, southEl);
+  let title, text;
+  switch (rel) {
+    case "相生(→)":
+      title = "現実から理想へ（オーソドックス型）";
+      text = "東方星（現実）が南方星（理想）を生じる関係。始めは現実やお金を大事にし、だんだん夢や理想を大切にするようになります。最終的には生きがい思考になる人です。";
+      break;
+    case "相生(←)":
+      title = "理想を現実化する型（起業家タイプ）";
+      text = "南方星（理想）が東方星（現実）を生じる関係。自分の夢や理想を着々と実現の方向に持って行く人です。苦労しながら時間をかけて夢を実現する起業家タイプです。";
+      break;
+    case "相剋(→)":
+      title = "現実優先型（サラリーマンタイプ）";
+      text = "東方星（現実）が南方星（理想）を剋す関係。環境や現実を優先して自分の理想は妥協できる人です。組織のために理想を曲げられるサラリーマンタイプです。";
+      break;
+    case "相剋(←)":
+      title = "理想押し込み型（デストロイヤータイプ）";
+      text = "南方星（理想）が東方星（現実）を剋す関係。無理やり理想を実現させようとする気が短いタイプです。周りから迷惑がられやすいので、物の言い方に注意が必要です。";
+      break;
+    default:
+      title = "比和型（バランスタイプ）";
+      text = "東方星と南方星が同じ五行（比和）の関係。現実と理想のバランスが取りやすいタイプですが、刺激に欠けることもあります。";
+      break;
+  }
+  return { eastStar: mainStars.east, southStar: mainStars.south, eastEl, southEl, rel, title, text };
+}
+
+// === 気図法 ===
+// 参考: https://sanmei-stock.com/basic/mathematical-technique/spirit/
+function analyzeKizu(counts) {
+  const vertical = (counts["水"] || 0) + (counts["火"] || 0);
+  const horizontal = (counts["木"] || 0) + (counts["金"] || 0);
+  const southeast = (counts["木"] || 0) + (counts["火"] || 0);
+  const northwest = (counts["金"] || 0) + (counts["水"] || 0);
+
+  let type, text;
+  if (vertical > horizontal) {
+    type = "学問優秀型";
+    text = "縦線（北・水＋南・火）のエネルギーが横線（東・木＋西・金）を上回るため、学問に優れたタイプです。何事も積極的に学ぼうとし、研究没頭や創作活動などクリエイティブな領域で力を発揮します。";
+  } else if (horizontal > vertical) {
+    type = "現実社会型";
+    text = "横線（東・木＋西・金）のエネルギーが縦線（北・水＋南・火）を上回るため、現実社会に強いタイプです。世渡り上手で人付き合いも卒なくこなせ、社会で生き残る術を追求し、お金儲けが得意な働き者です。";
+  } else {
+    type = "バランス型";
+    text = "縦線と横線のエネルギーが均衡しており、学問と現実社会の両面でバランスよく活躍できるタイプです。";
+  }
+
+  let schoolAdvice;
+  if (southeast > northwest) {
+    schoolAdvice = "東南の合計値が高いため、私立校への進学が向いています。";
+  } else if (northwest > southeast) {
+    schoolAdvice = "西北の合計値が高いため、官公立校への進学が才能を伸ばす傾向が高いです。";
+  } else {
+    schoolAdvice = "東南と西北のバランスが取れているため、どちらの進学先でも才能を発揮できます。";
+  }
+
+  return { type, text, schoolAdvice, vertical, horizontal, southeast, northwest };
+}
+
+// === 干合法 ===
+// 参考: https://sanmei-stock.com/applied/resonance/
+// kangouPairs は六親法セクションで既に定義済み（line 844）
+
+function analyzeKangou(pillars) {
+  const results = [];
+  const pairDefs = [
+    { a: "year", b: "month", label: "年柱と月柱" },
+    { a: "year", b: "day", label: "年柱と日柱" },
+    { a: "month", b: "day", label: "月柱と日柱" }
+  ];
+  pairDefs.forEach(({ a, b, label }) => {
+    const sa = pillars[a].stem, sb = pillars[b].stem;
+    const ba = pillars[a].branch, bb = pillars[b].branch;
+    if (kangouPairs[sa] === sb) {
+      results.push({ label, type: "干合", stars: `${sa}↔${sb}`, note: `${sa}と${sb}は干合の関係です。天の気が融合し、化学反応が起こって五行が変化します。引き寄せ合う強い縁を表します。` });
+    }
+    if (kangouPairs[sa] === sb && shigouPair[ba] === bb) {
+      results.push({ label, type: "干合支合", stars: `${sa}${ba}↔${sb}${bb}`, note: `${sa}${ba}と${sb}${bb}は干合支合の関係です。天干が干合し地支も支合で、非常に結びつきが強い組み合わせです。思考力があり、危険を避けながら周囲と上手くやっていける人です。` });
+    }
+    if (kangouPairs[sa] === sb && gaiPair[ba] === bb) {
+      results.push({ label, type: "干合支害", stars: `${sa}${ba}↔${sb}${bb}`, note: `${sa}${ba}と${sb}${bb}は干合支害の関係です。天干は引き合うのに地支は害し合う、アンビバレントな関係です。表面的には惹かれ合っても内在する摩擦やストレスを抱えやすい組み合わせです。` });
+    }
+  });
+  return results;
+}
+
+// === 洩天地支（えいてんちし）===
+// 参考: https://sanmei-stock.com/applied/eten-chishi/
+function analyzeEitenchishi(pillars) {
+  const results = [];
+  ["year", "month", "day"].forEach(key => {
+    const p = pillars[key];
+    const stemEl = elements[stems.indexOf(p.stem)];
+    const branchEl = branchElements[p.branch];
+    const rel = getGogyoRelation(stemEl, branchEl);
+    if (rel === "相生(→)") {
+      const label = key === "year" ? "年柱" : key === "month" ? "月柱" : "日柱";
+      results.push({ pillar: label, stem: p.stem, branch: p.branch, note: `${p.stem}${p.branch}は洩天地支（えいてんちし）です。天干が地支を生じる（相生）関係にあり、内面のエネルギーが外面に自然に表れやすい干支です。才能が外に発揮されやすい傾向があります。` });
+    }
+  });
+  return results;
+}
+
+// === 調候守護神 ===
+// 参考: https://sanmei-stock.com/category/basic/guardian/
+function getSeasonFromMonth(month) {
+  if (month >= 2 && month <= 4) return "春";
+  if (month >= 5 && month <= 7) return "夏";
+  if (month >= 8 && month <= 10) return "秋";
+  return "冬";
+}
+
+const choukouTable = {
+  "甲": { 春: { el: "火", reason: "春の木は火で発散させると良い。" }, 夏: { el: "水", reason: "夏の木は水で潤すと良い。" }, 秋: { el: "水", reason: "秋の木は金剋を水で和らげると良い。" }, 冬: { el: "火", reason: "冬の木は火で温めると良い。" } },
+  "乙": { 春: { el: "火", reason: "春の木は火で発散させると良い。" }, 夏: { el: "水", reason: "夏の木は水で潤すと良い。" }, 秋: { el: "水", reason: "秋の木は金剋を水で和らげると良い。" }, 冬: { el: "火", reason: "冬の木は火で温めると良い。" } },
+  "丙": { 春: { el: "水", reason: "春の火は水で潤すと良い。" }, 夏: { el: "水", reason: "夏の火は水で冷やすと良い。" }, 秋: { el: "木", reason: "秋の火は木で助けると良い。" }, 冬: { el: "木", reason: "冬の火は木で助けると良い。" } },
+  "丁": { 春: { el: "水", reason: "春の火は水で潤すと良い。" }, 夏: { el: "水", reason: "夏の火は水で冷やすと良い。" }, 秋: { el: "木", reason: "秋の火は木で助けると良い。" }, 冬: { el: "木", reason: "冬の火は木で助けると良い。" } },
+  "戊": { 春: { el: "火", reason: "春の土は火で温めると良い。" }, 夏: { el: "水", reason: "夏の土は水で潤すと良い。" }, 秋: { el: "火", reason: "秋の土は火で温めると良い。" }, 冬: { el: "火", reason: "冬の土は火で温めると良い。" } },
+  "己": { 春: { el: "火", reason: "春の土は火で温めると良い。" }, 夏: { el: "水", reason: "夏の土は水で潤すと良い。" }, 秋: { el: "火", reason: "秋の土は火で温めると良い。" }, 冬: { el: "火", reason: "冬の土は火で温めると良い。" } },
+  "庚": { 春: { el: "土", reason: "春の金は土で保護すると良い。" }, 夏: { el: "水", reason: "夏の金は水で冷やすと良い。" }, 秋: { el: "火", reason: "秋の金は火で鍛えると良い。" }, 冬: { el: "土", reason: "冬の金は土で保護すると良い。" } },
+  "辛": { 春: { el: "土", reason: "春の金は土で保護すると良い。" }, 夏: { el: "水", reason: "夏の金は水で冷やすと良い。" }, 秋: { el: "火", reason: "秋の金は火で鍛えると良い。" }, 冬: { el: "土", reason: "冬の金は土で保護すると良い。" } },
+  "壬": { 春: { el: "金", reason: "春の水は金で生じると良い。" }, 夏: { el: "金", reason: "夏の水は金で生じると良い。" }, 秋: { el: "火", reason: "秋の水は火で温めると良い。" }, 冬: { el: "火", reason: "冬の水は火で温めると良い。" } },
+  "癸": { 春: { el: "金", reason: "春の水は金で生じると良い。" }, 夏: { el: "金", reason: "夏の水は金で生じると良い。" }, 秋: { el: "火", reason: "秋の水は火で温めると良い。" }, 冬: { el: "火", reason: "冬の水は火で温めると良い。" } }
+};
+
+function analyzeChoukou(dayStem, birthMonth) {
+  const season = getSeasonFromMonth(birthMonth);
+  const entry = choukouTable[dayStem];
+  if (!entry) return null;
+  const s = entry[season];
+  return { dayStem, season, element: s.el, reason: s.reason };
+}
+
 function countElements(pillars) {
   const counts = { 木: 0, 火: 0, 土: 0, 金: 0, 水: 0 };
   pillars.forEach((p) => {
@@ -4765,6 +4998,38 @@ function render(event) {
         </div>`;
       })()}
     </div>
+    ${(() => {
+      const kangouResults = analyzeKangou(pillars);
+      if (kangouResults.length === 0) return '';
+      return `<div class="result-card expert-only">
+        <h3>干合法・干合支合・干合支害</h3>
+        <p class="note mb-10">天干同士の干合（引き寄せ合う関係）と、地支の支合・害法の組み合わせを判定します。干合支合は非常に強い結びつき、干合支害は表面的な惹かれと内在する摩擦のアンビバレントな関係です。</p>
+        <div class="kangou-list">
+          ${kangouResults.map(r => `
+            <div class="kangou-item">
+              <div class="kangou-head"><b>${r.type}</b><span class="kangou-label">${r.label}</span><span class="kangou-stars">${r.stars}</span></div>
+              <div class="kangou-note">${r.note}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const eitenResults = analyzeEitenchishi(pillars);
+      if (eitenResults.length === 0) return '';
+      return `<div class="result-card expert-only">
+        <h3>洩天地支（えいてんちし）</h3>
+        <p class="note mb-10">天干が地支を生じる（相生）関係の干支を「洩天地支」と言います。内面のエネルギーが外面に自然に表れやすい干支です。</p>
+        <div class="eiten-list">
+          ${eitenResults.map(r => `
+            <div class="eiten-item">
+              <div class="eiten-head"><b>${r.stem}${r.branch}</b><span class="eiten-pillar">${r.pillar}</span></div>
+              <div class="eiten-note">${r.note}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>`;
+    })()}
     <div class="result-card expert-only">
       <h3>宿命天中殺（詳細判定）</h3>
       <p class="note mb-10">宿命天中殺は、生日干支の天中殺範囲に年支・月支が含まれるか、生年干支の天中殺範囲に日支が含まれるかで判定します。日座・日居は特定の干支のみ該当します。</p>
@@ -4811,6 +5076,23 @@ function render(event) {
         `;
       })()}
     </div>
+    ${(() => {
+      const choukou = analyzeChoukou(day.stem, birthMonth);
+      if (!choukou) return '';
+      return `<div class="result-card expert-only">
+        <h3>調候守護神</h3>
+        <p class="note mb-10">調候守護神は、日干と生まれた季節のバランスを整える五行元素です。季節に応じて過剰な気を抑え、不足な気を補うことで運勢が安定します。</p>
+        <div class="info-box is-green">
+          <div class="choukou-info">
+            <span><b>日干：</b>${choukou.dayStem}</span>
+            <span><b>季節：</b>${choukou.season}</span>
+            <span><b>調候守護神：</b><span class="choukou-element">${choukou.element}</span></span>
+          </div>
+          <p class="info-text mt-6">${choukou.reason}</p>
+          <p class="note-text-sm mt-6">${choukou.element}の性質を日頃の生活に取り入れることで、季節に合った自然な運勢の流れを作ることができます。</p>
+        </div>
+      </div>`;
+    })()}
     <div class="result-card expert-only">
       <h3>陽占（人体星図・簡易）</h3>
       <div class="star-grid">
@@ -4822,6 +5104,64 @@ function render(event) {
         <div class="star"><small>右肩・伴星</small><b>${mainStars.companion}</b><span>${pickByBalance(starTexts[mainStars.companion], balanceType)}</span></div>
       </div>
     </div>
+    ${(() => {
+      const ryudo = analyzeRyudo(mainStars);
+      return `<div class="result-card expert-only">
+        <h3>流動法（人間関係の自然・不自然）</h3>
+        <p class="note mb-10">中央（自分）と各方位の星の五行関係から、人間関係の自然さを判定します。自然=恵まれやすい、不自然=工夫が必要。</p>
+        <div class="ryudo-list">
+          ${ryudo.map(r => `
+            <div class="ryudo-item${r.isNatural ? " is-natural" : " is-unnatural"}">
+              <div class="ryudo-dir">${r.dir}</div>
+              <div class="ryudo-stars">${r.myStar}（${r.myEl}） vs ${r.otherStar}（${r.otherEl}）</div>
+              <div class="ryudo-rel">${r.rel}</div>
+              <div class="ryudo-badge ${r.isNatural ? "tag-go" : "tag-san"}">${r.isNatural ? "自然" : "不自然"}</div>
+              <div class="ryudo-advice">${r.advice}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const junkan = analyzeJunkan(mainStars);
+      return `<div class="result-card expert-only">
+        <h3>循環法（精神の中心・極）</h3>
+        <p class="note mb-10">陽占の十大主星の相生関係を辿り、循環が止まる星（極）を導き出します。極は精神の中心であり、ものの考え方の根幹を表します。</p>
+        <div class="info-box is-blue">
+          <div class="junkan-pole"><b>極（精神の中心）：</b><span class="junkan-pole-star">${junkan.poleStar}</span></div>
+          ${junkan.chain.length > 0 ? `<div class="junkan-chain">相生の流れ：${junkan.chain.join(" → ")} → <b>止</b></div>` : ""}
+          <p class="info-text mt-6">${junkan.note}</p>
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const es = analyzeEastSouth(mainStars);
+      return `<div class="result-card expert-only">
+        <h3>東方星と南方星の関係（現実と理想）</h3>
+        <p class="note mb-10">東方星は現実、南方星は理想（精神）を表します。この関係から人生の優先順位のパターンがわかります。</p>
+        <div class="info-box is-gold">
+          <div class="es-relation-title">${es.title}</div>
+          <div class="es-relation-stars">東方星：${es.eastStar}（${es.eastEl}） / 南方星：${es.southStar}（${es.southEl}） / 関係：${es.rel}</div>
+          <p class="info-text mt-6">${es.text}</p>
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const kizu = analyzeKizu(counts);
+      return `<div class="result-card expert-only">
+        <h3>気図法（内的エネルギー分布）</h3>
+        <p class="note mb-10">宿命の五行エネルギーを自然界の定位置（東：木・西：金・北：水・南：火・中央：土）に配置し、縦線・横線の強さを比較します。中央は比較に含みません。</p>
+        <div class="info-box is-steel">
+          <div class="kizu-type"><b>タイプ：</b>${kizu.type}</div>
+          <div class="kizu-bars">
+            <div class="kizu-bar-row"><span>縦線（北・水＋南・火）</span><div class="kizu-bar"><i style="--kizu-width:${Math.min(kizu.vertical / 6 * 100, 100)}%"></i></div><b>${kizu.vertical}</b></div>
+            <div class="kizu-bar-row"><span>横線（東・木＋西・金）</span><div class="kizu-bar"><i class="is-horiz" style="--kizu-width:${Math.min(kizu.horizontal / 6 * 100, 100)}%"></i></div><b>${kizu.horizontal}</b></div>
+          </div>
+          <p class="info-text mt-6">${kizu.text}</p>
+          <p class="note-text-sm mt-6">${kizu.schoolAdvice}</p>
+        </div>
+      </div>`;
+    })()}
     <div class="result-card reading">
       <h3 class="expert-only">恋愛・結婚・離婚・浮気（不倫）傾向</h3>
       <h3 class="simple-only">恋愛・結婚の傾向</h3>

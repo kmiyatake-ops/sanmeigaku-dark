@@ -3156,3 +3156,218 @@ button {
   font-size: 11px;
   margin-top: 2px;
 }
+
+/* === 流動法 === */
+.ryudo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+.ryudo-item {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: auto auto;
+  gap: 4px 12px;
+  align-items: center;
+}
+.ryudo-item.is-natural {
+  background: rgba(80, 200, 120, 0.06);
+  border-color: rgba(80, 200, 120, 0.2);
+}
+.ryudo-item.is-unnatural {
+  background: rgba(200, 80, 80, 0.06);
+  border-color: rgba(200, 80, 80, 0.2);
+}
+.ryudo-dir {
+  font-weight: 600;
+  font-size: 0.85em;
+  color: var(--gold);
+}
+.ryudo-stars {
+  font-size: 0.8em;
+  color: var(--text);
+}
+.ryudo-rel {
+  font-size: 0.78em;
+  color: var(--muted);
+}
+.ryudo-badge {
+  font-size: 0.72em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.ryudo-advice {
+  grid-column: 1 / -1;
+  font-size: 0.8em;
+  color: var(--text);
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+/* === 循環法 === */
+.junkan-pole {
+  font-size: 1em;
+  margin-bottom: 8px;
+}
+.junkan-pole-star {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: var(--gold);
+}
+.junkan-chain {
+  font-size: 0.85em;
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 6px;
+}
+
+/* === 東方星と南方星 === */
+.es-relation-title {
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.es-relation-stars {
+  font-size: 0.82em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+/* === 気図法 === */
+.kizu-type {
+  font-size: 0.95em;
+  margin-bottom: 10px;
+}
+.kizu-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.kizu-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82em;
+}
+.kizu-bar-row span {
+  min-width: 160px;
+  color: var(--muted);
+}
+.kizu-bar {
+  flex: 1;
+  height: 16px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.kizu-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #4682b4, #5a9fd4);
+  border-radius: 8px;
+  width: var(--kizu-width, 0%);
+  transition: width 0.6s ease;
+}
+.kizu-bar i.is-horiz {
+  background: linear-gradient(90deg, #daa520, #e8b840);
+}
+.kizu-bar-row b {
+  min-width: 24px;
+  text-align: right;
+  font-size: 0.85em;
+}
+
+/* === 干合法 === */
+.kangou-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+.kangou-item {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+}
+.kangou-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.kangou-head b {
+  color: var(--gold);
+  font-size: 0.9em;
+}
+.kangou-label {
+  font-size: 0.78em;
+  color: var(--muted);
+}
+.kangou-stars {
+  font-size: 0.82em;
+  font-weight: 600;
+  color: var(--text);
+}
+.kangou-note {
+  font-size: 0.8em;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* === 洩天地支 === */
+.eiten-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+.eiten-item {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+}
+.eiten-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.eiten-head b {
+  color: var(--gold);
+  font-size: 1.1em;
+}
+.eiten-pillar {
+  font-size: 0.78em;
+  color: var(--muted);
+}
+.eiten-note {
+  font-size: 0.8em;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* === 調候守護神 === */
+.choukou-info {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: 0.88em;
+}
+.choukou-info span b {
+  color: var(--muted);
+  font-weight: 400;
+}
+.choukou-element {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--gold);
+}
