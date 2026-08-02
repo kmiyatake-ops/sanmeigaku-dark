@@ -5538,7 +5538,7 @@ function analyzeSpecialRelations(pillars) {
   return results;
 }
 
-function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, affairScore, workEx, seimeiResult, tenchusatsu, birthYear, gender, day, currentAge) {
+function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, affairScore, workEx, seimeiResult, tenchusatsu, birthYear, gender, day, currentAge, mote) {
   const stages = [];
 
   // 健康リスクTOP3（高危険の上位3件のみ）
@@ -5582,22 +5582,28 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
       events.push({ icon: "warning", text: "天中殺期間。大きな決断（結婚・転職・起業）は避け、整理と準備に徹する" });
     }
 
-    // 結婚の時期（より具体的）
-    if (starInfo && starInfo.marriage && !isTenchu) {
-      if (gender === "male") {
-        events.push({ icon: "heart", text: "結婚のベストタイミング。良縁に恵まれやすく、家庭を築くのに最適な時期" });
-      } else {
-        events.push({ icon: "heart", text: "結婚のベストタイミング。良縁に恵まれやすく、家庭を築くのに最適な時期" });
+    // 結婚の時期（モテ度を加味して結婚の可能性を判定）
+    const moteScore = mote ? mote.oppositeScore : 50;
+    const canMarry = moteScore >= 35 && marriageScore >= 35;
+    const easyMarry = moteScore >= 60 && marriageScore >= 55;
+
+    if (canMarry) {
+      if (starInfo && starInfo.marriage && !isTenchu) {
+        events.push({ icon: "heart", text: easyMarry ? "結婚のベストタイミング。良縁に恵まれやすく、家庭を築くのに最適な時期" : "結婚のチャンス。縁を大切にすれば家庭を築ける時期" });
       }
-    }
-    if (ageFrom >= 22 && ageTo <= 32 && marriageScore >= 65 && !isTenchu) {
-      events.push({ icon: "heart", text: "結婚適齢期。出会いのチャンスが多く、自然な流れで結婚に至りやすい" });
-    }
-    if (ageFrom >= 28 && ageTo <= 40 && marriageScore >= 45 && marriageScore < 65 && !isTenchu) {
-      events.push({ icon: "heart", text: "結婚を意識する時期。焦らず相手を見極めることが大切" });
-    }
-    if (ageFrom >= 35 && ageTo <= 50 && marriageScore < 45) {
-      events.push({ icon: "heart", text: "結婚には慎重さが必要な時期。パートナー選びを間違えないよう注意" });
+      if (ageFrom >= 22 && ageTo <= 32 && easyMarry && !isTenchu) {
+        events.push({ icon: "heart", text: "結婚適齢期。出会いのチャンスが多く、自然な流れで結婚に至りやすい" });
+      }
+      if (ageFrom >= 25 && ageTo <= 35 && !easyMarry && canMarry && !isTenchu) {
+        events.push({ icon: "heart", text: "結婚を意識する時期。自分から積極的に出会いの場に出ることで縁が結ばれる" });
+      }
+      if (ageFrom >= 28 && ageTo <= 42 && canMarry && !easyMarry && !isTenchu) {
+        events.push({ icon: "heart", text: "遅めの結婚のチャンス。焦らず、価値観の合う相手を見つける時期" });
+      }
+    } else {
+      if (ageFrom >= 30 && ageTo <= 50) {
+        events.push({ icon: "heart", text: "結婚は縁遠い時期。趣味や仕事に打ち込み、自分磨きに専念するのが吉" });
+      }
     }
 
     // 浮気の時期（より具体的）
@@ -5798,7 +5804,7 @@ function render(event) {
     gender
   });
   const lifeSummary = buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk);
-  const lifeChronology = buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, affairScore, workEx, seimeiResult, tenchusatsu, birthYear, gender, day, currentAge);
+  const lifeChronology = buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, affairScore, workEx, seimeiResult, tenchusatsu, birthYear, gender, day, currentAge, mote);
 
   result.classList.remove("hidden");
   console.log("[render] starting, simple-mode:", document.body.classList.contains("simple-mode"));
