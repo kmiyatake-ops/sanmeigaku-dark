@@ -5582,23 +5582,34 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
       events.push({ icon: "warning", text: "天中殺期間。大きな決断（結婚・転職・起業）は避け、整理と準備に徹する" });
     }
 
-    // 結婚の時期（モテ度を加味して結婚の可能性を判定）
+    // 結婚の時期（モテ度を加味して結婚の可能性と時期を判定）
     const moteScore = mote ? mote.oppositeScore : 50;
     const canMarry = moteScore >= 35 && marriageScore >= 35;
     const easyMarry = moteScore >= 60 && marriageScore >= 55;
 
     if (canMarry) {
-      if (starInfo && starInfo.marriage && !isTenchu) {
-        events.push({ icon: "heart", text: easyMarry ? "結婚のベストタイミング。良縁に恵まれやすく、家庭を築くのに最適な時期" : "結婚のチャンス。縁を大切にすれば家庭を築ける時期" });
-      }
-      if (ageFrom >= 22 && ageTo <= 32 && easyMarry && !isTenchu) {
-        events.push({ icon: "heart", text: "結婚適齢期。出会いのチャンスが多く、自然な流れで結婚に至りやすい" });
-      }
-      if (ageFrom >= 25 && ageTo <= 35 && !easyMarry && canMarry && !isTenchu) {
-        events.push({ icon: "heart", text: "結婚を意識する時期。自分から積極的に出会いの場に出ることで縁が結ばれる" });
-      }
-      if (ageFrom >= 28 && ageTo <= 42 && canMarry && !easyMarry && !isTenchu) {
-        events.push({ icon: "heart", text: "遅めの結婚のチャンス。焦らず、価値観の合う相手を見つける時期" });
+      if (easyMarry) {
+        // モテ度が高い人は早めの結婚時期
+        if (starInfo && starInfo.marriage && !isTenchu) {
+          events.push({ icon: "heart", text: "結婚のベストタイミング。良縁に恵まれやすく、家庭を築くのに最適な時期" });
+        }
+        if (ageFrom >= 20 && ageTo <= 28 && !isTenchu) {
+          events.push({ icon: "heart", text: "早めの結婚適齢期。出会いのチャンスが多く、若くして結婚に至りやすい" });
+        }
+        if (ageFrom >= 28 && ageTo <= 35 && !isTenchu) {
+          events.push({ icon: "heart", text: "結婚のチャンス続行。理想の相手に出会いやすい時期" });
+        }
+      } else {
+        // モテ度が普通の人は遅めの結婚時期
+        if (starInfo && starInfo.marriage && !isTenchu) {
+          events.push({ icon: "heart", text: "結婚のチャンス。縁を大切にすれば家庭を築ける時期" });
+        }
+        if (ageFrom >= 25 && ageTo <= 35 && !isTenchu) {
+          events.push({ icon: "heart", text: "結婚を意識する時期。自分から積極的に出会いの場に出ることで縁が結ばれる" });
+        }
+        if (ageFrom >= 28 && ageTo <= 42 && !isTenchu) {
+          events.push({ icon: "heart", text: "遅めの結婚のチャンス。焦らず、価値観の合う相手を見つける時期" });
+        }
       }
     } else {
       if (ageFrom >= 30 && ageTo <= 50) {
