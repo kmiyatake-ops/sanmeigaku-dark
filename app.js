@@ -1522,6 +1522,211 @@ function analyzeEnergyBias(energyStarsArr) {
   return results;
 }
 
+// === 三分法 ===
+// 参考: https://sanmei-stock.com/basic/yang/trichotomy/
+const sanbunPeriodMap = {
+  year: { label: "初年期（若年期）", ageRange: "生誕〜成人" },
+  month: { label: "中年期（壮年期）", ageRange: "成人〜引退" },
+  day: { label: "晩年期", ageRange: "引退〜死" }
+};
+
+const realityStars = ["貫索星", "石門星", "禄存星", "司禄星", "車騎星", "牽牛星"];
+const spiritStars = ["鳳閣星", "調舒星", "龍高星", "玉堂星"];
+const realityEnergies = ["天貴星", "天恍星", "天南星", "天禄星", "天将星", "天堂星", "天胡星"];
+const spiritEnergies = ["天極星", "天庫星", "天馳星", "天報星", "天印星"];
+
+const mismatchTexts = {
+  5: "冒険で運が掴める人。伝統や常識に囚われない人生。自由に振る舞える環境が吉。常識に囚われず、想像力を鍛えれば可能性が絶大な人。",
+  4: "物事をネガティブに考えやすい人。開き直れないので、周りに振り回されやすい人になります。人をアテにせず、開き直れれば開運に繋がります。信仰心を持つといい人です。",
+  3: "新しい分野を切り開くような人生が向いていて、脱サラして独立してチャレンジすることもいいです。一番バランス感覚のいいパイオニアです。変化が可能な分野に入ると良さが出ます。",
+  2: "常識の中で真面目に働く人で、法律を重視する人です。ルールを重んじて、信用第一で着実な人生を歩もうとする傾向があります。",
+  1: "他力運を持っていて、模範となる人に従っていこうとする人です。模範的な人についていくと間違いない人生をおくれる人です。なるべく自己を押し出さないような行き方がいいでしょう。",
+  0: "守りの人生で、発展は二の次で安全第一として人生を歩みます。引越しを繰り返すのも良くなくて、安全第一で物事を考えたほうがいいでしょう。年中行事を常に大事にする人です。"
+};
+
+function analyzeSanbun(mainStars, energyStarsArr) {
+  const periods = ["year", "month", "day"];
+  const results = periods.map(key => {
+    const mainStar = mainStars[key];
+    const energyStar = energyStarsArr.find(e => e.pillar === key);
+    const energyName = energyStar ? energyStar.name : "";
+    const isRealityMain = realityStars.includes(mainStar);
+    const isSpiritMain = spiritStars.includes(mainStar);
+    const isRealityEnergy = realityEnergies.includes(energyName);
+    const isSpiritEnergy = spiritEnergies.includes(energyName);
+    const isMismatch = (isRealityMain && isSpiritEnergy) || (isSpiritMain && isRealityEnergy);
+    return {
+      key,
+      label: sanbunPeriodMap[key].label,
+      ageRange: sanbunPeriodMap[key].ageRange,
+      mainStar,
+      energyName,
+      isRealityMain,
+      isSpiritMain,
+      isRealityEnergy,
+      isSpiritEnergy,
+      isMismatch
+    };
+  });
+  const mismatchCount = results.filter(r => r.isMismatch).length;
+  const matchCount = 3 - mismatchCount;
+  const mismatchText = mismatchTexts[mismatchCount] || "";
+  return { periods: results, mismatchCount, matchCount, mismatchText };
+}
+
+// === 適職占技 ===
+// 参考: https://sanmei-stock.com/applied/applied-divination/suitable-occupation-reading/
+const sekishokuData = {
+  "貫索星": { keywords: "維持、保守、管理、自立", text: "変えない、変化させない事を目的とする仕事が適職です。守ることが得意なので、美術品を守る博物館の仕事や警備員なども向いています。人間の命を守ろうとする臨床医、他人のものを保管してあげるような仕事も向いています。単独行動、独立業や自営業が向いています。" },
+  "石門星": { keywords: "人脈を広げる、リーダーシップ、人を束ねる", text: "和合を重視する仕事が向いています。人を集めたり、大勢を束ねたり、グループ形成が得意です。交渉力や説得力が抜群なので、そういった局面が多い職業はいいでしょう。フランチャイズや営業など、人を使って広げていく仕事が向いています。" },
+  "鳳閣星": { keywords: "客観的、分かりやすさ、バランス感", text: "伝達に関わる仕事（客観的）に向いています。自然に向き合う仕事も向いていますので農業や酪農なども向いています。人を楽しませる職業も向いていますので、レジャー系の仕事や飲食の仕事、芸能関係の仕事も向いています。報道系でアナウンサーやリポーターなどの職業も向いています。" },
+  "調舒星": { keywords: "きめ細やかさ、センス", text: "自分のこだわりを貫ける、特殊技術を扱う仕事や専門家が向いています。繊細で神経を使うような仕事や、代わりの効かない仕事がいいです。基本的には個人プレイで完結できる仕事で、自分個人の考えや主張を伝える仕事はほぼ含まれます。" },
+  "禄存星": { keywords: "信用、奉仕", text: "奉仕的な仕事全般が向いています。人を惹きつける根本には深い愛情があります。また、財を回す仕事も向いています。ボランティア関連、医療全般、証券会社、銀行員など人の財産を扱う仕事も適職です。" },
+  "司禄星": { keywords: "家庭的、コツコツ努力", text: "生活関連、真面目さ、誠実さ、まとめる力を試される仕事が向いています。コツコツ努力することが得意なので、どんな仕事でも地味だけど着実に前進します。集めたり、蓄積と準備が得意です。情報収集、金融系、保険系の仕事も向いています。" },
+  "車騎星": { keywords: "役に立つ、負けない、頑張る、営業現場力", text: "行動的な仕事で、現場でやる仕事が得意です。スピードを求められる仕事も向いています。スポーツ選手として好まれる星です。金星は攻撃本能なので、ルールに則った勝負事を得意としますので法律関係の仕事も向いています。「武官」と称します。" },
+  "牽牛星": { keywords: "組織大切、既存の組織を作る", text: "プライドが高い星なので、国家資格など誰もが知っているような資格を取得して、みんなから認められるような仕事が向いています。公務員や役員や政治家、大企業への就職などを求めます。補佐的な仕事（No.2的立ち位置、秘書など）も向いています。「文官」と称します。" },
+  "龍高星": { keywords: "企画、臨機応変さ", text: "外国や異文化に関わる仕事に向いています。マンネリを一番嫌うので、常に変化がある仕事を好みます。独創的で常に新しいものに触れていられる仕事が向いています。立体思考の持ち主なので、もともとあるものを応用して変化させることを得意とします。デザイン関係の仕事も向いています。" },
+  "玉堂星": { keywords: "企画、教育", text: "企画・設計・計画する仕事が向いています。教養を活かした仕事や、教育に関わる仕事も適職です。準備や蓄積が得意なので、研究職や開発職にも向いています。" }
+};
+
+function analyzeSekishoku(mainStars) {
+  const eastStar = mainStars.east;
+  const southStar = mainStars.south;
+  const eastData = sekishokuData[eastStar];
+  const southData = sekishokuData[southStar];
+  if (!eastData || !southData) return null;
+  const eastElVal = getStarElement(eastStar);
+  const southElVal = getStarElement(southStar);
+  let relation = "比和";
+  let relationText = "報酬もやりがいも重視し、理想と現実が一致します。そのため、適職を見極めるのに迷いはありません。しかし、その仕事ができない時の苦しみは人一倍あります。";
+  if (eastElVal && southElVal) {
+    const rel = getGogyoRelation(eastElVal, southElVal);
+    if (rel === "相生(→)" || rel === "相生(←)") {
+      relation = "相生";
+      relationText = "うまくまとまるので仕事に対する矛盾や悩みは少なくなります。東が南を生じる場合、報酬重視から自然にやりがいなどの精神的満足を重視するようになります。南が東を生じる場合、仕事内容を重視しながら報酬も重視する傾向があります。";
+    } else if (rel === "相剋(→)" || rel === "相剋(←)") {
+      relation = "相剋";
+      relationText = "理想と現実が繋がらないため、仕事に迷いが生じやすい。ただ、苦しむことで得られる成長があります。東が南を剋する場合、報酬を重視し、やりがいは二の次になります。南が東を剋する場合、やりがいを重視し、報酬は気にならなくなります。";
+    }
+  }
+  return { eastStar, southStar, eastData, southData, relation, relationText };
+}
+
+// === 情的か理性的か ===
+// 参考: https://sanmei-stock.com/mind-skill/yang-hao/myself/emotional_or_rational/
+function analyzeJoritsu(mainStars) {
+  const horizontalStars = [mainStars.east, mainStars.west, mainStars.center];
+  const southNorthStars = ["玉堂星", "龍高星", "鳳閣星", "調舒星"];
+  const hasSouthNorth = horizontalStars.some(s => southNorthStars.includes(s));
+  if (hasSouthNorth) {
+    return {
+      type: "理性的",
+      text: "情の立ち切りが早い人です。親離れ・子離れも早いでしょう。理性度が高すぎると、女性の場合、恋愛にのめり込めず婚期を逃す可能性が出てきます。理性的な人は、恋愛結婚よりもお見合い結婚の方が向いています。",
+      horizontalStars
+    };
+  } else {
+    return {
+      type: "情的",
+      text: "情的なのでお人好しの傾向があります。親離れ・子離れも遅くなりがちです。ただ、横線に南・北定位置星がないのに情の立ち切り方が早い人もいますが、その人は極端に薄情だと思われがちです。",
+      horizontalStars
+    };
+  }
+}
+
+// === 変剋律 ===
+// 参考: https://sanmei-stock.com/applied/applied-divination/henkokuritsu/
+const abnormalZodiacList = ["甲戌", "乙亥", "丙戌", "丁巳", "丁亥", "戊戌", "戊子", "己亥", "庚子", "辛巳", "辛亥", "壬午", "癸巳"];
+
+const henkokuChains = [
+  { stars: ["丙戌", "丁亥", "戊子"], type: "3つ連続", note: "丙戌→丁亥→戊子の3つ連続変剋律。大運天中殺の代わりとなる運気（準大運天中殺）です。" },
+  { stars: ["戊戌", "己亥", "庚子"], type: "3つ連続", note: "戊戌→己亥→庚子の3つ連続変剋律。大運天中殺の代わりとなる運気（準大運天中殺）です。" },
+  { stars: ["甲戌", "乙亥"], type: "2つ連続", note: "甲戌→乙亥の2つ連続変剋律。大運天中殺を優先してください。" },
+  { stars: ["辛巳", "壬午"], type: "2つ連続", note: "辛巳→壬午の2つ連続変剋律。" }
+];
+
+function analyzeHenkoku(pillars) {
+  const pillarKanshi = ["year", "month", "day"].map(k => pillars[k].stem + pillars[k].branch);
+  const abnormalInMeimei = pillarKanshi.filter(k => abnormalZodiacList.includes(k));
+  if (abnormalInMeimei.length === 0) return null;
+  const matchedChains = [];
+  henkokuChains.forEach(chain => {
+    const matched = chain.stars.filter(s => abnormalInMeimei.includes(s));
+    if (matched.length >= 2) {
+      matchedChains.push({ ...chain, matched });
+    }
+  });
+  return {
+    abnormalInMeimei,
+    matchedChains,
+    note: "宿命に異常干支があります。大運で異常干支が2つ以上連続して出る場合、変剋律として準大運天中殺と同様の運気変動が起こります。変剋律が陽転するには、突入して5年間の精神苦が必要です。"
+  };
+}
+
+// === 混在占技 ===
+// 参考: https://sanmei-stock.com/applied/applied-divination/mixture/
+function analyzeKonzai(pillars) {
+  const pillarKanshi = ["year", "month", "day"].map(k => pillars[k].stem + pillars[k].branch);
+  const abnormalInMeimei = pillarKanshi.filter(k => abnormalZodiacList.includes(k));
+  const scrambleBranches = ["子", "巳", "午", "戌", "亥"];
+  const hasScrambleBranch = ["year", "month", "day"].some(k => scrambleBranches.includes(pillars[k].branch));
+  if (abnormalInMeimei.length > 0) {
+    return {
+      hasAbnormal: true,
+      hasScrambleBranch,
+      note: "宿命に異常干支があるため、混在占技の作用は弱めです。宿命に異常干支がない人の方が、混在占技の作用が大きくなります。"
+    };
+  }
+  if (!hasScrambleBranch) {
+    return {
+      hasAbnormal: false,
+      hasScrambleBranch: false,
+      note: "宿命に「子・巳・午・戌・亥」いずれもないため、スクランブル異常干支は成立しません。混在占技の対象外です。"
+    };
+  }
+  return {
+    hasAbnormal: false,
+    hasScrambleBranch: true,
+    note: "宿命に異常干支はありませんが、「子・巳・午・戌・亥」があるため、大運との組み合わせでスクランブル異常干支が成立する可能性があります。スクランブル異常干支成立大運では、天中殺の年と異常干支の年に注意が必要です。守護神が回ってくる年は救いのある年になります。半会×散（対冲・刑・害）が成立する年に壁にぶちあたる現象が起きやすくなります。"
+  };
+}
+
+// === 特殊位相法（大半会・律音・納音・天剋地冲）===
+// 参考: https://sanmei-stock.com/category/basic/yin/topology/
+const taishuPair = { 寅: "卯", 卯: "辰", 辰: "巳", 巳: "午", 午: "未", 未: "申", 申: "酉", 酉: "戌", 戌: "亥", 亥: "子", 子: "丑", 丑: "寅" };
+const taichuPair = { 子: "午", 午: "子", 丑: "未", 未: "丑", 寅: "申", 申: "寅", 卯: "酉", 酉: "卯", 辰: "戌", 戌: "辰", 巳: "亥", 亥: "巳" };
+
+function analyzeTokushuIso(pillars) {
+  const results = [];
+  const pairs = [
+    { keys: ["year", "month"], label: "年柱×月柱" },
+    { keys: ["year", "day"], label: "年柱×日柱" },
+    { keys: ["month", "day"], label: "月柱×日柱" }
+  ];
+  pairs.forEach(pair => {
+    const p1 = pillars[pair.keys[0]];
+    const p2 = pillars[pair.keys[1]];
+    const k1 = p1.stem + p1.branch;
+    const k2 = p2.stem + p2.branch;
+    if (k1 === k2) {
+      results.push({ pair: pair.label, type: "律音", note: "天干・地支が同じ（同干支）。比和の強力バージョン。結びつきが非常に強い。" });
+    }
+    if (p1.stem === p2.stem && taichuPair[p1.branch] === p2.branch) {
+      results.push({ pair: pair.label, type: "納音", note: "天干が同じで地支が対冲。「音が納まる」＝物事が一つにまとまる。" });
+    }
+    if (p1.stem === p2.stem && taishuPair[p1.branch] === p2.branch) {
+      results.push({ pair: pair.label, type: "大半会", note: "天干が同じで地支が半会。半会よりも強い結びつき。" });
+    }
+    const s1El = elements[stems.indexOf(p1.stem)];
+    const s2El = elements[stems.indexOf(p2.stem)];
+    const stemRel = getGogyoRelation(s1El, s2El);
+    const isYangSame = (stems.indexOf(p1.stem) % 2 === 0 && stems.indexOf(p2.stem) % 2 === 0) || (stems.indexOf(p1.stem) % 2 === 1 && stems.indexOf(p2.stem) % 2 === 1);
+    if (isYangSame && (stemRel === "相剋(→)" || stemRel === "相剋(←)") && taichuPair[p1.branch] === p2.branch) {
+      results.push({ pair: pair.label, type: "天剋地冲", note: "天干が陽同士/陰同士の相剋で地支が対冲。信頼の逆＝信頼しづらい関係。利害関係ベースの付き合いになりやすい。" });
+    }
+  });
+  return results;
+}
+
 function countElements(pillars) {
   const counts = { 木: 0, 火: 0, 土: 0, 金: 0, 水: 0 };
   pillars.forEach((p) => {
@@ -4818,6 +5023,9 @@ function render(event) {
     companion: getMainStar(day.stem, stems[mod(stems.indexOf(year.stem) + 5, 10)])
   };
   const energy = [getEnergyStar(day.stem, year.branch), getEnergyStar(day.stem, month.branch), getEnergyStar(day.stem, day.branch)];
+  const energyYear = { pillar: "year", name: energy[0] };
+  const energyMonth = { pillar: "month", name: energy[1] };
+  const energyDay = { pillar: "day", name: energy[2] };
   const tenchusatsu = getTenchusatsu(day.index);
   const maxCount = Math.max(...Object.values(counts), 1);
   const gender = genderSelect.value;
@@ -5213,6 +5421,56 @@ function render(event) {
         </div>
       </div>`;
     })()}
+    ${(() => {
+      const henkoku = analyzeHenkoku(pillars);
+      if (!henkoku) return '';
+      return `<div class="result-card expert-only">
+        <h3>変剋律（異常干支の連続・準大運天中殺）</h3>
+        <p class="note mb-10">異常干支が2つ以上繋がって大運に出る場合「変剋律」といい、大運天中殺の代わりとなる運気変動が起こります。宿命の異常干支から判定します。</p>
+        <div class="info-box is-steel">
+          <div class="henkoku-abnormal">宿命の異常干支：${henkoku.abnormalInMeimei.join("・")}</div>
+          ${henkoku.matchedChains.length > 0 ? `
+            <div class="henkoku-chains">
+              ${henkoku.matchedChains.map(c => `
+                <div class="henkoku-chain">
+                  <span class="henkoku-chain-type">${c.type}</span>
+                  <b>${c.matched.join("→")}</b>
+                  <div class="henkoku-chain-note">${c.note}</div>
+                </div>
+              `).join("")}
+            </div>
+          ` : '<p class="note mt-6">宿命の異常干支の組み合わせでは変剋律チェーンは成立しませんが、大運で異常干支が連続した場合に変剋律が発生します。</p>'}
+          <p class="info-text mt-6">${henkoku.note}</p>
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const konzai = analyzeKonzai(pillars);
+      return `<div class="result-card expert-only">
+        <h3>混在占技（壁にぶつかる時期の判定）</h3>
+        <p class="note mb-10">宿命に異常干支がない人が、大運との組み合わせでスクランブル異常干支が成立する場合、人生で壁にぶつかる時期を予見できます。</p>
+        <div class="info-box is-purple">
+          <p class="info-text">${konzai.note}</p>
+          ${konzai.hasScrambleBranch && !konzai.hasAbnormal ? '<div class="konzai-warn mt-6">⚠ 大運でスクランブル異常干支が成立した場合、天中殺の年と異常干支の年に注意が必要です。守護神が回ってくる年は救いがあります。</div>' : ''}
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const tokushu = analyzeTokushuIso(pillars);
+      if (tokushu.length === 0) return '';
+      return `<div class="result-card expert-only">
+        <h3>特殊位相法（大半会・律音・納音・天剋地冲）</h3>
+        <p class="note mb-10">干支の特殊な組み合わせによる関係性を判定します。基本8種の位相法以外に、干支の組み合わせで成立する4種類の特殊位相法があります。</p>
+        <div class="tokushu-list">
+          ${tokushu.map(t => `
+            <div class="tokushu-item">
+              <div class="tokushu-head"><span class="tokushu-type">${t.type}</span><b>${t.pair}</b></div>
+              <div class="tokushu-note">${t.note}</div>
+            </div>
+          `).join("")}
+        </div>
+      </div>`;
+    })()}
     <div class="result-card expert-only">
       <h3>内面のバランス</h3>
       <div class="bars">${Object.entries(counts).map(([key, value]) => `<div class="bar-row"><b>${key}</b><div class="bar"><i style="--bar-width:${(value / maxCount) * 100}%"></i></div><span>${value}</span></div>`).join("")}</div>
@@ -5467,6 +5725,63 @@ function render(event) {
               <div class="bias-text">${b.text}</div>
             </div>
           `).join("")}
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const sanbun = analyzeSanbun(mainStars, [energyYear, energyMonth, energyDay]);
+      return `<div class="result-card expert-only">
+        <h3>三分法（人生3分割の運気流）</h3>
+        <p class="note mb-10">一生を初年期・中年期・晩年期の3分割し、十大主星（本能）と十二大従星（心）の組み合わせから運気の流れを読み取ります。現実星と精神星のミスマッチ数から人生の特徴が分かります。</p>
+        <div class="info-box is-steel">
+          <div class="sanbun-periods">
+            ${sanbun.periods.map(p => `
+              <div class="sanbun-period">
+                <div class="sanbun-period-head"><b>${p.label}</b><span class="sanbun-age">${p.ageRange}</span></div>
+                <div class="sanbun-stars">主星：${p.mainStar} ／ 従星：${p.energyName}</div>
+                <div class="sanbun-match${p.isMismatch ? " is-mismatch" : " is-match"}">${p.isMismatch ? "✕ ミスマッチ" : "○ マッチ"}</div>
+              </div>
+            `).join("")}
+          </div>
+          <div class="sanbun-summary">
+            <div class="sanbun-counts">ミスマッチ：<b>${sanbun.mismatchCount}</b> ／ マッチ：<b>${sanbun.matchCount}</b></div>
+            <p class="info-text mt-6">${sanbun.mismatchText}</p>
+          </div>
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const sekishoku = analyzeSekishoku(mainStars);
+      if (!sekishoku) return '';
+      return `<div class="result-card expert-only">
+        <h3>適職占技（東方星・南方星から適職を探す）</h3>
+        <p class="note mb-10">東方星は「現実のスタート（収入の窓口）」、南方星は「精神のスタート（やりがい・夢）」を表します。東と南の星の関係から、仕事に対する傾向が分かります。</p>
+        <div class="info-box is-purple">
+          <div class="sekishoku-relation"><b>東と南の関係：</b><span class="sekishoku-relation-val">${sekishoku.relation}</span></div>
+          <p class="info-text mt-6">${sekishoku.relationText}</p>
+          <div class="sekishoku-stars">
+            <div class="sekishoku-star">
+              <div class="sekishoku-star-head"><b>東方星（現実・収入）：${sekishoku.eastStar}</b></div>
+              <div class="sekishoku-keywords">キーワード：${sekishoku.eastData.keywords}</div>
+              <div class="sekishoku-text">${sekishoku.eastData.text}</div>
+            </div>
+            <div class="sekishoku-star">
+              <div class="sekishoku-star-head"><b>南方星（精神・やりがい）：${sekishoku.southStar}</b></div>
+              <div class="sekishoku-keywords">キーワード：${sekishoku.southData.keywords}</div>
+              <div class="sekishoku-text">${sekishoku.southData.text}</div>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    })()}
+    ${(() => {
+      const joritsu = analyzeJoritsu(mainStars);
+      return `<div class="result-card expert-only">
+        <h3>情的か理性的か（横線の星から判断）</h3>
+        <p class="note mb-10">陽占の横線（東・西・中央）に南・北定位置星（玉堂・龍高・鳳閣・調舒）があるかどうかで、情的か理性的かを判断します。親離れ・子離れの早さや、恋愛結婚かお見合い結婚かの傾向も分かります。</p>
+        <div class="info-box is-steel">
+          <div class="joritsu-type"><b>タイプ：</b><span class="joritsu-type-name">${joritsu.type}</span></div>
+          <p class="info-text mt-6">${joritsu.text}</p>
         </div>
       </div>`;
     })()}

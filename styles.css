@@ -3590,3 +3590,201 @@ button {
   color: var(--gold);
   font-weight: 600;
 }
+
+/* === 三分法 === */
+.sanbun-periods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.sanbun-period {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+}
+.sanbun-period-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.sanbun-period-head b {
+  color: var(--gold);
+  font-size: 0.95em;
+}
+.sanbun-age {
+  font-size: 0.75em;
+  color: var(--muted);
+}
+.sanbun-stars {
+  font-size: 0.82em;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.sanbun-match {
+  font-size: 0.78em;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+.sanbun-match.is-match {
+  background: rgba(80,200,120,0.1);
+  color: #5ec878;
+}
+.sanbun-match.is-mismatch {
+  background: rgba(200,80,80,0.1);
+  color: #e08080;
+}
+.sanbun-summary {
+  margin-top: 8px;
+}
+.sanbun-counts {
+  font-size: 0.88em;
+  margin-bottom: 6px;
+}
+.sanbun-counts b {
+  color: var(--gold);
+  font-size: 1.1em;
+}
+
+/* === 適職占技 === */
+.sekishoku-relation {
+  font-size: 1em;
+  margin-bottom: 8px;
+}
+.sekishoku-relation-val {
+  font-size: 1.2em;
+  font-weight: 700;
+  color: var(--gold);
+}
+.sekishoku-stars {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.sekishoku-star {
+  flex: 1;
+  min-width: 250px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+}
+.sekishoku-star-head {
+  margin-bottom: 6px;
+}
+.sekishoku-star-head b {
+  color: var(--gold);
+  font-size: 0.9em;
+}
+.sekishoku-keywords {
+  font-size: 0.78em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.sekishoku-text {
+  font-size: 0.8em;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* === 情的か理性的か === */
+.joritsu-type {
+  font-size: 1em;
+  margin-bottom: 8px;
+}
+.joritsu-type-name {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* === 変剋律 === */
+.henkoku-abnormal {
+  font-size: 0.88em;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.henkoku-chains {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.henkoku-chain {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+}
+.henkoku-chain-type {
+  font-size: 0.72em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(200,80,80,0.12);
+  color: #e08080;
+  font-weight: 600;
+  margin-right: 8px;
+}
+.henkoku-chain b {
+  color: var(--gold);
+  font-size: 0.9em;
+}
+.henkoku-chain-note {
+  font-size: 0.78em;
+  color: var(--text);
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+/* === 混在占技 === */
+.konzai-warn {
+  font-size: 0.82em;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(200,140,40,0.08);
+  border: 1px solid rgba(200,140,40,0.2);
+  color: #e0b060;
+  line-height: 1.6;
+}
+
+/* === 特殊位相法 === */
+.tokushu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+.tokushu-item {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+}
+.tokushu-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.tokushu-type {
+  font-size: 0.72em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(218,165,32,0.12);
+  color: var(--gold);
+  font-weight: 600;
+}
+.tokushu-head b {
+  color: var(--text);
+  font-size: 0.9em;
+}
+.tokushu-note {
+  font-size: 0.8em;
+  color: var(--text);
+  line-height: 1.6;
+}
