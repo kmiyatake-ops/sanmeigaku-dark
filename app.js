@@ -777,17 +777,17 @@ function getLoveAges(day, pillars, taiun, tenchusatsu, birthYear, currentAge, co
 const abnormalZodiacData = {
   甲戌: { type: "通常", star: "天印星", note: "" },
   乙亥: { type: "通常", star: "天極星", note: "" },
-  戊戌: { type: "通常", star: "天庫星", note: "教養が高いほど異常性が強まりやすい。配偶者が最身強（天将星2つ以上）だと異常性は抑えられる。" },
+  戊戌: { type: "通常", star: "天庫星", note: "教養が高いほど個性が強まりやすい。配偶者が最身強（天将星2つ以上）だと個性は抑えられる。" },
   庚子: { type: "通常", star: "天極星", note: "" },
   辛亥: { type: "通常", star: "天恍星", note: "" },
   丁巳: { type: "通常", star: "天将星", note: "" },
-  辛巳: { type: "暗合", star: "天極星", note: "霊感作用が強い干支の第3位。丙が癸巳に変化する暗合異常干支。" },
-  壬午: { type: "暗合", star: "天報星", note: "霊感作用が強い干支の第2位。丁が甲午に変化する暗合異常干支。視力の異常性が出やすい。配偶者は天将星の人だと良い。" },
-  丙戌: { type: "暗合", star: "天庫星", note: "辛が壬戌に変化する暗合異常干支。教養が高いほど異常性が強まりやすい。配偶者が最身強だと異常性は抑えられる。" },
-  丁亥: { type: "暗合", star: "天報星", note: "霊感作用が最も強い干支。壬が乙亥に変化する暗合異常干支。" },
-  戊子: { type: "暗合", star: "天報星", note: "癸が丙子に変化する暗合異常干支。" },
-  癸巳: { type: "暗合", star: "天報星", note: "戊が丁巳に変化する暗合異常干支。配偶者は天将星の人だと良い。" },
-  己亥: { type: "暗合", star: "天報星", note: "甲が己亥（自身と同じ）に変化する暗合異常干支。視力の異常性が出やすい。配偶者は天将星の人だと良い。" }
+  辛巳: { type: "暗合", star: "天極星", note: "直感力が強い干支の第3位。内面が外に変化しやすい特別なパターン。" },
+  壬午: { type: "暗合", star: "天報星", note: "直感力が強い干支の第2位。内面が外に変化しやすい特別なパターン。視力の異常性が出やすい。配偶者は天将星の人だと良い。" },
+  丙戌: { type: "暗合", star: "天庫星", note: "内面が外に変化しやすい特別なパターン。教養が高いほど個性が強まりやすい。配偶者が最身強だと個性は抑えられる。" },
+  丁亥: { type: "暗合", star: "天報星", note: "直感力が最も強い干支。内面が外に変化しやすい特別なパターン。" },
+  戊子: { type: "暗合", star: "天報星", note: "内面が外に変化しやすい特別なパターン。" },
+  癸巳: { type: "暗合", star: "天報星", note: "内面が外に変化しやすい特別なパターン。配偶者は天将星の人だと良い。" },
+  己亥: { type: "暗合", star: "天報星", note: "内面が外に変化しやすい特別なパターン。視力の異常性が出やすい。配偶者は天将星の人だと良い。" }
 };
 const abnormalTopThree = ["丁亥", "壬午", "辛巳"];
 
@@ -1105,6 +1105,15 @@ function getGogyoRelation(a, b) {
   return "相剋(←)"; // b剋a
 }
 
+function relToText(rel) {
+  if (rel === "比和") return "同じ性質";
+  if (rel === "相生(→)") return "後押しする";
+  if (rel === "相生(←)") return "後押しされる";
+  if (rel === "相剋(→)") return "抑え込む";
+  if (rel === "相剋(←)") return "抑え込まれる";
+  return rel;
+}
+
 // === 流動法 ===
 // 参考: https://sanmei-stock.com/basic/yang/flow-technique/
 function analyzeRyudo(mainStars) {
@@ -1130,12 +1139,12 @@ function analyzeRyudo(mainStars) {
         : "社会に対して不自然な関係。社会から生じられる（甘える）傾向があり、自力で立ち上がる訓練が必要。";
     } else if (d.key === "south") {
       advice = isNatural
-        ? "目下から自然にサポートされる関係。目下に恵まれやすい。"
-        : "目下との関係が不自然。目下と比和したり剋し合ったりしやすく、目下の運に注意が必要。";
+        ? "目下から自然にサポートされる関係。部下や後輩、子供に恵まれやすい。"
+        : "目下との関係がギクシャクしやすい。同じ性質がぶつかり合ったり、反発し合ったりしやすく、目下の運に注意が必要。";
     } else {
       advice = isNatural
         ? "配偶者に自然に尽くせる、または配偶者から支えられる関係。"
-        : "配偶者と比和したり剋し合ったりする不自然な関係。適度な距離感を保つことが大切。";
+        : "配偶者と同じ性質がぶつかり合ったり反発し合ったりしやすい関係。適度な距離感を保つことが大切。";
     }
     return { dir: d.label, myStar: mainStars.center, myEl: centerEl, otherStar: mainStars[d.key], otherEl, rel, isNatural, advice };
   });
@@ -1172,14 +1181,14 @@ function analyzeJunkan(mainStars) {
   }
 
   if (bestChain.length <= 1) {
-    return { poleStar: mainStars.center, chain: [], note: "陽占に相生の循環が見つからないため、中央の星を精神の中心（極）とします。" };
+    return { poleStar: mainStars.center, chain: [], note: "性格を表す星のエネルギーの流れが見つからないため、中央の星を「ものの考え方の根幹」とします。" };
   }
   const chainStars = bestChain.map(idx => stars[idx]);
   const poleStar = stars[bestEnd];
   return {
     poleStar,
     chain: chainStars,
-    note: `相生の循環が「${chainStars.join(" → ")}」の順で進み、「${poleStar}」で止まります。この星が精神の中心（極）であり、ものの考え方の根幹を表します。`
+    note: `エネルギーの流れが「${chainStars.join(" → ")}」の順で進み、「${poleStar}」で止まります。この星が「ものの考え方の根幹」になり、人生の土台となる考え方を表します。`
   };
 }
 
@@ -1193,23 +1202,23 @@ function analyzeEastSouth(mainStars) {
   switch (rel) {
     case "相生(→)":
       title = "現実から理想へ（オーソドックス型）";
-      text = "東方星（現実）が南方星（理想）を生じる関係。始めは現実やお金を大事にし、だんだん夢や理想を大切にするようになります。最終的には生きがい思考になる人です。";
+      text = "現実（収入・社会的地位）が理想（やりがい・夢）を後押しする関係。始めは現実やお金を大事にし、だんだん夢や理想を大切にするようになります。最終的には生きがいを大切にする人です。";
       break;
     case "相生(←)":
       title = "理想を現実化する型（起業家タイプ）";
-      text = "南方星（理想）が東方星（現実）を生じる関係。自分の夢や理想を着々と実現の方向に持って行く人です。苦労しながら時間をかけて夢を実現する起業家タイプです。";
+      text = "理想（やりがい・夢）が現実（収入・社会的地位）を後押しする関係。自分の夢や理想を着々と実現の方向に持って行く人です。苦労しながら時間をかけて夢を実現する起業家タイプです。";
       break;
     case "相剋(→)":
       title = "現実優先型（サラリーマンタイプ）";
-      text = "東方星（現実）が南方星（理想）を剋す関係。環境や現実を優先して自分の理想は妥協できる人です。組織のために理想を曲げられるサラリーマンタイプです。";
+      text = "現実が理想を抑える関係。環境や現実を優先して自分の理想は妥協できる人です。組織のために理想を曲げられるサラリーマンタイプです。";
       break;
     case "相剋(←)":
       title = "理想押し込み型（デストロイヤータイプ）";
-      text = "南方星（理想）が東方星（現実）を剋す関係。無理やり理想を実現させようとする気が短いタイプです。周りから迷惑がられやすいので、物の言い方に注意が必要です。";
+      text = "理想が現実を抑え込む関係。無理やり理想を実現させようとする気が短いタイプです。周りから迷惑がられやすいので、物の言い方に注意が必要です。";
       break;
     default:
-      title = "比和型（バランスタイプ）";
-      text = "東方星と南方星が同じ五行（比和）の関係。現実と理想のバランスが取りやすいタイプですが、刺激に欠けることもあります。";
+      title = "バランスタイプ";
+      text = "現実と理想が同じ性質の関係。現実と理想のバランスが取りやすいタイプですが、刺激に欠けることもあります。";
       break;
   }
   return { eastStar: mainStars.east, southStar: mainStars.south, eastEl, southEl, rel, title, text };
@@ -1262,13 +1271,13 @@ function analyzeKangou(pillars) {
     const sa = pillars[a].stem, sb = pillars[b].stem;
     const ba = pillars[a].branch, bb = pillars[b].branch;
     if (kangouPairs[sa] === sb) {
-      results.push({ label, type: "干合", stars: `${sa}↔${sb}`, note: `${sa}と${sb}は干合の関係です。天の気が融合し、化学反応が起こって五行が変化します。引き寄せ合う強い縁を表します。` });
+      results.push({ label, type: "干合", stars: `${sa}↔${sb}`, note: `${sa}と${sb}は引き寄せ合う関係です。上の文字同士が強く引き合い、特別な縁を表します。出会うべき人との縁を意味します。` });
     }
     if (kangouPairs[sa] === sb && shigouPair[ba] === bb) {
-      results.push({ label, type: "干合支合", stars: `${sa}${ba}↔${sb}${bb}`, note: `${sa}${ba}と${sb}${bb}は干合支合の関係です。天干が干合し地支も支合で、非常に結びつきが強い組み合わせです。思考力があり、危険を避けながら周囲と上手くやっていける人です。` });
+      results.push({ label, type: "干合支合", stars: `${sa}${ba}↔${sb}${bb}`, note: `${sa}${ba}と${sb}${bb}は上も下も引き寄せ合う関係です。非常に結びつきが強い組み合わせで、思考力があり、危険を避けながら周囲と上手くやっていける人です。` });
     }
     if (kangouPairs[sa] === sb && gaiPair[ba] === bb) {
-      results.push({ label, type: "干合支害", stars: `${sa}${ba}↔${sb}${bb}`, note: `${sa}${ba}と${sb}${bb}は干合支害の関係です。天干は引き合うのに地支は害し合う、アンビバレントな関係です。表面的には惹かれ合っても内在する摩擦やストレスを抱えやすい組み合わせです。` });
+      results.push({ label, type: "干合支害", stars: `${sa}${ba}↔${sb}${bb}`, note: `${sa}${ba}と${sb}${bb}は上は引き合うのに下はぶつかり合う、複雑な関係です。表面的には惹かれ合っても、内在する摩擦やストレスを抱えやすい組み合わせです。` });
     }
   });
   return results;
@@ -1285,7 +1294,7 @@ function analyzeEitenchishi(pillars) {
     const rel = getGogyoRelation(stemEl, branchEl);
     if (rel === "相生(→)") {
       const label = key === "year" ? "年柱" : key === "month" ? "月柱" : "日柱";
-      results.push({ pillar: label, stem: p.stem, branch: p.branch, note: `${p.stem}${p.branch}は洩天地支（えいてんちし）です。天干が地支を生じる（相生）関係にあり、内面のエネルギーが外面に自然に表れやすい干支です。才能が外に発揮されやすい傾向があります。` });
+      results.push({ pillar: label, stem: p.stem, branch: p.branch, note: `${p.stem}${p.branch}は内面のエネルギーが自然に外面に表れやすい干支です。上の文字が下の文字を後押しする関係にあり、才能が外に発揮されやすい傾向があります。` });
     }
   });
   return results;
@@ -1387,9 +1396,9 @@ function analyzeIshiki(pillars, day) {
   const monthConflict = (monthBranchRel === "相生(→)" || monthBranchRel === "相生(←)") ? "低い" : "高い";
   let summary;
   if (conscious > unconscious) {
-    summary = "意識（相剋・比和）が多いため、葛藤が多い苦労人タイプです。常に何かを意識し、感じながら人生を歩むため心が休まりにくいですが、精神的な成長は早くなります。早咲きの傾向です。";
+    summary = "意識して努力することが多いため、葛藤が多い苦労人タイプです。常に何かを意識し、感じながら人生を歩むため心が休まりにくいですが、精神的な成長は早くなります。早咲きの傾向です。";
   } else if (unconscious > conscious) {
-    summary = "無意識（相生）が多いため、周りに助けられながら自然に発展するタイプです。物事を深く考える必要がなく、記憶力は抜群ですが、深みのない人間形成になりがちです。遅咲きの傾向です。";
+    summary = "自然に恵まれることが多いため、周りに助けられながら自然に発展するタイプです。物事を深く考える必要がなく、記憶力は抜群ですが、深みのない人間形成になりがちです。遅咲きの傾向です。";
   } else {
     summary = "意識と無意識のバランスが取れており、苦労と恩恵の両方を経験するタイプです。";
   }
@@ -1415,7 +1424,7 @@ function analyzeNiko(pillars) {
     isTwoKanshi,
     elements: Array.from(elementSet),
     kanshi: Array.from(kanshiSet),
-    note: "二行干支に該当します。感情のみで行動しやすくフィーリング重視で、非常に行動力があります。周囲からは勘が鋭くて頭の回転が速く見えます。結婚して子供を持つと至って普通の人に戻ります。子供がいなければ、感情で動き、行動力抜群です。"
+    note: "二行干支に該当します。直感と感情で行動するパワフルなタイプで、フィーリングを大切にします。周囲からは勘が鋭くて頭の回転が速く見えます。結婚して子供を持つと至って普通の人に戻ります。子供がいなければ、感情で動き、行動力抜群です。"
   };
 }
 
@@ -1598,16 +1607,16 @@ function analyzeSekishoku(mainStars) {
   if (!eastData || !southData) return null;
   const eastElVal = getStarElement(eastStar);
   const southElVal = getStarElement(southStar);
-  let relation = "比和";
+  let relation = "バランス";
   let relationText = "報酬もやりがいも重視し、理想と現実が一致します。そのため、適職を見極めるのに迷いはありません。しかし、その仕事ができない時の苦しみは人一倍あります。";
   if (eastElVal && southElVal) {
     const rel = getGogyoRelation(eastElVal, southElVal);
     if (rel === "相生(→)" || rel === "相生(←)") {
-      relation = "相生";
-      relationText = "うまくまとまるので仕事に対する矛盾や悩みは少なくなります。東が南を生じる場合、報酬重視から自然にやりがいなどの精神的満足を重視するようになります。南が東を生じる場合、仕事内容を重視しながら報酬も重視する傾向があります。";
+      relation = "うまくまとまる";
+      relationText = "うまくまとまるので仕事に対する矛盾や悩みは少なくなります。現実重視から自然にやりがいなどの精神的満足を重視するようになります。または、仕事内容を重視しながら報酬も重視する傾向があります。";
     } else if (rel === "相剋(→)" || rel === "相剋(←)") {
-      relation = "相剋";
-      relationText = "理想と現実が繋がらないため、仕事に迷いが生じやすい。ただ、苦しむことで得られる成長があります。東が南を剋する場合、報酬を重視し、やりがいは二の次になります。南が東を剋する場合、やりがいを重視し、報酬は気にならなくなります。";
+      relation = "現実と理想がぶつかる";
+      relationText = "理想と現実が繋がらないため、仕事に迷いが生じやすいです。ただ、苦しむことで得られる成長があります。現実を優先する場合は報酬を重視し、やりがいは二の次になります。理想を優先する場合はやりがいを重視し、報酬は気にならなくなります。";
     }
   }
   return { eastStar, southStar, eastData, southData, relation, relationText };
@@ -1659,7 +1668,7 @@ function analyzeHenkoku(pillars) {
   return {
     abnormalInMeimei,
     matchedChains,
-    note: "宿命に異常干支があります。大運で異常干支が2つ以上連続して出る場合、変剋律として準大運天中殺と同様の運気変動が起こります。変剋律が陽転するには、突入して5年間の精神苦が必要です。"
+    note: "生まれ持った特殊な干支があります。運気の周期で特殊な干支が2つ以上連続して現れる時期は、人生の大きな転換期になります。その時期を乗り越えるには、突入して最初の5年間の悩み抜くことが成長の鍵になります。"
   };
 }
 
@@ -1674,20 +1683,20 @@ function analyzeKonzai(pillars) {
     return {
       hasAbnormal: true,
       hasScrambleBranch,
-      note: "宿命に異常干支があるため、混在占技の作用は弱めです。宿命に異常干支がない人の方が、混在占技の作用が大きくなります。"
+      note: "生まれ持った命式に特殊な干支があるため、混在占技の作用は弱めです。生まれ持った命式に特殊な干支がない人の方が、混在占技の作用が大きくなります。"
     };
   }
   if (!hasScrambleBranch) {
     return {
       hasAbnormal: false,
       hasScrambleBranch: false,
-      note: "宿命に「子・巳・午・戌・亥」いずれもないため、スクランブル異常干支は成立しません。混在占技の対象外です。"
+      note: "生まれ持った命式に「子・巳・午・戌・亥」いずれもないため、混在占技の対象外です。"
     };
   }
   return {
     hasAbnormal: false,
     hasScrambleBranch: true,
-    note: "宿命に異常干支はありませんが、「子・巳・午・戌・亥」があるため、大運との組み合わせでスクランブル異常干支が成立する可能性があります。スクランブル異常干支成立大運では、天中殺の年と異常干支の年に注意が必要です。守護神が回ってくる年は救いのある年になります。半会×散（対冲・刑・害）が成立する年に壁にぶちあたる現象が起きやすくなります。"
+    note: "生まれ持った命式に特殊な干支はありませんが、「子・巳・午・戌・亥」があるため、運気の周期との組み合わせで突然壁にぶつかる時期ができる可能性があります。その時期は、特に注意が必要な年と、助けが来る年があります。"
   };
 }
 
@@ -1709,20 +1718,20 @@ function analyzeTokushuIso(pillars) {
     const k1 = p1.stem + p1.branch;
     const k2 = p2.stem + p2.branch;
     if (k1 === k2) {
-      results.push({ pair: pair.label, type: "律音", note: "天干・地支が同じ（同干支）。比和の強力バージョン。結びつきが非常に強い。" });
+      results.push({ pair: pair.label, type: "律音", note: "上の文字も下の文字も全く同じ（同干支）。同じ性質が重なるため、結びつきが非常に強い関係です。" });
     }
     if (p1.stem === p2.stem && taichuPair[p1.branch] === p2.branch) {
-      results.push({ pair: pair.label, type: "納音", note: "天干が同じで地支が対冲。「音が納まる」＝物事が一つにまとまる。" });
+      results.push({ pair: pair.label, type: "納音", note: "上の文字が同じで下の文字が正反対。「音が納まる」＝物事が一つにまとまる関係です。" });
     }
     if (p1.stem === p2.stem && taishuPair[p1.branch] === p2.branch) {
-      results.push({ pair: pair.label, type: "大半会", note: "天干が同じで地支が半会。半会よりも強い結びつき。" });
+      results.push({ pair: pair.label, type: "大半会", note: "上の文字が同じで下の文字が隣り合う。隣り合うよりも強い結びつきがあります。" });
     }
     const s1El = elements[stems.indexOf(p1.stem)];
     const s2El = elements[stems.indexOf(p2.stem)];
     const stemRel = getGogyoRelation(s1El, s2El);
     const isYangSame = (stems.indexOf(p1.stem) % 2 === 0 && stems.indexOf(p2.stem) % 2 === 0) || (stems.indexOf(p1.stem) % 2 === 1 && stems.indexOf(p2.stem) % 2 === 1);
     if (isYangSame && (stemRel === "相剋(→)" || stemRel === "相剋(←)") && taichuPair[p1.branch] === p2.branch) {
-      results.push({ pair: pair.label, type: "天剋地冲", note: "天干が陽同士/陰同士の相剋で地支が対冲。信頼の逆＝信頼しづらい関係。利害関係ベースの付き合いになりやすい。" });
+      results.push({ pair: pair.label, type: "天剋地冲", note: "上の文字が同じタイプ同士でぶつかり合い、下の文字が正反対。信頼しづらい関係で、利害関係ベースの付き合いになりやすいです。" });
     }
   });
   return results;
@@ -1969,6 +1978,38 @@ function topologySummary(results) {
   }
 
   return summary;
+}
+
+function topologyBriefDescription(results) {
+  if (!results || results.length === 0) return null;
+  const goResults = results.filter((r) => r.group === "合法");
+  const sanResults = results.filter((r) => r.group === "散法");
+  const parts = [];
+  goResults.forEach(r => {
+    if (r.name.includes("律音")) parts.push("同じ干支が重なる分岐点");
+    else if (r.name.includes("大半会")) parts.push("力が広がる飛躍のチャンス");
+    else if (r.name.includes("納音")) parts.push("物事が一つにまとまる");
+    else if (r.name.includes("三合会局")) parts.push("強力な協力関係が完成");
+    else if (r.name.includes("方三位")) parts.push("一つの分野に集中し評価を得る");
+    else if (r.name.includes("支合")) parts.push("協力関係が生まれ順調に進む");
+  });
+  sanResults.forEach(r => {
+    if (r.name.includes("天剋地冲")) parts.push("人生の曲がり角・大きな変化");
+    else if (r.name.includes("対冲")) parts.push("正面衝突・予期せぬ変化");
+    else if (r.name.includes("害法")) parts.push("ストレス・裏切りに注意");
+    else if (r.name.includes("破法")) parts.push("決断が揺れやすい");
+    else if (r.name.includes("刑")) parts.push("人間関係のこじれ");
+  });
+  if (parts.length === 0) return null;
+  const goCount = goResults.length;
+  const sanCount = sanResults.length;
+  let prefix = "";
+  if (goCount > 0 && sanCount === 0) prefix = "協力関係に恵まれる時期。";
+  else if (sanCount > 0 && goCount === 0) prefix = "摩擦や変化の多い時期。";
+  else if (goCount > sanCount) prefix = "協力優位だが一部摩擦あり。";
+  else if (sanCount > goCount) prefix = "摩擦優位だが一部協力あり。";
+  else prefix = "協力と摩擦が混在する時期。";
+  return prefix + parts.join("、") + "。";
 }
 
 function topologyToComment(results) {
@@ -2679,13 +2720,13 @@ function analyzeMote(mainStars, energy, counts, day, pillars) {
     sameFactors.push("控えめなエネルギーが同性からも安心感を与える");
   }
 
-  // 異常干支の補正
+  // 特殊な干支の補正
   const hasAbnormal = ["year", "month", "day"].some(key => getAbnormalZodiac(pillars[key].stem, pillars[key].branch));
   if (hasAbnormal) {
     oppositeScore += 12;
     sameScore += 8;
-    oppFactors.push("異常干支持ちの独特なオーラが、一部の異性を強烈に惹きつける");
-    sameFactors.push("異常干支の個性が、同性からも「面白い人」として注目される");
+    oppFactors.push("特殊な干支を持つ独特なオーラが、一部の異性を強烈に惹きつける");
+    sameFactors.push("特殊な干支の個性が、同性からも「面白い人」として注目される");
   }
 
   // 正規化: 生スコアを0-100スケールに変換
@@ -2759,7 +2800,7 @@ function analyzeMote(mainStars, energy, counts, day, pillars) {
     sameFanSet.add("落ち着いた人と付き合いたい人");
   }
 
-  // 異常干支持ちのファン層
+  // 特殊な干支持ちのファン層
   if (hasAbnormal) {
     oppFanSet.add("型破りな人に惹かれる人");
     sameFanSet.add("個性的で面白い人を探す人");
@@ -5168,18 +5209,27 @@ function render(event) {
         const allTopo = [...(yearlyFortune.taiunTopo || []).map((r) => ({ ...r, source: "大運" })), ...yearlyFortune.yearTopo.map((r) => ({ ...r, source: "年運" }))];
         if (allTopo.length === 0) return '';
         const topoSummary = topologySummary(allTopo);
+        const topoBrief = topologyBriefDescription(allTopo);
         const goNames = allTopo.filter((r) => r.group === "合法").map((r) => r.name);
         const sanNames = allTopo.filter((r) => r.group === "散法").map((r) => r.name);
-        return `<div class="yearly-fortune-topo expert-only">
-          <h4>位相法による運勢の補足</h4>
-          ${topoSummary ? `<div class="topology-summary">
-            <div class="topology-summary-title">${topoSummary.title}</div>
-            <div class="topology-summary-text">${topoSummary.text}</div>
-            <div class="topology-summary-advice"><b>アドバイス：</b>${topoSummary.advice}</div>
-          </div>` : ''}
-          <div class="topology-tags">
-            ${goNames.length ? `<div class="topo-tag-group"><span class="topo-tag-label">合法</span>${goNames.map((n) => `<span class="topo-mini-tag tag-go">${n}</span>`).join("")}</div>` : ''}
-            ${sanNames.length ? `<div class="topo-tag-group"><span class="topo-tag-label">散法</span>${sanNames.map((n) => `<span class="topo-mini-tag tag-san">${n}</span>`).join("")}</div>` : ''}
+        const goNotes = allTopo.filter((r) => r.group === "合法").map((r) => `<div class="topo-note-row"><span class="topo-mini-tag tag-go">${r.name}</span><span class="topo-note-text">${r.note}</span></div>`);
+        const sanNotes = allTopo.filter((r) => r.group === "散法").map((r) => `<div class="topo-note-row"><span class="topo-mini-tag tag-san">${r.name}</span><span class="topo-note-text">${r.note}</span></div>`);
+        return `<div class="yearly-fortune-topo">
+          <h4 class="expert-only">位相法による運勢の補足</h4>
+          <h4 class="simple-only">今年の人との縁・出来事</h4>
+          ${topoBrief ? `<div class="topo-brief-desc info-box is-blue">${topoBrief}</div>` : ''}
+          <div class="expert-only">
+            ${topoSummary ? `<div class="topology-summary">
+              <div class="topology-summary-title">${topoSummary.title}</div>
+              <div class="topology-summary-text">${topoSummary.text}</div>
+              <div class="topology-summary-advice"><b>アドバイス：</b>${topoSummary.advice}</div>
+            </div>` : ''}
+            <div class="topology-tags">
+              ${goNames.length ? `<div class="topo-tag-group"><span class="topo-tag-label">協力関係</span>${goNames.map((n) => `<span class="topo-mini-tag tag-go">${n}</span>`).join("")}</div>` : ''}
+              ${sanNames.length ? `<div class="topo-tag-group"><span class="topo-tag-label">摩擦要素</span>${sanNames.map((n) => `<span class="topo-mini-tag tag-san">${n}</span>`).join("")}</div>` : ''}
+            </div>
+            ${goNotes.length ? `<div class="topo-notes"><b class="topo-notes-title">協力関係の詳細：</b>${goNotes.join("")}</div>` : ''}
+            ${sanNotes.length ? `<div class="topo-notes"><b class="topo-notes-title">摩擦要素の詳細：</b>${sanNotes.join("")}</div>` : ''}
           </div>
         </div>`;
       })()}
@@ -5353,7 +5403,7 @@ function render(event) {
       </table>
     </div>
     <div class="result-card expert-only">
-      <h3>異常干支</h3>
+      <h3>特殊な干支（感性が鋭いタイプ）</h3>
       ${(() => {
         const pillarLabels = { year: "年柱", month: "月柱", day: "日柱" };
         const matches = ["year", "month", "day"].map((key) => {
@@ -5362,7 +5412,7 @@ function render(event) {
           return info ? { key, stem: p.stem, branch: p.branch, info } : null;
         }).filter(Boolean);
         if (matches.length === 0) {
-          return '<p class="note">この命式に異常干支はありません（通常干支）。</p>';
+          return '<p class="note">この命式に特殊な干支はありません（通常の干支です）。</p>';
         }
         return `
           <p class="note mb-10">生まれ持った干支の組み合わせの中で、特に感性が鋭く・直感力が強いタイプを示す特殊なパターンです。直感やひらめきに優れ、周囲が気づかないことに先に気づく才能があります。一番影響が強いのは生まれた日の干支、次いで生まれた月・年です。</p>
@@ -5373,10 +5423,10 @@ function render(event) {
                 <div class="abnormal-head">
                   <span class="pillar-tag">${pillarLabels[m.key]}</span>
                   <b>${m.stem}${m.branch}</b>
-                  <span class="abnormal-type">${m.info.type}異常干支</span>
+                  <span class="abnormal-type">${m.info.type}タイプ</span>
                   ${isTop ? '<span class="tenchu-badge">強烈TOP3</span>' : ''}
                 </div>
-                <div class="abnormal-body">十二大従星: ${m.info.star}${m.info.note ? ` ／ ${m.info.note}` : ''}</div>
+                <div class="abnormal-body">心の星：${m.info.star}${m.info.note ? ` ／ ${m.info.note}` : ''}</div>
               </div>`;
             }).join("")}
           </div>
@@ -5390,20 +5440,20 @@ function render(event) {
         <p class="note mb-10">自分を中心に、周囲との関係性から「意識して努力するタイプ」か「自然に恵まれるタイプ」かを判定します。意識が多い＝自分で切り開く苦労人・早咲き、無意識が多い＝周囲に助けられる恩恵型・遅咲き。</p>
         <div class="info-box is-steel">
           <div class="ishiki-counts">
-            <span class="ishiki-count is-conscious">意識（相剋・比和）：<b>${ishiki.conscious}</b></span>
-            <span class="ishiki-count is-unconscious">無意識（相生）：<b>${ishiki.unconscious}</b></span>
+            <span class="ishiki-count is-conscious">意識（努力が必要）：<b>${ishiki.conscious}</b></span>
+            <span class="ishiki-count is-unconscious">無意識（自然に恵まれる）：<b>${ishiki.unconscious}</b></span>
           </div>
           <div class="ishiki-list">
             ${ishiki.targets.map(t => `
               <div class="ishiki-item">
                 <span class="ishiki-pillar">${t.pillar}</span>
-                <span>${t.stem}（${t.stemEl}）→${t.stemRel}</span>
-                <span>${t.branch}（${t.branchEl}）→${t.branchRel}</span>
+                <span>${t.stem}（${t.stemEl}）→${relToText(t.stemRel)}</span>
+                <span>${t.branch}（${t.branchEl}）→${relToText(t.branchRel)}</span>
               </div>
             `).join("")}
           </div>
           <p class="info-text mt-6">${ishiki.summary}</p>
-          <p class="note-text-sm mt-6">日干と月支の関係：${ishiki.monthBranchRel}（心の葛藤度合い：${ishiki.monthConflict}）。月支は中年期の場所なので、中年期に大きく現れます。</p>
+          <p class="note-text-sm mt-6">自分と月の地支の関係：${relToText(ishiki.monthBranchRel)}（心の葛藤度合い：${ishiki.monthConflict}）。月は中年期の場所なので、中年期に大きく現れます。</p>
         </div>
       </div>`;
     })()}
@@ -5415,8 +5465,8 @@ function render(event) {
         <p class="note mb-10">生年月日の干支が2種類の要素だけで構成されている場合、直感と感情で行動するパワフルなタイプになります。フィーリングを大切にし、行動力が抜群ですが、結婚して子供を持つと落ち着く傾向があります。</p>
         <div class="info-box is-purple">
           <div class="niko-pattern">
-            ${niko.isTwoElements ? `<span class="niko-tag">五行2行のみ：${niko.elements.join("・")}</span>` : ''}
-            ${niko.isTwoKanshi ? `<span class="niko-tag">干支2種類のみ：${niko.kanshi.join("・")}</span>` : ''}
+            ${niko.isTwoElements ? `<span class="niko-tag">2種類の性質のみ：${niko.elements.join("・")}</span>` : ''}
+            ${niko.isTwoKanshi ? `<span class="niko-tag">2種類の干支のみ：${niko.kanshi.join("・")}</span>` : ''}
           </div>
           <p class="info-text mt-6">${niko.note}</p>
         </div>
@@ -5429,7 +5479,7 @@ function render(event) {
         <h3>変剋律（人生の大転換期）</h3>
         <p class="note mb-10">生まれ持った特殊な干支が2つ以上連続して現れる時期は、人生の大きな転換期になります。環境が大きく変わり、精神的な試練を経て成長する時期です。最初の5年間は悩み抜くことが陽転の鍵になります。</p>
         <div class="info-box is-steel">
-          <div class="henkoku-abnormal">宿命の異常干支：${henkoku.abnormalInMeimei.join("・")}</div>
+          <div class="henkoku-abnormal">生まれ持った特殊な干支：${henkoku.abnormalInMeimei.join("・")}</div>
           ${henkoku.matchedChains.length > 0 ? `
             <div class="henkoku-chains">
               ${henkoku.matchedChains.map(c => `
@@ -5440,7 +5490,7 @@ function render(event) {
                 </div>
               `).join("")}
             </div>
-          ` : '<p class="note mt-6">宿命の異常干支の組み合わせでは変剋律チェーンは成立しませんが、大運で異常干支が連続した場合に変剋律が発生します。</p>'}
+          ` : '<p class="note mt-6">生まれ持った特殊な干支の組み合わせでは連続パターンは成立しませんが、運気の周期で特殊な干支が連続した場合に転換期が発生します。</p>'}
           <p class="info-text mt-6">${henkoku.note}</p>
         </div>
       </div>`;
@@ -5452,7 +5502,7 @@ function render(event) {
         <p class="note mb-10">普段は安定している人でも、特定の時期に突然壁にぶつかったり、迷路に入り込むような時期があるかを判定します。生年月日と運気の周期の組み合わせから、注意が必要な時期を見つけます。</p>
         <div class="info-box is-purple">
           <p class="info-text">${konzai.note}</p>
-          ${konzai.hasScrambleBranch && !konzai.hasAbnormal ? '<div class="konzai-warn mt-6">⚠ 大運でスクランブル異常干支が成立した場合、天中殺の年と異常干支の年に注意が必要です。守護神が回ってくる年は救いがあります。</div>' : ''}
+          ${konzai.hasScrambleBranch && !konzai.hasAbnormal ? '<div class="konzai-warn mt-6">⚠ 運気の周期で壁にぶつかる時期が成立した場合、特に注意が必要な年と、助けが来る年があります。心のバランスを整える要素を意識すると良いでしょう。</div>' : ''}
         </div>
       </div>`;
     })()}
@@ -5481,7 +5531,7 @@ function render(event) {
       <p class="note mb-10">生まれた年・月・日の地支（動物）同士の関係性を8種類のパターンで判定します。結びつきを表す関係は協力・融合を、ぶつかり合う関係はストレス・変化を意味します。</p>
       ${(() => {
         if (topologyResults.length === 0) {
-          return '<p class="note">この命式の三柱間に位相法の関係は検出されませんでした。</p>';
+          return '<p class="note">生まれた年・月・日の間に特別な関係性は検出されませんでした。</p>';
         }
         const topoSummary = topologySummary(topologyResults);
         const goNames = topologyResults.filter((r) => r.group === "合法").map((r) => r.name);
@@ -5534,16 +5584,16 @@ function render(event) {
       <p class="note mb-10">生まれ持った命式から、常識の枠に収まらない型破りな人生を歩むかを判定します。特定の干支の組み合わせがある場合、既存の枠組みにとらわれない独自の人生になりやすいです。</p>
       ${(() => {
         const items = [];
-        if (fateTenchu.seinen) items.push({ name: "生年天中殺", note: "生日干支の天中殺範囲に年支が含まれる。常識の枠を持たず、型破りな人生になりやすい。" });
-        if (fateTenchu.seigetsu) items.push({ name: "生月天中殺", note: "生日干支の天中殺範囲に月支が含まれる。家系を離れて他の家系に入る（養子・結婚など）と成功しやすい。" });
-        if (fateTenchu.seinichi) items.push({ name: "生日天中殺", note: "生年干支の天中殺範囲に日支が含まれる。自己完結しやすく、独自の世界観を持つ。" });
-        if (fateTenchu.kokan) items.push({ name: "互換中殺", note: "生年天中殺と生日天中殺が同時に成立。年と日が相互に天中殺し合う特殊な関係。" });
-        if (fateTenchu.dayZa) items.push({ name: "日座天中殺", note: "日干支が甲戌または乙亥。純粋な宿命天中殺で、子供と夫婦間のバランスを取りにくいが、生家を出れば成功できる。" });
-        if (fateTenchu.dayKyo) items.push({ name: "日居天中殺", note: "日干支が甲辰または乙巳。東と西が欠ける天中殺で、現実と精神のギャップが激しく「異世界」がキーワード。" });
+        if (fateTenchu.seinen) items.push({ name: "生年天中殺", note: "生まれた日の干支の範囲に年支が含まれる。常識の枠を持たず、型破りな人生になりやすい。" });
+        if (fateTenchu.seigetsu) items.push({ name: "生月天中殺", note: "生まれた日の干支の範囲に月支が含まれる。家系を離れて他の家系に入る（養子・結婚など）と成功しやすい。" });
+        if (fateTenchu.seinichi) items.push({ name: "生日天中殺", note: "生まれた年の干支の範囲に日支が含まれる。自己完結しやすく、独自の世界観を持つ。" });
+        if (fateTenchu.kokan) items.push({ name: "互換中殺", note: "生年天中殺と生日天中殺が同時に成立。年と日が相互に影響し合う特殊な関係。" });
+        if (fateTenchu.dayZa) items.push({ name: "日座天中殺", note: "生まれた日の干支が甲戌または乙亥。純粋な型破りタイプで、子供と夫婦間のバランスを取りにくいが、実家を出れば成功できる。" });
+        if (fateTenchu.dayKyo) items.push({ name: "日居天中殺", note: "生まれた日の干支が甲辰または乙巳。現実と精神のギャップが激しく「異世界」がキーワード。" });
         if (fateTenchu.shukumei2) items.push({ name: "宿命二中殺", note: "生年天中殺と生月天中殺の両方を保持。自分以外頼れるものはない状態だが、それが強さの源泉にもなる。" });
         if (fateTenchu.zenTenchusatsu) items.push({ name: "全天中殺", note: "日座天中殺＋生月天中殺＋生年天中殺の全てが成立。「参禅の行とする」と言われる特別な宿命。" });
         if (items.length === 0) {
-          return '<p class="note">この命式に宿命天中殺の型は検出されませんでした（通常命式）。</p>';
+          return '<p class="note">この命式に型破りな人生を示すパターンは検出されませんでした（通常の命式です）。</p>';
         }
         return `<div class="fate-tenchu-list">
           ${items.map((it) => `
@@ -5560,7 +5610,7 @@ function render(event) {
       <p class="note mb-10">内面の5つの要素（木・火・土・金・水）のバランスを整えるのが守護神です。強すぎる性質を抑え、足りない性質を補うものを日頃の生活に取り入れることで、心のバランスが保ちやすくなります。</p>
       ${(() => {
         if (guardian.isBalanced) {
-          return '<p class="note">バランスが均等に配置されており、特定の守護神は不要なバランスの良い命式です。</p>';
+          return '<p class="note">バランスが均等に配置されており、特定の補整要素は不要なバランスの良い命式です。</p>';
         }
         const guardianNames = guardian.guardians.map((g) => `${g}（${gogyoMeaning[g]}）`).join("・");
         const strongNames = guardian.strongest.join("・");
@@ -5569,9 +5619,9 @@ function render(event) {
           <div class="guardian-section">
             <div class="guardian-row"><b>最も強い性質</b><span>${strongNames}</span></div>
             <div class="guardian-row"><b>最も弱い性質</b><span>${weakNames}</span></div>
-            <div class="guardian-row guardian-highlight"><b>全体守護神</b><span>${guardianNames}</span></div>
+            <div class="guardian-row guardian-highlight"><b>心のバランスを整える要素</b><span>${guardianNames}</span></div>
           </div>
-          <div class="note-text-sm mt-10">守護神の性質を日頃の生活や行動に取り入れることで、心のバランスを保ちやすくなります。命式内に守護神がなくても、意識的に取り入れることで効果が期待できます。</div>
+          <div class="note-text-sm mt-10">心のバランスを整える要素を日頃の生活や行動に取り入れることで、心のバランスを保ちやすくなります。命式内に補整要素がなくても、意識的に取り入れることで効果が期待できます。</div>
         `;
       })()}
     </div>
@@ -5628,7 +5678,7 @@ function render(event) {
         <p class="note mb-10">性格を表す5つの星のエネルギーの流れを辿り、循環が止まる星（精神の中心）を導き出します。この星が「ものの考え方の根幹」になり、人生の土台となる考え方を表します。</p>
         <div class="info-box is-blue">
           <div class="junkan-pole"><b>極（精神の中心）：</b><span class="junkan-pole-star">${junkan.poleStar}</span></div>
-          ${junkan.chain.length > 0 ? `<div class="junkan-chain">相生の流れ：${junkan.chain.join(" → ")} → <b>止</b></div>` : ""}
+          ${junkan.chain.length > 0 ? `<div class="junkan-chain">エネルギーの流れ：${junkan.chain.join(" → ")} → <b>止</b></div>` : ""}
           <p class="info-text mt-6">${junkan.note}</p>
         </div>
       </div>`;
@@ -5640,7 +5690,7 @@ function render(event) {
         <p class="note mb-10">東方の星は「現実・収入・社会的地位」を、南方の星は「理想・やりがい・夢」を表します。この2つの星の関係から、現実を優先するか理想を優先するかの人生の傾向が分かります。</p>
         <div class="info-box is-gold">
           <div class="es-relation-title">${es.title}</div>
-          <div class="es-relation-stars">東方星：${es.eastStar}（${es.eastEl}） / 南方星：${es.southStar}（${es.southEl}） / 関係：${es.rel}</div>
+          <div class="es-relation-stars">東方星：${es.eastStar}（${es.eastEl}） / 南方星：${es.southStar}（${es.southEl}） / 関係：${relToText(es.rel)}</div>
           <p class="info-text mt-6">${es.text}</p>
         </div>
       </div>`;
@@ -5861,7 +5911,7 @@ function render(event) {
               <div class="affair-risk-rank-badge affair-risk-rank-${affairRankClass}">${affairLevel}</div>
             </div>
             <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${affairRankClass}" style="--affair-width:${affairScore}%"></div></div>
-            <div class="note-text-sm mt-6">全主星（中央・北・南・東・西）の傾向＋配偶者宮（日支）の十二大従星＋二度縁の型＋異常干支＋日干の陰陽＋内面のバランスの偏りから総合的に算出した目安です。166名の芸能人データの統計分析（ロジスティック回帰 AUC=0.79）に基づく重み付けを反映しています。断定ではなく傾向として参考にしてください。</div>
+            <div class="note-text-sm mt-6">全主星（中央・北・南・東・西）の傾向＋配偶者宮（日支）の心の星＋二度縁の型＋特殊な干支＋日干の陰陽＋内面のバランスの偏りから総合的に算出した目安です。166名の芸能人データの統計分析（ロジスティック回帰 AUC=0.79）に基づく重み付けを反映しています。断定ではなく傾向として参考にしてください。</div>
           </article>
           <article>
             <h4>天中殺と結婚・離婚</h4>
@@ -5939,7 +5989,7 @@ function render(event) {
     <div class="result-card mote-card">
       <h3 class="expert-only">モテ度分析（異性から・同性から）</h3>
       <h3 class="simple-only">人気度チェック（異性から・同性から）</h3>
-      <p class="expert-only note mb-14">十大主星の魅力特性・内面のバランス・日干の陰陽・十二大従星のエネルギー・異常干支を総合して算出しています。あくまで宿命的な素質の目安です。</p>
+      <p class="expert-only note mb-14">性格を表す星の魅力・内面のバランス・日干の陰陽・心の星のエネルギー・特殊な干支を総合して算出しています。あくまで宿命的な素質の目安です。</p>
       <p class="simple-only note mb-14">生まれ持った性格や魅力の傾向から、異性・同性それぞれからの人気度を計算しています。あくまで目安です。</p>
       <div class="mote-scores">
         <div class="mote-score-item mote-opposite">
@@ -6001,30 +6051,6 @@ function render(event) {
         </div>
       </div>
     </div>
-    <div class="result-card">
-      <h3 class="expert-only">子育て・育児アドバイス</h3>
-      <h3 class="simple-only">子育てのヒント</h3>
-      ${(() => {
-        const pa = parentingAdvice;
-        if (!pa) return '<p class="note">データがありません。</p>';
-        return `
-          <div class="info-box is-orange">
-            <div class="info-section">
-              <b class="info-label is-orange">得意な子育てスタイル</b>
-              <p class="info-text">${pa.strength}</p>
-            </div>
-            <div class="info-section">
-              <b class="info-label is-red">注意すべき点</b>
-              <p class="info-text">${pa.caution}</p>
-            </div>
-            <div class="info-section">
-              <b class="info-label is-green">実践のヒント</b>
-              <p class="info-text">${pa.tip}</p>
-            </div>
-          </div>
-        `;
-      })()}
-    </div>
     <div class="result-card expert-only">
       <h3>大運（10年周期の運気）</h3>
       <p class="note mb-8">${taiun.forward ? "順行" : "逆行"} / 立運${taiun.startAge}歳</p>
@@ -6034,11 +6060,15 @@ function render(event) {
           const mainStar = getMainStar(day.stem, p.stem);
           const topoResults = analyzeBranchTopology(p.branch, pillars, p.stem);
           const topoTags = topoResults.map((r) => `<span class="topo-mini-tag${r.group === '合法' ? ' tag-go' : ' tag-san'}">${r.name}</span>`).join("");
+          const topoDesc = topologyBriefDescription(topoResults);
+          const isTenchu = isTenchusatsuYear(p.branch, tenchusatsu);
           return `<div class="taiun-item${isCurrent ? " current" : ""}">
             <span class="age">${p.age}〜${p.ageTo}歳</span>
             <span class="pillar">${p.stem}${p.branch}</span>
             <span class="star-label">${mainStar}</span>
+            ${isTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}
             ${topoTags ? `<div class="taiun-topo-tags">${topoTags}</div>` : ''}
+            ${topoDesc ? `<div class="taiun-topo-desc">${topoDesc}</div>` : ''}
           </div>`;
         }).join("")}
       </div>
