@@ -5498,6 +5498,46 @@ function buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, i
   };
 }
 
+function analyzeYinYang(pillars) {
+  const allPillars = ["year", "month", "day", "hour"].filter(k => pillars[k]);
+  let yangCount = 0, yinCount = 0;
+  allPillars.forEach(k => {
+    const p = pillars[k];
+    if (stems.indexOf(p.stem) % 2 === 0) yangCount++; else yinCount++;
+    if (branches.indexOf(p.branch) % 2 === 0) yangCount++; else yinCount++;
+  });
+  const total = yangCount + yinCount;
+  let summary;
+  if (yangCount >= total * 0.7) summary = "陽が非常に多く、積極的で行動力のある性格。ただし強気すぎる面が出ることも。";
+  else if (yangCount >= total * 0.55) summary = "陽がやや多く、基本的には積極的。状況に応じて受動的にもなれる柔軟さがある。";
+  else if (yinCount >= total * 0.7) summary = "陰が非常に多く、受動的で慎重な性格。しかし内面に強い情熱を秘めている。";
+  else if (yinCount >= total * 0.55) summary = "陰がやや多く、慎重で思慮深い。行動する前に熟考するタイプ。";
+  else summary = "陰陽のバランスが良く、状況に応じて積極的にも受動的にもなれる柔軟な性格。";
+  return { yangCount, yinCount, summary };
+}
+
+function analyzeSpecialRelations(pillars) {
+  const results = [];
+  const allPillars = ["year", "month", "day", "hour"].filter(k => pillars[k]).map(k => ({ key: k, ...pillars[k] }));
+  for (let i = 0; i < allPillars.length; i++) {
+    for (let j = i + 1; j < allPillars.length; j++) {
+      const a = allPillars[i];
+      const b = allPillars[j];
+      const branchDiff = (branches.indexOf(b.branch) - branches.indexOf(a.branch) + 12) % 12;
+      if (branchDiff === 6) {
+        results.push({ name: `${a.key}柱×${b.key}柱 対冲`, type: "冲", text: "正面衝突の関係。予期しない変化や摩擦が起きやすい組み合わせ。" });
+      }
+      if (branchDiff === 0) {
+        results.push({ name: `${a.key}柱×${b.key}柱 自刑`, type: "刑", text: "同じ地支が重なり、自分自身との葛藤が生じやすい組み合わせ。" });
+      }
+      if ([4, 8].includes(branchDiff)) {
+        results.push({ name: `${a.key}柱×${b.key}柱 三合候補`, type: "合", text: "協力関係の候補。三つ揃うと強力な協力関係が生まれる。" });
+      }
+    }
+  }
+  return results;
+}
+
 function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, affairScore, workEx, seimeiResult, tenchusatsu, birthYear, gender, day, currentAge) {
   const stages = [];
 
@@ -6211,7 +6251,7 @@ function render(event) {
           <div class="yin-yang-row"><b>年柱</b> ${pillars.year.stem}${pillars.year.branch}（${yinYang[stems.indexOf(pillars.year.stem)]}/${yinYang[branches.indexOf(pillars.year.branch)]}）</div>
           <div class="yin-yang-row"><b>月柱</b> ${pillars.month.stem}${pillars.month.branch}（${yinYang[stems.indexOf(pillars.month.stem)]}/${yinYang[branches.indexOf(pillars.month.branch)]}）</div>
           <div class="yin-yang-row"><b>日柱</b> ${pillars.day.stem}${pillars.day.branch}（${yinYang[stems.indexOf(pillars.day.stem)]}/${yinYang[branches.indexOf(pillars.day.branch)]}）</div>
-          <div class="yin-yang-row"><b>時柱</b> ${pillars.hour.stem}${pillars.hour.branch}（${yinYang[stems.indexOf(pillars.hour.stem)]}/${yinYang[branches.indexOf(pillars.hour.branch)]}）</div>
+          ${pillars.hour ? `<div class="yin-yang-row"><b>時柱</b> ${pillars.hour.stem}${pillars.hour.branch}（${yinYang[stems.indexOf(pillars.hour.stem)]}/${yinYang[branches.indexOf(pillars.hour.branch)]}）</div>` : '<div class="yin-yang-row"><b>時柱</b> 不明（出生時刻未入力）</div>'}
           <p class="info-text mt-6">${yinYin.summary}</p>
         </div>
       </div>`;
