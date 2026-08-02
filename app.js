@@ -5365,7 +5365,7 @@ function render(event) {
           return '<p class="note">この命式に異常干支はありません（通常干支）。</p>';
         }
         return `
-          <p class="note mb-10">異常干支とは、精神面で強い個性（鋭い感性・霊感・先見の明など）が出やすい60干支中13種の特殊な干支です。日柱にある場合が最も影響大。強烈TOP3は「丁亥・壬午・辛巳」で、この3つは月柱・年柱にあっても影響が出やすいとされます。</p>
+          <p class="note mb-10">生まれ持った干支の組み合わせの中で、特に感性が鋭く・直感力が強いタイプを示す特殊なパターンです。直感やひらめきに優れ、周囲が気づかないことに先に気づく才能があります。一番影響が強いのは生まれた日の干支、次いで生まれた月・年です。</p>
           <div class="abnormal-list">
             ${matches.map((m) => {
               const isTop = abnormalTopThree.includes(m.stem + m.branch);
@@ -5386,8 +5386,8 @@ function render(event) {
     ${(() => {
       const ishiki = analyzeIshiki(pillars, day);
       return `<div class="result-card expert-only">
-        <h3>意識と無意識（陰占の五行関係）</h3>
-        <p class="note mb-10">日干に対する他の干支の五行関係から、意識（相剋・比和）と無意識（相生）の割合を分析します。意識が多い＝苦労人・早咲き、無意識が多い＝恩恵型・遅咲き。</p>
+        <h3>意識と無意識（努力型か恵まれ型か）</h3>
+        <p class="note mb-10">自分を中心に、周囲との関係性から「意識して努力するタイプ」か「自然に恵まれるタイプ」かを判定します。意識が多い＝自分で切り開く苦労人・早咲き、無意識が多い＝周囲に助けられる恩恵型・遅咲き。</p>
         <div class="info-box is-steel">
           <div class="ishiki-counts">
             <span class="ishiki-count is-conscious">意識（相剋・比和）：<b>${ishiki.conscious}</b></span>
@@ -5412,7 +5412,7 @@ function render(event) {
       if (!niko) return '';
       return `<div class="result-card expert-only">
         <h3>二行干支</h3>
-        <p class="note mb-10">陰占の三柱が五行2行のみ、または2種類の干支のみで構成される場合、感情のみで行動しやすくフィーリング重視の行動力があるタイプになります。</p>
+        <p class="note mb-10">生年月日の干支が2種類の要素だけで構成されている場合、直感と感情で行動するパワフルなタイプになります。フィーリングを大切にし、行動力が抜群ですが、結婚して子供を持つと落ち着く傾向があります。</p>
         <div class="info-box is-purple">
           <div class="niko-pattern">
             ${niko.isTwoElements ? `<span class="niko-tag">五行2行のみ：${niko.elements.join("・")}</span>` : ''}
@@ -5426,8 +5426,8 @@ function render(event) {
       const henkoku = analyzeHenkoku(pillars);
       if (!henkoku) return '';
       return `<div class="result-card expert-only">
-        <h3>変剋律（異常干支の連続・準大運天中殺）</h3>
-        <p class="note mb-10">異常干支が2つ以上繋がって大運に出る場合「変剋律」といい、大運天中殺の代わりとなる運気変動が起こります。宿命の異常干支から判定します。</p>
+        <h3>変剋律（人生の大転換期）</h3>
+        <p class="note mb-10">生まれ持った特殊な干支が2つ以上連続して現れる時期は、人生の大きな転換期になります。環境が大きく変わり、精神的な試練を経て成長する時期です。最初の5年間は悩み抜くことが陽転の鍵になります。</p>
         <div class="info-box is-steel">
           <div class="henkoku-abnormal">宿命の異常干支：${henkoku.abnormalInMeimei.join("・")}</div>
           ${henkoku.matchedChains.length > 0 ? `
@@ -5448,8 +5448,8 @@ function render(event) {
     ${(() => {
       const konzai = analyzeKonzai(pillars);
       return `<div class="result-card expert-only">
-        <h3>混在占技（壁にぶつかる時期の判定）</h3>
-        <p class="note mb-10">宿命に異常干支がない人が、大運との組み合わせでスクランブル異常干支が成立する場合、人生で壁にぶつかる時期を予見できます。</p>
+        <h3>混在占技（壁にぶつかる時期）</h3>
+        <p class="note mb-10">普段は安定している人でも、特定の時期に突然壁にぶつかったり、迷路に入り込むような時期があるかを判定します。生年月日と運気の周期の組み合わせから、注意が必要な時期を見つけます。</p>
         <div class="info-box is-purple">
           <p class="info-text">${konzai.note}</p>
           ${konzai.hasScrambleBranch && !konzai.hasAbnormal ? '<div class="konzai-warn mt-6">⚠ 大運でスクランブル異常干支が成立した場合、天中殺の年と異常干支の年に注意が必要です。守護神が回ってくる年は救いがあります。</div>' : ''}
@@ -5460,8 +5460,8 @@ function render(event) {
       const tokushu = analyzeTokushuIso(pillars);
       if (tokushu.length === 0) return '';
       return `<div class="result-card expert-only">
-        <h3>特殊位相法（大半会・律音・納音・天剋地冲）</h3>
-        <p class="note mb-10">干支の特殊な組み合わせによる関係性を判定します。基本8種の位相法以外に、干支の組み合わせで成立する4種類の特殊位相法があります。</p>
+        <h3>特殊位相法（干支の珍しい組み合わせ）</h3>
+        <p class="note mb-10">生年月日の干支の珍しい組み合わせから、特別な結びつきや関係性を判定します。同じ干支の重なり、天干と地支の特殊な組み合わせなど、4種類のレアな関係性があります。</p>
         <div class="tokushu-list">
           ${tokushu.map(t => `
             <div class="tokushu-item">
@@ -5477,8 +5477,8 @@ function render(event) {
       <div class="bars">${Object.entries(counts).map(([key, value]) => `<div class="bar-row"><b>${key}</b><div class="bar"><i style="--bar-width:${(value / maxCount) * 100}%"></i></div><span>${value}</span></div>`).join("")}</div>
     </div>
     <div class="result-card expert-only">
-      <h3>位相法（地支の関係性）</h3>
-      <p class="note mb-10">年支・月支・日支の間に成立する関係を8種類の位相法で判定します。合法は結びつき・融合を、散法は衝突・ストレス・分裂を意味します。</p>
+      <h3>地支の関係性（結びつきとぶつかり合い）</h3>
+      <p class="note mb-10">生まれた年・月・日の地支（動物）同士の関係性を8種類のパターンで判定します。結びつきを表す関係は協力・融合を、ぶつかり合う関係はストレス・変化を意味します。</p>
       ${(() => {
         if (topologyResults.length === 0) {
           return '<p class="note">この命式の三柱間に位相法の関係は検出されませんでした。</p>';
@@ -5502,7 +5502,7 @@ function render(event) {
       if (kangouResults.length === 0) return '';
       return `<div class="result-card expert-only">
         <h3>干合法・干合支合・干合支害</h3>
-        <p class="note mb-10">天干同士の干合（引き寄せ合う関係）と、地支の支合・害法の組み合わせを判定します。干合支合は非常に強い結びつき、干合支害は表面的な惹かれと内在する摩擦のアンビバレントな関係です。</p>
+        <p class="note mb-10">天干（上の文字）同士の引き寄せ合う関係と、地支（下の文字）の結びつき・摩擦の組み合わせを判定します。両方が結びつく場合は非常に強い縁、引き寄せつつも摩擦がある場合は「惹かれるけど衝突する」複雑な関係です。</p>
         <div class="kangou-list">
           ${kangouResults.map(r => `
             <div class="kangou-item">
@@ -5517,8 +5517,8 @@ function render(event) {
       const eitenResults = analyzeEitenchishi(pillars);
       if (eitenResults.length === 0) return '';
       return `<div class="result-card expert-only">
-        <h3>洩天地支（えいてんちし）</h3>
-        <p class="note mb-10">天干が地支を生じる（相生）関係の干支を「洩天地支」と言います。内面のエネルギーが外面に自然に表れやすい干支です。</p>
+        <h3>洩天地支（内面が自然に表れる干支）</h3>
+        <p class="note mb-10">内面のエネルギーが自然に外面に表れやすい干支を判定します。自分の中にある才能や思いが、自然に周囲に伝わるタイプの干支です。</p>
         <div class="eiten-list">
           ${eitenResults.map(r => `
             <div class="eiten-item">
@@ -5530,8 +5530,8 @@ function render(event) {
       </div>`;
     })()}
     <div class="result-card expert-only">
-      <h3>宿命天中殺（詳細判定）</h3>
-      <p class="note mb-10">宿命天中殺は、生日干支の天中殺範囲に年支・月支が含まれるか、生年干支の天中殺範囲に日支が含まれるかで判定します。日座・日居は特定の干支のみ該当します。</p>
+      <h3>宿命天中殺（型破りな人生の判定）</h3>
+      <p class="note mb-10">生まれ持った命式から、常識の枠に収まらない型破りな人生を歩むかを判定します。特定の干支の組み合わせがある場合、既存の枠組みにとらわれない独自の人生になりやすいです。</p>
       ${(() => {
         const items = [];
         if (fateTenchu.seinen) items.push({ name: "生年天中殺", note: "生日干支の天中殺範囲に年支が含まれる。常識の枠を持たず、型破りな人生になりやすい。" });
@@ -5556,8 +5556,8 @@ function render(event) {
       })()}
     </div>
     <div class="result-card expert-only">
-      <h3>守護神</h3>
-      <p class="note mb-10">全体守護神は、内面のバランスを整える要素です。強すぎる性質を抑え、足りない性質を補うものが守護神となります（蔵干は考慮しません）。</p>
+      <h3>守護神（心のバランスを整える要素）</h3>
+      <p class="note mb-10">内面の5つの要素（木・火・土・金・水）のバランスを整えるのが守護神です。強すぎる性質を抑え、足りない性質を補うものを日頃の生活に取り入れることで、心のバランスが保ちやすくなります。</p>
       ${(() => {
         if (guardian.isBalanced) {
           return '<p class="note">バランスが均等に配置されており、特定の守護神は不要なバランスの良い命式です。</p>';
@@ -5579,8 +5579,8 @@ function render(event) {
       const choukou = analyzeChoukou(day.stem, birthMonth);
       if (!choukou) return '';
       return `<div class="result-card expert-only">
-        <h3>調候守護神</h3>
-        <p class="note mb-10">調候守護神は、日干と生まれた季節のバランスを整える五行元素です。季節に応じて過剰な気を抑え、不足な気を補うことで運勢が安定します。</p>
+        <h3>調候守護神（季節と自分のバランス）</h3>
+        <p class="note mb-10">生まれた季節と自分の性質のバランスを整える要素を判定します。季節によって強すぎる性質を抑え、足りない性質を補うことで、運勢が安定しやすくなります。</p>
         <div class="info-box is-green">
           <div class="choukou-info">
             <span><b>日干：</b>${choukou.dayStem}</span>
@@ -5606,8 +5606,8 @@ function render(event) {
     ${(() => {
       const ryudo = analyzeRyudo(mainStars);
       return `<div class="result-card expert-only">
-        <h3>流動法（人間関係の自然・不自然）</h3>
-        <p class="note mb-10">中央（自分）と各方位の星の五行関係から、人間関係の自然さを判定します。自然=恵まれやすい、不自然=工夫が必要。</p>
+        <h3>流動法（人間関係の相性）</h3>
+        <p class="note mb-10">自分を中心に、各方位（目上・目下・友人・家族）との相性の良し悪しを判定します。相性が良い＝自然に恵まれやすい、相性が悪い＝工夫が必要ですが成長できる関係です。</p>
         <div class="ryudo-list">
           ${ryudo.map(r => `
             <div class="ryudo-item${r.isNatural ? " is-natural" : " is-unnatural"}">
@@ -5624,8 +5624,8 @@ function render(event) {
     ${(() => {
       const junkan = analyzeJunkan(mainStars);
       return `<div class="result-card expert-only">
-        <h3>循環法（精神の中心・極）</h3>
-        <p class="note mb-10">陽占の十大主星の相生関係を辿り、循環が止まる星（極）を導き出します。極は精神の中心であり、ものの考え方の根幹を表します。</p>
+        <h3>循環法（ものの考え方の根幹）</h3>
+        <p class="note mb-10">性格を表す5つの星のエネルギーの流れを辿り、循環が止まる星（精神の中心）を導き出します。この星が「ものの考え方の根幹」になり、人生の土台となる考え方を表します。</p>
         <div class="info-box is-blue">
           <div class="junkan-pole"><b>極（精神の中心）：</b><span class="junkan-pole-star">${junkan.poleStar}</span></div>
           ${junkan.chain.length > 0 ? `<div class="junkan-chain">相生の流れ：${junkan.chain.join(" → ")} → <b>止</b></div>` : ""}
@@ -5637,7 +5637,7 @@ function render(event) {
       const es = analyzeEastSouth(mainStars);
       return `<div class="result-card expert-only">
         <h3>東方星と南方星の関係（現実と理想）</h3>
-        <p class="note mb-10">東方星は現実、南方星は理想（精神）を表します。この関係から人生の優先順位のパターンがわかります。</p>
+        <p class="note mb-10">東方の星は「現実・収入・社会的地位」を、南方の星は「理想・やりがい・夢」を表します。この2つの星の関係から、現実を優先するか理想を優先するかの人生の傾向が分かります。</p>
         <div class="info-box is-gold">
           <div class="es-relation-title">${es.title}</div>
           <div class="es-relation-stars">東方星：${es.eastStar}（${es.eastEl}） / 南方星：${es.southStar}（${es.southEl}） / 関係：${es.rel}</div>
@@ -5648,8 +5648,8 @@ function render(event) {
     ${(() => {
       const kizu = analyzeKizu(counts);
       return `<div class="result-card expert-only">
-        <h3>気図法（内的エネルギー分布）</h3>
-        <p class="note mb-10">宿命の五行エネルギーを自然界の定位置（東：木・西：金・北：水・南：火・中央：土）に配置し、縦線・横線の強さを比較します。中央は比較に含みません。</p>
+        <h3>気図法（精神性と行動力のどちらが強いか）</h3>
+        <p class="note mb-10">内面の5つのエネルギー（木・火・土・金・水）を自然界の定位置に配置し、縦線（精神性）と横線（行動力）のどちらが強いかを比較します。縦線が強い＝感受性豊か、横線が強い＝実行力があるタイプです。</p>
         <div class="info-box is-steel">
           <div class="kizu-type"><b>タイプ：</b>${kizu.type}</div>
           <div class="kizu-bars">
@@ -5666,8 +5666,8 @@ function render(event) {
       if (!hachimon) return '';
       const dirLabels = { north: "北", south: "南", east: "東", west: "西", center: "中央" };
       return `<div class="result-card expert-only">
-        <h3>八門法（気の流れと器の型）</h3>
-        <p class="note mb-10">日干を中心に配置した気の流れ（気図五行）から、器の型を判定します。縦線が相生（無意識）、横線が相剋（意識）を表します。</p>
+        <h3>八門法（あなたの器の型）</h3>
+        <p class="note mb-10">自分を中心にしたエネルギーの流れから、どんな「器」のタイプかを判定します。縦線が強い＝感受性・直感型、横線が強い＝論理・行動型で、合計8パターンの器の型があります。</p>
         <div class="info-box is-purple">
           <div class="hachimon-type"><b>器の型：</b><span class="hachimon-type-name">${hachimon.type.name}</span></div>
           <div class="hachimon-positions">
@@ -5685,8 +5685,8 @@ function render(event) {
       const combos = analyzeStarCombos(mainStars, [energyYear, energyMonth, energyDay]);
       if (combos.length === 0) return '';
       return `<div class="result-card expert-only">
-        <h3>星の組み合わせ（十態・特殊）</h3>
-        <p class="note mb-10">十大主星と十二大従星の組み合わせから、その人に起こり得る現象を読み取ります。</p>
+        <h3>星の組み合わせ（起こりやすい現象）</h3>
+        <p class="note mb-10">性格を表す星と心の状態を表す星の特定の組み合わせから、その人に起こりやすい現象や傾向を読み取ります。</p>
         <div class="combo-list">
           ${combos.map(c => `
             <div class="combo-item">
@@ -5701,8 +5701,8 @@ function render(event) {
       const triples = analyzeTripleStar(mainStars);
       if (triples.length === 0) return '';
       return `<div class="result-card expert-only">
-        <h3>同星3連変化（十大主星の偏り）</h3>
-        <p class="note mb-10">同じ十大主星が3つ以上命式にある場合、精神的な偏りが生じ、奇人・変人・天才型が多いと言われます。</p>
+        <h3>同星3連変化（天才・変人タイプ）</h3>
+        <p class="note mb-10">同じ性格の星が3つ以上ある場合、その性質が極端に強くなります。一般的な常識に当てはまらない、独特の個性を持つ天才型・変人型が多いと言われます。</p>
         <div class="triple-list">
           ${triples.map(t => `
             <div class="triple-item">
@@ -5717,8 +5717,8 @@ function render(event) {
       const biases = analyzeEnergyBias([energyYear, energyMonth, energyDay]);
       if (biases.length === 0) return '';
       return `<div class="result-card expert-only">
-        <h3>十二大従星の偏り</h3>
-        <p class="note mb-10">同じ十二大従星が2つ以上ある場合、星の性質が強く現れます。</p>
+        <h3>十二大従星の偏り（強く現れる性質）</h3>
+        <p class="note mb-10">心の状態を表す星が2つ以上重なると、その星の性質が人生において強く現れます。例えば、行動的な星が2つあれば常に動き回る人生になりやすいです。</p>
         <div class="bias-list">
           ${biases.map(b => `
             <div class="bias-item">
@@ -5732,8 +5732,8 @@ function render(event) {
     ${(() => {
       const sanbun = analyzeSanbun(mainStars, [energyYear, energyMonth, energyDay]);
       return `<div class="result-card expert-only">
-        <h3>三分法（人生3分割の運気流）</h3>
-        <p class="note mb-10">一生を初年期・中年期・晩年期の3分割し、十大主星（本能）と十二大従星（心）の組み合わせから運気の流れを読み取ります。現実星と精神星のミスマッチ数から人生の特徴が分かります。</p>
+        <h3>三分法（人生3分割の運気の流れ）</h3>
+        <p class="note mb-10">一生を若年期・中年期・晩年期の3つに分け、それぞれの時期の「本能（性格）」と「心（世代）」の組み合わせから運気の流れを読み取ります。現実的な性質と精神的な性質のミスマッチ数から、人生の全体像が分かります。</p>
         <div class="info-box is-steel">
           <div class="sanbun-periods">
             ${sanbun.periods.map(p => `
@@ -5755,8 +5755,8 @@ function render(event) {
       const sekishoku = analyzeSekishoku(mainStars);
       if (!sekishoku) return '';
       return `<div class="result-card expert-only">
-        <h3>適職占技（東方星・南方星から適職を探す）</h3>
-        <p class="note mb-10">東方星は「現実のスタート（収入の窓口）」、南方星は「精神のスタート（やりがい・夢）」を表します。東と南の星の関係から、仕事に対する傾向が分かります。</p>
+        <h3>適職占技（あなたに向いている仕事）</h3>
+        <p class="note mb-10">東方の星は「現実の収入・社会的地位」、南方の星は「やりがい・夢・生きがい」を表します。この2つの星の関係から、お金重視かやりがい重視か、仕事に対する姿勢の傾向が分かります。</p>
         <div class="info-box is-purple">
           <div class="sekishoku-relation"><b>東と南の関係：</b><span class="sekishoku-relation-val">${sekishoku.relation}</span></div>
           <p class="info-text mt-6">${sekishoku.relationText}</p>
@@ -5778,8 +5778,8 @@ function render(event) {
     ${(() => {
       const joritsu = analyzeJoritsu(mainStars);
       return `<div class="result-card expert-only">
-        <h3>情的か理性的か（横線の星から判断）</h3>
-        <p class="note mb-10">陽占の横線（東・西・中央）に南・北定位置星（玉堂・龍高・鳳閣・調舒）があるかどうかで、情的か理性的かを判断します。親離れ・子離れの早さや、恋愛結婚かお見合い結婚かの傾向も分かります。</p>
+        <h3>情的か理性的か（感情豊かかクールか）</h3>
+        <p class="note mb-10">性格を表す星の配置から、あなたが「情的（感情豊か）」か「理性的（クール）」かを判定します。親離れ・子離れの早さや、恋愛結婚に向いているかお見合い結婚に向いているかの傾向も分かります。</p>
         <div class="info-box is-steel">
           <div class="joritsu-type"><b>タイプ：</b><span class="joritsu-type-name">${joritsu.type}</span></div>
           <p class="info-text mt-6">${joritsu.text}</p>
