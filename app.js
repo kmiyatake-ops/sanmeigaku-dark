@@ -5397,6 +5397,107 @@ function renderCompat(event) {
   compatResult.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk) {
+  const center = mainStars.center;
+
+  const starKeyword = {
+    貫索星: "自立心が強く信念を曲げない",
+    石門星: "協調性に優れ人脈を広げる",
+    鳳閣星: "自然体で表現力がある",
+    調舒星: "感性が鋭く独自の世界を持つ",
+    禄存星: "包容力があり人を支える",
+    司禄星: "堅実で着実に積み重ねる",
+    車騎星: "行動力と突破力がある",
+    牽牛星: "責任感と品格がある",
+    龍高星: "改革志向で型破り",
+    玉堂星: "知性が高く学ぶ力がある"
+  };
+
+  const balanceDesc = {
+    balanced: "五行のバランスが良く心が安定しやすい",
+    moderate: "五行にやや偏りがありバランスを意識すると良い",
+    imbalanced: "五行の偏りが大きく心のバランスを整えることが課題"
+  };
+
+  const effortType = ishiki.conscious > ishiki.unconscious
+    ? "自ら切り開く苦労人タイプ（早咲き傾向）"
+    : ishiki.unconscious > ishiki.conscious
+    ? "周囲に助けられる恩恵タイプ（遅咲き傾向）"
+    : "努力と恩恵のバランス型";
+
+  const workRank = workEx.rank || "";
+  const workScore = workEx.score || 0;
+
+  const marriageLevel = marriageScore >= 80 ? "非常に向いている" : marriageScore >= 65 ? "向いている" : marriageScore >= 45 ? "普通" : marriageScore >= 30 ? "やや向いていない" : "向いていない";
+  const affairLevel = affairScore >= 80 ? "高危険" : affairScore >= 65 ? "要注意" : affairScore >= 45 ? "普通" : affairScore >= 25 ? "低め" : "安心";
+
+  const major = healthRisk.majorDiseaseRisks || [];
+  const healthSummary = major.length > 0
+    ? `${major[0].year}年（${major[0].age}歳）頃に${major[0].majorDiseases[0] ? major[0].majorDiseases[0].diseases.split("・")[0] : "健康リスク"}に注意`
+    : "現時点で大病リスクの高い年は検出されていない";
+
+  const tpSummary = turningPoints.length > 0
+    ? turningPoints.slice(0, 3).map(tp => `${tp.age}歳（${tp.year}年）${tp.type}`).join("、")
+    : "特筆すべき大転換期は検出されていない";
+
+  // ワンポイントアドバイス生成
+  const adviceParts = [];
+
+  // 性格の強みと注意点
+  const starAdvice = {
+    貫索星: "自分の軸は強みだが、人の意見に耳を傾ける柔軟さを持つことで孤立を防げる。",
+    石門星: "人脈力は武器だが、全員に良い顔をせず本当に大切にする関係を見極めることが鍵。",
+    鳳閣星: "自然体の魅力は本物だが、大事な場面で危機感を持つことでチャンスを逃さなくなる。",
+    調舒星: "感性の鋭さは才能だが、感情の波に飲まれず一歩引いて客観視する習慣を。",
+    禄存星: "人を支える優しさは宝だが、見返りを求めず自分をすり減らさない境界線を。",
+    司禄星: "堅実さは強みだが、変化を恐れず適度なリスクを取ることで成長が加速する。",
+    車騎星: "行動力は武器だが、一呼吸置いて周囲を巻き込むことで成果が倍増する。",
+    牽牛星: "品格と責任感は信頼の源だが、プライドを手放して素の自分を見せるとより慕われる。",
+    龍高星: "独創性は才能だが、自由と約束のバランスを取ることで信用を失わず革新できる。",
+    玉堂星: "知性は武器だが、理屈より相手の気持ちに寄り添うことで人間関係が深まる。"
+  };
+  if (starAdvice[center]) adviceParts.push(starAdvice[center]);
+
+  // バランス
+  if (balanceType === "imbalanced") adviceParts.push("五行の偏りが大きいので、守護神（不足している性質）を日常に取り入れて心のバランスを保つことが開運の鍵。");
+
+  // 努力タイプ
+  if (ishiki.conscious > ishiki.unconscious) adviceParts.push("自ら切り開く苦労人タイプ。若い頃の苦労は将来の財産になるので、諦めず経験を積み重ねること。");
+  else if (ishiki.unconscious > ishiki.conscious) adviceParts.push("周囲に助けられる恩恵タイプ。人との縁を大切にし、恩を忘れず返すことで運がさらに開く。");
+
+  // 結婚・浮気
+  if (marriageScore < 45) adviceParts.push("結婚には向いていない傾向があるが、パートナー選びを慎重にし、焦らず自分を高めることが大切。");
+  if (affairScore >= 65) adviceParts.push("浮気リスクが高め。誘惑に気をつけ、パートナーとの信頼関係を意識的に築くことが重要。");
+
+  // 健康
+  if (major.length > 0) adviceParts.push(`${major[0].year}年（${major[0].age}歳）頃に健康リスクが高まるため、早めの定期健診と生活習慣の改善を心がけて。`);
+
+  // ターニングポイント
+  if (turningPoints.length > 0) {
+    const firstTP = turningPoints[0];
+    adviceParts.push(`${firstTP.age}歳（${firstTP.year}年）の「${firstTP.type}」が最初の大きな転機。この時期は準備と勇気を持って変化を受け入れることが成長の鍵。`);
+  }
+
+  // 天中殺
+  adviceParts.push(`${tenchusatsu}天中殺の期間は大きな決断を避け、整理と準備に徹することが吉。`);
+
+  const onePointAdvice = adviceParts.join("\n\n");
+
+  return {
+    personality: `${starKeyword[center] || ""}タイプ。${balanceDesc[balanceType]}。`,
+    lifeFlow: sanbun.mismatchText,
+    effortType,
+    work: `${workRank}（${workScore}点）`,
+    marriage: `${marriageLevel}（${marriageScore}点）`,
+    affair: `${affairLevel}（${affairScore}点）`,
+    popularity: `異性から${mote.oppositeRank.rank}・同性から${mote.sameRank.rank}（異性${mote.oppositeScore}点・同性${mote.sameScore}点）`,
+    health: healthSummary,
+    turningPoints: tpSummary,
+    tenchu: `${tenchusatsu}天中殺`,
+    onePointAdvice
+  };
+}
+
 function render(event) {
   if (event) event.preventDefault();
   const result = document.querySelector("#result");
@@ -5467,6 +5568,9 @@ function render(event) {
   const specificJobs = buildSpecificJobs(mainStars.center, workEx);
   const parentingAdvice = buildParentingAdvice(mainStars.center);
   const troublePrevention = buildTroublePrevention(mainStars.center, tenchusatsu, turningPoints);
+  const ishiki = analyzeIshiki(pillars, day);
+  const sanbun = analyzeSanbun(mainStars, [energyYear, energyMonth, energyDay]);
+  const lifeSummary = buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk);
 
   // 浮気リスク・結婚適性度を事前計算（saveToHistoryで使用）
   const spouseEnergyForScore = getEnergyStar(day.stem, day.branch);
@@ -5538,6 +5642,29 @@ function render(event) {
       </label>
       <p class="view-toggle-hint expert-only">専門用語を含む詳細表示中。切り替えると分かりやすい表示になります。</p>
       <p class="view-toggle-hint simple-only">分かりやすい表示中。切り替えると専門的な詳細が見られます。</p>
+    </div>
+    <div class="result-card life-summary-card">
+      <h3 class="expert-only">総合人生鑑定</h3>
+      <h3 class="simple-only">どんな人生になるか（総合）</h3>
+      <div class="info-box is-gold">
+        <p class="info-text is-lead">${lifeSummary.personality}</p>
+        <p class="info-text mt-6">${lifeSummary.lifeFlow}</p>
+      </div>
+      <div class="life-summary-grid">
+        <div class="life-summary-item"><b>運の掴み方</b><span>${lifeSummary.effortType}</span></div>
+        <div class="life-summary-item"><b>仕事の適性</b><span>${lifeSummary.work}</span></div>
+        <div class="life-summary-item"><b>結婚適性</b><span>${lifeSummary.marriage}</span></div>
+        <div class="life-summary-item"><b>浮気リスク</b><span>${lifeSummary.affair}</span></div>
+        <div class="life-summary-item"><b>人気度</b><span>${lifeSummary.popularity}</span></div>
+        <div class="life-summary-item"><b>健康</b><span>${lifeSummary.health}</span></div>
+        <div class="life-summary-item"><b>人生の転機</b><span>${lifeSummary.turningPoints}</span></div>
+        <div class="life-summary-item"><b>天中殺</b><span>${lifeSummary.tenchu}</span></div>
+      </div>
+      <div class="life-advice-box">
+        <h4 class="expert-only">人生のワンポイントアドバイス</h4>
+        <h4 class="simple-only">あなたへのアドバイス</h4>
+        <div class="life-advice-text">${lifeSummary.onePointAdvice.split("\n\n").map(p => `<p>${p}</p>`).join("")}</div>
+      </div>
     </div>
     <div class="section-group-header expert-only">運勢の全体像<span class="sg-sub">今年の運勢・開運アクション</span></div>
     <div class="result-card yearly-fortune-card">
@@ -5763,10 +5890,15 @@ function render(event) {
       })()}
     </div>
     <div class="section-group-header expert-only">命式の基本情報<span class="sg-sub">姓名判断・陰占・特殊干支</span></div>
+    <div class="section-group-header simple-only">名前の運勢<span class="sg-sub">姓名判断</span></div>
     ${(() => {
       if (seimeiResult.error) {
         return `<div class="result-card seimei-card expert-only">
           <h3>姓名判断</h3>
+          <p class="note">${seimeiResult.error}</p>
+        </div>
+        <div class="result-card seimei-card simple-only">
+          <h3>名前の運勢</h3>
           <p class="note">${seimeiResult.error}</p>
         </div>`;
       }
@@ -5781,6 +5913,19 @@ function render(event) {
         { name: "外格", value: r.gaikaku, rank: r.gaiRank, desc: "総格－人格。対人関係・社会での立ち位置。", period: "社会に出てから" },
         { name: "総格", value: r.soukaku, rank: r.souRank, desc: "姓名全画数合計。晩年の運勢・人生の到達点。", period: "50代以降" }
       ];
+      // 専門用語なし用の簡易説明
+      const gokakuSimple = [
+        { name: "姓の運勢", rank: r.tenRank, text: "家系や祖先から受け継ぐ基盤の運勢を表します。", period: "生涯を通じて影響" },
+        { name: "性格の核", rank: r.jinRank, text: "名前の中央部分で、あなたの性格の核心と人生の方向性を表します。最も重要な部分です。", period: "20代後半〜50代で最も影響" },
+        { name: "感受性", rank: r.chiRank, text: "名前の部分で、内面の感受性や恋愛の傾向を表します。", period: "0歳〜20代前半で影響" },
+        { name: "対人関係", rank: r.gaiRank, text: "社会に出てからの対人関係や、他人からの見え方を表します。", period: "社会に出てから影響" },
+        { name: "晩年の運勢", rank: r.souRank, text: "名前全体の合計で、晩年の運勢と人生の到達点を表します。", period: "50代以降で影響" }
+      ];
+      const simpleBalance = r.tenJinRel === "相生" && r.jinChiRel === "相生"
+        ? "名前の各部分のバランスが良く、環境に恵まれやすく内面と行動が一致しやすいタイプです。"
+        : r.tenJinRel === "相剋" || r.jinChiRel === "相剋"
+        ? "名前の各部分に少し摩擦があり、家庭環境と自分の方向性にズレを感じやすいタイプです。"
+        : "名前の各部分が同じ傾向で、安定感がありますが、柔軟性に欠ける面があります。";
       return `<div class="result-card seimei-card expert-only">
         <h3>姓名判断（${r.lastName} ${r.firstName}）</h3>
         <div class="seimei-overview">
@@ -5818,6 +5963,55 @@ function render(event) {
             <span class="seimei-rel">人格→地格: ${r.jinChiRel}</span>
           </div>
           <p class="note-text-sm mt-6">${r.tenJinRel === "相生" ? "天格から人格へは相生（支え合う）の流れがあり、環境から個人の運への援助が得やすい。" : r.tenJinRel === "相剋" ? "天格から人格へは相剋（ぶつかり合う）の流れがあり、家庭背景と個人の方向性に摩擦が生じやすい。" : "天格と人格は同じ性質（比和）で、安定感がある。"}${r.jinChiRel === "相生" ? "人格から地格へも相生で、内面と行動が一致しやすい。" : r.jinChiRel === "相剋" ? "人格から地格へは相剋で、思っていることと行動にズレが生じやすい。" : "人格と地格も同じ性質（比和）で、内面と外面の調和が取りやすい。"}</p>
+        </div>
+        <div class="seimei-fortune-scores">
+          <div class="seimei-fs-item">
+            <div class="seimei-fs-header"><b>金運</b></div>
+            <div class="seimei-fs-bar"><i class="is-money" style="--seimei-width:${r.moneyFortune}%"></i></div>
+            <div class="seimei-fs-num">${r.moneyFortune}点</div>
+          </div>
+          <div class="seimei-fs-item">
+            <div class="seimei-fs-header"><b>恋愛運</b></div>
+            <div class="seimei-fs-bar"><i class="is-love" style="--seimei-width:${r.loveFortune}%"></i></div>
+            <div class="seimei-fs-num">${r.loveFortune}点</div>
+          </div>
+          <div class="seimei-fs-item">
+            <div class="seimei-fs-header"><b>仕事運</b></div>
+            <div class="seimei-fs-bar"><i class="is-work" style="--seimei-width:${r.workFortune}%"></i></div>
+            <div class="seimei-fs-num">${r.workFortune}点</div>
+          </div>
+        </div>
+      </div>
+      <div class="result-card seimei-card simple-only">
+        <h3>名前の運勢（${r.lastName} ${r.firstName}）</h3>
+        <div class="seimei-overview">
+          <div class="seimei-overall ${overallClass}">
+            <span class="seimei-overall-label">総合判定</span>
+            <span class="seimei-overall-rank">${r.overallRank}</span>
+            <span class="seimei-overall-sub">${rankScore[r.overallRank] || 55}点 / 良い${r.goodCount} / 悪い${r.badCount}</span>
+          </div>
+          <div class="seimei-stroke-info">
+            <div class="seimei-stroke-row"><b>姓</b> ${r.lastChars.map((ch, i) => `${ch}(${r.lastStrokes[i]})`).join(" ＋ ")} = <strong>${r.tenkaku}画</strong></div>
+            <div class="seimei-stroke-row"><b>名</b> ${r.firstChars.map((ch, i) => `${ch}(${r.firstStrokes[i]})`).join(" ＋ ")} = <strong>${r.chikaku}画</strong></div>
+          </div>
+        </div>
+        <div class="seimei-gokaku">
+          ${gokakuSimple.map((g) => `
+            <div class="seimei-gokaku-item ${rankClass[g.rank.rank] || ''}">
+              <div class="seimei-gokaku-head">
+                <b>${g.name}</b>
+                <span class="seimei-gokaku-rank">${g.rank.rank}</span>
+                <span class="seimei-gokaku-score">${rankScore[g.rank.rank] || 50}点</span>
+              </div>
+              <div class="seimei-gokaku-keyword">${g.rank.keyword}</div>
+              <div class="seimei-gokaku-desc">${g.text}</div>
+              <div class="seimei-gokaku-period">影響が強い時期: ${g.period}</div>
+              <div class="seimei-gokaku-text">${g.rank.text}</div>
+            </div>
+          `).join("")}
+        </div>
+        <div class="info-box is-gold mt-10">
+          <p class="info-text">${simpleBalance}</p>
         </div>
         <div class="seimei-fortune-scores">
           <div class="seimei-fs-item">

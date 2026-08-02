@@ -3981,3 +3981,53 @@ button {
   border-radius: 6px;
   line-height: 1.6;
 }
+
+/* === 総合人生鑑定 === */
+.life-summary-card {
+  border: 2px solid var(--gold);
+  background: linear-gradient(135deg, rgba(217,164,65,0.06), rgba(20,24,34,0.82));
+}
+.life-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.life-summary-item {
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+}
+.life-summary-item b {
+  display: block;
+  font-size: 12px;
+  color: var(--gold);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.life-summary-item span {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.life-advice-box {
+  margin-top: 16px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(217,164,65,0.10), rgba(95,168,211,0.06));
+  border: 1px solid var(--gold);
+}
+.life-advice-box h4 {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: var(--gold);
+  font-weight: 700;
+}
+.life-advice-text p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text);
+}
+.life-advice-text p:last-child { margin-bottom: 0; }
