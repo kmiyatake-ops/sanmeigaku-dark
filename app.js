@@ -2314,6 +2314,125 @@ function analyzeYearlyFortune(day, pillars, taiun, currentAge, thisYear, balance
   };
 }
 
+// 大運・年運の星を分かりやすく解説する関数
+function starToPlainDesc(starName, isTenchu, rel, period) {
+  const starDesc = {
+    "貫索星": {
+      title: "自分の道を貫く時期",
+      desc: "自分の信念を大切にし、周囲に流されずに進む時期です。",
+      good: "例：自分のやりたい仕事を貫いて認められる、一人で始めたことが評価される",
+      bad: "例：頑固になりすぎて周囲と対立する、人のアドバイスを聞かずに失敗する",
+      neutral: "例：今の仕事や関係を深めつつ、自分のペースを守るのが正解"
+    },
+    "石門星": {
+      title: "人とのつながりが鍵の時期",
+      desc: "協力やチームワークが成果を生む時期です。",
+      good: "例：新しいコミュニティで重要な人脈ができる、チームで大きなプロジェクトを成功させる",
+      bad: "例：人間関係のトラブルに巻き込まれる、グループ内の対立で板挟みになる",
+      neutral: "例：交流会に参加して来年に向けた人脈を蓄える、今の仲間との関係を深める"
+    },
+    "鳳閣星": {
+      title: "楽しさと表現力が広がる時期",
+      desc: "明るさや表現力が運を呼び込む時期です。",
+      good: "例：SNSの発信が評価されて仕事につながる、趣味が収入になる",
+      bad: "例：遊びすぎて健康やお金を損なう、だらけすぎて仕事に支障が出る",
+      neutral: "例：週末は趣味を楽しみつつ平日はしっかり働くバランスが取れる"
+    },
+    "調舒星": {
+      title: "感受性が鋭くなる時期",
+      desc: "感性や直感が冴える一方、感情の波にも注意が必要です。",
+      good: "例：ひらめいたアイデアが評価される、クリエイティブな仕事で成果を出す",
+      bad: "例：些細なことで怒って人間関係を悪化させる、感情の波で仕事が手につかない",
+      neutral: "例：日記や一人の時間で自分の感情を整理する内省の期間"
+    },
+    "禄存星": {
+      title: "愛情と奉仕が運を呼ぶ時期",
+      desc: "人に親切にすることで自分にも良いことが巡ってくる時期です。",
+      good: "例：後輩を指導して自分の評価も上がる、人に尽くしたことが形になって返ってくる",
+      bad: "例：人に尽くしすぎて自分が疲弊する、いい人になりすぎて利用される",
+      neutral: "例：お世話になった人に挨拶回りをして関係を深める"
+    },
+    "司禄星": {
+      title: "蓄積と堅実さが報われる時期",
+      desc: "コツコツ積み重ねたことが評価される時期です。",
+      good: "例：長年続けた勉強が資格試験合格につながる、地道な努力が昇進に結びつく",
+      bad: "例：変化を恐れてチャンスを逃す、安全策ばかり取って成長がない",
+      neutral: "例：貯金や基盤作りを着実に進め、来年の飛躍に備える"
+    },
+    "車騎星": {
+      title: "行動力が試される時期",
+      desc: "動いて結果を出すことが求められる時期です。",
+      good: "例：営業成績でトップを取る、コンテストに応募して入賞する",
+      bad: "例：焦って失敗する、勢いで契約して後で条件が悪いことに気づく",
+      neutral: "例：体力作りから始め、来年の勝負に備える"
+    },
+    "牽牛星": {
+      title: "名誉と責任が訪れる時期",
+      desc: "評価される一方で、責任も重くなる時期です。",
+      good: "例：昇進して役職がつき、やりがいと充実感を感じる、表彰される",
+      bad: "例：責任が重すぎて潰されそうになる、スケジュール管理ができずチームが混乱する",
+      neutral: "例：地道に実績を積み上げて「次は任せよう」と言われる"
+    },
+    "龍高星": {
+      title: "変革と冒険の時期",
+      desc: "環境が大きく変わる可能性がある時期です。",
+      good: "例：未経験の業界に転職して活躍し始める、新しい分野に挑戦して成功する",
+      bad: "例：引っ越し・転職・別れが同時に起きて心の余裕がない、変化が多すぎて疲弊する",
+      neutral: "例：趣味を一つ変えてみるなど、小さな冒険から始める"
+    },
+    "玉堂星": {
+      title: "学びと知恵が評価される時期",
+      desc: "知識や学習が成果につながる時期です。",
+      good: "例：取得した資格が活きる部署に異動する、専門知識が評価されて仕事が増える",
+      bad: "例：理屈ばかりで行動が遅れる、考えすぎてチャンスを逃す",
+      neutral: "例：オンライン講座を受講し、来年に向けたスキルを身につける"
+    }
+  };
+
+  // 従星（十二大従星）の分かりやすい解説
+  const energyDesc = {
+    "天貴星": { title: "品性と役割意識を磨く時期", desc: "自分の役割を見つけ、品と向上心を大切にする時期です。" },
+    "天南星": { title: "内なる想いを形にする時期", desc: "自分の主張を行動に変え、新しい道を開く時期です。" },
+    "天禄星": { title: "コツコツ積み重ねて安定を築く時期", desc: "堅実な積み重ねで将来の安定を作る時期です。" },
+    "天将星": { title: "大きな変化を生み出す時期", desc: "創造と破壊の波が訪れ、新しいものを生み出す時期です。" },
+    "天堂星": { title: "一歩下がって協調する時期", desc: "自制心を持ち、周囲と協調することで道が開ける時期です。" },
+    "天恍星": { title: "現状を打破し飛び込む時期", desc: "新しい環境に飛び込み、自分を変える時期です。" },
+    "天印星": { title: "目の前の現実に集中する時期", desc: "今の環境に適応し、準備を整える時期です。" },
+    "天報星": { title: "前例のない道を切り開く時期", desc: "変化と直感力で新しい道を作る時期です。" },
+    "天胡星": { title: "感受性と集中力が高まる時期", desc: "鋭い感性で無から有を生み出す時期です。" },
+    "天極星": { title: "環境に合わせて持続する時期", desc: "柔軟に環境に適応し、心を整える時期です。" },
+    "天庫星": { title: "一つのことに集中して探究する時期", desc: "一つの分野を深く掘り下げ、専門性を高める時期です。" },
+    "天馳星": { title: "動きの中で変化を受け入れる時期", desc: "変化の多い中で静けさを保ち、柔軟に生きる時期です。" }
+  };
+
+  const relText = {
+    "相生": "あなたを後押しする関係",
+    "比和": "同じ性質が重なり勢いが増す関係",
+    "相剋": "ぶつかり合い摩擦を生む関係",
+    "反剋": "予期せぬ逆風が吹く関係"
+  };
+
+  const info = starDesc[starName];
+  if (!info) return null;
+
+  let tone = "neutral";
+  if (isTenchu) {
+    tone = "bad";
+  } else if (rel === "相生" || rel === "比和") {
+    tone = "good";
+  } else if (rel === "相剋" || rel === "反剋") {
+    tone = "bad";
+  }
+
+  return {
+    title: info.title,
+    desc: info.desc,
+    example: info[tone],
+    relText: rel ? relText[rel] || rel : "",
+    isTenchu
+  };
+}
+
 function buildYearlyConcreteDescription(yf, simple) {
   const parts = [];
   const yearStarName = yf.yearStar;
@@ -5434,6 +5553,70 @@ function render(event) {
         <div class="yearly-fortune-rel">
           <span><b>日干との相性関係</b> 年運: ${yearlyFortune.yearRel}${yearlyFortune.taiunRel ? ` / 大運: ${yearlyFortune.taiunRel}` : ''}</span>
         </div>
+      </div>
+      ${(() => {
+        const taiunInfo = yearlyFortune.taiunStar ? starToPlainDesc(yearlyFortune.taiunStar, yearlyFortune.isTaiunTenchu, yearlyFortune.taiunRel, "大運") : null;
+        const yearInfo = starToPlainDesc(yearlyFortune.yearStar, yearlyFortune.isYearTenchu, yearlyFortune.yearRel, "年運");
+        const energyDescMap = {
+          "天貴星": "品性と役割意識を磨く時期", "天南星": "内なる想いを形にする時期", "天禄星": "コツコツ積み重ねて安定を築く時期",
+          "天将星": "大きな変化を生み出す時期", "天堂星": "一歩下がって協調する時期", "天恍星": "現状を打破し飛び込む時期",
+          "天印星": "目の前の現実に集中する時期", "天報星": "前例のない道を切り開く時期", "天胡星": "感受性と集中力が高まる時期",
+          "天極星": "環境に合わせて持続する時期", "天庫星": "一つのことに集中して探究する時期", "天馳星": "動きの中で変化を受け入れる時期"
+        };
+        const taiunEnergyTitle = taiunInfo && yearlyFortune.taiunEnergy ? energyDescMap[yearlyFortune.taiunEnergy.name] : "";
+        const yearEnergyTitle = yearInfo && yearlyFortune.yearEnergy ? energyDescMap[yearlyFortune.yearEnergy.name] : "";
+        let html = '<div class="taiun-year-friendly">';
+        if (taiunInfo) {
+          html += `<div class="tyf-block tyf-taiun${yearlyFortune.isTaiunTenchu ? " is-tenchu" : ""}">
+            <div class="tyf-header"><span class="tyf-period">大運（10年周期）</span>${yearlyFortune.isTaiunTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
+            <div class="tyf-title">${taiunInfo.title}</div>
+            <div class="tyf-desc">${taiunInfo.desc}</div>
+            ${taiunEnergyTitle ? `<div class="tyf-energy">ライフテーマ：${taiunEnergyTitle}</div>` : ''}
+            <div class="tyf-rel">あなたとの相性：${taiunInfo.relText || "影響範囲外"}</div>
+            <div class="tyf-example">${taiunInfo.example}</div>
+            ${yearlyFortune.isTaiunTenchu ? '<div class="tyf-tenchu-note">天中殺中：大きな決断は避け、整理と準備に徹するのが正解。例：転職や結婚は時期が明けてからにする</div>' : ''}
+          </div>`;
+        }
+        if (yearInfo) {
+          html += `<div class="tyf-block tyf-year${yearlyFortune.isYearTenchu ? " is-tenchu" : ""}">
+            <div class="tyf-header"><span class="tyf-period">年運（今年1年）</span>${yearlyFortune.isYearTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
+            <div class="tyf-title">${yearInfo.title}</div>
+            <div class="tyf-desc">${yearInfo.desc}</div>
+            ${yearEnergyTitle ? `<div class="tyf-energy">今年のテーマ：${yearEnergyTitle}</div>` : ''}
+            <div class="tyf-rel">あなたとの相性：${yearInfo.relText || "影響範囲外"}</div>
+            <div class="tyf-example">${yearInfo.example}</div>
+            ${yearlyFortune.isYearTenchu ? '<div class="tyf-tenchu-note">天中殺の年：新しいスタートは来年に回し、準備と体力作りに専念する。例：新プロジェクトの立ち上げは避ける</div>' : ''}
+          </div>`;
+        }
+        html += '</div>';
+        return html;
+      })()}
+      <div class="yearly-fortune-overview simple-only">
+        ${(() => {
+          const taiunInfo = yearlyFortune.taiunStar ? starToPlainDesc(yearlyFortune.taiunStar, yearlyFortune.isTaiunTenchu, yearlyFortune.taiunRel, "大運") : null;
+          const yearInfo = starToPlainDesc(yearlyFortune.yearStar, yearlyFortune.isYearTenchu, yearlyFortune.yearRel, "年運");
+          let html = '<div class="taiun-year-friendly">';
+          if (taiunInfo) {
+            html += `<div class="tyf-block tyf-taiun${yearlyFortune.isTaiunTenchu ? " is-tenchu" : ""}">
+              <div class="tyf-header"><span class="tyf-period">今の10年間の運気</span>${yearlyFortune.isTaiunTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
+              <div class="tyf-title">${taiunInfo.title}</div>
+              <div class="tyf-desc">${taiunInfo.desc}</div>
+              <div class="tyf-example">${taiunInfo.example}</div>
+              ${yearlyFortune.isTaiunTenchu ? '<div class="tyf-tenchu-note">注意が必要な時期：大きな決断は避け、準備に徹しましょう</div>' : ''}
+            </div>`;
+          }
+          if (yearInfo) {
+            html += `<div class="tyf-block tyf-year${yearlyFortune.isYearTenchu ? " is-tenchu" : ""}">
+              <div class="tyf-header"><span class="tyf-period">今年1年の運気</span>${yearlyFortune.isYearTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
+              <div class="tyf-title">${yearInfo.title}</div>
+              <div class="tyf-desc">${yearInfo.desc}</div>
+              <div class="tyf-example">${yearInfo.example}</div>
+              ${yearlyFortune.isYearTenchu ? '<div class="tyf-tenchu-note">注意が必要な年：新しいことを始めるより、準備と体力作りに専念しましょう</div>' : ''}
+            </div>`;
+          }
+          html += '</div>';
+          return html;
+        })()}
       </div>
       <div class="yearly-fortune-scores">
         <div class="yf-score-item">

@@ -3899,3 +3899,85 @@ button {
   color: var(--gold);
   font-size: 0.85em;
 }
+
+/* === 大運・年運 分かりやすい表示 === */
+.taiun-year-friendly {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 14px 0;
+}
+.tyf-block {
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.tyf-taiun {
+  background: linear-gradient(135deg, rgba(217,164,65,0.08), rgba(217,164,65,0.02));
+  border-left: 4px solid var(--gold);
+}
+.tyf-year {
+  background: linear-gradient(135deg, rgba(95,168,211,0.08), rgba(95,168,211,0.02));
+  border-left: 4px solid var(--blue);
+}
+.tyf-block.is-tenchu {
+  background: linear-gradient(135deg, rgba(209,75,75,0.08), rgba(209,75,75,0.02));
+  border-left: 4px solid var(--red);
+}
+.tyf-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.tyf-period {
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+.tyf-taiun .tyf-period { color: var(--gold); }
+.tyf-year .tyf-period { color: var(--blue); }
+.tyf-title {
+  font-size: 1.1em;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.tyf-desc {
+  font-size: 0.88em;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+.tyf-energy {
+  font-size: 0.82em;
+  color: var(--muted);
+  margin-bottom: 6px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 4px;
+  display: inline-block;
+}
+.tyf-rel {
+  font-size: 0.82em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.tyf-example {
+  font-size: 0.85em;
+  color: var(--text);
+  line-height: 1.6;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.tyf-tenchu-note {
+  font-size: 0.82em;
+  color: var(--red);
+  padding: 8px 12px;
+  background: rgba(209,75,75,0.08);
+  border-radius: 6px;
+  line-height: 1.6;
+}
