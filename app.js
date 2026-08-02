@@ -5541,6 +5541,12 @@ function analyzeSpecialRelations(pillars) {
 function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, affairScore, workEx, seimeiResult, tenchusatsu, birthYear, gender, day, currentAge) {
   const stages = [];
 
+  // 健康リスクTOP3（高危険の上位3件のみ）
+  const top3HealthRisks = (healthRisk.yearRisks || [])
+    .filter(r => r.level === "高危険" && r.majorDiseases && r.majorDiseases.length > 0)
+    .sort((a, b) => b.riskScore - a.riskScore)
+    .slice(0, 3);
+
   taiun.periods.forEach((p, idx) => {
     const ageFrom = p.age;
     const ageTo = p.ageTo;
@@ -5555,38 +5561,85 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
       events.push({ icon: "school", text: "学生時代・人格形成期" });
     }
 
+    // 星ごとの運勢と具体的な出来事
     const starEvents = {
-      "禄存星": "家庭運・パートナーシップ運が上昇。結婚や家庭を築くのに良い時期",
-      "司禄星": "堅実に積み重ねる時期。地道な努力が財産になる",
-      "石門星": "人脈が広がる時期。新しいコミュニティで活躍",
-      "玉堂星": "学習・資格運が好調。専門性を深めて評価アップ",
-      "牽牛星": "社会的責任・名誉運が上昇。地位が上がる",
-      "貫索星": "独立・自立運。自分の道を切り開く",
-      "調舒星": "感受性が鋭くなる一方、人間関係で孤立しやすい",
-      "龍高星": "現状を壊して新しい道を切り開く変革期",
-      "車騎星": "行動力が高まるが、摩擦や衝突に注意"
+      "禄存星": { text: "家庭運・パートナーシップ運が上昇。結婚や家庭を築くのに良い時期", marriage: true },
+      "司禄星": { text: "堅実に積み重ねる時期。地道な努力が財産になる", save: true },
+      "石門星": { text: "人脈が広がる時期。新しいコミュニティで活躍", network: true },
+      "玉堂星": { text: "学習・資格運が好調。専門性を深めて評価アップ", study: true },
+      "牽牛星": { text: "社会的責任・名誉運が上昇。地位が上がる", promotion: true },
+      "貫索星": { text: "独立・自立運。自分の道を切り開く", independence: true },
+      "調舒星": { text: "感受性が鋭くなる一方、人間関係で孤立しやすい", caution: true },
+      "龍高星": { text: "現状を壊して新しい道を切り開く変革期。転職や独立のチャンス", jobChange: true },
+      "車騎星": { text: "行動力が高まるが、摩擦や衝突に注意", action: true }
     };
-    if (starEvents[star]) {
-      events.push({ icon: "star", text: starEvents[star] });
+    const starInfo = starEvents[star];
+    if (starInfo) {
+      events.push({ icon: "star", text: starInfo.text });
     }
 
     if (isTenchu) {
       events.push({ icon: "warning", text: "天中殺期間。大きな決断（結婚・転職・起業）は避け、整理と準備に徹する" });
     }
 
-    if (ageFrom >= 25 && ageTo <= 35 && marriageScore >= 45) {
-      events.push({ icon: "heart", text: "結婚に適した時期。良縁に恵まれやすい" });
+    // 結婚の時期（より具体的）
+    if (starInfo && starInfo.marriage && !isTenchu) {
+      if (gender === "male") {
+        events.push({ icon: "heart", text: "結婚のベストタイミング。良縁に恵まれやすく、家庭を築くのに最適な時期" });
+      } else {
+        events.push({ icon: "heart", text: "結婚のベストタイミング。良縁に恵まれやすく、家庭を築くのに最適な時期" });
+      }
     }
-    if (ageFrom >= 25 && ageTo <= 40 && affairScore >= 65) {
-      events.push({ icon: "alert", text: "浮気リスクが高まりやすい時期。パートナーとの信頼関係を意識して" });
+    if (ageFrom >= 22 && ageTo <= 32 && marriageScore >= 65 && !isTenchu) {
+      events.push({ icon: "heart", text: "結婚適齢期。出会いのチャンスが多く、自然な流れで結婚に至りやすい" });
     }
-    if (ageFrom >= 25 && ageTo <= 45) {
-      events.push({ icon: "work", text: `仕事運：${workEx.rank}（${workEx.score}点）。${workEx.jobTendency || ""}` });
+    if (ageFrom >= 28 && ageTo <= 40 && marriageScore >= 45 && marriageScore < 65 && !isTenchu) {
+      events.push({ icon: "heart", text: "結婚を意識する時期。焦らず相手を見極めることが大切" });
     }
-    if (ageFrom >= 30 && ageTo <= 50) {
-      events.push({ icon: "money", text: "転職や独立を検討するなら、天中殺以外の時期が有利" });
+    if (ageFrom >= 35 && ageTo <= 50 && marriageScore < 45) {
+      events.push({ icon: "heart", text: "結婚には慎重さが必要な時期。パートナー選びを間違えないよう注意" });
     }
 
+    // 浮気の時期（より具体的）
+    if (starInfo && (star === "鳳閣星" || star === "車騎星") && !isTenchu) {
+      if (affairScore >= 45) {
+        events.push({ icon: "alert", text: "異性からのアプローチが増え、浮気の誘惑が生じやすい時期" });
+      }
+    }
+    if (ageFrom >= 25 && ageTo <= 45 && affairScore >= 80) {
+      events.push({ icon: "alert", text: "浮気リスクが非常に高い時期。誘惑を避け、パートナーとの時間を大切に" });
+    }
+    if (ageFrom >= 25 && ageTo <= 45 && affairScore >= 65 && affairScore < 80) {
+      events.push({ icon: "alert", text: "浮気リスクが高まりやすい時期。異性との距離感に注意" });
+    }
+    if (ageFrom >= 30 && ageTo <= 50 && affairScore >= 45 && affairScore < 65) {
+      events.push({ icon: "alert", text: "浮気の誘惑がちらつく時期。自制心を保ち、家庭を守る意識が大切" });
+    }
+
+    // 転職・仕事の時期（より具体的）
+    if (starInfo && starInfo.jobChange && !isTenchu) {
+      events.push({ icon: "work", text: "転職や独立に最適な時期。現状を変える決断が良い結果を生みやすい" });
+    }
+    if (starInfo && starInfo.independence && !isTenchu) {
+      events.push({ icon: "work", text: "独立・起業のチャンス。自分の力で道を切り開く決断の時期" });
+    }
+    if (starInfo && starInfo.promotion && !isTenchu) {
+      events.push({ icon: "work", text: "昇進・昇格のチャンス。管理職やリーダー役を任されやすい" });
+    }
+    if (starInfo && starInfo.study && !isTenchu) {
+      events.push({ icon: "work", text: "資格取得やスキルアップに最適。専門性を高めて転職や昇進につなげる" });
+    }
+    if (ageFrom >= 25 && ageTo <= 45 && !isTenchu) {
+      events.push({ icon: "work", text: `仕事運：${workEx.rank}（${workEx.score}点）` });
+    }
+    if (ageFrom >= 28 && ageTo <= 50 && !isTenchu) {
+      events.push({ icon: "work", text: "転職を検討するなら天中殺明け後が有利。準備期間として資格取得を進めるのが吉" });
+    }
+    if (isTenchu && ageFrom >= 25 && ageTo <= 55) {
+      events.push({ icon: "work", text: "転職・独立は避けるべき時期。今の職場で実力を蓄えることに専念" });
+    }
+
+    // ターニングポイント
     turningPoints.filter(tp => tp.age >= ageFrom && tp.age <= ageTo).forEach(tp => {
       const labelMap = {
         "大運切り替わり": "運気の切り替わり",
@@ -5607,8 +5660,8 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
       events.push({ icon: "turning", text: `${tp.age}歳（${tp.year}年）${label}${evText ? "：" + evText : ""}` });
     });
 
-    const healthYears = (healthRisk.yearRisks || []).filter(r => r.year >= yearFrom && r.year <= yearTo && r.level === "高危険");
-    healthYears.forEach(hy => {
+    // 健康リスク（TOP3のみ）
+    top3HealthRisks.filter(hy => hy.year >= yearFrom && hy.year <= yearTo).forEach(hy => {
       const disease = hy.majorDiseases && hy.majorDiseases[0] ? hy.majorDiseases[0].diseases.split("・")[0] : "健康リスク";
       events.push({ icon: "health", text: `${hy.year}年（${hy.age}歳）頃に健康リスク上昇：${disease}に注意` });
     });
