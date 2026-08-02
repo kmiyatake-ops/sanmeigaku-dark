@@ -5853,13 +5853,14 @@ function render(event) {
         const yearEnergyTitle = yearInfo && yearlyFortune.yearEnergy ? energyDescMap[yearlyFortune.yearEnergy.name] : "";
         let html = '<div class="taiun-year-friendly">';
         if (taiunInfo) {
+          const sameStar = yearlyFortune.taiunStar === yearlyFortune.yearStar;
           html += `<div class="tyf-block tyf-taiun${yearlyFortune.isTaiunTenchu ? " is-tenchu" : ""}">
             <div class="tyf-header"><span class="tyf-period">大運（10年周期）</span>${yearlyFortune.isTaiunTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
             <div class="tyf-title">${taiunInfo.title}</div>
             <div class="tyf-desc">${taiunInfo.desc}</div>
             ${taiunEnergyTitle ? `<div class="tyf-energy">ライフテーマ：${taiunEnergyTitle}</div>` : ''}
             <div class="tyf-rel">あなたとの相性：${taiunInfo.relText || "影響範囲外"}</div>
-            <div class="tyf-example">${taiunInfo.example}</div>
+            ${sameStar ? '' : `<div class="tyf-example">${taiunInfo.example}</div>`}
             ${yearlyFortune.isTaiunTenchu ? '<div class="tyf-tenchu-note">天中殺中：大きな決断は避け、整理と準備に徹するのが正解。転職や結婚は時期が明けてからにする</div>' : ''}
           </div>`;
         }
@@ -5883,12 +5884,13 @@ function render(event) {
           const yearInfo = starToPlainDesc(yearlyFortune.yearStar, yearlyFortune.isYearTenchu, yearlyFortune.yearRel, "年運");
           let html = '<div class="taiun-year-friendly">';
           if (taiunInfo) {
+            const sameStar = yearlyFortune.taiunStar === yearlyFortune.yearStar;
             html += `<div class="tyf-block tyf-taiun${yearlyFortune.isTaiunTenchu ? " is-tenchu" : ""}">
               <div class="tyf-header"><span class="tyf-period">今の10年間の運気</span>${yearlyFortune.isTaiunTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}</div>
               <div class="tyf-title">${taiunInfo.title}</div>
               <div class="tyf-desc">${taiunInfo.desc}</div>
-              <div class="tyf-example">${taiunInfo.example}</div>
-              ${yearlyFortune.isTaiunTenchu ? '<div class="tyf-tenchu-note">注意が必要な時期：大きな決断は避け、準備に徹しましょう</div>' : ''}
+              ${sameStar ? '' : `<div class="tyf-example">${taiunInfo.example}</div>`}
+              ${yearlyFortune.isTaiunTenchu ? '<div class="tyf-tenchu-note">注意が必要な時期：大きな決断は避け、整理と準備に徹するのが正解。転職や結婚は時期が明けてからにする</div>' : ''}
             </div>`;
           }
           if (yearInfo) {
