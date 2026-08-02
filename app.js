@@ -5548,6 +5548,7 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
     .slice(0, 3);
 
   taiun.periods.forEach((p, idx) => {
+    if (p.age >= 90) return;
     const ageFrom = p.age;
     const ageTo = p.ageTo;
     const yearFrom = birthYear + ageFrom;
