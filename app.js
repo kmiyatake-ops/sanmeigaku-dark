@@ -5915,11 +5915,11 @@ function render(event) {
       ];
       // 専門用語なし用の簡易説明
       const gokakuSimple = [
-        { name: "姓の運勢", rank: r.tenRank, text: "家系や祖先から受け継ぐ基盤の運勢を表します。", period: "生涯を通じて影響" },
-        { name: "性格の核", rank: r.jinRank, text: "名前の中央部分で、あなたの性格の核心と人生の方向性を表します。最も重要な部分です。", period: "20代後半〜50代で最も影響" },
-        { name: "感受性", rank: r.chiRank, text: "名前の部分で、内面の感受性や恋愛の傾向を表します。", period: "0歳〜20代前半で影響" },
-        { name: "対人関係", rank: r.gaiRank, text: "社会に出てからの対人関係や、他人からの見え方を表します。", period: "社会に出てから影響" },
-        { name: "晩年の運勢", rank: r.souRank, text: "名前全体の合計で、晩年の運勢と人生の到達点を表します。", period: "50代以降で影響" }
+        { name: "姓の運勢", value: r.tenkaku, rank: r.tenRank, text: "家系や祖先から受け継ぐ基盤の運勢を表します。", period: "生涯を通じて影響" },
+        { name: "性格の核", value: r.jinkaku, rank: r.jinRank, text: "名前の中央部分で、あなたの性格の核心と人生の方向性を表します。最も重要な部分です。", period: "20代後半〜50代で最も影響" },
+        { name: "感受性", value: r.chikaku, rank: r.chiRank, text: "名前の部分で、内面の感受性や恋愛の傾向を表します。", period: "0歳〜20代前半で影響" },
+        { name: "対人関係", value: r.gaikaku, rank: r.gaiRank, text: "社会に出てからの対人関係や、他人からの見え方を表します。", period: "社会に出てから影響" },
+        { name: "晩年の運勢", value: r.soukaku, rank: r.souRank, text: "名前全体の合計で、晩年の運勢と人生の到達点を表します。", period: "50代以降で影響" }
       ];
       const simpleBalance = r.tenJinRel === "相生" && r.jinChiRel === "相生"
         ? "名前の各部分のバランスが良く、環境に恵まれやすく内面と行動が一致しやすいタイプです。"
@@ -5986,7 +5986,7 @@ function render(event) {
         <h3>名前の運勢（${r.lastName} ${r.firstName}）</h3>
         <div class="seimei-overview">
           <div class="seimei-overall ${overallClass}">
-            <span class="seimei-overall-label">総合判定</span>
+            <span class="seimei-overall-label">総合評価</span>
             <span class="seimei-overall-rank">${r.overallRank}</span>
             <span class="seimei-overall-sub">${rankScore[r.overallRank] || 55}点 / 良い${r.goodCount} / 悪い${r.badCount}</span>
           </div>
@@ -6000,6 +6000,7 @@ function render(event) {
             <div class="seimei-gokaku-item ${rankClass[g.rank.rank] || ''}">
               <div class="seimei-gokaku-head">
                 <b>${g.name}</b>
+                <span class="seimei-gokaku-value">${g.value}画</span>
                 <span class="seimei-gokaku-rank">${g.rank.rank}</span>
                 <span class="seimei-gokaku-score">${rankScore[g.rank.rank] || 50}点</span>
               </div>
@@ -6011,7 +6012,7 @@ function render(event) {
           `).join("")}
         </div>
         <div class="info-box is-gold mt-10">
-          <p class="info-text">${simpleBalance}</p>
+          <p class="info-text"><b>名前の五行バランス（${r.sancai}）</b><br>${simpleBalance}</p>
         </div>
         <div class="seimei-fortune-scores">
           <div class="seimei-fs-item">
