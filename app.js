@@ -5589,21 +5589,22 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
 
     if (canMarry) {
       if (isDoubleEn) {
-        // 二度縁：2回の結婚時期を表示
-        if (starInfo && starInfo.marriage && !isTenchu) {
-          events.push({ icon: "heart", text: "【1回目の結婚】のベストタイミング。若い頃の縁を大切に" });
-        }
         if (easyMarry) {
+          // 二度縁＋モテ度高：1回目も2回目も結婚する
+          if (starInfo && starInfo.marriage && !isTenchu) {
+            events.push({ icon: "heart", text: "【1回目の結婚】のベストタイミング。若い頃の縁を大切に" });
+          }
           if (ageFrom >= 20 && ageTo <= 28 && !isTenchu) {
             events.push({ icon: "heart", text: "【1回目の結婚】早めの結婚適齢期。出会いのチャンスが多い" });
           }
-        } else {
-          if (ageFrom >= 22 && ageTo <= 30 && !isTenchu) {
-            events.push({ icon: "heart", text: "【1回目の結婚】のチャンス。縁を大切にすれば結婚に至る" });
+          if (ageFrom >= 30 && ageTo <= 45 && !isTenchu) {
+            events.push({ icon: "heart", text: "【2回目の結婚】のチャンス。一度目の経験を活かし、価値観の合う相手と再婚しやすい時期" });
           }
-        }
-        if (ageFrom >= 30 && ageTo <= 45 && !isTenchu) {
-          events.push({ icon: "heart", text: "【2回目の結婚】のチャンス。一度目の経験を活かし、価値観の合う相手と再婚しやすい時期" });
+        } else {
+          // 二度縁＋モテ度普通：1回目は実現せず、2回目のみ結婚
+          if (ageFrom >= 30 && ageTo <= 45 && !isTenchu) {
+            events.push({ icon: "heart", text: "【2回目の結婚】のチャンス。若い頃の縁は実らなかったが、30代以降に価値観の合う相手と結婚しやすい時期" });
+          }
         }
       } else {
         // 通常：1回の結婚時期
