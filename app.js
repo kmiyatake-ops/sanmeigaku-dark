@@ -4089,34 +4089,34 @@ function calcWorkExcellence(center, northStar, southStar, energy, counts, pillar
 // === 主星相互関係（中央×他方位の組み合わせパターン） ===
 const starInteractionData = {
   "相生(→)": {
-    north: "目上からの支援が自然に得られる関係。上司や親から引き立てられ、目上の運に恵まれやすい。",
-    south: "目下を自然に導ける関係。部下や後輩、子供に恵まれ、教える立場で成果を出す。",
-    east: "社会との関係が自然に築ける。友人や同僚の支援を得て、社会で伸びていく。",
-    west: "配偶者との関係が自然。パートナーから支えられ、家庭が安定する基盤がある。"
+    north: "目上から自然に支援される恵まれた関係。",
+    south: "目下を自然に導け、教える立場で成果を出す。",
+    east: "社会と自然に築け、友人の支援を得て伸びる。",
+    west: "配偶者から支えられ、家庭が安定する。"
   },
   "相生(←)": {
-    north: "目上を支える関係。自分が目上に尽くすことで信頼を得るが、頼るのが苦手な面がある。",
-    south: "目下から支えられる関係。部下や後輩が自分を助けてくれるが、甘えさせすぎに注意。",
-    east: "社会に尽くす関係。自分から貢献することで評価されるが、自己主張が控えめになりがち。",
-    west: "配偶者に尽くす関係。パートナーを支えることで家庭が成り立つが、自分のニーズを抑えがち。"
+    north: "目上を支える関係。頼るのが苦手な面あり。",
+    south: "目下から支えられるが、甘えさせすぎに注意。",
+    east: "社会に貢献して評価されるが、自己主張が控えめ。",
+    west: "配偶者に尽くす関係。自分のニーズを抑えがち。"
   },
   "相剋(→)": {
-    north: "目上との摩擦が生じやすい関係。上司と衝突しやすく、自分のやり方を押し通す傾向がある。",
-    south: "目下を抑え込みやすい関係。部下や後輩との関係に葛藤があり、厳しすぎる面が出る。",
-    east: "社会とぶつかる関係。友人や同僚と対立しやすく、自分のペースを押し付けがち。",
-    west: "配偶者を抑え込みやすい関係。パートナーとの主導権争いが生じ、適度な距離感が必要。"
+    north: "目上と摩擦しやすい。自分のやり方を押し通す傾向。",
+    south: "目下を抑え込みやすい。厳しすぎる面に注意。",
+    east: "社会とぶつかりやすい。ペースを押し付けがち。",
+    west: "配偶者と主導権争い。距離感を保つことが大切。"
   },
   "相剋(←)": {
-    north: "目上から抑圧されやすい関係。上司や親の期待に縛られ、自分の意思を抑えがち。",
-    south: "目下から反発されやすい関係。部下や後輩との関係に苦労し、思い通りにいかない。",
-    east: "社会から圧力を受ける関係。環境に翻弄されやすく、自分のペースを保つ工夫が必要。",
-    west: "配偶者から抑圧されやすい関係。パートナーの強さに押されがちで、自分の主張が大事。"
+    north: "目上から抑圧されやすい。自分の意思を抑えがち。",
+    south: "目下から反発されやすい。思い通りにいかない。",
+    east: "社会から圧力を受けやすい。自分のペースを保つ工夫が必要。",
+    west: "配偶者から抑圧されやすい。自分の主張が大事。"
   },
   "比和": {
-    north: "目上と同じ性質の関係。親しみやすいが、目上の良し悪しがそのまま自分に影響する。",
-    south: "目下と同じ性質の関係。共感しやすいが、似た者同士で欠点も共有しやすい。",
-    east: "社会と同じ性質の関係。友人と波長が合うが、刺激に欠け成長のきっかけが少ない。",
-    west: "配偶者と同じ性質の関係。似た者夫婦で安定するが、変化がなくマンネリになりやすい。"
+    north: "目上と同質。親しみやすいが良し悪しの影響を直接受ける。",
+    south: "目下と同質。共感しやすいが欠点も共有しやすい。",
+    east: "社会と同質。波長は合うが刺激に欠ける。",
+    west: "配偶者と同質。安定するがマンネリになりやすい。"
   }
 };
 
@@ -4132,11 +4132,11 @@ function getStarInteraction(centerStar, otherStar, direction) {
 
 // === 主星×十二大従星の組み合わせ ===
 const mainEnergyComboData = {
-  "相生(→)": "主星の性質が従星によって自然に表現される。内面のテーマが外に現れやすい。",
-  "相生(←)": "従星のエネルギーが主星を支える。環境のタイミングが性格の表現を後押しする。",
-  "相剋(→)": "主星の性質が従星とぶつかる。内面と外面のテーマが葛藤を生む。",
-  "相剋(←)": "従星のエネルギーが主星を抑圧する。環境が性格の表現を制限する。",
-  "比和": "主星と従星が同じ性質。内面と外面が一致し、素直な表現ができる。"
+  "相生(→)": "内面のテーマが自然に外に現れる。",
+  "相生(←)": "環境が性格の表現を後押しする。",
+  "相剋(→)": "内面と外面のテーマが葛藤を生む。",
+  "相剋(←)": "環境が性格の表現を制限する。",
+  "比和": "内面と外面が一致し、素直な表現ができる。"
 };
 
 function getMainEnergyCombo(mainStar, energyStar) {
@@ -4892,17 +4892,17 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
 
   // extra データ（既存分析結果）
   const ex = extra || {};
-  const ryudoText = ex.ryudo ? ex.ryudo.map(r => `${r.dir}：${r.advice}`).join("\n") : "";
-  const junkanText = ex.junkan ? ex.junkan.note : "";
-  const eastSouthText = ex.eastSouth ? `${ex.eastSouth.title}：${ex.eastSouth.text}` : "";
-  const joritsuText = ex.joritsu ? `${ex.joritsu.type}：${ex.joritsu.text}` : "";
-  const starCombosText = ex.starCombos && ex.starCombos.length > 0 ? ex.starCombos.map(c => `【${c.type}】${c.name}：${c.note}`).join("\n") : "";
-  const tripleStarText = ex.tripleStars && ex.tripleStars.length > 0 ? ex.tripleStars.map(t => `【${t.star}が${t.count}つ】${t.text}`).join("\n") : "";
-  const energyBiasText = ex.energyBias && ex.energyBias.length > 0 ? ex.energyBias.map(b => `【${b.star}が${b.count}つ】${b.text}`).join("\n") : "";
-  const kizuText = ex.kizu ? `${ex.kizu.type}：${ex.kizu.text}` : "";
-  const sekishokuText = ex.sekishoku ? `関係：${ex.sekishoku.relation}\n${ex.sekishoku.relationText}\n東方（現実）：${ex.sekishoku.eastStar}＝${ex.sekishoku.eastData.keywords}\n南方（理想）：${ex.sekishoku.southStar}＝${ex.sekishoku.southData.keywords}` : "";
+  const ryudoText = ex.ryudo ? ex.ryudo.map(r => `${r.dir}：${r.rel}${r.isNatural ? "（自然）" : "（工夫が必要）"}`).join("　") : "";
+  const junkanText = ex.junkan && ex.junkan.chain && ex.junkan.chain.length > 1 ? `考え方の根幹は「${ex.junkan.poleStar}」。流れ：${ex.junkan.chain.join(" → ")}` : (ex.junkan ? `考え方の根幹は「${ex.junkan.poleStar}」` : "");
+  const eastSouthText = ex.eastSouth ? `${ex.eastSouth.title}` : "";
+  const joritsuText = ex.joritsu ? `${ex.joritsu.type}型` : "";
+  const starCombosText = ex.starCombos && ex.starCombos.length > 0 ? ex.starCombos.map(c => `${c.name}`).join("、") : "";
+  const tripleStarText = ex.tripleStars && ex.tripleStars.length > 0 ? ex.tripleStars.map(t => `${t.star}×${t.count}` + (t.text ? `：${t.text.split("。")[0]}。` : "")).join("　") : "";
+  const energyBiasText = ex.energyBias && ex.energyBias.length > 0 ? ex.energyBias.map(b => `${b.star}×${b.count}：${b.text.split("。")[0]}。`).join("　") : "";
+  const kizuText = ex.kizu ? `${ex.kizu.type}` : "";
+  const sekishokuText = ex.sekishoku ? `${ex.sekishoku.relation}　現実：${ex.sekishoku.eastData.keywords}　理想：${ex.sekishoku.southData.keywords}` : "";
   const sanbunText = ex.sanbun ? ex.sanbun.mismatchText : "";
-  const topologyText = ex.topology && ex.topology.length > 0 ? ex.topology.map(t => `【${t.label}】${t.name}：${t.note}`).join("\n") : "";
+  const topologyText = ex.topology && ex.topology.length > 0 ? ex.topology.map(t => `${t.name}（${t.label}）：${t.note.split("。")[0]}。`).join("　") : "";
 
   const reading = [
     { title: `${name}さんの本質`, text: `${dayP.good}${hasSeimei ? `\n姓名判断では人格${seimei.jinkaku}画（${seimei.jinRank?.rank}）。` : ""}` },
