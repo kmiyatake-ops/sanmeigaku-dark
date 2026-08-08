@@ -4893,17 +4893,18 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
 
   // extra データ（既存分析結果）
   const ex = extra || {};
-  const ryudoText = ex.ryudo ? ex.ryudo.map(r => `${r.dir}：${r.rel}${r.isNatural ? "（自然）" : "（工夫が必要）"}`).join("　") : "";
+  const relLabels = { "相生(→)": "自然に恵まれる", "相生(←)": "支え合う", "相剋(→)": "ぶつかりやすい", "相剋(←)": "抑圧されやすい", "比和": "似たもの同士" };
+  const ryudoText = ex.ryudo ? ex.ryudo.map(r => `${r.dir}：${relLabels[r.rel] || r.rel}${r.isNatural ? "（自然な関係）" : "（工夫が必要）"}`).join("\n") : "";
   const junkanText = ex.junkan && ex.junkan.chain && ex.junkan.chain.length > 1 ? `考え方の根幹は「${ex.junkan.poleStar}」。流れ：${ex.junkan.chain.join(" → ")}` : (ex.junkan ? `考え方の根幹は「${ex.junkan.poleStar}」` : "");
   const eastSouthText = ex.eastSouth ? `${ex.eastSouth.title}` : "";
-  const joritsuText = ex.joritsu ? `${ex.joritsu.type}型` : "";
-  const starCombosText = ex.starCombos && ex.starCombos.length > 0 ? ex.starCombos.map(c => `${c.name}`).join("、") : "";
+  const joritsuText = ex.joritsu ? `${ex.joritsu.type}型：${ex.joritsu.text.split("。")[0]}。` : "";
+  const starCombosText = ex.starCombos && ex.starCombos.length > 0 ? ex.starCombos.map(c => `${c.name}：${c.note.split("。")[0]}。`).join("\n") : "";
   const tripleStarText = ex.tripleStars && ex.tripleStars.length > 0 ? ex.tripleStars.map(t => `${t.star}×${t.count}` + (t.text ? `：${t.text.split("。")[0]}。` : "")).join("　") : "";
   const energyBiasText = ex.energyBias && ex.energyBias.length > 0 ? ex.energyBias.map(b => `${b.star}×${b.count}：${b.text.split("。")[0]}。`).join("　") : "";
-  const kizuText = ex.kizu ? `${ex.kizu.type}` : "";
-  const sekishokuText = ex.sekishoku ? `${ex.sekishoku.relation}　現実：${ex.sekishoku.eastData.keywords}　理想：${ex.sekishoku.southData.keywords}` : "";
+  const kizuText = ex.kizu ? `${ex.kizu.type}：${ex.kizu.text.split("。")[0]}。` : "";
+  const sekishokuText = ex.sekishoku ? `${ex.sekishoku.relation}：${ex.sekishoku.relationText.split("。")[0]}。　現実：${ex.sekishoku.eastData.keywords}　理想：${ex.sekishoku.southData.keywords}` : "";
   const sanbunText = ex.sanbun ? ex.sanbun.mismatchText : "";
-  const topologyText = ex.topology && ex.topology.length > 0 ? ex.topology.map(t => `${t.name}（${t.label}）：${t.note.split("。")[0]}。`).join("　") : "";
+  const topologyText = ex.topology && ex.topology.length > 0 ? ex.topology.map(t => `${t.name}（${t.label}）：${t.note.split("。")[0]}。`).join("\n") : "";
 
   const reading = [
     { title: `${name}さんの本質`, text: `${dayP.good}${hasSeimei ? `\n姓名判断では人格${seimei.jinkaku}画（${seimei.jinRank?.rank}）。` : ""}` },
@@ -4934,7 +4935,7 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
     { title: "仕事のバランス（適職占技）", text: sekishokuText },
     { title: "現実と精神のミスマッチ（三分法）", text: sanbunText },
     { title: "干支の相互作用", text: topologyText },
-    { title: "バランスと課題", text: `内面では「${strongest}」の性質が強く、「${weakest}」の性質が不足気味。強い要素は武器ですが、過剰になると独善・偏り・視野狭窄になります。不足する「${weakest}」は、人生で意識的に鍛えないと同じ壁として何度も出ます。${strongP.good}という長所を活かしつつ、${weakP.bad}という弱点を補う環境選びが鍵です。${hasSeimei ? `\n姓名判断の総合判定は「${seimei.overallRank}」。${seimei.overallRank === "大吉" || seimei.overallRank === "吉" ? "名前の画数バランスが良く、運勢を後押しする。" : seimei.overallRank === "半吉" ? "名前の画数は標準的。努力次第で運勢を引き上げられる。" : "名前の画数に偏りがあり、意識的な努力で補う必要がある。"}` : ""}` },
+    { title: "バランスと課題", text: `内面では「${strongest}」の性質が強く、「${weakest}」の性質が不足気味。強い要素は武器ですが、過剰になると自分の考えに固執し、視野が狭くなります。不足する「${weakest}」は、人生で意識的に鍛えないと同じ壁として何度も出ます。${strongP.good}という長所を活かしつつ、${weakP.bad}という弱点を補う環境選びが鍵です。${hasSeimei ? `\n姓名判断の総合判定は「${seimei.overallRank}」。${seimei.overallRank === "大吉" || seimei.overallRank === "吉" ? "名前の画数バランスが良く、運勢を後押しする。" : seimei.overallRank === "半吉" ? "名前の画数は標準的。努力次第で運勢を引き上げられる。" : "名前の画数に偏りがあり、意識的な努力で補う必要がある。"}` : ""}` },
     { title: "エネルギー傾向", text: `人生のタイミングを表す星の合計エネルギーは${totalEnergy}点。${energy.map((e) => `${e.name}${e.score}点`).join("・")}。${totalEnergy >= 28 ? "強い運命ほど、怠けた時の反動も大きいです。力を持て余すと周囲への圧になります。" : "繊細な運命ほど、環境の悪さに削られます。根性論だけで突破しようとすると消耗します。"}` },
     { title: "注意が必要な時期", text: `${tenchusatsu}の期間中は、拡大や大きな決断より整理・準備・見直し向き。無理に勝負すると、手に入れたものの維持で苦しくなりやすいです。` }
   ].filter(r => r.text);
