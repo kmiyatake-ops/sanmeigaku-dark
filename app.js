@@ -4089,34 +4089,34 @@ function calcWorkExcellence(center, northStar, southStar, energy, counts, pillar
 // === 主星相互関係（中央×他方位の組み合わせパターン） ===
 const starInteractionData = {
   "相生(→)": {
-    north: "目上から自然に支援される恵まれた関係。",
-    south: "目下を自然に導け、教える立場で成果を出す。",
-    east: "社会と自然に築け、友人の支援を得て伸びる。",
-    west: "配偶者から支えられ、家庭が安定する。"
+    north: "上司や親から自然に応援してもらえる恵まれた関係。目上の人の引き立てでチャンスが広がります。",
+    south: "部下や後輩を自然に導ける関係。教える立場で成果を出し、人に慕われます。",
+    east: "友人や同僚と自然に協力できる関係。周りの支援を得て社会で伸びていきます。",
+    west: "パートナーから支えられる関係。家庭が安定し、安心感があります。"
   },
   "相生(←)": {
-    north: "目上を支える関係。頼るのが苦手な面あり。",
-    south: "目下から支えられるが、甘えさせすぎに注意。",
-    east: "社会に貢献して評価されるが、自己主張が控えめ。",
-    west: "配偶者に尽くす関係。自分のニーズを抑えがち。"
+    north: "目上の人を支える関係。自分から頼るのが苦手で、尽くすことで信頼を得ます。",
+    south: "目下から助けてもらえる関係。ただし甘えさせすぎに注意が必要です。",
+    east: "社会に貢献して評価される関係。自己主張は控えめですが、実績で勝負します。",
+    west: "パートナーに尽くす関係。自分の気持ちを我慢しすぎないよう気をつけて。"
   },
   "相剋(→)": {
-    north: "目上と摩擦しやすい。自分のやり方を押し通す傾向。",
-    south: "目下を抑え込みやすい。厳しすぎる面に注意。",
-    east: "社会とぶつかりやすい。ペースを押し付けがち。",
-    west: "配偶者と主導権争い。距離感を保つことが大切。"
+    north: "目上の人とぶつかりやすい関係。自分のやり方を押し通す傾向があり、摩擦に注意。",
+    south: "部下や後輩に厳しくなりすぎる関係。コントロールしすぎず、ゆだねることも大切。",
+    east: "社会と対立しやすい関係。自分のペースを押し付けず、協調性を意識すると良い。",
+    west: "パートナーと主導権争いになりやすい関係。適度な距離感を保つことが鍵。"
   },
   "相剋(←)": {
-    north: "目上から抑圧されやすい。自分の意思を抑えがち。",
-    south: "目下から反発されやすい。思い通りにいかない。",
-    east: "社会から圧力を受けやすい。自分のペースを保つ工夫が必要。",
-    west: "配偶者から抑圧されやすい。自分の主張が大事。"
+    north: "目上から抑圧されやすい関係。自分の意思を抑えがちなので、勇気を持って主張を。",
+    south: "目下から反発されやすい関係。思い通りにいかず苦労しますが、寛容さが鍵。",
+    east: "社会から圧力を受けやすい関係。自分のペースを保つ工夫と忍耐が必要。",
+    west: "パートナーに押されがちな関係。自分の主張を大切にしないと不満が溜まります。"
   },
   "比和": {
-    north: "目上と同質。親しみやすいが良し悪しの影響を直接受ける。",
-    south: "目下と同質。共感しやすいが欠点も共有しやすい。",
-    east: "社会と同質。波長は合うが刺激に欠ける。",
-    west: "配偶者と同質。安定するがマンネリになりやすい。"
+    north: "目上と似た性質の関係。親しみやすいですが、目上の良し悪しの影響を直接受けます。",
+    south: "目下と似た性質の関係。共感しやすいですが、似た欠点も共有しやすいです。",
+    east: "社会と似た性質の関係。波長は合いますが、刺激に欠けて成長のきっかけが少ないです。",
+    west: "パートナーと似たもの同士。安定しますが、変化がなくマンネリになりやすいです。"
   }
 };
 
@@ -4127,16 +4127,17 @@ function getStarInteraction(centerStar, otherStar, direction) {
   const rel = getGogyoRelation(centerEl, otherEl);
   const data = starInteractionData[rel];
   if (!data || !data[direction]) return "";
-  return `${centerStar}（中央）と${otherStar}（${direction === "north" ? "北" : direction === "south" ? "南" : direction === "east" ? "東" : "西"}）の関係：${data[direction]}`;
+  const dirLabel = direction === "north" ? "目上（親・上司）" : direction === "south" ? "目下（部下・子供）" : direction === "east" ? "社会（友人・同僚）" : "配偶者（パートナー）";
+  return `【${dirLabel}】${data[direction]}`;
 }
 
 // === 主星×十二大従星の組み合わせ ===
 const mainEnergyComboData = {
-  "相生(→)": "内面のテーマが自然に外に現れる。",
-  "相生(←)": "環境が性格の表現を後押しする。",
-  "相剋(→)": "内面と外面のテーマが葛藤を生む。",
-  "相剋(←)": "環境が性格の表現を制限する。",
-  "比和": "内面と外面が一致し、素直な表現ができる。"
+  "相生(→)": "自分の内面がそのまま外に表れる、素直なタイプ。",
+  "相生(←)": "環境が自分の性格を後押ししてくれる、恵まれたタイミング。",
+  "相剋(→)": "内面と外面が葛藤しやすく、気持ちと行動にズレが生じやすい。",
+  "相剋(←)": "環境に制限され、自分を出しにくいタイミング。工夫が必要。",
+  "比和": "内面と外面が一致し、等身大の自分を自然に表現できる。"
 };
 
 function getMainEnergyCombo(mainStar, energyStar) {
@@ -4887,7 +4888,7 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
   // 主星×従星の組み合わせ
   const energyCombos = energy.map((e, i) => {
     const combo = getMainEnergyCombo(center, e.name);
-    return combo ? `【${energyLabels[i]}】${center}×${e.name}：${combo}` : "";
+    return combo ? `【${energyLabels[i]}】${combo}` : "";
   }).filter(Boolean);
 
   // extra データ（既存分析結果）
@@ -4919,20 +4920,20 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
     { title: `内面に持っている面×生まれた日の性質の詳細`, text: southP.byDayStem ? southP.byDayStem[pillars.day.stem] || "" : "" },
     { title: "本人も自覚しにくい裏の性格", text: pickByBalance(starP.hidden, balanceType) },
     { title: "人生のタイミングから見る性格要素", text: energyTexts.join("　") },
-    { title: "主星相互関係（内面の構造）", text: [interactionNorth, interactionSouth, interactionEast, interactionWest].filter(Boolean).join("\n") },
+    { title: "内面の構造（人間関係の相性）", text: [interactionNorth, interactionSouth, interactionEast, interactionWest].filter(Boolean).join("\n") },
     { title: "社会と配偶者の関係", text: interactionEastWest || "" },
-    { title: "主星×従星の組み合わせ", text: energyCombos.join("\n") || "" },
-    { title: "流動法（人間関係の相性）", text: ryudoText },
-    { title: "循環法（ものの考え方の根幹）", text: junkanText },
-    { title: "現実と理想の関係（東方×南方）", text: eastSouthText },
+    { title: "内面と外面の表現の仕方", text: energyCombos.join("\n") || "" },
+    { title: "人間関係の相性（流動法）", text: ryudoText },
+    { title: "考え方の根幹（循環法）", text: junkanText },
+    { title: "現実と理想のバランス", text: eastSouthText },
     { title: "情的か理性的か", text: joritsuText },
-    { title: "星の組み合わせ（起こりやすい現象）", text: starCombosText },
-    { title: "同星3連変化（天才・変人タイプ）", text: tripleStarText },
-    { title: "十二大従星の偏り", text: energyBiasText },
-    { title: "気図法（精神性と行動力）", text: kizuText },
-    { title: "適職占技（現実と理想の仕事バランス）", text: sekishokuText },
-    { title: "三分法（現実と精神のミスマッチ）", text: sanbunText },
-    { title: "干支の相互作用（刑冲破害）", text: topologyText },
+    { title: "起こりやすい現象", text: starCombosText },
+    { title: "天才・変人タイプ（同星3連）", text: tripleStarText },
+    { title: "従星の偏り", text: energyBiasText },
+    { title: "精神性と行動力（気図法）", text: kizuText },
+    { title: "仕事のバランス（適職占技）", text: sekishokuText },
+    { title: "現実と精神のミスマッチ（三分法）", text: sanbunText },
+    { title: "干支の相互作用", text: topologyText },
     { title: "バランスと課題", text: `内面では「${strongest}」の性質が強く、「${weakest}」の性質が不足気味。強い要素は武器ですが、過剰になると独善・偏り・視野狭窄になります。不足する「${weakest}」は、人生で意識的に鍛えないと同じ壁として何度も出ます。${strongP.good}という長所を活かしつつ、${weakP.bad}という弱点を補う環境選びが鍵です。${hasSeimei ? `\n姓名判断の総合判定は「${seimei.overallRank}」。${seimei.overallRank === "大吉" || seimei.overallRank === "吉" ? "名前の画数バランスが良く、運勢を後押しする。" : seimei.overallRank === "半吉" ? "名前の画数は標準的。努力次第で運勢を引き上げられる。" : "名前の画数に偏りがあり、意識的な努力で補う必要がある。"}` : ""}` },
     { title: "エネルギー傾向", text: `人生のタイミングを表す星の合計エネルギーは${totalEnergy}点。${energy.map((e) => `${e.name}${e.score}点`).join("・")}。${totalEnergy >= 28 ? "強い運命ほど、怠けた時の反動も大きいです。力を持て余すと周囲への圧になります。" : "繊細な運命ほど、環境の悪さに削られます。根性論だけで突破しようとすると消耗します。"}` },
     { title: "注意が必要な時期", text: `${tenchusatsu}の期間中は、拡大や大きな決断より整理・準備・見直し向き。無理に勝負すると、手に入れたものの維持で苦しくなりやすいです。` }
