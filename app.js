@@ -4895,7 +4895,10 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
   // extra データ（既存分析結果）
   const ex = extra || {};
   const ryudoText = ex.ryudo ? ex.ryudo.map(r => `${r.dir}：${r.advice.split("。")[0]}。`).join("\n") : "";
-  const junkanText = ex.junkan && ex.junkan.chain && ex.junkan.chain.length > 1 ? `考え方の根幹は「${ex.junkan.poleStar}」。流れ：${ex.junkan.chain.join(" → ")}` : (ex.junkan ? `考え方の根幹は「${ex.junkan.poleStar}」` : "");
+  const starBrief = { "牽牛星": "責任感・品格", "龍高星": "好奇心・探求", "玉堂星": "知性・学び", "車騎星": "行動力・勝負", "石門星": "協力・絆", "禄存星": "愛情・奉仕", "鳳閣星": "楽しさ・自由", "調舒星": "繊細・調和", "司禄星": "蓄積・実務", "貫索星": "独立・貫徹" };
+  const junkanText = ex.junkan && ex.junkan.chain && ex.junkan.chain.length > 1
+    ? `物事を考える時の基本姿勢は「${ex.junkan.poleStar}」（${starBrief[ex.junkan.poleStar] || ""}）。思考の流れ：${ex.junkan.chain.map(s => `${s}（${starBrief[s] || ""}）`).join(" → ")}。最終的に「${ex.junkan.poleStar}」の性質で結論を出す傾向があります。`
+    : (ex.junkan ? `物事を考える時の基本姿勢は「${ex.junkan.poleStar}」（${starBrief[ex.junkan.poleStar] || ""}）。` : "");
   const eastSouthText = ex.eastSouth ? `${ex.eastSouth.title}：${ex.eastSouth.text.split("。")[0]}。` : "";
   const joritsuText = ex.joritsu ? `${ex.joritsu.type}型：${ex.joritsu.text.split("。")[0]}。` : "";
   const starCombosText = ex.starCombos && ex.starCombos.length > 0 ? ex.starCombos.map(c => `${c.name}：${c.note.split("。")[0]}。`).join("\n") : "";
