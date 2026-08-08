@@ -4133,11 +4133,11 @@ function getStarInteraction(centerStar, otherStar, direction) {
 
 // === 主星×十二大従星の組み合わせ ===
 const mainEnergyComboData = {
-  "相生(→)": "自分の内面がそのまま外に表れる、素直なタイプ。",
-  "相生(←)": "環境が自分の性格を後押ししてくれる、恵まれたタイミング。",
-  "相剋(→)": "内面と外面が葛藤しやすく、気持ちと行動にズレが生じやすい。",
-  "相剋(←)": "環境に制限され、自分を出しにくいタイミング。工夫が必要。",
-  "比和": "内面と外面が一致し、等身大の自分を自然に表現できる。"
+  "相生(→)": "内面がそのまま外に表れる。社会では素直に自分を出せるタイミング。",
+  "相生(←)": "環境が自分を後押しする。周りの支援で性格が発揮しやすい。",
+  "相剋(→)": "気持ちと行動にズレが生じやすい。内面と外面が葛藤する。",
+  "相剋(←)": "環境に制限され自分を出しにくい。工夫して表現する必要がある。",
+  "比和": "内面と外面が一致。等身大の自分を自然に表現できる。"
 };
 
 function getMainEnergyCombo(mainStar, energyStar) {
@@ -4888,13 +4888,13 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
   // 主星×従星の組み合わせ
   const energyCombos = energy.map((e, i) => {
     const combo = getMainEnergyCombo(center, e.name);
-    return combo ? `【${energyLabels[i]}】${combo}` : "";
+    const timingDesc = i === 0 ? "社会や家系の中で" : i === 1 ? "仕事や中年期で" : "本質や配偶者との間で";
+    return combo ? `【${energyLabels[i]}】${timingDesc}${combo}` : "";
   }).filter(Boolean);
 
   // extra データ（既存分析結果）
   const ex = extra || {};
-  const relLabels = { "相生(→)": "自然に恵まれる", "相生(←)": "支え合う", "相剋(→)": "ぶつかりやすい", "相剋(←)": "抑圧されやすい", "比和": "似たもの同士" };
-  const ryudoText = ex.ryudo ? ex.ryudo.map(r => `${r.dir}：${relLabels[r.rel] || r.rel}${r.isNatural ? "（自然な関係）" : "（工夫が必要）"}`).join("\n") : "";
+  const ryudoText = ex.ryudo ? ex.ryudo.map(r => `${r.dir}：${r.advice.split("。")[0]}。`).join("\n") : "";
   const junkanText = ex.junkan && ex.junkan.chain && ex.junkan.chain.length > 1 ? `考え方の根幹は「${ex.junkan.poleStar}」。流れ：${ex.junkan.chain.join(" → ")}` : (ex.junkan ? `考え方の根幹は「${ex.junkan.poleStar}」` : "");
   const eastSouthText = ex.eastSouth ? `${ex.eastSouth.title}：${ex.eastSouth.text.split("。")[0]}。` : "";
   const joritsuText = ex.joritsu ? `${ex.joritsu.type}型：${ex.joritsu.text.split("。")[0]}。` : "";
