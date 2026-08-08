@@ -4871,7 +4871,7 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
   const strongP = gogyoPersonality[strongest] || { good: "", bad: "" };
   const weakP = gogyoPersonality[weakest] || { good: "", bad: "" };
   const energyLabels = ["年柱（社会・家系のタイミング）", "月柱（仕事・中年期のタイミング）", "日柱（本質・配偶者のタイミング）"];
-  const energyTexts = energy.map((e, i) => `【${energyLabels[i]}】${e.name}（${pickByBalance(energyPersonality[e.name]?.good, balanceType) || ""}／${pickByBalance(energyPersonality[e.name]?.bad, balanceType) || ""}）`);
+  const energyTexts = energy.map((e, i) => `【${energyLabels[i]}】${e.name}（${pickByBalance(energyPersonality[e.name]?.good, balanceType)?.split("。")[0] || ""}）`);
   const workEx = calcWorkExcellence(center, northStar, southStar, energy, counts, pillars);
 
   // 姓名判断の性格データを統合
@@ -4896,11 +4896,11 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
   const relLabels = { "相生(→)": "自然に恵まれる", "相生(←)": "支え合う", "相剋(→)": "ぶつかりやすい", "相剋(←)": "抑圧されやすい", "比和": "似たもの同士" };
   const ryudoText = ex.ryudo ? ex.ryudo.map(r => `${r.dir}：${relLabels[r.rel] || r.rel}${r.isNatural ? "（自然な関係）" : "（工夫が必要）"}`).join("\n") : "";
   const junkanText = ex.junkan && ex.junkan.chain && ex.junkan.chain.length > 1 ? `考え方の根幹は「${ex.junkan.poleStar}」。流れ：${ex.junkan.chain.join(" → ")}` : (ex.junkan ? `考え方の根幹は「${ex.junkan.poleStar}」` : "");
-  const eastSouthText = ex.eastSouth ? `${ex.eastSouth.title}` : "";
+  const eastSouthText = ex.eastSouth ? `${ex.eastSouth.title}：${ex.eastSouth.text.split("。")[0]}。` : "";
   const joritsuText = ex.joritsu ? `${ex.joritsu.type}型：${ex.joritsu.text.split("。")[0]}。` : "";
   const starCombosText = ex.starCombos && ex.starCombos.length > 0 ? ex.starCombos.map(c => `${c.name}：${c.note.split("。")[0]}。`).join("\n") : "";
-  const tripleStarText = ex.tripleStars && ex.tripleStars.length > 0 ? ex.tripleStars.map(t => `${t.star}×${t.count}` + (t.text ? `：${t.text.split("。")[0]}。` : "")).join("　") : "";
-  const energyBiasText = ex.energyBias && ex.energyBias.length > 0 ? ex.energyBias.map(b => `${b.star}×${b.count}：${b.text.split("。")[0]}。`).join("　") : "";
+  const tripleStarText = ex.tripleStars && ex.tripleStars.length > 0 ? ex.tripleStars.map(t => `${t.star}×${t.count}` + (t.text ? `：${t.text.split("。")[0]}。` : "")).join("\n") : "";
+  const energyBiasText = ex.energyBias && ex.energyBias.length > 0 ? ex.energyBias.map(b => `${b.star}×${b.count}：${b.text.split("。")[0]}。`).join("\n") : "";
   const kizuText = ex.kizu ? `${ex.kizu.type}：${ex.kizu.text.split("。")[0]}。` : "";
   const sekishokuText = ex.sekishoku ? `${ex.sekishoku.relation}：${ex.sekishoku.relationText.split("。")[0]}。　現実：${ex.sekishoku.eastData.keywords}　理想：${ex.sekishoku.southData.keywords}` : "";
   const sanbunText = ex.sanbun ? ex.sanbun.mismatchText : "";
@@ -4916,9 +4916,9 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
     { title: "金銭感覚とお金の性格", text: pickByBalance(starP.money, balanceType) },
     { title: "結婚観と家庭の性格", text: pickByBalance(starP.marriage, balanceType) },
     { title: "社交性と対人関係の性格", text: pickByBalance(starP.social, balanceType) },
-    { title: `中心的な性格×生まれた日の性質の詳細`, text: starP.byDayStem ? starP.byDayStem[pillars.day.stem] || "" : "" },
-    { title: `表に出やすい面×生まれた日の性質の詳細`, text: northP.byDayStem ? northP.byDayStem[pillars.day.stem] || "" : "" },
-    { title: `内面に持っている面×生まれた日の性質の詳細`, text: southP.byDayStem ? southP.byDayStem[pillars.day.stem] || "" : "" },
+    { title: `中心的な性格×生まれた日の性質の詳細`, text: starP.byDayStem ? (starP.byDayStem[pillars.day.stem] || "").split("。").slice(0, 2).join("。") + "。" : "" },
+    { title: `表に出やすい面×生まれた日の性質の詳細`, text: northP.byDayStem ? (northP.byDayStem[pillars.day.stem] || "").split("。").slice(0, 2).join("。") + "。" : "" },
+    { title: `内面に持っている面×生まれた日の性質の詳細`, text: southP.byDayStem ? (southP.byDayStem[pillars.day.stem] || "").split("。").slice(0, 2).join("。") + "。" : "" },
     { title: "本人も自覚しにくい裏の性格", text: pickByBalance(starP.hidden, balanceType) },
     { title: "人生のタイミングから見る性格要素", text: energyTexts.join("　") },
     { title: "内面の構造（人間関係の相性）", text: [interactionNorth, interactionSouth, interactionEast, interactionWest].filter(Boolean).join("\n") },
