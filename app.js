@@ -4086,7 +4086,77 @@ function calcWorkExcellence(center, northStar, southStar, energy, counts, pillar
   return { score, rank, breakdown: breakdown.join(" / "), jobTendency: jobTendency[center] || "" };
 }
 
-function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, seimei) {
+// === 主星相互関係（中央×他方位の組み合わせパターン） ===
+const starInteractionData = {
+  "相生(→)": {
+    north: "目上からの支援が自然に得られる関係。上司や親から引き立てられ、目上の運に恵まれやすい。",
+    south: "目下を自然に導ける関係。部下や後輩、子供に恵まれ、教える立場で成果を出す。",
+    east: "社会との関係が自然に築ける。友人や同僚の支援を得て、社会で伸びていく。",
+    west: "配偶者との関係が自然。パートナーから支えられ、家庭が安定する基盤がある。"
+  },
+  "相生(←)": {
+    north: "目上を支える関係。自分が目上に尽くすことで信頼を得るが、頼るのが苦手な面がある。",
+    south: "目下から支えられる関係。部下や後輩が自分を助けてくれるが、甘えさせすぎに注意。",
+    east: "社会に尽くす関係。自分から貢献することで評価されるが、自己主張が控えめになりがち。",
+    west: "配偶者に尽くす関係。パートナーを支えることで家庭が成り立つが、自分のニーズを抑えがち。"
+  },
+  "相剋(→)": {
+    north: "目上との摩擦が生じやすい関係。上司と衝突しやすく、自分のやり方を押し通す傾向がある。",
+    south: "目下を抑え込みやすい関係。部下や後輩との関係に葛藤があり、厳しすぎる面が出る。",
+    east: "社会とぶつかる関係。友人や同僚と対立しやすく、自分のペースを押し付けがち。",
+    west: "配偶者を抑え込みやすい関係。パートナーとの主導権争いが生じ、適度な距離感が必要。"
+  },
+  "相剋(←)": {
+    north: "目上から抑圧されやすい関係。上司や親の期待に縛られ、自分の意思を抑えがち。",
+    south: "目下から反発されやすい関係。部下や後輩との関係に苦労し、思い通りにいかない。",
+    east: "社会から圧力を受ける関係。環境に翻弄されやすく、自分のペースを保つ工夫が必要。",
+    west: "配偶者から抑圧されやすい関係。パートナーの強さに押されがちで、自分の主張が大事。"
+  },
+  "比和": {
+    north: "目上と同じ性質の関係。親しみやすいが、目上の良し悪しがそのまま自分に影響する。",
+    south: "目下と同じ性質の関係。共感しやすいが、似た者同士で欠点も共有しやすい。",
+    east: "社会と同じ性質の関係。友人と波長が合うが、刺激に欠け成長のきっかけが少ない。",
+    west: "配偶者と同じ性質の関係。似た者夫婦で安定するが、変化がなくマンネリになりやすい。"
+  }
+};
+
+function getStarInteraction(centerStar, otherStar, direction) {
+  const centerEl = getStarElement(centerStar);
+  const otherEl = getStarElement(otherStar);
+  if (!centerEl || !otherEl) return "";
+  const rel = getGogyoRelation(centerEl, otherEl);
+  const data = starInteractionData[rel];
+  if (!data || !data[direction]) return "";
+  return `${centerStar}（中央）と${otherStar}（${direction === "north" ? "北" : direction === "south" ? "南" : direction === "east" ? "東" : "西"}）の関係：${data[direction]}`;
+}
+
+// === 主星×十二大従星の組み合わせ ===
+const mainEnergyComboData = {
+  "相生(→)": "主星の性質が従星によって自然に表現される。内面のテーマが外に現れやすい。",
+  "相生(←)": "従星のエネルギーが主星を支える。環境のタイミングが性格の表現を後押しする。",
+  "相剋(→)": "主星の性質が従星とぶつかる。内面と外面のテーマが葛藤を生む。",
+  "相剋(←)": "従星のエネルギーが主星を抑圧する。環境が性格の表現を制限する。",
+  "比和": "主星と従星が同じ性質。内面と外面が一致し、素直な表現ができる。"
+};
+
+function getMainEnergyCombo(mainStar, energyStar) {
+  const mainEl = getStarElement(mainStar);
+  const energyEl = getEnergyElement(energyStar);
+  if (!mainEl || !energyEl) return "";
+  const rel = getGogyoRelation(mainEl, energyEl);
+  return mainEnergyComboData[rel] || "";
+}
+
+function getEnergyElement(energyName) {
+  const energyElementMap = {
+    "天貴星": "土", "天南星": "水", "天禄星": "木", "天将星": "木", "天堂星": "土",
+    "天恍星": "火", "天印星": "土", "天報星": "水", "天胡星": "木", "天極星": "水",
+    "天庫星": "土", "天馳星": "金"
+  };
+  return energyElementMap[energyName] || "";
+}
+
+function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, seimei, extra) {
   const weakest = Object.entries(counts).sort((a, b) => a[1] - b[1])[0][0];
   const strongest = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
   const center = mainStars.center;
@@ -4807,6 +4877,33 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
   const seimeiGood = hasSeimei ? `【姓名判断・人格の性質（${seimei.jinGogyo}）】${seimeiPersonality.jinGogyo.good}\n【姓名判断・人格${seimei.jinRank?.rank}】${seimeiPersonality.jinRankText}\n【姓名判断・地格${seimei.chiRank?.rank}】${seimeiPersonality.chiRankText}\n【姓名判断・外格${seimei.gaiRank?.rank}】${seimeiPersonality.gaiRankText}` : "";
   const seimeiBad = hasSeimei ? `【姓名判断・人格の性質（${seimei.jinGogyo}）】${seimeiPersonality.jinGogyo.bad}\n【姓名判断・三才配置】${seimeiPersonality.sancaiText}` : "";
 
+  // 主星相互関係
+  const interactionNorth = getStarInteraction(center, mainStars.north, "north");
+  const interactionSouth = getStarInteraction(center, mainStars.south, "south");
+  const interactionEast = getStarInteraction(center, mainStars.east, "east");
+  const interactionWest = getStarInteraction(center, mainStars.west, "west");
+  const interactionEastWest = getStarInteraction(mainStars.east, mainStars.west, "west");
+
+  // 主星×従星の組み合わせ
+  const energyCombos = energy.map((e, i) => {
+    const combo = getMainEnergyCombo(center, e.name);
+    return combo ? `【${energyLabels[i]}】${center}×${e.name}：${combo}` : "";
+  }).filter(Boolean);
+
+  // extra データ（既存分析結果）
+  const ex = extra || {};
+  const ryudoText = ex.ryudo ? ex.ryudo.map(r => `${r.dir}：${r.advice}`).join("\n") : "";
+  const junkanText = ex.junkan ? ex.junkan.note : "";
+  const eastSouthText = ex.eastSouth ? `${ex.eastSouth.title}：${ex.eastSouth.text}` : "";
+  const joritsuText = ex.joritsu ? `${ex.joritsu.type}：${ex.joritsu.text}` : "";
+  const starCombosText = ex.starCombos && ex.starCombos.length > 0 ? ex.starCombos.map(c => `【${c.type}】${c.name}：${c.note}`).join("\n") : "";
+  const tripleStarText = ex.tripleStars && ex.tripleStars.length > 0 ? ex.tripleStars.map(t => `【${t.star}が${t.count}つ】${t.text}`).join("\n") : "";
+  const energyBiasText = ex.energyBias && ex.energyBias.length > 0 ? ex.energyBias.map(b => `【${b.star}が${b.count}つ】${b.text}`).join("\n") : "";
+  const kizuText = ex.kizu ? `${ex.kizu.type}：${ex.kizu.text}` : "";
+  const sekishokuText = ex.sekishoku ? `関係：${ex.sekishoku.relation}\n${ex.sekishoku.relationText}\n東方（現実）：${ex.sekishoku.eastStar}＝${ex.sekishoku.eastData.keywords}\n南方（理想）：${ex.sekishoku.southStar}＝${ex.sekishoku.southData.keywords}` : "";
+  const sanbunText = ex.sanbun ? ex.sanbun.mismatchText : "";
+  const topologyText = ex.topology && ex.topology.length > 0 ? ex.topology.map(t => `【${t.label}】${t.name}：${t.note}`).join("\n") : "";
+
   const reading = [
     { title: `${name}さんの本質`, text: `${dayP.good}${hasSeimei ? `\n姓名判断では人格${seimei.jinkaku}画（${seimei.jinRank?.rank}）。` : ""}` },
     { title: "性格の長所", text: `【中心的な性格】${pickByBalance(starP.good, balanceType)}\n【生まれた日の性質】${dayP.good}\n【最も強い要素（${strongest}）】${strongP.good}\n【表に出やすい面】${pickByBalance(northP.good, balanceType)}\n【内面に持っている面】${pickByBalance(southP.good, balanceType)}${seimeiGood ? "\n" + seimeiGood : ""}` },
@@ -4822,10 +4919,24 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
     { title: `内面に持っている面×生まれた日の性質の詳細`, text: southP.byDayStem ? southP.byDayStem[pillars.day.stem] || "" : "" },
     { title: "本人も自覚しにくい裏の性格", text: pickByBalance(starP.hidden, balanceType) },
     { title: "人生のタイミングから見る性格要素", text: energyTexts.join("　") },
+    { title: "主星相互関係（内面の構造）", text: [interactionNorth, interactionSouth, interactionEast, interactionWest].filter(Boolean).join("\n") },
+    { title: "社会と配偶者の関係", text: interactionEastWest || "" },
+    { title: "主星×従星の組み合わせ", text: energyCombos.join("\n") || "" },
+    { title: "流動法（人間関係の相性）", text: ryudoText },
+    { title: "循環法（ものの考え方の根幹）", text: junkanText },
+    { title: "現実と理想の関係（東方×南方）", text: eastSouthText },
+    { title: "情的か理性的か", text: joritsuText },
+    { title: "星の組み合わせ（起こりやすい現象）", text: starCombosText },
+    { title: "同星3連変化（天才・変人タイプ）", text: tripleStarText },
+    { title: "十二大従星の偏り", text: energyBiasText },
+    { title: "気図法（精神性と行動力）", text: kizuText },
+    { title: "適職占技（現実と理想の仕事バランス）", text: sekishokuText },
+    { title: "三分法（現実と精神のミスマッチ）", text: sanbunText },
+    { title: "干支の相互作用（刑冲破害）", text: topologyText },
     { title: "バランスと課題", text: `内面では「${strongest}」の性質が強く、「${weakest}」の性質が不足気味。強い要素は武器ですが、過剰になると独善・偏り・視野狭窄になります。不足する「${weakest}」は、人生で意識的に鍛えないと同じ壁として何度も出ます。${strongP.good}という長所を活かしつつ、${weakP.bad}という弱点を補う環境選びが鍵です。${hasSeimei ? `\n姓名判断の総合判定は「${seimei.overallRank}」。${seimei.overallRank === "大吉" || seimei.overallRank === "吉" ? "名前の画数バランスが良く、運勢を後押しする。" : seimei.overallRank === "半吉" ? "名前の画数は標準的。努力次第で運勢を引き上げられる。" : "名前の画数に偏りがあり、意識的な努力で補う必要がある。"}` : ""}` },
     { title: "エネルギー傾向", text: `人生のタイミングを表す星の合計エネルギーは${totalEnergy}点。${energy.map((e) => `${e.name}${e.score}点`).join("・")}。${totalEnergy >= 28 ? "強い運命ほど、怠けた時の反動も大きいです。力を持て余すと周囲への圧になります。" : "繊細な運命ほど、環境の悪さに削られます。根性論だけで突破しようとすると消耗します。"}` },
     { title: "注意が必要な時期", text: `${tenchusatsu}の期間中は、拡大や大きな決断より整理・準備・見直し向き。無理に勝負すると、手に入れたものの維持で苦しくなりやすいです。` }
-  ];
+  ].filter(r => r.text);
   return reading;
 }
 
@@ -5769,7 +5880,6 @@ function render(event) {
   const taiun = getTaiun(date, month, stems.indexOf(year.stem), gender);
   const currentAge = Math.floor((new Date() - date) / (365.25 * 86400000));
   const seimeiResult = analyzeSeimei(lastName, firstName);
-  const reading = buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, seimeiResult);
   const topologyResults = analyzeTopology(pillars);
   const fateTenchu = analyzeFateTenchusatsu(pillars);
   const guardian = getGuardianElements(counts);
@@ -5785,6 +5895,22 @@ function render(event) {
   const troublePrevention = buildTroublePrevention(mainStars.center, tenchusatsu, turningPoints);
   const ishiki = analyzeIshiki(pillars, day);
   const sanbun = analyzeSanbun(mainStars, [energyYear, energyMonth, energyDay]);
+
+  // buildReading用のextraデータを準備
+  const readingExtra = {
+    ryudo: analyzeRyudo(mainStars),
+    junkan: analyzeJunkan(mainStars),
+    eastSouth: analyzeEastSouth(mainStars),
+    joritsu: analyzeJoritsu(mainStars),
+    starCombos: analyzeStarCombos(mainStars, [energyYear, energyMonth, energyDay]),
+    tripleStars: analyzeTripleStar(mainStars),
+    energyBias: analyzeEnergyBias([energyYear, energyMonth, energyDay]),
+    kizu: analyzeKizu(counts),
+    sekishoku: analyzeSekishoku(mainStars),
+    sanbun: sanbun,
+    topology: topologyResults
+  };
+  const reading = buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, seimeiResult, readingExtra);
 
   // 浮気リスク・結婚適性度を事前計算（saveToHistoryで使用）
   const spouseEnergyForScore = getEnergyStar(day.stem, day.branch);
