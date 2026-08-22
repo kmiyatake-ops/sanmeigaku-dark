@@ -1095,6 +1095,7 @@ function getStarElement(starName) { return starElementMap[starNames.indexOf(star
 
 // 五行相生相剋の方向判定
 const gogyoCycle = ["木", "火", "土", "金", "水"];
+const gogyoRelation = { 木: { 木: "比和", 火: "相生", 土: "相剋", 金: "反剋", 水: "相生" }, 火: { 木: "相生", 火: "比和", 土: "相生", 金: "相剋", 水: "反剋" }, 土: { 木: "反剋", 火: "相生", 土: "比和", 金: "相生", 水: "相剋" }, 金: { 木: "相剋", 火: "反剋", 金: "比和", 土: "相生", 水: "相生" }, 水: { 木: "相生", 火: "相剋", 土: "反剋", 金: "相生", 水: "比和" } };
 function getGogyoRelation(a, b) {
   if (a === b) return "比和";
   const ai = gogyoCycle.indexOf(a);
@@ -1587,16 +1588,16 @@ function analyzeSanbun(mainStars, energyStarsArr) {
 // === 適職占技 ===
 // 参考: https://sanmei-stock.com/applied/applied-divination/suitable-occupation-reading/
 const sekishokuData = {
-  "貫索星": { keywords: "維持、保守、管理、自立", text: "変えない、変化させない事を目的とする仕事が適職です。守ることが得意なので、美術品を守る博物館の仕事や警備員なども向いています。人間の命を守ろうとする臨床医、他人のものを保管してあげるような仕事も向いています。単独行動、独立業や自営業が向いています。" },
-  "石門星": { keywords: "人脈を広げる、リーダーシップ、人を束ねる", text: "和合を重視する仕事が向いています。人を集めたり、大勢を束ねたり、グループ形成が得意です。交渉力や説得力が抜群なので、そういった局面が多い職業はいいでしょう。フランチャイズや営業など、人を使って広げていく仕事が向いています。" },
-  "鳳閣星": { keywords: "客観的、分かりやすさ、バランス感", text: "伝達に関わる仕事（客観的）に向いています。自然に向き合う仕事も向いていますので農業や酪農なども向いています。人を楽しませる職業も向いていますので、レジャー系の仕事や飲食の仕事、芸能関係の仕事も向いています。報道系でアナウンサーやリポーターなどの職業も向いています。" },
-  "調舒星": { keywords: "きめ細やかさ、センス", text: "自分のこだわりを貫ける、特殊技術を扱う仕事や専門家が向いています。繊細で神経を使うような仕事や、代わりの効かない仕事がいいです。基本的には個人プレイで完結できる仕事で、自分個人の考えや主張を伝える仕事はほぼ含まれます。" },
-  "禄存星": { keywords: "信用、奉仕", text: "奉仕的な仕事全般が向いています。人を惹きつける根本には深い愛情があります。また、財を回す仕事も向いています。ボランティア関連、医療全般、証券会社、銀行員など人の財産を扱う仕事も適職です。" },
-  "司禄星": { keywords: "家庭的、コツコツ努力", text: "生活関連、真面目さ、誠実さ、まとめる力を試される仕事が向いています。コツコツ努力することが得意なので、どんな仕事でも地味だけど着実に前進します。集めたり、蓄積と準備が得意です。情報収集、金融系、保険系の仕事も向いています。" },
-  "車騎星": { keywords: "役に立つ、負けない、頑張る、営業現場力", text: "行動的な仕事で、現場でやる仕事が得意です。スピードを求められる仕事も向いています。スポーツ選手として好まれる星です。金星は攻撃本能なので、ルールに則った勝負事を得意としますので法律関係の仕事も向いています。「武官」と称します。" },
-  "牽牛星": { keywords: "組織大切、既存の組織を作る", text: "プライドが高い星なので、国家資格など誰もが知っているような資格を取得して、みんなから認められるような仕事が向いています。公務員や役員や政治家、大企業への就職などを求めます。補佐的な仕事（No.2的立ち位置、秘書など）も向いています。「文官」と称します。" },
-  "龍高星": { keywords: "企画、臨機応変さ", text: "外国や異文化に関わる仕事に向いています。マンネリを一番嫌うので、常に変化がある仕事を好みます。独創的で常に新しいものに触れていられる仕事が向いています。立体思考の持ち主なので、もともとあるものを応用して変化させることを得意とします。デザイン関係の仕事も向いています。" },
-  "玉堂星": { keywords: "企画、教育", text: "企画・設計・計画する仕事が向いています。教養を活かした仕事や、教育に関わる仕事も適職です。準備や蓄積が得意なので、研究職や開発職にも向いています。" }
+  "貫索星": { keywords: "維持、保守、管理、自立", text: "変えない、変化させない事を目的とする仕事が適職です。守ることが得意なので、美術品を守る博物館の仕事や警備員なども向いています。人間の命を守ろうとする臨床医、他人のものを保管してあげるような仕事も向いています。単独行動、独立業や自営業が向いています。", celebs: "堀江貴文（起業家）、赤川次郎（作家）、伊東四朗（俳優）" },
+  "石門星": { keywords: "人脈を広げる、リーダーシップ、人を束ねる", text: "和合を重視する仕事が向いています。人を集めたり、大勢を束ねたり、グループ形成が得意です。交渉力や説得力が抜群なので、そういった局面が多い職業はいいでしょう。フランチャイズや営業など、人を使って広げていく仕事が向いています。", celebs: "安倍晋三（政治家・首相）、松下幸之助（実業家・パナソニック創業者）、三木谷浩史（実業家・楽天社長）" },
+  "鳳閣星": { keywords: "客観的、分かりやすさ、バランス感", text: "伝達に関わる仕事（客観的）に向いています。自然に向き合う仕事も向いていますので農業や酪農なども向いています。人を楽しませる職業も向いていますので、レジャー系の仕事や飲食の仕事、芸能関係の仕事も向いています。報道系でアナウンサーやリポーターなどの職業も向いています。", celebs: "小泉純一郎（政治家・首相）、中曽根康弘（政治家・首相）" },
+  "調舒星": { keywords: "きめ細やかさ、センス", text: "自分のこだわりを貫ける、特殊技術を扱う仕事や専門家が向いています。繊細で神経を使うような仕事や、代わりの効かない仕事がいいです。基本的には個人プレイで完結できる仕事で、自分個人の考えや主張を伝える仕事はほぼ含まれます。", celebs: "井ノ原快彦（タレント・キャスター・V6）" },
+  "禄存星": { keywords: "信用、奉仕", text: "奉仕的な仕事全般が向いています。人を惹きつける根本には深い愛情があります。また、財を回す仕事も向いています。ボランティア関連、医療全般、証券会社、銀行員など人の財産を扱う仕事も適職です。", celebs: "明石家さんま（タレント）、北野武（タレント・映画監督）、天海祐希（女優）、浜崎あゆみ（歌手）、吉永小百合（女優）" },
+  "司禄星": { keywords: "家庭的、コツコツ努力", text: "生活関連、真面目さ、誠実さ、まとめる力を試される仕事が向いています。コツコツ努力することが得意なので、どんな仕事でも地味だけど着実に前進します。集めたり、蓄積と準備が得意です。情報収集、金融系、保険系の仕事も向いています。", celebs: "大谷翔平（野球選手・二刀流）、三浦知良（サッカー選手・J最年長）" },
+  "車騎星": { keywords: "役に立つ、負けない、頑張る、営業現場力", text: "行動的な仕事で、現場でやる仕事が得意です。スピードを求められる仕事も向いています。スポーツ選手として好まれる星です。金星は攻撃本能なので、ルールに則った勝負事を得意としますので法律関係の仕事も向いています。「武官」と称します。", celebs: "木村拓哉（俳優・SMAP）、加藤茶（タレント・ザ・ドリフターズ）" },
+  "牽牛星": { keywords: "組織大切、既存の組織を作る", text: "プライドが高い星なので、国家資格など誰もが知っているような資格を取得して、みんなから認められるような仕事が向いています。公務員や役員や政治家、大企業への就職などを求めます。補佐的な仕事（No.2的立ち位置、秘書など）も向いています。「文官」と称します。", celebs: "石原慎太郎（政治家・東京都知事）、田原総一朗（ジャーナリスト）、森田正光（気象キャスター・実業家）" },
+  "龍高星": { keywords: "企画、臨機応変さ", text: "外国や異文化に関わる仕事に向いています。マンネリを一番嫌うので、常に変化がある仕事を好みます。独創的で常に新しいものに触れていられる仕事が向いています。立体思考の持ち主なので、もともとあるものを応用して変化させることを得意とします。デザイン関係の仕事も向いています。", celebs: "大村智（ノーベル生理学・医学賞受賞者）、澤穂希（サッカー選手・元日本代表）、森英惠（ファッションデザイナー）" },
+  "玉堂星": { keywords: "企画、教育", text: "企画・設計・計画する仕事が向いています。教養を活かした仕事や、教育に関わる仕事も適職です。準備や蓄積が得意なので、研究職や開発職にも向いています。", celebs: "タモリ（タレント）、イチロー（野球選手）、藤井聡太（将棋棋士・最年少名人）、鳥山明（漫画家・ドラゴンボール）、田中角栄（政治家・首相）" }
 };
 
 function analyzeSekishoku(mainStars) {
@@ -2145,9 +2146,8 @@ function analyzeYearlyFortune(day, pillars, taiun, currentAge, thisYear, balance
   const dayEl = elements[stems.indexOf(day.stem)];
   const yearEl = elements[stems.indexOf(yp.stem)];
   const taiunEl = currentTaiun ? elements[stems.indexOf(currentTaiun.stem)] : null;
-  const gogyoRel = { 木: { 木: "比和", 火: "相生", 土: "相剋", 金: "反剋", 水: "相生" }, 火: { 木: "相生", 火: "比和", 土: "相生", 金: "相剋", 水: "反剋" }, 土: { 木: "反剋", 火: "相生", 土: "比和", 金: "相生", 水: "相剋" }, 金: { 木: "相剋", 火: "反剋", 金: "比和", 土: "相生", 水: "相生" }, 水: { 木: "相生", 火: "相剋", 土: "反剋", 金: "相生", 水: "比和" } };
-  const yearRel = gogyoRel[dayEl][yearEl];
-  const taiunRel = taiunEl ? gogyoRel[dayEl][taiunEl] : null;
+  const yearRel = gogyoRelation[dayEl][yearEl];
+  const taiunRel = taiunEl ? gogyoRelation[dayEl][taiunEl] : null;
 
   // 金運・恋愛運・仕事運の構築
   const isGood = (star) => {
@@ -2314,75 +2314,237 @@ function analyzeYearlyFortune(day, pillars, taiun, currentAge, thisYear, balance
   };
 }
 
+// === 今日の運勢・今月の運勢 ===
+function analyzeDailyMonthlyFortune(day, pillars, tenchusatsu, balanceType) {
+  const now = new Date();
+  const todayPillar = getDayPillar(now);
+  const yearPillar = getYearPillar(now);
+  const monthPillar = getMonthPillar(now, stems.indexOf(yearPillar.stem));
+
+  // 日運・月運の主星と従星
+  const dayStar = getMainStar(day.stem, todayPillar.stem);
+  const dayEnergy = getEnergyStar(day.stem, todayPillar.branch);
+  const monthStar = getMainStar(day.stem, monthPillar.stem);
+  const monthEnergy = getEnergyStar(day.stem, monthPillar.branch);
+
+  // 五行関係
+  const dayEl = elements[stems.indexOf(day.stem)];
+  const todayEl = elements[stems.indexOf(todayPillar.stem)];
+  const monthEl_el = elements[stems.indexOf(monthPillar.stem)];
+  const dayRel = gogyoRelation[dayEl][todayEl];
+  const monthRel = gogyoRelation[dayEl][monthEl_el];
+
+  // 天中殺判定
+  const isDayTenchu = isTenchusatsuYear(todayPillar.branch, tenchusatsu);
+  const isMonthTenchu = isTenchusatsuYear(monthPillar.branch, tenchusatsu);
+
+  // 位相法
+  const dayTopo = analyzeBranchTopology(todayPillar.branch, pillars, todayPillar.stem);
+  const monthTopo = analyzeBranchTopology(monthPillar.branch, pillars, monthPillar.stem);
+
+  // スコア計算（年運と同じロジックを縮小適用）
+  const starDomainWeights = {
+    "貫索星": { money: 22, love: -8, work: 18 },
+    "石門星": { money: 12, love: 18, work: 14 },
+    "鳳閣星": { money: -6, love: 25, work: -10 },
+    "調舒星": { money: -12, love: 20, work: -14 },
+    "禄存星": { money: 16, love: 22, work: 8 },
+    "司禄星": { money: 24, love: -4, work: 20 },
+    "車騎星": { money: 6, love: 18, work: 16 },
+    "牽牛星": { money: 18, love: -10, work: 24 },
+    "龍高星": { money: -14, love: 22, work: -16 },
+    "玉堂星": { money: 14, love: 6, work: 22 }
+  };
+  const energyDomainWeights = {
+    "天貴星": { money: 12, love: 6, work: 14 },
+    "天南星": { money: 8, love: 14, work: 10 },
+    "天禄星": { money: 16, love: 8, work: 12 },
+    "天将星": { money: 14, love: 10, work: 16 },
+    "天堂星": { money: 10, love: 16, work: 6 },
+    "天印星": { money: 4, love: 12, work: 6 },
+    "天報星": { money: -12, love: -6, work: -10 },
+    "天胡星": { money: -8, love: -14, work: -8 },
+    "天極星": { money: -10, love: -8, work: -14 },
+    "天馳星": { money: -6, love: -12, work: -10 },
+    "天庫星": { money: 14, love: 4, work: 12 },
+    "天恍星": { money: -4, love: -8, work: -6 }
+  };
+
+  function calcScore(star, energyName, rel, isTenchu, topo) {
+    let money = 50, love = 50, work = 50;
+    const sw = starDomainWeights[star] || { money: 0, love: 0, work: 0 };
+    money += sw.money; love += sw.love; work += sw.work;
+    if (rel === "相生") { money += 12; love += 20; work += 14; }
+    else if (rel === "比和") { money += 6; love += 4; work += 8; }
+    else if (rel === "相剋") { money -= 18; love -= 14; work -= 12; }
+    else if (rel === "反剋") { money -= 8; love -= 12; work -= 14; }
+    const ew = energyDomainWeights[energyName] || { money: 0, love: 0, work: 0 };
+    money += ew.money; love += ew.love; work += ew.work;
+    if (isTenchu) { money -= 16; love -= 28; work -= 14; }
+    const goCount = topo.filter(r => r.group === "合法").length;
+    const sanCount = topo.filter(r => r.group === "散法").length;
+    money += goCount * 10 - sanCount * 6;
+    love += goCount * 12 - sanCount * 10;
+    work += goCount * 8 - sanCount * 8;
+    return {
+      money: Math.max(5, Math.min(98, money)),
+      love: Math.max(5, Math.min(98, love)),
+      work: Math.max(5, Math.min(98, work))
+    };
+  }
+
+  const dayScores = calcScore(dayStar, dayEnergy.name, dayRel, isDayTenchu, dayTopo);
+  const monthScores = calcScore(monthStar, monthEnergy.name, monthRel, isMonthTenchu, monthTopo);
+
+  // アドバイス生成
+  function buildAdvice(star, energyName, rel, isTenchu, scores, period) {
+    const parts = [];
+    const goodStars = ["禄存星", "司禄星", "石門星", "玉堂星", "牽牛星"];
+
+    if (isTenchu) {
+      parts.push(`${period}は天中殺中。大きな決断や新しいことを始めるのは避け、整理と準備に徹するのが無難です。`);
+    } else if (rel === "相生" || rel === "比和") {
+      parts.push(`${period}は運気の追い風がある時期。積極的に動くことで良い結果が期待できます。`);
+    } else if (rel === "相剋" || rel === "反剋") {
+      parts.push(`${period}は摩擦や抵抗が出やすい時期。無理をせず、慎重に行動するのが安全です。`);
+    } else {
+      parts.push(`${period}は平凡な運気。日常を着実に過ごし、コンディションを整えるのに適しています。`);
+    }
+
+    // 星別の具体的アドバイス
+    const starAdvice = {
+      "貫索星": "自分のペースを守り、一つのことに集中するのが吉。",
+      "石門星": "人との交流を大切にすると運が開ける。",
+      "鳳閣星": "楽しさや表現力を活かすと良い流れが来る。",
+      "調舒星": "感性を大切にしつつ、感情の波に注意。",
+      "禄存星": "人に親切にすると自分にも良いことが返ってくる。",
+      "司禄星": "コツコツ積み重ねることが成果につながる。",
+      "車騎星": "行動力が鍵。思い切って動くのが吉。",
+      "牽牛星": "品位と責任を大切にすると評価が上がる。",
+      "龍高星": "変化を受け入れ、柔軟に対応するのが吉。",
+      "玉堂星": "学びや知識を活かすと良い結果が出る。"
+    };
+    if (starAdvice[star]) parts.push(starAdvice[star]);
+
+    // スコア別のドメインアドバイス
+    const domains = [
+      { name: "金運", score: scores.money },
+      { name: "恋愛運", score: scores.love },
+      { name: "仕事運", score: scores.work }
+    ];
+    const best = domains.reduce((a, b) => a.score > b.score ? a : b);
+    const worst = domains.reduce((a, b) => a.score < b.score ? a : b);
+
+    if (best.score >= 65) {
+      parts.push(`${best.name}が特に好調（${best.score}点）。この分野で積極的に動くのが効果的です。`);
+    }
+    if (worst.score <= 35) {
+      parts.push(`${worst.name}には注意（${worst.score}点）。無理をせず、守りに入るのが賢明です。`);
+    }
+
+    return parts.join(" ");
+  }
+
+  const dayAdvice = buildAdvice(dayStar, dayEnergy.name, dayRel, isDayTenchu, dayScores, "今日");
+  const monthAdvice = buildAdvice(monthStar, monthEnergy.name, monthRel, isMonthTenchu, monthScores, "今月");
+
+  // 日付フォーマット
+  const todayStr = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+  const monthStr = `${now.getFullYear()}年${now.getMonth() + 1}月`;
+
+  return {
+    today: {
+      date: todayStr,
+      pillar: todayPillar,
+      star: dayStar,
+      energy: dayEnergy,
+      rel: dayRel,
+      isTenchu: isDayTenchu,
+      scores: dayScores,
+      advice: dayAdvice
+    },
+    monthly: {
+      month: monthStr,
+      pillar: monthPillar,
+      star: monthStar,
+      energy: monthEnergy,
+      rel: monthRel,
+      isTenchu: isMonthTenchu,
+      scores: monthScores,
+      advice: monthAdvice
+    }
+  };
+}
+
 // 大運・年運の星を分かりやすく解説する関数
 function starToPlainDesc(starName, isTenchu, rel, period) {
   const starDesc = {
     "貫索星": {
       title: "自分の道を貫く時期",
-      desc: "自分の信念を大切にし、周囲に流されずに進む時期です。",
+      desc: "自分の信念を大切にして、周りに流されずに進む時期。一人で始めたことが評価されやすいです。",
       good: "自分のやりたい仕事を貫いて認められる、一人で始めたことが評価される",
-      bad: "頑固になりすぎて周囲と対立する、人のアドバイスを聞かずに失敗する",
+      bad: "頑固になりすぎて周りと対立する、人のアドバイスを聞かずに失敗する",
       neutral: "今の仕事や関係を深めつつ、自分のペースを守るのが正解"
     },
     "石門星": {
       title: "人とのつながりが鍵の時期",
-      desc: "協力やチームワークが成果を生む時期です。",
-      good: "新しいコミュニティで重要な人脈ができる、チームで大きなプロジェクトを成功させる",
+      desc: "協力やチームワークが成果を生む時期。人との出会いが運を呼び込みます。",
+      good: "新しいコミュニティで大切な人脈ができる、チームで大きなプロジェクトを成功させる",
       bad: "人間関係のトラブルに巻き込まれる、グループ内の対立で板挟みになる",
-      neutral: "交流会に参加して来年に向けた人脈を蓄える、今の仲間との関係を深める"
+      neutral: "交流会に参加して来年に向けた人脈を育む、今の仲間との関係を深める"
     },
     "鳳閣星": {
       title: "楽しさと表現力が広がる時期",
-      desc: "明るさや表現力が運を呼び込む時期です。",
+      desc: "明るさや表現力が運を呼び込む時期。自分を楽しませることが、結果的に運を開きます。",
       good: "SNSの発信が評価されて仕事につながる、趣味が収入になる",
       bad: "遊びすぎて健康やお金を損なう、だらけすぎて仕事に支障が出る",
       neutral: "週末は趣味を楽しみつつ平日はしっかり働くバランスが取れる"
     },
     "調舒星": {
       title: "感受性が鋭くなる時期",
-      desc: "感性や直感が冴える一方、感情の波にも注意が必要です。",
+      desc: "感性や直感が冴える一方、感情の波にも注意が必要。クリエイティブな作業に向いています。",
       good: "ひらめいたアイデアが評価される、クリエイティブな仕事で成果を出す",
       bad: "些細なことで怒って人間関係を悪化させる、感情の波で仕事が手につかない",
       neutral: "日記や一人の時間で自分の感情を整理する内省の期間"
     },
     "禄存星": {
       title: "愛情と奉仕が運を呼ぶ時期",
-      desc: "人に親切にすることで自分にも良いことが巡ってくる時期です。",
+      desc: "人に親切にすることで自分にも良いことが巡ってくる時期。優しさが運を連れてきます。",
       good: "後輩を指導して自分の評価も上がる、人に尽くしたことが形になって返ってくる",
       bad: "人に尽くしすぎて自分が疲弊する、いい人になりすぎて利用される",
       neutral: "お世話になった人に挨拶回りをして関係を深める"
     },
     "司禄星": {
       title: "蓄積と堅実さが報われる時期",
-      desc: "コツコツ積み重ねたことが評価される時期です。",
+      desc: "コツコツ積み重ねたことが評価される時期。地道な努力が花を開かせます。",
       good: "長年続けた勉強が資格試験合格につながる、地道な努力が昇進に結びつく",
       bad: "変化を恐れてチャンスを逃す、安全策ばかり取って成長がない",
       neutral: "貯金や基盤作りを着実に進め、来年の飛躍に備える"
     },
     "車騎星": {
       title: "行動力が試される時期",
-      desc: "動いて結果を出すことが求められる時期です。",
+      desc: "動いて結果を出すことが求められる時期。思い切って動く人が報われます。",
       good: "営業成績でトップを取る、コンテストに応募して入賞する",
       bad: "焦って失敗する、勢いで契約して後で条件が悪いことに気づく",
       neutral: "体力作りから始め、来年の勝負に備える"
     },
     "牽牛星": {
       title: "名誉と責任が訪れる時期",
-      desc: "評価される一方で、責任も重くなる時期です。",
+      desc: "評価される一方で、責任も重くなる時期。やりがいとプレッシャーが表裏一体です。",
       good: "昇進して役職がつき、やりがいと充実感を感じる、表彰される",
       bad: "責任が重すぎて潰されそうになる、スケジュール管理ができずチームが混乱する",
       neutral: "地道に実績を積み上げて「次は任せよう」と言われる"
     },
     "龍高星": {
       title: "変革と冒険の時期",
-      desc: "環境が大きく変わる可能性がある時期です。",
+      desc: "環境が大きく変わる可能性がある時期。変化を恐れず飛び込む人が成果をつかみます。",
       good: "未経験の業界に転職して活躍し始める、新しい分野に挑戦して成功する",
       bad: "引っ越し・転職・別れが同時に起きて心の余裕がない、変化が多すぎて疲弊する",
       neutral: "趣味を一つ変えてみるなど、小さな冒険から始める"
     },
     "玉堂星": {
       title: "学びと知恵が評価される時期",
-      desc: "知識や学習が成果につながる時期です。",
+      desc: "知識や学習が成果につながる時期。学んだことが自信になり、自信が運を呼びます。",
       good: "取得した資格が活きる部署に異動する、専門知識が評価されて仕事が増える",
       bad: "理屈ばかりで行動が遅れる、考えすぎてチャンスを逃す",
       neutral: "オンライン講座を受講し、来年に向けたスキルを身につける"
@@ -2658,9 +2820,9 @@ function buildYearlySummary(yf, simple) {
   let overallTone = "";
   if (simple) {
     if (avgScore >= 70) overallTone = "全体的に運気が良く、積極的に動くといい時期です";
-    else if (avgScore >= 55) overallTone = "だいたい順調ですが、油断せずコツコツ進めるのがいい時期です";
-    else if (avgScore >= 40) overallTone = "良いことと悪いことが混ざる時期で、メリハリをつけて動く必要があります";
-    else overallTone = "運気が低迷しやすい時期です。無理をせず、守りを固めるのが無難です";
+    else if (avgScore >= 55) overallTone = "だいたい順調です。油断せずコツコツ進めるのがちょうどいい時期です";
+    else if (avgScore >= 40) overallTone = "良いことと悪いことが混ざる時期。メリハリをつけて動くのがコツです";
+    else overallTone = "運気が低迷しやすい時期です。無理をせず、自分を労わりながら守りを固めましょう";
     const taiunTendencyText = starTendency[taiunStarName] || (taiunStarName === "不明" ? "大運の影響がまだ始まっていない、または終わった時期" : "");
     parts.push(`今は10年周期の流れとして「${taiunTendencyText}」、今年1年の流れとして「${starTendency[yearStarName] || ""}」が来ています。${overallTone}。`);
     // === 運気の相性（シンプル） ===
@@ -2763,9 +2925,9 @@ function buildYearlySummary(yf, simple) {
     } else if (avgScore >= 45 && !tenchuStatus.length) {
       advice = "基本は守りながら、チャンスを見極めて動く時期です。今年の運気に合った行動をとりましょう。";
     } else if (tenchuStatus.length) {
-      advice = "今は注意が必要な時期です。「動かないこと」が一番の戦略です。整理や準備に徹し、時期が明けたらスタートダッシュに備えましょう。";
+      advice = "今は少し注意が必要な時期です。「動かないこと」が一番の戦略。整理や準備に微せて、時期が明けたらスタートダッシュに備えましょう。";
     } else {
-      advice = "厳しい時期ですが、無理をしなければ乗り越えられます。健康と人間関係を最優先にし、次のチャンスに備えて力を蓄えましょう。";
+      advice = "少し厳しい時期ですが、無理をしなければ乗り越えられます。健康と人間関係を大切にしながら、次のチャンスに備えて力を蓄えましょう。";
     }
   } else {
     if (avgScore >= 65 && !tenchuStatus.length) {
@@ -2924,7 +3086,7 @@ function analyzeMote(mainStars, energy, counts, day, pillars) {
   allStars.forEach((star) => {
     const p = starMotePoint[star];
     if (p) {
-      oppositeScore += p.oppDesc ? p.opposite : 0;
+      oppositeScore += p.opposite;
       sameScore += p.same;
     }
   });
@@ -3002,8 +3164,8 @@ function analyzeMote(mainStars, energy, counts, day, pillars) {
 
   // 正規化: 生スコアを0-100スケールに変換
   // 実用的な範囲は約15-220（星6個×最大35 + 補正類）
-  const RAW_MIN = 15;
-  const RAW_MAX = 220;
+  const RAW_MIN = 5;
+  const RAW_MAX = 250;
   oppositeScore = Math.max(5, Math.min(100, Math.round(((oppositeScore - RAW_MIN) / (RAW_MAX - RAW_MIN)) * 100)));
   sameScore = Math.max(5, Math.min(100, Math.round(((sameScore - RAW_MIN) / (RAW_MAX - RAW_MIN)) * 100)));
 
@@ -3089,6 +3251,267 @@ function analyzeMote(mainStars, energy, counts, day, pillars) {
     oppFans: [...oppFanSet],
     sameFans: [...sameFanSet],
     gogyoFans
+  };
+}
+
+// === 九星気学（方位判定）===
+// 出典: 園田真次郎が1924年に体系化した日本の方位占術
+const kyuseiStarNames = ["一白水星", "二黒土星", "三碧木星", "四緑木星", "五黄土星", "六白金星", "七赤金星", "八白土星", "九紫火星"];
+const kyuseiStarElements = ["水", "土", "木", "木", "土", "金", "金", "土", "火"];
+
+// 洛書の飛星順序: 中宮→NW→W→NE→S→N→SW→E→SE
+const rakushoOrder = [5, 6, 7, 8, 9, 1, 2, 3, 4];
+
+// 方位名（洛書番号→方位名）
+const kyuseiPositionNames = {
+  1: "北", 2: "南西", 3: "東", 4: "南東",
+  5: "中央", 6: "北西", 7: "西", 8: "北東", 9: "南"
+};
+
+// 十二支→方位ポジション（8方位に圧縮）
+const branchToKyuseiPosition = {
+  "子": 1, "丑": 8, "寅": 8, "卯": 3, "辰": 4, "巳": 4,
+  "午": 9, "未": 2, "申": 2, "酉": 7, "戌": 6, "亥": 6
+};
+
+// 方位の反対
+const oppositePosition = { 1: 9, 9: 1, 2: 8, 8: 2, 3: 7, 7: 3, 4: 6, 6: 4 };
+
+// 本命星を計算（立春区切り、1984年=下元甲子・中宮七赤）
+function getKyuseiHonmeisei(date) {
+  const y = date.getFullYear();
+  const lichun = new Date(y, 1, setsuiriDays[1]);
+  const adjustedYear = (date >= lichun) ? y : y - 1;
+  const diff = adjustedYear - 1984;
+  return ((7 - diff - 1) % 9 + 9) % 9 + 1;
+}
+
+// 月命星を計算
+function getKyuseiGetsumeisei(date) {
+  const honmeisei = getKyuseiHonmeisei(date);
+  let monthStartStar;
+  if ([1, 4, 7].includes(honmeisei)) monthStartStar = 8;
+  else if ([2, 5, 8].includes(honmeisei)) monthStartStar = 5;
+  else monthStartStar = 2;
+  const m = date.getMonth();
+  const d = date.getDate();
+  let solarMonth = m;
+  if (d < setsuiriDays[m]) solarMonth = mod(m - 1, 12);
+  return ((monthStartStar - solarMonth - 1) % 9 + 9) % 9 + 1;
+}
+
+// 飛星盤を生成（陰遁・減少順）
+function generateKyuseiBoard(centerStar) {
+  const board = {};
+  rakushoOrder.forEach((pos, i) => {
+    board[pos] = ((centerStar - i - 1) % 9 + 9) % 9 + 1;
+  });
+  return board;
+}
+
+// 指定年の年盤を取得
+function getKyuseiYearBoard(adjustedYear) {
+  const diff = adjustedYear - 1984;
+  const centerStar = ((7 - diff - 1) % 9 + 9) % 9 + 1;
+  return generateKyuseiBoard(centerStar);
+}
+
+// 指定月の月盤を取得
+function getKyuseiMonthBoard(date) {
+  const centerStar = getKyuseiGetsumeisei(date);
+  return generateKyuseiBoard(centerStar);
+}
+
+// 日命星を計算（1900年1月1日=中宮一白を基準に日ごとに減少）
+function getKyuseiNichimeisei(date) {
+  const epoch = new Date(1900, 0, 1);
+  const diffDays = Math.floor((date - epoch) / (1000 * 60 * 60 * 24));
+  return ((1 - diffDays - 1) % 9 + 9) % 9 + 1;
+}
+
+// 指定日の日盤を取得
+function getKyuseiDayBoard(date) {
+  const centerStar = getKyuseiNichimeisei(date);
+  return generateKyuseiBoard(centerStar);
+}
+
+// 方位判定メイン関数
+function analyzeKyuseiDirections(birthDate, targetDate) {
+  const honmeisei = getKyuseiHonmeisei(birthDate);
+  const getsumeisei = getKyuseiGetsumeisei(birthDate);
+  const honmeiElement = kyuseiStarElements[honmeisei - 1];
+
+  const ty = targetDate.getFullYear();
+  const lichun = new Date(ty, 1, setsuiriDays[1]);
+  const adjustedYear = (targetDate >= lichun) ? ty : ty - 1;
+  const yearBoard = getKyuseiYearBoard(adjustedYear);
+
+  // 五黄の位置を探す
+  let goouPosition = null;
+  for (const [pos, star] of Object.entries(yearBoard)) {
+    if (star === 5) goouPosition = parseInt(pos);
+  }
+
+  // 暗剣殺（五黄の位置、中央以外）
+  const ankenSatsu = (goouPosition && goouPosition !== 5) ? goouPosition : null;
+
+  // 歳破（年の十二支の反対方位）
+  const yearBranchIdx = mod(adjustedYear - 1984, 12);
+  const yearBranchName = branches[yearBranchIdx];
+  const oppositeBranchName = branches[mod(yearBranchIdx + 6, 12)];
+  const saihaiPosition = branchToKyuseiPosition[oppositeBranchName];
+
+  // 本命殺（本命星の位置、中央以外）
+  let honmeiSatsu = null;
+  for (const [pos, star] of Object.entries(yearBoard)) {
+    if (star === honmeisei && parseInt(pos) !== 5) honmeiSatsu = parseInt(pos);
+  }
+  // 本命的殺（本命殺の反対方位）
+  const honmeiTekiSatsu = honmeiSatsu ? oppositePosition[honmeiSatsu] : null;
+
+  // 月盤の凶方位
+  const monthBoard = getKyuseiMonthBoard(targetDate);
+  let getsumeiSatsu = null;
+  for (const [pos, star] of Object.entries(monthBoard)) {
+    if (star === getsumeisei && parseInt(pos) !== 5) getsumeiSatsu = parseInt(pos);
+  }
+  const getsumeiTekiSatsu = getsumeiSatsu ? oppositePosition[getsumeiSatsu] : null;
+
+  // 日盤の計算
+  const nichimeisei = getKyuseiNichimeisei(targetDate);
+  const dayBoard = getKyuseiDayBoard(targetDate);
+
+  // 日盤の凶方位（日命殺・日命的殺）
+  let nichimeiSatsu = null;
+  for (const [pos, star] of Object.entries(dayBoard)) {
+    if (star === nichimeisei && parseInt(pos) !== 5) nichimeiSatsu = parseInt(pos);
+  }
+  const nichimeiTekiSatsu = nichimeiSatsu ? oppositePosition[nichimeiSatsu] : null;
+
+  // 月盤の五黄の位置（暗剣殺・月破判定用）
+  let monthGoouPosition = null;
+  for (const [pos, star] of Object.entries(monthBoard)) {
+    if (star === 5) monthGoouPosition = parseInt(pos);
+  }
+  const monthAnkenSatsu = (monthGoouPosition && monthGoouPosition !== 5) ? monthGoouPosition : null;
+
+  // 月破（月の十二支の反対方位）
+  const m = targetDate.getMonth();
+  const d = targetDate.getDate();
+  const solarMonth = (d < setsuiriDays[m]) ? mod(m - 1, 12) : m;
+  const monthBranchIdx = mod(solarMonth + 2, 12); // 寅月=2→branches[2]=寅
+  const monthBranchName = branches[monthBranchIdx];
+  const monthOppositeBranchName = branches[mod(monthBranchIdx + 6, 12)];
+  const monthSaihaiPosition = branchToKyuseiPosition[monthOppositeBranchName];
+
+  // 日盤の五黄の位置（暗剣殺判定用）
+  let dayGoouPosition = null;
+  for (const [pos, star] of Object.entries(dayBoard)) {
+    if (star === 5) dayGoouPosition = parseInt(pos);
+  }
+  const dayAnkenSatsu = (dayGoouPosition && dayGoouPosition !== 5) ? dayGoouPosition : null;
+
+  // 年盤の凶方位のセット
+  const badPositions = new Set();
+  if (ankenSatsu) badPositions.add(ankenSatsu);
+  badPositions.add(saihaiPosition);
+  if (honmeiSatsu) badPositions.add(honmeiSatsu);
+  if (honmeiTekiSatsu) badPositions.add(honmeiTekiSatsu);
+  if (getsumeiSatsu) badPositions.add(getsumeiSatsu);
+  if (getsumeiTekiSatsu) badPositions.add(getsumeiTekiSatsu);
+
+  // 月盤の凶方位のセット
+  const monthBadPositions = new Set();
+  if (monthAnkenSatsu) monthBadPositions.add(monthAnkenSatsu);
+  monthBadPositions.add(monthSaihaiPosition);
+  if (honmeiSatsu) monthBadPositions.add(honmeiSatsu);
+  if (honmeiTekiSatsu) monthBadPositions.add(honmeiTekiSatsu);
+  if (getsumeiSatsu) monthBadPositions.add(getsumeiSatsu);
+  if (getsumeiTekiSatsu) monthBadPositions.add(getsumeiTekiSatsu);
+
+  // 日盤の凶方位のセット
+  const dayBadPositions = new Set();
+  if (dayAnkenSatsu) dayBadPositions.add(dayAnkenSatsu);
+  if (honmeiSatsu) dayBadPositions.add(honmeiSatsu);
+  if (honmeiTekiSatsu) dayBadPositions.add(honmeiTekiSatsu);
+  if (nichimeiSatsu) dayBadPositions.add(nichimeiSatsu);
+  if (nichimeiTekiSatsu) dayBadPositions.add(nichimeiTekiSatsu);
+
+  // 吉方位の判定（相生・比和で凶方位以外）
+  function calcGoodDirs(board, badSet) {
+    const dirs = [];
+    for (const [posStr, star] of Object.entries(board)) {
+      const pos = parseInt(posStr);
+      if (pos === 5 || badSet.has(pos)) continue;
+      const starElement = kyuseiStarElements[star - 1];
+      const rel = gogyoRelation[honmeiElement]?.[starElement];
+      if (rel === "相生" || rel === "比和") {
+        dirs.push({
+          position: pos,
+          direction: kyuseiPositionNames[pos],
+          star: kyuseiStarNames[star - 1],
+          relationship: rel
+        });
+      }
+    }
+    return dirs;
+  }
+
+  const goodDirections = calcGoodDirs(yearBoard, badPositions);
+  const monthGoodDirections = calcGoodDirs(monthBoard, monthBadPositions);
+  const dayGoodDirections = calcGoodDirs(dayBoard, dayBadPositions);
+
+  // 凶方位の詳細リスト
+  const badDirections = [];
+  if (ankenSatsu) badDirections.push({ direction: kyuseiPositionNames[ankenSatsu], type: "暗剣殺", note: "全員に凶。最も注意が必要な方位" });
+  badDirections.push({ direction: kyuseiPositionNames[saihaiPosition], type: "歳破", note: `${yearBranchName}年の反対方位。全員に凶` });
+  if (honmeiSatsu) badDirections.push({ direction: kyuseiPositionNames[honmeiSatsu], type: "本命殺", note: "あなたの本命星の方位。特に凶" });
+  if (honmeiTekiSatsu) badDirections.push({ direction: kyuseiPositionNames[honmeiTekiSatsu], type: "本命的殺", note: "本命殺の反対方位" });
+  if (getsumeiSatsu) badDirections.push({ direction: kyuseiPositionNames[getsumeiSatsu], type: "月命殺", note: "今月の月命星の方位" });
+  if (getsumeiTekiSatsu) badDirections.push({ direction: kyuseiPositionNames[getsumeiTekiSatsu], type: "月命的殺", note: "月命殺の反対方位" });
+
+  // 月盤の凶方位リスト
+  const monthBadDirections = [];
+  if (monthAnkenSatsu) monthBadDirections.push({ direction: kyuseiPositionNames[monthAnkenSatsu], type: "月暗剣殺", note: "今月の暗剣殺。全員に凶" });
+  monthBadDirections.push({ direction: kyuseiPositionNames[monthSaihaiPosition], type: "月破", note: `${monthBranchName}月の反対方位。全員に凶` });
+  if (honmeiSatsu) monthBadDirections.push({ direction: kyuseiPositionNames[honmeiSatsu], type: "本命殺", note: "あなたの本命星の方位" });
+  if (honmeiTekiSatsu) monthBadDirections.push({ direction: kyuseiPositionNames[honmeiTekiSatsu], type: "本命的殺", note: "本命殺の反対方位" });
+  if (getsumeiSatsu) monthBadDirections.push({ direction: kyuseiPositionNames[getsumeiSatsu], type: "月命殺", note: "月命星の方位" });
+  if (getsumeiTekiSatsu) monthBadDirections.push({ direction: kyuseiPositionNames[getsumeiTekiSatsu], type: "月命的殺", note: "月命殺の反対方位" });
+
+  // 日盤の凶方位リスト
+  const dayBadDirections = [];
+  if (dayAnkenSatsu) dayBadDirections.push({ direction: kyuseiPositionNames[dayAnkenSatsu], type: "日暗剣殺", note: "本日の暗剣殺。全員に凶" });
+  if (honmeiSatsu) dayBadDirections.push({ direction: kyuseiPositionNames[honmeiSatsu], type: "本命殺", note: "あなたの本命星の方位" });
+  if (honmeiTekiSatsu) dayBadDirections.push({ direction: kyuseiPositionNames[honmeiTekiSatsu], type: "本命的殺", note: "本命殺の反対方位" });
+  if (nichimeiSatsu) dayBadDirections.push({ direction: kyuseiPositionNames[nichimeiSatsu], type: "日命殺", note: "本日の日命星の方位" });
+  if (nichimeiTekiSatsu) dayBadDirections.push({ direction: kyuseiPositionNames[nichimeiTekiSatsu], type: "日命的殺", note: "日命殺の反対方位" });
+
+  // 月名（太陽月）
+  const solarMonthNames = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
+  const monthLabel = solarMonthNames[solarMonth];
+
+  return {
+    honmeisei: { number: honmeisei, name: kyuseiStarNames[honmeisei - 1], element: honmeiElement },
+    getsumeisei: { number: getsumeisei, name: kyuseiStarNames[getsumeisei - 1], element: kyuseiStarElements[getsumeisei - 1] },
+    nichimeisei: { number: nichimeisei, name: kyuseiStarNames[nichimeisei - 1], element: kyuseiStarElements[nichimeisei - 1] },
+    yearBoard,
+    monthBoard,
+    dayBoard,
+    adjustedYear,
+    yearBranch: yearBranchName,
+    monthBranch: monthBranchName,
+    monthLabel,
+    targetDate,
+    goodDirections,
+    badDirections,
+    badPositions: [...badPositions],
+    monthGoodDirections,
+    monthBadDirections,
+    monthBadPositions: [...monthBadPositions],
+    dayGoodDirections,
+    dayBadDirections,
+    dayBadPositions: [...dayBadPositions]
   };
 }
 
@@ -3530,7 +3953,6 @@ function buildTroublePrevention(centerStar, tenchusatsu, turningPoints) {
 function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birthYear, currentAge) {
   const points = [];
   const dayEl = elements[stems.indexOf(day.stem)];
-  const gogyoRel = { 木: { 木: "比和", 火: "相生", 土: "相剋", 金: "反剋", 水: "相生" }, 火: { 木: "相生", 火: "比和", 土: "相生", 金: "相剋", 水: "反剋" }, 土: { 木: "反剋", 火: "相生", 土: "比和", 金: "相生", 水: "相剋" }, 金: { 木: "相剋", 火: "反剋", 金: "比和", 土: "相生", 水: "相生" }, 水: { 木: "相生", 火: "相剋", 土: "反剋", 金: "相生", 水: "比和" } };
   const goodStars = ["禄存星", "司禄星", "石門星", "玉堂星", "牽牛星", "貫索星"];
   const badStars = ["調舒星", "龍高星", "車騎星"];
   const yangStars = [mainStars.center, mainStars.north, mainStars.south, mainStars.east, mainStars.west];
@@ -3621,7 +4043,7 @@ function analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birth
     const yp = getYearPillarForYear(year);
     const yearStar = getMainStar(day.stem, yp.stem);
     const yearEl = elements[stems.indexOf(yp.stem)];
-    const yearRel = gogyoRel[dayEl][yearEl];
+    const yearRel = gogyoRelation[dayEl][yearEl];
     const isYearTenchu = isTenchusatsuYear(yp.branch, tenchusatsu);
 
     // その年の大運を取得
@@ -3827,7 +4249,6 @@ const energyLifeInterpretation = {
 
 function analyzeLifeStageFortune(day, pillars, taiun, tenchusatsu, currentAge) {
   const dayEl = elements[stems.indexOf(day.stem)];
-  const gogyoRel = { 木: { 木: "比和", 火: "相生", 土: "相剋", 金: "反剋", 水: "相生" }, 火: { 木: "相生", 火: "比和", 土: "相生", 金: "相剋", 水: "反剋" }, 土: { 木: "反剋", 火: "相生", 土: "比和", 金: "相生", 水: "相剋" }, 金: { 木: "相剋", 火: "反剋", 金: "比和", 土: "相生", 水: "相生" }, 水: { 木: "相生", 火: "相剋", 土: "反剋", 金: "相生", 水: "比和" } };
 
   const goodStars = ["貫索星", "石門星", "禄存星", "司禄星", "牽牛星", "玉堂星"];
   const badStars = ["調舒星", "龍高星", "車騎星"];
@@ -3852,7 +4273,7 @@ function analyzeLifeStageFortune(day, pillars, taiun, tenchusatsu, currentAge) {
       const star = getMainStar(day.stem, p.stem);
       const eStar = getEnergyStar(day.stem, p.branch);
       const taiunEl = elements[stems.indexOf(p.stem)];
-      const rel = gogyoRel[dayEl][taiunEl];
+      const rel = gogyoRelation[dayEl][taiunEl];
       const isTenchu = isTenchusatsuYear(p.branch, tenchusatsu);
       const topoResults = analyzeBranchTopology(p.branch, pillars, p.stem);
 
@@ -4756,6 +5177,14 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
     }
   };
 
+  const starByDayStem = {};
+  for (const [star, data] of Object.entries(starPersonality)) {
+    if (data.byDayStem) {
+      starByDayStem[star] = data.byDayStem;
+      delete data.byDayStem;
+    }
+  }
+
   // 日干の陰陽×五行の性格
   const dayStemPersonality = {
     "甲": { good: "大木のように真っ直ぐ伸びる成長力。リーダーシップがあり、自分の信念を曲げない。", bad: "上から押し付ける威圧感が出る。自分のやり方が正しいと思い込み、柔軟性を失う。" },
@@ -4919,9 +5348,9 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
     { title: "金銭感覚とお金の性格", text: pickByBalance(starP.money, balanceType) },
     { title: "結婚観と家庭の性格", text: pickByBalance(starP.marriage, balanceType) },
     { title: "社交性と対人関係の性格", text: pickByBalance(starP.social, balanceType) },
-    { title: `中心的な性格×生まれた日の性質の詳細`, text: starP.byDayStem ? (starP.byDayStem[pillars.day.stem] || "").split("。").slice(0, 2).join("。") + "。" : "" },
-    { title: `表に出やすい面×生まれた日の性質の詳細`, text: northP.byDayStem ? (northP.byDayStem[pillars.day.stem] || "").split("。").slice(0, 2).join("。") + "。" : "" },
-    { title: `内面に持っている面×生まれた日の性質の詳細`, text: southP.byDayStem ? (southP.byDayStem[pillars.day.stem] || "").split("。").slice(0, 2).join("。") + "。" : "" },
+    { title: `中心的な性格×生まれた日の性質の詳細`, text: starByDayStem[center] ? (starByDayStem[center][pillars.day.stem] || "").split("。").slice(0, 2).join("。") + "。" : "" },
+    { title: `表に出やすい面×生まれた日の性質の詳細`, text: starByDayStem[northStar] ? (starByDayStem[northStar][pillars.day.stem] || "").split("。").slice(0, 2).join("。") + "。" : "" },
+    { title: `内面に持っている面×生まれた日の性質の詳細`, text: starByDayStem[southStar] ? (starByDayStem[southStar][pillars.day.stem] || "").split("。").slice(0, 2).join("。") + "。" : "" },
     { title: "本人も自覚しにくい裏の性格", text: pickByBalance(starP.hidden, balanceType) },
     { title: "人生のタイミングから見る性格要素", text: energyTexts.join("　") },
     { title: "内面の構造（人間関係の相性）", text: [interactionNorth, interactionSouth, interactionEast, interactionWest].filter(Boolean).join("\n") },
@@ -5152,7 +5581,6 @@ function calcParentChildCompatibility(parent, child) {
 }
 
 // === 相性占い ===
-const gogyoRelation = { 木: { 木: "比和", 火: "相生", 土: "相剋", 金: "反剋", 水: "相生" }, 火: { 木: "相生", 火: "比和", 土: "相生", 金: "相剋", 水: "反剋" }, 土: { 木: "反剋", 火: "相生", 土: "比和", 金: "相生", 水: "相剋" }, 金: { 木: "相剋", 火: "反剋", 金: "比和", 土: "相生", 水: "相生" }, 水: { 木: "相生", 火: "相剋", 土: "反剋", 金: "相生", 水: "比和" } };
 
 const compatTexts = {
   比和: { good: "似た者同士で居心地はいいが、成長は止まる。馴れ合いで互いに甘え合い、結局どちらも変わらないまま関係が停滞しやすいタイプ。", bad: "似た者同士は最初は安心するが、刺激がないと関係が停滞する。欠点まで似ているため、同じ壁にぶつかり二人して止まる。最悪の組み合わせではないが、最善でもない。" },
@@ -5513,89 +5941,97 @@ function renderCompat(event) {
   compatResult.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk) {
+function buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk, gender) {
+  const gKey = gender === "male" ? "male" : "female";
   const center = mainStars.center;
 
   const starKeyword = {
-    貫索星: "自立心が強く信念を曲げない",
-    石門星: "協調性に優れ人脈を広げる",
-    鳳閣星: "自然体で表現力がある",
-    調舒星: "感性が鋭く独自の世界を持つ",
-    禄存星: "包容力があり人を支える",
-    司禄星: "堅実で着実に積み重ねる",
-    車騎星: "行動力と突破力がある",
-    牽牛星: "責任感と品格がある",
-    龍高星: "改革志向で型破り",
-    玉堂星: "知性が高く学ぶ力がある"
+    貫索星: "自分の軸をしっかり持って、ぶれない人",
+    石門星: "人と人をつなぐ、ムードメーカー",
+    鳳閣星: "一緒にいるとホッとする、自然体の人",
+    調舒星: "繊細な感性で世界を捉える、アーティスト型",
+    禄存星: "周りを温かく支える、安心感のある人",
+    司禄星: "コツコツ積み重ねて、着実に歩む人",
+    車騎星: "思い立ったら動く、行動力の人",
+    牽牛星: "責任を背負える、頼りがいのある人",
+    龍高星: "常識にとらわれない、自由な発想の人",
+    玉堂星: "知るのが好き、学び続ける知性派"
   };
 
   const balanceDesc = {
-    balanced: "五行のバランスが良く心が安定しやすい",
-    moderate: "五行にやや偏りがありバランスを意識すると良い",
-    imbalanced: "五行の偏りが大きく心のバランスを整えることが課題"
+    balanced: "心が安定しやすく、どんな状況でもフットワークが軽いタイプ",
+    moderate: "少し偏りはあるけれど、意識すればすぐ整うバランス",
+    imbalanced: "心の波は大きい分、自分を知ることで一番伸びるタイプ"
   };
 
   const effortType = ishiki.conscious > ishiki.unconscious
-    ? "自ら切り開く苦労人タイプ（早咲き傾向）"
+    ? "自分で道を切り開くタイプ。若い頃は苦労する分、後半に花が開く"
     : ishiki.unconscious > ishiki.conscious
-    ? "周囲に助けられる恩恵タイプ（遅咲き傾向）"
-    : "努力と恩恵のバランス型";
+    ? "人との縁に恵まれ、周りに引いてもらえるタイプ。のびのか咲く"
+    : "努力と運のバランス型。自分で動くことも、人に頼ることも上手"
+  ;
 
   const workRank = workEx.rank || "";
   const workScore = workEx.score || 0;
 
-  const marriageLevel = marriageScore >= 80 ? "非常に向いている" : marriageScore >= 65 ? "向いている" : marriageScore >= 45 ? "普通" : marriageScore >= 30 ? "やや向いていない" : "向いていない";
+  const marriageLevel = marriageScore >= 80 ? "とても向いている" : marriageScore >= 65 ? "向いている" : marriageScore >= 45 ? "普通" : marriageScore >= 30 ? "少し工夫がいる" : "向いていない";
   const affairLevel = affairScore >= 80 ? "高危険" : affairScore >= 65 ? "要注意" : affairScore >= 45 ? "普通" : affairScore >= 25 ? "低め" : "安心";
 
   const major = healthRisk.majorDiseaseRisks || [];
   const healthSummary = major.length > 0
-    ? `${major[0].year}年（${major[0].age}歳）頃に${major[0].majorDiseases[0] ? major[0].majorDiseases[0].diseases.split("・")[0] : "健康リスク"}に注意`
-    : "現時点で大病リスクの高い年は検出されていない";
+    ? `${major[0].year}年（${major[0].age}歳）頃に${major[0].majorDiseases[0] ? major[0].majorDiseases[0].diseases.split("・")[0] : "健康面"}に気をつけて`
+    : "現時点で大病のサインは出ていません。今のペースで大丈夫";
 
   const tpSummary = turningPoints.length > 0
     ? turningPoints.slice(0, 3).map(tp => `${tp.age}歳（${tp.year}年）${tp.type}`).join("、")
-    : "特筆すべき大転換期は検出されていない";
+    : "特別大きな転換期は出ていません。日々の積み重ねが花を開かせます";
 
   // ワンポイントアドバイス生成
   const adviceParts = [];
 
   // 性格の強みと注意点
   const starAdvice = {
-    貫索星: "自分の軸は強みだが、人の意見に耳を傾ける柔軟さを持つことで孤立を防げる。",
-    石門星: "人脈力は武器だが、全員に良い顔をせず本当に大切にする関係を見極めることが鍵。",
-    鳳閣星: "自然体の魅力は本物だが、大事な場面で危機感を持つことでチャンスを逃さなくなる。",
-    調舒星: "感性の鋭さは才能だが、感情の波に飲まれず一歩引いて客観視する習慣を。",
-    禄存星: "人を支える優しさは宝だが、見返りを求めず自分をすり減らさない境界線を。",
-    司禄星: "堅実さは強みだが、変化を恐れず適度なリスクを取ることで成長が加速する。",
-    車騎星: "行動力は武器だが、一呼吸置いて周囲を巻き込むことで成果が倍増する。",
-    牽牛星: "品格と責任感は信頼の源だが、プライドを手放して素の自分を見せるとより慕われる。",
-    龍高星: "独創性は才能だが、自由と約束のバランスを取ることで信用を失わず革新できる。",
-    玉堂星: "知性は武器だが、理屈より相手の気持ちに寄り添うことで人間関係が深まる。"
+    貫索星: "ぶれない軸はあなたの魅力。ただ、たまには人に頼ってもいい。周りの声に耳を傾けるだけで、もっと世界が広がります。",
+    石門星: "人と人をつなぐ力は宝物。ただ、全員にいい顔をしなくていい。本当に大切にしたい関係を見極めると、もっと心地よくなります。",
+    鳳閣星: "一緒にいるとホッとする空気感は本物。ただ、いざという時に少し引き締めるだけで、チャンスを逃さずつかめます。",
+    調舒星: "繊細な感性は才能。ただ、感情の波が来たら一歩引いて深呼吸。客観的に見る癖をつけると、感性がもっと生きます。",
+    禄存星: "人を支える温かさは宝。ただ、見返りを求めず、自分も大切にする境界線を引くと、優しさがもっと長続きします。",
+    司禄星: "コツコツ積み重ねる力は確か。ただ、たまには冒険してもいい。小さなリスクが、思いがけない成長を連れてきます。",
+    車騎星: "思い立ったら動く行動力は武器。ただ、一呼吸置いて周りを巻き込むと、成果が倍になります。一人で頑張りすぎないで。",
+    牽牛星: "責任を背負える姿は信頼の源。ただ、たまには素の自分を見せていい。完璧じゃないあなたに、人はもっと惹かれます。",
+    龍高星: "常識にとらわれない発想は才能。ただ、自由と約束のバランスを意識すると、信用を失わずに革新できます。",
+    玉堂星: "知るのが好き、学ぶ力は武器。ただ、理屈より相手の気持ちに寄り添うと、人間関係がぐっと深まります。"
   };
   if (starAdvice[center]) adviceParts.push(starAdvice[center]);
 
   // バランス
-  if (balanceType === "imbalanced") adviceParts.push("五行の偏りが大きいので、守護神（不足している性質）を日常に取り入れて心のバランスを保つことが開運の鍵。");
+  if (balanceType === "imbalanced") adviceParts.push("心の波は大きい分、自分を知ることが開運の鍵。不足している性質を日常にちょっと取り入れるだけで、心が軽くなります。");
 
   // 努力タイプ
-  if (ishiki.conscious > ishiki.unconscious) adviceParts.push("自ら切り開く苦労人タイプ。若い頃の苦労は将来の財産になるので、諦めず経験を積み重ねること。");
-  else if (ishiki.unconscious > ishiki.conscious) adviceParts.push("周囲に助けられる恩恵タイプ。人との縁を大切にし、恩を忘れず返すことで運がさらに開く。");
+  if (ishiki.conscious > ishiki.unconscious) adviceParts.push("自分で道を切り開くタイプ。若い頃の苦労は、将来の財産になります。諦めずに経験を積み重ねていってください。");
+  else if (ishiki.unconscious > ishiki.conscious) adviceParts.push("人との縁に恵まれるタイプ。周りに助けてもらった恩を忘れず、お返ししていくことで、運がさらに開いていきます。");
 
   // 結婚・浮気
-  if (marriageScore < 45) adviceParts.push("結婚において工夫が必要な傾向があるが、パートナー選びを慎重にし、焦らず自分を高めることが大切。");
-  if (affairScore >= 65) adviceParts.push("浮気リスクが高め。誘惑に気をつけ、パートナーとの信頼関係を意識的に築くことが重要。");
+  if (marriageScore < 45) adviceParts.push(`結婚には少し工夫がいる傾向。でも、焦らなくて大丈夫。自分を高めながら、本当に合う人をゆっくり見極めていってください。`);
+  if (marriageScore >= 65) adviceParts.push(`結婚に向いている時期がしっかりあります。タイミングを逃さず、安心できるパートナーシップを築いてください。`);
+  if (affairScore >= 65) adviceParts.push("浮気リスクが高め。誘惑に気をつけ、パートナーとの信頼関係を意識的に育てることが大切です。");
 
   // 健康
-  if (major.length > 0) adviceParts.push(`${major[0].year}年（${major[0].age}歳）頃に健康リスクが高まるため、早めの定期健診と生活習慣の改善を心がけて。`);
+  if (major.length > 0) adviceParts.push(`${major[0].year}年（${major[0].age}歳）頃は健康面に気をつけて。早めに定期健診を受けて、生活習慣を少し整えるだけで、不安が安心に変わります。`);
+  else adviceParts.push(`今のところ大きな健康リスクは出ていませんが、日々の小さなケアが未来の健康を守ります。`);
+
+  // 仕事・収入
+  if (workScore >= 70) adviceParts.push(`仕事運は良好。今の調子でスキルを積み上げれば、さらに可能性が広がります。`);
+  else if (workScore < 45) adviceParts.push(`仕事面では少し工夫がいる時期。焦らず、自分のペースで確実に力をつけていきましょう。`);
 
   // ターニングポイント
   if (turningPoints.length > 0) {
     const firstTP = turningPoints[0];
-    adviceParts.push(`${firstTP.age}歳（${firstTP.year}年）の「${firstTP.type}」が最初の大きな転機。この時期は準備と勇気を持って変化を受け入れることが成長の鍵。`);
+    adviceParts.push(`${firstTP.age}歳（${firstTP.year}年）の「${firstTP.type}」が最初の大きな転機。この時期は準備と勇気を持って変化を受け入れることで、次のステージへ進めます。`);
   }
 
   // 天中殺
-  adviceParts.push(`${tenchusatsu}天中殺の期間は大きな決断を避け、整理と準備に徹することが吉。`);
+  adviceParts.push(`${tenchusatsu}天中殺の期間は、大きな決断は少し待って。整理と準備に徹する時間と思えば、無駄にならない静かな充電期間になります。`);
 
   const onePointAdvice = adviceParts.join("\n\n");
 
@@ -5681,7 +6117,7 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
     // 星ごとの運勢と具体的な出来事
     const starEvents = {
       "禄存星": { text: "家庭運・パートナーシップ運が上昇。結婚や家庭を築くのに良い時期", marriage: true },
-      "司禄星": { text: "堅実に積み重ねる時期。地道な努力が財産になる", save: true },
+      "司禄星": { text: "コツコツ積み重ねる時期。地道な努力が財産になる", save: true },
       "石門星": { text: "人脈が広がる時期。新しいコミュニティで活躍", network: true },
       "玉堂星": { text: "学習・資格運が好調。専門性を深めて評価アップ", study: true },
       "牽牛星": { text: "社会的責任・名誉運が上昇。地位が上がる", promotion: true },
@@ -5696,7 +6132,7 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
     }
 
     if (isTenchu) {
-      events.push({ icon: "warning", text: "天中殺期間。大きな決断（結婚・転職・起業）は避け、整理と準備に徹する" });
+      events.push({ icon: "warning", text: "天中殺期間。大きな決断（結婚・転職・起業）は少し待って、整理と準備の時間に" });
     }
 
     // 結婚の時期（20〜50歳の範囲で判定）
@@ -5890,6 +6326,7 @@ function render(event) {
   const guardian = getGuardianElements(counts);
   const thisYear = 2026;
   const yearlyFortune = analyzeYearlyFortune(day, pillars, taiun, currentAge, thisYear, balanceType);
+  const dailyMonthlyFortune = analyzeDailyMonthlyFortune(day, pillars, tenchusatsu, balanceType);
   const healthRisk = analyzeHealthRisk(day, pillars, counts, taiun, tenchusatsu, currentAge, thisYear, mainStars);
   const mote = analyzeMote(mainStars, energy, counts, day, pillars);
   const turningPoints = analyzeTurningPoints(day, pillars, mainStars, taiun, tenchusatsu, birthYear, currentAge);
@@ -5966,8 +6403,9 @@ function render(event) {
     balanceType,
     gender
   });
-  const lifeSummary = buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk);
+  const lifeSummary = buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk, gender);
   const lifeChronology = buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, affairScore, workEx, seimeiResult, tenchusatsu, birthYear, gender, day, currentAge, mote, isDoubleEnForScore);
+  const kyuseiResult = analyzeKyuseiDirections(date, new Date());
 
   result.classList.remove("hidden");
   console.log("[render] starting, simple-mode:", document.body.classList.contains("simple-mode"));
@@ -5992,16 +6430,16 @@ function render(event) {
     </div>
     <div class="result-card life-summary-card">
       <h3 class="expert-only">総合人生鑑定</h3>
-      <h3 class="simple-only">どんな人生になるか（総合）</h3>
+      <h3 class="simple-only">あなたの人生、ざっくりいうと</h3>
       <div class="info-box is-gold">
         <p class="info-text is-lead">${lifeSummary.personality}</p>
         <p class="info-text mt-6">${lifeSummary.lifeFlow}</p>
       </div>
       <div class="life-summary-grid">
         <div class="life-summary-item"><b>運の掴み方</b><span>${lifeSummary.effortType}</span></div>
-        <div class="life-summary-item"><b>仕事の適性</b><span>${lifeSummary.work}</span></div>
-        <div class="life-summary-item"><b>結婚適性</b><span>${lifeSummary.marriage}</span></div>
-        <div class="life-summary-item"><b>浮気リスク</b><span>${lifeSummary.affair}</span></div>
+        <div class="life-summary-item"><b>仕事の向き</b><span>${lifeSummary.work}</span></div>
+        <div class="life-summary-item"><b>結婚の向き</b><span>${lifeSummary.marriage}</span></div>
+        <div class="life-summary-item"><b>浮気の傾向</b><span>${lifeSummary.affair}</span></div>
         <div class="life-summary-item"><b>人気度</b><span>${lifeSummary.popularity}</span></div>
         <div class="life-summary-item"><b>健康</b><span>${lifeSummary.health}</span></div>
         <div class="life-summary-item"><b>人生の転機</b><span>${lifeSummary.turningPoints}</span></div>
@@ -6009,7 +6447,7 @@ function render(event) {
       </div>
       <div class="life-advice-box">
         <h4 class="expert-only">人生のワンポイントアドバイス</h4>
-        <h4 class="simple-only">あなたへのアドバイス</h4>
+        <h4 class="simple-only">あなたへのメッセージ</h4>
         <div class="life-advice-text">${lifeSummary.onePointAdvice.split("\n\n").map(p => `<p>${p}</p>`).join("")}</div>
       </div>
     </div>
@@ -6017,7 +6455,7 @@ function render(event) {
       <h3 class="expert-only">自分年表（姓名判断×算命学 総合人生予測）</h3>
       <h3 class="simple-only">あなたの人生年表</h3>
       <p class="expert-only note mb-14">大運（10年周期）の星・天中殺・ターニングポイント・健康リスク・姓名判断の各格の影響を統合し、年代別に具体的にどんなことが起きるかを表示します。</p>
-      <p class="simple-only note mb-14">年代別に、仕事・結婚・浮気・転職・健康などどんなことが起きやすいかを表示します。</p>
+      <p class="simple-only note mb-14">年代別に、仕事・結婚・転職・健康など、どんなことが起きやすいかをやさしくお伝えします。</p>
       <div class="life-chronology-timeline">
         ${lifeChronology.map((s) => `
           <div class="chronology-stage${s.isCurrent ? " current" : ""}${s.isTenchu ? " tenchu" : ""}">
@@ -6035,10 +6473,141 @@ function render(event) {
         `).join("")}
       </div>
     </div>
+    <div class="result-card kyusei-card">
+      <h3 class="expert-only">九星気学 方位判定（${kyuseiResult.adjustedYear}年 ${kyuseiResult.yearBranch}年）</h3>
+      <h3 class="simple-only">九星気学で見る開運方位</h3>
+      <p class="expert-only note mb-14">九星気学は算命学とは別の体系で、生年月日の九星と方位盤から吉凶方位を導きます。引越し・旅行・開運方位の参考にしてください。</p>
+      <p class="simple-only note mb-14">引越しや旅行の方角選びに役立つ、九星気学の方位占いです。算命学とは違う視点から運勢を読み解きます。</p>
+      <div class="kyusei-stars-info">
+        <div class="kyusei-star-item">
+          <span class="kyusei-star-label">本命星</span>
+          <span class="kyusei-star-value">${kyuseiResult.honmeisei.name}（${kyuseiResult.honmeisei.element}）</span>
+        </div>
+        <div class="kyusei-star-item">
+          <span class="kyusei-star-label">月命星</span>
+          <span class="kyusei-star-value">${kyuseiResult.getsumeisei.name}（${kyuseiResult.getsumeisei.element}）</span>
+        </div>
+        <div class="kyusei-star-item">
+          <span class="kyusei-star-label">日命星</span>
+          <span class="kyusei-star-value">${kyuseiResult.nichimeisei.name}（${kyuseiResult.nichimeisei.element}）</span>
+        </div>
+      </div>
+      <div class="kyusei-board-wrap">
+        <h4 class="expert-only">${kyuseiResult.adjustedYear}年 年盤</h4>
+        <h4 class="simple-only">今年的方位盤</h4>
+        <div class="kyusei-board">
+          ${[4, 9, 2, 3, 5, 7, 8, 1, 6].map(pos => {
+            const star = kyuseiResult.yearBoard[pos];
+            const starName = kyuseiStarNames[star - 1];
+            const isGood = kyuseiResult.goodDirections.some(g => g.position === pos);
+            const isBad = kyuseiResult.badPositions.includes(pos);
+            const cls = pos === 5 ? "kyusei-cell center" : "kyusei-cell";
+            const badge = isGood ? '<span class="kyusei-badge good">吉</span>' : isBad ? '<span class="kyusei-badge bad">凶</span>' : '';
+            return `<div class="${cls}${isGood ? " is-good" : ""}${isBad ? " is-bad" : ""}">
+              <span class="kyusei-pos">${kyuseiPositionNames[pos]}</span>
+              <span class="kyusei-star">${starName}</span>
+              ${badge}
+            </div>`;
+          }).join("")}
+        </div>
+      </div>
+      <div class="kyusei-directions">
+        <div class="kyusei-good-directions">
+          <h4 class="expert-only">吉方位（開運方位）</h4>
+          <h4 class="simple-only">運気が上がる方角</h4>
+          ${kyuseiResult.goodDirections.length > 0
+            ? `<ul class="kyusei-dir-list">${kyuseiResult.goodDirections.map(g => `<li><b>${g.direction}</b>　${g.star}（${g.relationship}）</li>`).join("")}</ul>
+               <p class="note-text-sm mt-6">引越し・旅行・開運アクションに良い方角です。吉方位への移動は運気上昇の手助けになります。</p>`
+            : "<p class='note'>今年は吉方位が少ない年です。無理に移動せず、今の場所で地力を養うのも一手です。</p>"
+          }
+        </div>
+        <div class="kyusei-bad-directions">
+          <h4 class="expert-only">凶方位（要注意方位）</h4>
+          <h4 class="simple-only">気をつけたい方角</h4>
+          <ul class="kyusei-dir-list">
+            ${kyuseiResult.badDirections.map(b => `<li><b>${b.direction}</b>　<span class="kyusei-bad-type">${b.type}</span> — ${b.note}</li>`).join("")}
+          </ul>
+          <p class="note-text-sm mt-6">これらの方角への引越し・長距離移動は避けるのが無難です。やむを得ない場合は、吉方位を経由するなど工夫を。</p>
+        </div>
+      </div>
+      <div class="kyusei-sub-section">
+        <h4 class="expert-only">${kyuseiResult.monthLabel}の月盤</h4>
+        <h4 class="simple-only">今月の方位盤</h4>
+        <div class="kyusei-board kyusei-board-sm">
+          ${[4, 9, 2, 3, 5, 7, 8, 1, 6].map(pos => {
+            const star = kyuseiResult.monthBoard[pos];
+            const starName = kyuseiStarNames[star - 1];
+            const isGood = kyuseiResult.monthGoodDirections.some(g => g.position === pos);
+            const isBad = kyuseiResult.monthBadPositions.includes(pos);
+            const cls = pos === 5 ? "kyusei-cell center" : "kyusei-cell";
+            const badge = isGood ? '<span class="kyusei-badge good">吉</span>' : isBad ? '<span class="kyusei-badge bad">凶</span>' : '';
+            return `<div class="${cls}${isGood ? " is-good" : ""}${isBad ? " is-bad" : ""}">
+              <span class="kyusei-pos">${kyuseiPositionNames[pos]}</span>
+              <span class="kyusei-star">${starName}</span>
+              ${badge}
+            </div>`;
+          }).join("")}
+        </div>
+        <div class="kyusei-directions kyusei-directions-sm">
+          <div class="kyusei-good-directions">
+            <h4 class="expert-only">今月の吉方位</h4>
+            <h4 class="simple-only">今月運気が上がる方角</h4>
+            ${kyuseiResult.monthGoodDirections.length > 0
+              ? `<ul class="kyusei-dir-list">${kyuseiResult.monthGoodDirections.map(g => `<li><b>${g.direction}</b>　${g.star}（${g.relationship}）</li>`).join("")}</ul>`
+              : "<p class='note'>今月は吉方位が少ない月です。</p>"
+            }
+          </div>
+          <div class="kyusei-bad-directions">
+            <h4 class="expert-only">今月の凶方位</h4>
+            <h4 class="simple-only">今月気をつけたい方角</h4>
+            <ul class="kyusei-dir-list">
+              ${kyuseiResult.monthBadDirections.map(b => `<li><b>${b.direction}</b>　<span class="kyusei-bad-type">${b.type}</span> — ${b.note}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="kyusei-sub-section">
+        <h4 class="expert-only">${kyuseiResult.targetDate.getMonth()+1}月${kyuseiResult.targetDate.getDate()}日の日盤</h4>
+        <h4 class="simple-only">今日の方位盤</h4>
+        <div class="kyusei-board kyusei-board-sm">
+          ${[4, 9, 2, 3, 5, 7, 8, 1, 6].map(pos => {
+            const star = kyuseiResult.dayBoard[pos];
+            const starName = kyuseiStarNames[star - 1];
+            const isGood = kyuseiResult.dayGoodDirections.some(g => g.position === pos);
+            const isBad = kyuseiResult.dayBadPositions.includes(pos);
+            const cls = pos === 5 ? "kyusei-cell center" : "kyusei-cell";
+            const badge = isGood ? '<span class="kyusei-badge good">吉</span>' : isBad ? '<span class="kyusei-badge bad">凶</span>' : '';
+            return `<div class="${cls}${isGood ? " is-good" : ""}${isBad ? " is-bad" : ""}">
+              <span class="kyusei-pos">${kyuseiPositionNames[pos]}</span>
+              <span class="kyusei-star">${starName}</span>
+              ${badge}
+            </div>`;
+          }).join("")}
+        </div>
+        <div class="kyusei-directions kyusei-directions-sm">
+          <div class="kyusei-good-directions">
+            <h4 class="expert-only">今日の吉方位</h4>
+            <h4 class="simple-only">今日運気が上がる方角</h4>
+            ${kyuseiResult.dayGoodDirections.length > 0
+              ? `<ul class="kyusei-dir-list">${kyuseiResult.dayGoodDirections.map(g => `<li><b>${g.direction}</b>　${g.star}（${g.relationship}）</li>`).join("")}</ul>`
+              : "<p class='note'>今日は吉方位が少ない日です。</p>"
+            }
+          </div>
+          <div class="kyusei-bad-directions">
+            <h4 class="expert-only">今日の凶方位</h4>
+            <h4 class="simple-only">今日気をつけたい方角</h4>
+            <ul class="kyusei-dir-list">
+              ${kyuseiResult.dayBadDirections.map(b => `<li><b>${b.direction}</b>　<span class="kyusei-bad-type">${b.type}</span> — ${b.note}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="section-group-header expert-only">運勢の全体像<span class="sg-sub">今年の運勢・開運アクション</span></div>
+    <div class="section-group-header simple-only">今年の運勢<span class="sg-sub">何に気をつけて、何をすればいい？</span></div>
     <div class="result-card yearly-fortune-card">
       <h3 class="expert-only">${yearlyFortune.thisYear}年の総合運勢（大運×年運 統合判定）</h3>
-      <h3 class="simple-only">${yearlyFortune.thisYear}年の運勢</h3>
+      <h3 class="simple-only">${yearlyFortune.thisYear}年、あなたの運勢</h3>
       <div class="yearly-summary expert-only info-box is-gold">${buildYearlySummary(yearlyFortune, false)}</div>
       <div class="yearly-summary simple-only info-box is-gold">${buildYearlySummary(yearlyFortune, true)}</div>
       <div class="yearly-fortune-overview expert-only">
@@ -6105,6 +6674,7 @@ function render(event) {
       <div class="yearly-concrete-desc">
         <h4 class="expert-only">今年はこんな年になります</h4>
         <h4 class="simple-only">今年はこんな年になりそう</h4>
+        <p class="simple-only note mt-6">ポイントを押さえて、安心して一年を過ごしましょう。</p>
         ${(() => {
           const concreteParts = buildYearlyConcreteDescription(yearlyFortune, false);
           const concretePartsSimple = buildYearlyConcreteDescription(yearlyFortune, true);
@@ -6155,9 +6725,50 @@ function render(event) {
         </div>`;
       })()}
     </div>
+    <div class="result-card daily-monthly-fortune-card">
+      <h3 class="expert-only">今月の運勢・今日の運勢</h3>
+      <h3 class="simple-only">今月と今日の運勢</h3>
+      ${(() => {
+        const dm = dailyMonthlyFortune;
+        const relTextMap = { "相生": "追い風", "比和": "同調", "相剋": "摩擦", "反剋": "逆風" };
+        function scoreBar(label, score, cls) {
+          return `<div class="dm-score-item">
+            <div class="dm-score-header"><b>${label}</b></div>
+            <div class="dm-score-bar"><i class="${cls}" style="--dm-width:${score}%"></i></div>
+            <div class="dm-score-num">${score}点</div>
+          </div>`;
+        }
+        function fortuneBlock(title, date, pillar, star, energy, rel, isTenchu, scores, advice) {
+          return `<div class="dm-fortune-block${isTenchu ? " is-tenchu" : ""}">
+            <div class="dm-fortune-header">
+              <span class="dm-fortune-title">${title}</span>
+              <span class="dm-fortune-date">${date}</span>
+              ${isTenchu ? '<span class="tenchu-badge">天中殺</span>' : ''}
+            </div>
+            <div class="dm-fortune-pillars">
+              <span class="dm-pillar"><b>干支</b> ${pillar.stem}${pillar.branch}</span>
+              <span class="dm-pillar"><b>主星</b> ${star}</span>
+              <span class="dm-pillar"><b>従星</b> ${energy.name}</span>
+              <span class="dm-pillar"><b>日干との関係</b> ${rel}（${relTextMap[rel] || ""}）</span>
+            </div>
+            <div class="dm-fortune-scores">
+              ${scoreBar("金運", scores.money, "is-money")}
+              ${scoreBar("恋愛運", scores.love, "is-love")}
+              ${scoreBar("仕事運", scores.work, "is-work")}
+            </div>
+            <div class="dm-fortune-advice">
+              <b>アドバイス</b>
+              <p>${advice}</p>
+            </div>
+          </div>`;
+        }
+        return fortuneBlock("今月の運勢", dm.monthly.month, dm.monthly.pillar, dm.monthly.star, dm.monthly.energy, dm.monthly.rel, dm.monthly.isTenchu, dm.monthly.scores, dm.monthly.advice)
+             + fortuneBlock("今日の運勢", dm.today.date, dm.today.pillar, dm.today.star, dm.today.energy, dm.today.rel, dm.today.isTenchu, dm.today.scores, dm.today.advice);
+      })()}
+    </div>
     <div class="result-card">
       <h3 class="expert-only">開運アクション・ラッキーアドバイス</h3>
-      <h3 class="simple-only">開運アドバイス・ラッキーポイント</h3>
+      <h3 class="simple-only">今日からできる開運アクション</h3>
       ${(() => {
         const la = luckyAdvice;
         return `
@@ -6194,6 +6805,7 @@ function render(event) {
       })()}
     </div>
     <div class="section-group-header expert-only">性格・才能・適職<span class="sg-sub">本質の分析と仕事の方向性</span></div>
+    <div class="section-group-header simple-only">あなたの性格と才能<span class="sg-sub">本質を知って、もっと生きやすく</span></div>
     <div class="result-card reading">
       <h3>性格</h3>
       ${reading.map((item) => { const isDetailOnly = item.title.includes("詳細") || item.title.includes("タイミング") || item.title.includes("エネルギー傾向") || item.title.includes("バランスと課題") || item.title.includes("注意が必要な時期") || item.title.includes("長所") || item.title.includes("短所"); const cls = (item.title.includes("長所") ? "is-good" : item.title.includes("短所") ? "is-bad" : item.title.includes("優秀度") ? "is-work-ex" : item.title.includes("仕事") ? "is-work" : item.title.includes("恋愛") ? "is-love" : item.title.includes("金銭") ? "is-money" : item.title.includes("結婚") ? "is-marriage" : item.title.includes("社交") ? "is-social" : item.title.includes("×日干") ? "is-star-detail" : item.title.includes("裏の") ? "is-hidden" : "") + (isDetailOnly ? " expert-only" : ""); const isWorkEx = item.title.includes("優秀度"); const scoreMatch = item.text.match(/スコア：(\d+)点/); const scoreNum = scoreMatch ? parseInt(scoreMatch[1]) : 0; const rankMatch = item.text.match(/（(.+?)）/); const rankText = rankMatch ? rankMatch[1] : ""; const detailText = item.text.replace(/総合仕事優秀度スコア：\d+点（.+?）\n/, ""); return `<article class="${cls}"><h4>${item.title}</h4><div>${isWorkEx && scoreNum ? `<div class="work-ex-score-wrap"><div class="work-ex-score-num">${scoreNum}<span>点</span></div><div class="work-ex-rank-badge">${rankText}</div></div><div class="work-ex-bar"><div class="work-ex-bar-fill" style="--work-ex-width:${scoreNum}%"></div></div><div class="work-ex-detail">${detailText}</div>` : item.text}</div></article>`; }).join("")}
@@ -6972,11 +7584,13 @@ function render(event) {
               <div class="sekishoku-star-head"><b>東方星（現実・収入）：${sekishoku.eastStar}</b></div>
               <div class="sekishoku-keywords">キーワード：${sekishoku.eastData.keywords}</div>
               <div class="sekishoku-text">${sekishoku.eastData.text}</div>
+              ${sekishoku.eastData.celebs ? `<div class="sekishoku-celebs"><span class="sekishoku-celebs-label">同じ星を持つ有名人：</span>${sekishoku.eastData.celebs}</div>` : ''}
             </div>
             <div class="sekishoku-star">
               <div class="sekishoku-star-head"><b>南方星（精神・やりがい）：${sekishoku.southStar}</b></div>
               <div class="sekishoku-keywords">キーワード：${sekishoku.southData.keywords}</div>
               <div class="sekishoku-text">${sekishoku.southData.text}</div>
+              ${sekishoku.southData.celebs ? `<div class="sekishoku-celebs"><span class="sekishoku-celebs-label">同じ星を持つ有名人：</span>${sekishoku.southData.celebs}</div>` : ''}
             </div>
           </div>
         </div>
@@ -7232,9 +7846,8 @@ function render(event) {
         }).join("")}
       </div>
     </div>
-    <div class="result-card">
-      <h3 class="expert-only">人体星図から見る人生の流れ</h3>
-      <h3 class="simple-only">人生の流れ（十二大従星）</h3>
+    <div class="result-card expert-only">
+      <h3>人体星図から見る人生の流れ</h3>
       ${(() => {
         const positions = [
           { label: "左肩［第三従星］", stage: "幼年期", energy: energy[0], key: "childhood" },
@@ -7257,11 +7870,9 @@ function render(event) {
         }).join("");
       })()}
     </div>
-    <div class="result-card">
-      <h3 class="expert-only">人生のターニングポイント</h3>
-      <h3 class="simple-only">人生のターニングポイント</h3>
-      <p class="expert-only note mb-14">大運の切り替わり・天中殺・年運の位相法（律音・大半会・納音・天剋地冲・三合会局など）を総合し、人生の中で特に大きな変化が起こりやすい年をピンポイントで最大3つ表示します。具体的な例とともに解説します。</p>
-      <p class="simple-only note mb-14">人生の中で特に大きな変化が起こりやすい年を、具体的な例とともに最大3つまで表示します。</p>
+    <div class="result-card expert-only">
+      <h3>人生のターニングポイント</h3>
+      <p class="note mb-14">大運の切り替わり・天中殺・年運の位相法（律音・大半会・納音・天剋地冲・三合会局など）を総合し、人生の中で特に大きな変化が起こりやすい年をピンポイントで最大3つ表示します。具体的な例とともに解説します。</p>
       ${(() => {
         if (turningPoints.length === 0) {
           return '<p class="note">特筆すべきターニングポイントは検出されませんでした。</p>';

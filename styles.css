@@ -1,28 +1,31 @@
 :root {
   color-scheme: dark;
-  --bg: #0b0d12;
-  --panel: rgba(20, 24, 34, 0.82);
-  --panel-strong: #171b27;
-  --text: #f4efe7;
-  --muted: #a8a0a0;
-  --gold: #d9a441;
-  --red: #d14b4b;
-  --blue: #5fa8d3;
-  --green: #78b77b;
-  --border: rgba(217, 164, 65, 0.25);
-  --green-soft: rgba(120, 200, 120, 0.06);
-  --green-border: rgba(120, 200, 120, 0.15);
-  --blue-soft: rgba(100, 150, 200, 0.06);
-  --blue-border: rgba(100, 150, 200, 0.15);
-  --orange-soft: rgba(200, 150, 100, 0.06);
-  --orange-border: rgba(200, 150, 100, 0.15);
-  --red-soft: rgba(220, 80, 80, 0.06);
-  --red-border: rgba(220, 80, 80, 0.15);
-  --steel-soft: rgba(100, 149, 237, 0.08);
-  --steel-border: rgba(100, 149, 237, 0.25);
-  --seagreen-soft: rgba(46, 139, 87, 0.08);
-  --seagreen-border: rgba(46, 139, 87, 0.2);
-  font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, system-ui, sans-serif;
+  --bg: #111218;
+  --panel: rgba(24, 26, 35, 0.88);
+  --panel-strong: #1a1d28;
+  --text: #e6e2da;
+  --muted: #918b85;
+  --gold: #c4a06a;
+  --gold-soft: rgba(196, 160, 106, 0.12);
+  --red: #c85a5a;
+  --blue: #6ba4c9;
+  --green: #7ab07e;
+  --border: rgba(196, 160, 106, 0.18);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --green-soft: rgba(120, 200, 120, 0.05);
+  --green-border: rgba(120, 200, 120, 0.12);
+  --blue-soft: rgba(100, 150, 200, 0.05);
+  --blue-border: rgba(100, 150, 200, 0.12);
+  --orange-soft: rgba(200, 150, 100, 0.05);
+  --orange-border: rgba(200, 150, 100, 0.12);
+  --red-soft: rgba(220, 80, 80, 0.05);
+  --red-border: rgba(220, 80, 80, 0.12);
+  --steel-soft: rgba(100, 149, 237, 0.06);
+  --steel-border: rgba(100, 149, 237, 0.2);
+  --seagreen-soft: rgba(46, 139, 87, 0.06);
+  --seagreen-border: rgba(46, 139, 87, 0.16);
+  font-family: "Noto Sans JP", "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, system-ui, -apple-system, sans-serif;
+  font-feature-settings: "palt";
 }
 
 /* === 統一ユーティリティクラス === */
@@ -259,8 +262,8 @@
   margin-bottom: 20px;
   padding: 14px 18px;
   background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
 }
 .view-toggle {
   display: inline-flex;
@@ -443,57 +446,68 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  background: radial-gradient(circle at top left, rgba(217, 164, 65, 0.2), transparent 34%), radial-gradient(circle at top right, rgba(95, 168, 211, 0.16), transparent 30%), var(--bg);
+  background: var(--bg);
   color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .app {
-  width: min(1120px, calc(100% - 32px));
+  width: min(1080px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 48px 0;
+  padding: 40px 0;
 }
 
 .hero {
   text-align: center;
-  padding: 36px 0 28px;
+  padding: 28px 0 24px;
 }
 
 .badge {
   display: inline-flex;
-  padding: 8px 14px;
+  padding: 6px 16px;
   border: 1px solid var(--border);
   border-radius: 999px;
   color: var(--gold);
-  background: rgba(217, 164, 65, 0.08);
-  letter-spacing: 0.08em;
-  font-size: 13px;
+  background: var(--gold-soft);
+  letter-spacing: 0.06em;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 h1 {
-  margin: 18px 0 12px;
-  font-size: clamp(40px, 8vw, 86px);
-  line-height: 0.95;
-  letter-spacing: -0.08em;
+  margin: 16px 0 10px;
+  font-size: clamp(28px, 5vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  font-weight: 700;
 }
 
 .hero p {
-  max-width: 760px;
+  max-width: 640px;
   margin: 0 auto;
   color: var(--muted);
-  line-height: 1.9;
+  line-height: 1.8;
+  font-size: 14px;
 }
 
 .panel,
 .result-card {
-  border: 1px solid var(--border);
-  border-radius: 26px;
-  background: linear-gradient(145deg, var(--panel), rgba(11, 13, 18, 0.88));
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(14px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+/* subtle top accent line for visual interest */
+.panel::before,
+.result-card::before {
+  content: none;
 }
 
 .input-panel {
-  padding: 24px;
+  padding: 28px;
 }
 
 form {
@@ -550,27 +564,44 @@ label {
 input,
 select,
 button {
-  min-height: 48px;
+  min-height: 44px;
   max-width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
-  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0 14px;
   font: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input,
 select {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--text);
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(196, 160, 106, 0.12);
 }
 
 button {
   cursor: pointer;
   border: none;
-  color: #1b1205;
-  background: linear-gradient(135deg, #f2cf74, var(--gold));
-  font-weight: 900;
-  padding: 0 24px;
+  color: #1a1612;
+  background: var(--gold);
+  font-weight: 600;
+  padding: 0 28px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button:hover {
+  background: #d4b07a;
+}
+
+button:active {
+  transform: scale(0.98);
 }
 
 .note {
@@ -596,7 +627,7 @@ button {
 }
 
 .result-card {
-  padding: 24px;
+  padding: 28px;
 }
 
 .result-header {
@@ -609,6 +640,7 @@ button {
 .result-header h2,
 .result-card h3 {
   margin: 0;
+  font-weight: 600;
 }
 
 .result-header p {
@@ -629,8 +661,8 @@ button {
 
 .kanshi {
   padding: 18px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.055);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .kanshi strong {
@@ -684,9 +716,9 @@ button {
 .star {
   min-height: 120px;
   padding: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .star small {
@@ -707,20 +739,20 @@ button {
 
 .reading article {
   padding: 18px;
-  border-left: 4px solid var(--red);
-  border-radius: 14px;
-  background: rgba(209, 75, 75, 0.08);
+  border-left: 3px solid var(--red);
+  border-radius: 10px;
+  background: rgba(200, 90, 90, 0.05);
   line-height: 1.8;
 }
 
 .reading article.is-good {
   border-left-color: var(--blue);
-  background: rgba(80, 160, 220, 0.08);
+  background: rgba(107, 164, 201, 0.05);
 }
 
 .reading article.is-bad {
   border-left-color: var(--red);
-  background: rgba(209, 75, 75, 0.1);
+  background: rgba(200, 90, 90, 0.06);
 }
 
 .reading article.is-work {
@@ -874,16 +906,16 @@ button {
 
 .taiun-item {
   padding: 14px 10px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.045);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
   text-align: center;
   transition: border-color 0.2s;
 }
 
 .taiun-item.current {
   border-color: var(--gold);
-  background: rgba(217, 164, 65, 0.12);
+  background: var(--gold-soft);
 }
 
 .taiun-item .age {
@@ -925,14 +957,14 @@ button {
   gap: 12px;
   align-items: center;
   padding: 12px 16px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
   margin-bottom: 6px;
   transition: background 0.2s;
 }
 
 .history-item:hover {
-  background: rgba(217, 164, 65, 0.12);
+  background: var(--gold-soft);
 }
 
 .history-name {
@@ -968,12 +1000,12 @@ button {
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  border: 4px solid var(--gold);
+  border: 3px solid var(--gold);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: rgba(217, 164, 65, 0.08);
+  background: var(--gold-soft);
 }
 
 .score-circle span {
@@ -1015,8 +1047,8 @@ button {
 .compat-cat {
   padding: 18px 20px;
   border-radius: 12px;
-  border-left: 4px solid;
-  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid;
+  background: rgba(255, 255, 255, 0.025);
 }
 
 .compat-cat.is-love {
@@ -1505,14 +1537,14 @@ button {
   gap: 14px;
   align-items: center;
   padding: 14px 18px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border-subtle);
 }
 
 .nenun-row.current {
   border-color: var(--gold);
-  background: rgba(217, 164, 65, 0.1);
+  background: var(--gold-soft);
 }
 
 .nenun-row.tenchu {
@@ -1670,6 +1702,100 @@ button {
 
 .yearly-fortune-card {
   border-left: 3px solid var(--gold);
+}
+
+/* === 今日の運勢・今月の運勢 === */
+.daily-monthly-fortune-card {
+  border-left: 3px solid var(--blue, #5fa8d3);
+}
+.dm-fortune-block {
+  padding: 16px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  margin-bottom: 14px;
+}
+.dm-fortune-block:last-child { margin-bottom: 0; }
+.dm-fortune-block.is-tenchu {
+  background: rgba(224, 72, 72, 0.06);
+  border-color: rgba(224, 72, 72, 0.2);
+}
+.dm-fortune-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.dm-fortune-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--gold);
+}
+.dm-fortune-date {
+  font-size: 13px;
+  color: var(--muted);
+}
+.dm-fortune-pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.dm-pillar {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+}
+.dm-pillar b {
+  color: var(--muted);
+  font-size: 10px;
+  margin-right: 3px;
+}
+.dm-fortune-scores {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.dm-score-item { text-align: center; }
+.dm-score-header { margin-bottom: 4px; }
+.dm-score-header b { font-size: 12px; color: var(--gold); }
+.dm-score-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.dm-score-bar i {
+  display: block;
+  height: 100%;
+  width: var(--dm-width, 0%);
+  border-radius: 999px;
+  transition: width 0.3s;
+}
+.dm-score-bar i.is-money { background: linear-gradient(90deg, #d4a843, #f0d060); }
+.dm-score-bar i.is-love { background: linear-gradient(90deg, #e04848, #ff8080); }
+.dm-score-bar i.is-work { background: linear-gradient(90deg, #4080e0, #80b0ff); }
+.dm-score-num { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.dm-fortune-advice {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(95, 168, 211, 0.06);
+}
+.dm-fortune-advice b {
+  font-size: 12px;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 4px;
+}
+.dm-fortune-advice p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text);
 }
 
 .yearly-fortune-overview {
@@ -1981,9 +2107,9 @@ button {
 
 .abnormal-item {
   padding: 14px 16px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.055);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--border-subtle);
 }
 
 .abnormal-head {
@@ -2049,9 +2175,9 @@ button {
 .topology-summary {
   padding: 16px 18px;
   margin-bottom: 14px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(100, 80, 200, 0.12), rgba(60, 120, 200, 0.08));
-  border: 1px solid rgba(120, 100, 220, 0.2);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(100, 80, 200, 0.08), rgba(60, 120, 200, 0.05));
+  border: 1px solid rgba(120, 100, 220, 0.15);
 }
 
 .topology-summary-title {
@@ -2078,9 +2204,9 @@ button {
 
 .topology-item {
   padding: 14px 16px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.055);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
 }
 
 .topology-item.is-go {
@@ -2144,9 +2270,9 @@ button {
 
 .fate-tenchu-item {
   padding: 14px 16px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.055);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
   border-left: 3px solid var(--gold);
 }
 
@@ -2842,7 +2968,7 @@ button {
   }
 
   .hero h1 {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .hero p {
@@ -2857,7 +2983,7 @@ button {
 
   .panel,
   .result-card {
-    border-radius: 16px;
+    border-radius: 12px;
   }
 
   .input-panel {
@@ -2895,16 +3021,16 @@ button {
   input,
   select,
   button {
-    min-height: 38px;
+    min-height: 40px;
     font-size: 13px;
     border-radius: 8px;
-    padding: 0 7px;
+    padding: 0 8px;
   }
 
   button {
-    padding: 0 10px;
+    padding: 0 12px;
     font-size: 13px;
-    font-weight: 800;
+    font-weight: 600;
   }
 
   label {
@@ -3131,7 +3257,7 @@ button {
   }
 
   .hero h1 {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .input-panel {
@@ -3743,6 +3869,20 @@ button {
   color: var(--text);
   line-height: 1.6;
 }
+.sekishoku-celebs {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: rgba(217, 164, 65, 0.06);
+  border-radius: 6px;
+  font-size: 0.78em;
+  line-height: 1.6;
+  color: var(--text);
+}
+.sekishoku-celebs-label {
+  font-weight: 600;
+  color: var(--gold);
+  margin-right: 4px;
+}
 
 /* === 情的か理性的か === */
 .joritsu-type {
@@ -3845,12 +3985,12 @@ button {
 .section-group-header {
   margin: 32px 0 14px;
   padding: 10px 16px;
-  border-left: 4px solid var(--gold);
-  background: linear-gradient(90deg, rgba(217,164,65,0.08), transparent);
-  font-size: 1.15em;
-  font-weight: 700;
+  border-left: 3px solid var(--gold);
+  background: linear-gradient(90deg, var(--gold-soft), transparent);
+  font-size: 1.05em;
+  font-weight: 600;
   color: var(--gold);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
 }
 .section-group-header:first-child {
   margin-top: 14px;
@@ -3984,8 +4124,8 @@ button {
 
 /* === 総合人生鑑定 === */
 .life-summary-card {
-  border: 2px solid var(--gold);
-  background: linear-gradient(135deg, rgba(217,164,65,0.06), rgba(20,24,34,0.82));
+  border: 1px solid var(--gold);
+  background: linear-gradient(135deg, var(--gold-soft), var(--panel));
 }
 .life-summary-grid {
   display: grid;
@@ -4015,8 +4155,8 @@ button {
   margin-top: 16px;
   padding: 16px 18px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(217,164,65,0.10), rgba(95,168,211,0.06));
-  border: 1px solid var(--gold);
+  background: linear-gradient(135deg, var(--gold-soft), rgba(107,164,201,0.04));
+  border: 1px solid var(--border);
 }
 .life-advice-box h4 {
   margin: 0 0 10px;
@@ -4034,8 +4174,8 @@ button {
 
 /* === 自分年表 === */
 .life-chronology-card {
-  border: 2px solid var(--gold);
-  background: linear-gradient(135deg, rgba(217,164,65,0.04), rgba(20,24,34,0.85));
+  border: 1px solid var(--gold);
+  background: linear-gradient(135deg, var(--gold-soft), var(--panel));
 }
 .life-chronology-timeline {
   display: flex;
@@ -4137,3 +4277,79 @@ button {
 .chronology-icon-health::before { content: "✚"; color: #e06060; }
 .chronology-icon-name::before { content: "名"; color: #a080d0; font-size: 10px; font-weight: 700; }
 .chronology-icon-school::before { content: "学"; color: #70a0e0; font-size: 10px; font-weight: 700; }
+
+/* === 九星気学 方位判定 === */
+.kyusei-card { margin-top: 20px; }
+.kyusei-stars-info {
+  display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 18px;
+  padding: 12px 16px; background: var(--panel-strong); border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.kyusei-star-item { display: flex; flex-direction: column; gap: 4px; }
+.kyusei-star-label { font-size: 12px; color: var(--muted); }
+.kyusei-star-value { font-size: 15px; font-weight: 600; color: var(--gold); }
+.kyusei-board-wrap { margin-bottom: 20px; }
+.kyusei-board-wrap h4 { margin: 0 0 10px; font-size: 14px; }
+.kyusei-board {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+  max-width: 360px; margin: 0 auto;
+}
+.kyusei-cell {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 14px 6px; border-radius: 8px; background: var(--panel-strong);
+  border: 1px solid var(--border); position: relative; min-height: 70px;
+}
+.kyusei-cell.center { background: rgba(217, 164, 65, 0.12); border-color: var(--gold); }
+.kyusei-cell.is-good { border-color: var(--green); background: var(--green-soft); }
+.kyusei-cell.is-bad { border-color: var(--red); background: var(--red-soft); }
+.kyusei-pos { font-size: 11px; color: var(--muted); }
+.kyusei-star { font-size: 13px; font-weight: 600; color: var(--text); text-align: center; }
+.kyusei-badge {
+  position: absolute; top: 4px; right: 6px; font-size: 11px; font-weight: 700;
+  padding: 1px 6px; border-radius: 4px;
+}
+.kyusei-badge.good { background: rgba(120, 183, 123, 0.25); color: var(--green); }
+.kyusei-badge.bad { background: rgba(209, 75, 75, 0.25); color: var(--red); }
+.kyusei-directions { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 600px) { .kyusei-directions { grid-template-columns: 1fr; } }
+.kyusei-good-directions h4, .kyusei-bad-directions h4 { margin: 0 0 8px; font-size: 14px; }
+.kyusei-dir-list { list-style: none; padding: 0; margin: 0; }
+.kyusei-dir-list li {
+  padding: 6px 0; font-size: 13px; line-height: 1.5;
+  border-bottom: 1px solid rgba(217, 164, 65, 0.08);
+}
+.kyusei-bad-type {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  padding: 1px 6px; border-radius: 4px; background: rgba(209, 75, 75, 0.2); color: var(--red);
+}
+
+/* === 月盤・日盤サブセクション === */
+.kyusei-sub-section {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+}
+.kyusei-sub-section h4 {
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: var(--gold);
+}
+.kyusei-board-sm {
+  max-width: 300px;
+}
+.kyusei-board-sm .kyusei-cell {
+  padding: 10px 4px;
+  min-height: 56px;
+}
+.kyusei-board-sm .kyusei-pos { font-size: 10px; }
+.kyusei-board-sm .kyusei-star { font-size: 12px; }
+.kyusei-board-sm .kyusei-badge { font-size: 10px; padding: 1px 4px; }
+.kyusei-directions-sm {
+  margin-top: 14px;
+}
+.kyusei-directions-sm h4 { font-size: 13px; }
+.kyusei-directions-sm .kyusei-dir-list li { font-size: 12px; }
+@media (max-width: 600px) {
+  .kyusei-directions-sm { grid-template-columns: 1fr; }
+  .kyusei-board-sm { max-width: 260px; }
+}

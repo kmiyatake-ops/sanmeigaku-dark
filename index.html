@@ -4,16 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>占いの館M</title>
-    <link rel="stylesheet" href="./styles.css?v=20260822b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css?v=20260823f" />
     <link rel="icon" type="image/svg+xml" href="./icon.svg" />
     <link rel="apple-touch-icon" href="./icon.svg" />
+    <!-- Google Analytics 4 - 測定IDを取得後に G-XXXXXXXXXX を実際のIDに置き換えてください -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
   </head>
   <body>
     <main class="app">
       <section class="hero">
-        <div class="badge">陰陽干支・人体星図</div>
+        <div class="badge">東洋運命学・算命学鑑定</div>
         <h1>占いの館M</h1>
-        <p>生年月日から、あなたの性格・才能・恋愛傾向・適職・人生の流れ・運気の波まで、具体的に鑑定します。東洋の運命学をもとに、現実的なアドバイスを分かりやすくお伝えします。</p>
+        <p>生年月日から、あなたの本質・恋愛の傾向・仕事の適性・人生の波を紐解きます。30代・40代の悩みに寄り添う、東洋運命学にもとづく鑑定。</p>
       </section>
 
       <section class="panel input-panel">
@@ -50,7 +61,7 @@
           </label>
           <button type="submit">鑑定する</button>
         </form>
-        <p class="note">簡易実装のため節入り時刻・出生時刻・流派差は補正していません。結果は娯楽・自己分析用です。</p>
+        <p class="note">簡易実装のため節入り時刻・出生時刻・流派差は補正していません。結果は自己理解を深めるための参考として、楽しくお読みください。</p>
       </section>
 
       <section id="result" class="result hidden"></section>
@@ -81,6 +92,6 @@
     </main>
     <script src="./qrcode.min.js?v=20260724a"></script>
     <script src="./kanji-data.js?v=20260822b"></script>
-    <script src="./app.js?v=20260822b"></script>
+    <script src="./app.js?v=20260823k"></script>
   </body>
 </html>
