@@ -5355,7 +5355,6 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
     { title: "人生のタイミングから見る性格要素", text: energyTexts.join("　") },
     { title: "内面の構造（人間関係の相性）", text: [interactionNorth, interactionSouth, interactionEast, interactionWest].filter(Boolean).join("\n") },
     { title: "社会と配偶者の関係", text: interactionEastWest || "" },
-    { title: "人間関係の相性（流動法）", text: ryudoText },
     { title: "考え方の根幹（循環法）", text: junkanText },
     { title: "現実と理想のバランス", text: eastSouthText },
     { title: "情的か理性的か", text: joritsuText },
