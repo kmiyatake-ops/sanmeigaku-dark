@@ -6525,25 +6525,6 @@ function render(event) {
           </div>
         </div>`;
       })()}
-      <div class="kyusei-board-wrap">
-        <h4 class="expert-only">${kyuseiResult.adjustedYear}年 年盤</h4>
-        <h4 class="simple-only">今年的方位盤</h4>
-        <div class="kyusei-board">
-          ${[4, 9, 2, 3, 5, 7, 8, 1, 6].map(pos => {
-            const star = kyuseiResult.yearBoard[pos];
-            const starName = kyuseiStarNames[star - 1];
-            const isGood = kyuseiResult.goodDirections.some(g => g.position === pos);
-            const isBad = kyuseiResult.badPositions.includes(pos);
-            const cls = pos === 5 ? "kyusei-cell center" : "kyusei-cell";
-            const badge = isGood ? '<span class="kyusei-badge good">吉</span>' : isBad ? '<span class="kyusei-badge bad">凶</span>' : '';
-            return `<div class="${cls}${isGood ? " is-good" : ""}${isBad ? " is-bad" : ""}">
-              <span class="kyusei-pos">${kyuseiPositionNames[pos]}</span>
-              <span class="kyusei-star">${starName}</span>
-              ${badge}
-            </div>`;
-          }).join("")}
-        </div>
-      </div>
       <div class="kyusei-directions">
         <div class="kyusei-good-directions">
           <h4 class="expert-only">吉方位（開運方位）</h4>
@@ -6565,23 +6546,6 @@ function render(event) {
         </div>
       </div>
       <div class="kyusei-sub-section">
-        <h4 class="expert-only">${kyuseiResult.monthLabel}の月盤</h4>
-        <h4 class="simple-only">今月の方位盤</h4>
-        <div class="kyusei-board kyusei-board-sm">
-          ${[4, 9, 2, 3, 5, 7, 8, 1, 6].map(pos => {
-            const star = kyuseiResult.monthBoard[pos];
-            const starName = kyuseiStarNames[star - 1];
-            const isGood = kyuseiResult.monthGoodDirections.some(g => g.position === pos);
-            const isBad = kyuseiResult.monthBadPositions.includes(pos);
-            const cls = pos === 5 ? "kyusei-cell center" : "kyusei-cell";
-            const badge = isGood ? '<span class="kyusei-badge good">吉</span>' : isBad ? '<span class="kyusei-badge bad">凶</span>' : '';
-            return `<div class="${cls}${isGood ? " is-good" : ""}${isBad ? " is-bad" : ""}">
-              <span class="kyusei-pos">${kyuseiPositionNames[pos]}</span>
-              <span class="kyusei-star">${starName}</span>
-              ${badge}
-            </div>`;
-          }).join("")}
-        </div>
         <div class="kyusei-directions kyusei-directions-sm">
           <div class="kyusei-good-directions">
             <h4 class="expert-only">今月の吉方位</h4>
@@ -6602,23 +6566,6 @@ function render(event) {
         </div>
       </div>
       <div class="kyusei-sub-section">
-        <h4 class="expert-only">${kyuseiResult.targetDate.getMonth()+1}月${kyuseiResult.targetDate.getDate()}日の日盤</h4>
-        <h4 class="simple-only">今日の方位盤</h4>
-        <div class="kyusei-board kyusei-board-sm">
-          ${[4, 9, 2, 3, 5, 7, 8, 1, 6].map(pos => {
-            const star = kyuseiResult.dayBoard[pos];
-            const starName = kyuseiStarNames[star - 1];
-            const isGood = kyuseiResult.dayGoodDirections.some(g => g.position === pos);
-            const isBad = kyuseiResult.dayBadPositions.includes(pos);
-            const cls = pos === 5 ? "kyusei-cell center" : "kyusei-cell";
-            const badge = isGood ? '<span class="kyusei-badge good">吉</span>' : isBad ? '<span class="kyusei-badge bad">凶</span>' : '';
-            return `<div class="${cls}${isGood ? " is-good" : ""}${isBad ? " is-bad" : ""}">
-              <span class="kyusei-pos">${kyuseiPositionNames[pos]}</span>
-              <span class="kyusei-star">${starName}</span>
-              ${badge}
-            </div>`;
-          }).join("")}
-        </div>
         <div class="kyusei-directions kyusei-directions-sm">
           <div class="kyusei-good-directions">
             <h4 class="expert-only">今日の吉方位</h4>
