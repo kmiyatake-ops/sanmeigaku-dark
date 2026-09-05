@@ -4422,6 +4422,24 @@ button:active {
 .kyusei-combined-none {
   font-size: 12px; color: var(--muted); font-style: italic;
 }
+.kyusei-bad-summary {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  padding: 10px 14px; margin-bottom: 10px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(255, 93, 115, 0.08), rgba(255, 112, 166, 0.06));
+  border: 1px solid rgba(255, 93, 115, 0.12);
+}
+.kyusei-bad-label {
+  font-size: 13px; font-weight: 700; color: var(--tropical-coral);
+  white-space: nowrap;
+}
+.kyusei-bad-tag {
+  display: inline-block; font-size: 14px; font-weight: 700;
+  padding: 4px 14px; border-radius: 8px;
+  background: rgba(255, 93, 115, 0.12);
+  border: 1px solid rgba(255, 93, 115, 0.25);
+  color: var(--tropical-coral);
+}
 
 /* === 月盤・日盤サブセクション === */
 .kyusei-sub-section {

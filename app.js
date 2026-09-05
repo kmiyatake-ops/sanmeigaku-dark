@@ -6558,10 +6558,11 @@ function render(event) {
         <div class="kyusei-bad-directions">
           <h4 class="expert-only">凶方位（要注意方位）</h4>
           <h4 class="simple-only">気をつけたい方角</h4>
-          <ul class="kyusei-dir-list">
+          <div class="kyusei-bad-summary simple-only"><span class="kyusei-bad-label">要注意</span> ${kyuseiResult.badDirections.map(b => `<span class="kyusei-bad-tag">${b.direction}</span>`).join("\n")}</div>
+          <ul class="kyusei-dir-list expert-only">
             ${kyuseiResult.badDirections.map(b => `<li><b>${b.direction}</b>　<span class="kyusei-bad-type">${b.type}</span> — ${b.note}</li>`).join("")}
           </ul>
-          <p class="note-text-sm mt-6">これらの方角への引越し・長距離移動は避けるのが無難です。やむを得ない場合は、吉方位を経由するなど工夫を。</p>
+          <p class="note-text-sm mt-6 expert-only">これらの方角への引越し・長距離移動は避けるのが無難です。やむを得ない場合は、吉方位を経由するなど工夫を。</p>
         </div>
       </div>
       <div class="kyusei-sub-section">
@@ -6595,7 +6596,8 @@ function render(event) {
           <div class="kyusei-bad-directions">
             <h4 class="expert-only">今月の凶方位</h4>
             <h4 class="simple-only">今月気をつけたい方角</h4>
-            <ul class="kyusei-dir-list">
+            <div class="kyusei-bad-summary simple-only"><span class="kyusei-bad-label">要注意</span> ${kyuseiResult.monthBadDirections.map(b => `<span class="kyusei-bad-tag">${b.direction}</span>`).join("\n")}</div>
+            <ul class="kyusei-dir-list expert-only">
               ${kyuseiResult.monthBadDirections.map(b => `<li><b>${b.direction}</b>　<span class="kyusei-bad-type">${b.type}</span> — ${b.note}</li>`).join("")}
             </ul>
           </div>
@@ -6632,7 +6634,8 @@ function render(event) {
           <div class="kyusei-bad-directions">
             <h4 class="expert-only">今日の凶方位</h4>
             <h4 class="simple-only">今日気をつけたい方角</h4>
-            <ul class="kyusei-dir-list">
+            <div class="kyusei-bad-summary simple-only"><span class="kyusei-bad-label">要注意</span> ${kyuseiResult.dayBadDirections.map(b => `<span class="kyusei-bad-tag">${b.direction}</span>`).join("\n")}</div>
+            <ul class="kyusei-dir-list expert-only">
               ${kyuseiResult.dayBadDirections.map(b => `<li><b>${b.direction}</b>　<span class="kyusei-bad-type">${b.type}</span> — ${b.note}</li>`).join("")}
             </ul>
           </div>
