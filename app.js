@@ -6768,6 +6768,16 @@ function render(event) {
       ${(() => {
         const dm = dailyMonthlyFortune;
         const relTextMap = { "相生": "追い風", "比和": "同調", "相剋": "摩擦", "反剋": "逆風" };
+        const m = dm.monthly, t = dm.today;
+        const allScores = [
+          { label: "金運", m: m.scores.money, t: t.scores.money, cls: "is-money" },
+          { label: "恋愛運", m: m.scores.love, t: t.scores.love, cls: "is-love" },
+          { label: "仕事運", m: m.scores.work, t: t.scores.work, cls: "is-work" },
+        ];
+        const bestMonth = allScores.reduce((a, b) => b.m > a.m ? b : a);
+        const bestToday = allScores.reduce((a, b) => b.t > a.t ? b : a);
+        const worstMonth = allScores.reduce((a, b) => b.m < a.m ? b : a);
+        const worstToday = allScores.reduce((a, b) => b.t < a.t ? b : a);
         function scoreBar(label, score, cls) {
           return `<div class="dm-score-item">
             <div class="dm-score-header"><b>${label}</b></div>
@@ -6799,7 +6809,25 @@ function render(event) {
             </div>
           </div>`;
         }
-        return fortuneBlock("今月の運勢", dm.monthly.month, dm.monthly.pillar, dm.monthly.star, dm.monthly.energy, dm.monthly.rel, dm.monthly.isTenchu, dm.monthly.scores, dm.monthly.advice)
+        const summary = `<div class="dm-combined-summary">
+          <div class="dm-combined-title">今月・今日の運勢サマリー</div>
+          <div class="dm-combined-grid">
+            <div class="dm-combined-col">
+              <div class="dm-combined-col-title">${m.month}</div>
+              <div class="dm-combined-row"><span class="dm-combined-label">注目</span> <span class="dm-combined-best">${bestMonth.label} ${bestMonth.m}点</span></div>
+              <div class="dm-combined-row"><span class="dm-combined-label">注意</span> <span class="dm-combined-worst">${worstMonth.label} ${worstMonth.m}点</span></div>
+              ${m.isTenchu ? '<div class="dm-combined-row"><span class="dm-combined-label">天中殺</span> <span class="dm-combined-warn">要注意</span></div>' : ''}
+            </div>
+            <div class="dm-combined-col">
+              <div class="dm-combined-col-title">${t.date}</div>
+              <div class="dm-combined-row"><span class="dm-combined-label">注目</span> <span class="dm-combined-best">${bestToday.label} ${bestToday.t}点</span></div>
+              <div class="dm-combined-row"><span class="dm-combined-label">注意</span> <span class="dm-combined-worst">${worstToday.label} ${worstToday.t}点</span></div>
+              ${t.isTenchu ? '<div class="dm-combined-row"><span class="dm-combined-label">天中殺</span> <span class="dm-combined-warn">要注意</span></div>' : ''}
+            </div>
+          </div>
+        </div>`;
+        return summary
+             + fortuneBlock("今月の運勢", dm.monthly.month, dm.monthly.pillar, dm.monthly.star, dm.monthly.energy, dm.monthly.rel, dm.monthly.isTenchu, dm.monthly.scores, dm.monthly.advice)
              + fortuneBlock("今日の運勢", dm.today.date, dm.today.pillar, dm.today.star, dm.today.energy, dm.today.rel, dm.today.isTenchu, dm.today.scores, dm.today.advice);
       })()}
     </div>
