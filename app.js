@@ -6555,14 +6555,13 @@ function render(event) {
             : "<p class='note'>今年は吉方位が少ない年です。無理に移動せず、今の場所で地力を養うのも一手です。</p>"
           }
         </div>
-        <div class="kyusei-bad-directions">
-          <h4 class="expert-only">凶方位（要注意方位）</h4>
-          <h4 class="simple-only">気をつけたい方角</h4>
-          <div class="kyusei-bad-summary simple-only"><span class="kyusei-bad-label">要注意</span> ${kyuseiResult.badDirections.map(b => `<span class="kyusei-bad-tag">${b.direction}</span>`).join("\n")}</div>
-          <ul class="kyusei-dir-list expert-only">
+        <div class="kyusei-bad-directions expert-only">
+          <h4>凶方位（要注意方位）</h4>
+          <div class="kyusei-bad-summary"><span class="kyusei-bad-label">要注意</span> ${kyuseiResult.badDirections.map(b => `<span class="kyusei-bad-tag">${b.direction}</span>`).join("\n")}</div>
+          <ul class="kyusei-dir-list">
             ${kyuseiResult.badDirections.map(b => `<li><b>${b.direction}</b>　<span class="kyusei-bad-type">${b.type}</span> — ${b.note}</li>`).join("")}
           </ul>
-          <p class="note-text-sm mt-6 expert-only">これらの方角への引越し・長距離移動は避けるのが無難です。やむを得ない場合は、吉方位を経由するなど工夫を。</p>
+          <p class="note-text-sm mt-6">これらの方角への引越し・長距離移動は避けるのが無難です。やむを得ない場合は、吉方位を経由するなど工夫を。</p>
         </div>
       </div>
       <div class="kyusei-sub-section">
@@ -6593,11 +6592,10 @@ function render(event) {
               : "<p class='note'>今月は吉方位が少ない月です。</p>"
             }
           </div>
-          <div class="kyusei-bad-directions">
-            <h4 class="expert-only">今月の凶方位</h4>
-            <h4 class="simple-only">今月気をつけたい方角</h4>
-            <div class="kyusei-bad-summary simple-only"><span class="kyusei-bad-label">要注意</span> ${kyuseiResult.monthBadDirections.map(b => `<span class="kyusei-bad-tag">${b.direction}</span>`).join("\n")}</div>
-            <ul class="kyusei-dir-list expert-only">
+          <div class="kyusei-bad-directions expert-only">
+            <h4>今月の凶方位</h4>
+            <div class="kyusei-bad-summary"><span class="kyusei-bad-label">要注意</span> ${kyuseiResult.monthBadDirections.map(b => `<span class="kyusei-bad-tag">${b.direction}</span>`).join("\n")}</div>
+            <ul class="kyusei-dir-list">
               ${kyuseiResult.monthBadDirections.map(b => `<li><b>${b.direction}</b>　<span class="kyusei-bad-type">${b.type}</span> — ${b.note}</li>`).join("")}
             </ul>
           </div>
@@ -6631,11 +6629,10 @@ function render(event) {
               : "<p class='note'>今日は吉方位が少ない日です。</p>"
             }
           </div>
-          <div class="kyusei-bad-directions">
-            <h4 class="expert-only">今日の凶方位</h4>
-            <h4 class="simple-only">今日気をつけたい方角</h4>
-            <div class="kyusei-bad-summary simple-only"><span class="kyusei-bad-label">要注意</span> ${kyuseiResult.dayBadDirections.map(b => `<span class="kyusei-bad-tag">${b.direction}</span>`).join("\n")}</div>
-            <ul class="kyusei-dir-list expert-only">
+          <div class="kyusei-bad-directions expert-only">
+            <h4>今日の凶方位</h4>
+            <div class="kyusei-bad-summary"><span class="kyusei-bad-label">要注意</span> ${kyuseiResult.dayBadDirections.map(b => `<span class="kyusei-bad-tag">${b.direction}</span>`).join("\n")}</div>
+            <ul class="kyusei-dir-list">
               ${kyuseiResult.dayBadDirections.map(b => `<li><b>${b.direction}</b>　<span class="kyusei-bad-type">${b.type}</span> — ${b.note}</li>`).join("")}
             </ul>
           </div>
