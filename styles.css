@@ -1838,47 +1838,39 @@ button:active {
   line-height: 1.7;
   color: var(--text);
 }
-.dm-combined-summary {
-  margin-bottom: 18px; padding: 16px 18px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(199, 125, 255, 0.06), rgba(0, 187, 249, 0.04));
-  border: 1px solid rgba(199, 125, 255, 0.12);
-}
-.dm-combined-title {
-  font-size: 15px; font-weight: 700; color: var(--tropical-purple);
-  margin-bottom: 12px;
-}
-.dm-combined-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
-}
-@media (max-width: 600px) { .dm-combined-grid { grid-template-columns: 1fr; } }
-.dm-combined-col {
-  padding: 12px 14px; border-radius: 10px;
+.dm-compact-row {
+  padding: 14px 16px; margin-bottom: 12px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border);
 }
-.dm-combined-col-title {
-  font-size: 14px; font-weight: 700; color: var(--tropical-teal);
-  margin-bottom: 8px;
+.dm-compact-row:last-child { margin-bottom: 0; }
+.dm-compact-row.is-tenchu {
+  background: rgba(224, 72, 72, 0.06);
+  border-color: rgba(224, 72, 72, 0.2);
 }
-.dm-combined-row {
-  display: flex; align-items: center; gap: 8px;
-  padding: 4px 0; font-size: 13px;
+.dm-compact-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
 }
-.dm-combined-label {
-  font-size: 11px; font-weight: 700; color: var(--muted);
-  min-width: 48px;
+.dm-compact-label {
+  font-size: 16px; font-weight: 700; color: var(--tropical-purple);
 }
-.dm-combined-best {
-  font-weight: 700; color: var(--tropical-palm);
+.dm-compact-date {
+  font-size: 13px; color: var(--muted);
 }
-.dm-combined-worst {
-  font-weight: 700; color: var(--tropical-coral);
+.dm-compact-scores {
+  display: flex; gap: 16px; margin-bottom: 8px;
 }
-.dm-combined-warn {
-  font-size: 12px; font-weight: 700; color: var(--red);
-  padding: 2px 8px; border-radius: 6px;
-  background: rgba(232, 93, 93, 0.12);
+.dm-compact-score {
+  font-size: 14px; font-weight: 700;
+}
+.dm-compact-score.is-best { color: var(--tropical-palm); }
+.dm-compact-score.is-worst { color: var(--tropical-coral); }
+.dm-compact-meta {
+  font-size: 12px; color: var(--muted); margin-bottom: 6px;
+}
+.dm-compact-advice {
+  margin: 0; font-size: 13px; line-height: 1.6; color: var(--text);
 }
 
 .yearly-fortune-overview {
