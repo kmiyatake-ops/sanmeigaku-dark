@@ -6492,6 +6492,39 @@ function render(event) {
           <span class="kyusei-star-value">${kyuseiResult.nichimeisei.name}（${kyuseiResult.nichimeisei.element}）</span>
         </div>
       </div>
+      ${(() => {
+        const yearDirs = kyuseiResult.goodDirections.map(g => g.direction);
+        const monthDirs = kyuseiResult.monthGoodDirections.map(g => g.direction);
+        const dayDirs = kyuseiResult.dayGoodDirections.map(g => g.direction);
+        const allDirs = [...new Set([...yearDirs, ...monthDirs, ...dayDirs])];
+        const bestDirs = allDirs.filter(d => yearDirs.includes(d) && monthDirs.includes(d) && dayDirs.includes(d));
+        const dirStars = {};
+        [...kyuseiResult.goodDirections, ...kyuseiResult.monthGoodDirections, ...kyuseiResult.dayGoodDirections].forEach(g => {
+          if (!dirStars[g.direction]) dirStars[g.direction] = g.star;
+        });
+        return `<div class="kyusei-combined-summary">
+          <div class="kyusei-combined-title">本日の吉方位サマリー</div>
+          ${bestDirs.length > 0
+            ? `<div class="kyusei-combined-best"><span class="kyusei-combined-badge">★ 最強吉方位</span> ${bestDirs.map(d => `<span class="kyusei-good-tag kyusei-good-tag-best">${d}</span>`).join("\n")}</div>
+               <p class="kyusei-combined-note">年盤・月盤・日盤のすべてで吉方位の方角です。この方角への移動・行動が最も運気を上げます。</p>`
+            : ""
+          }
+          <div class="kyusei-combined-rows">
+            <div class="kyusei-combined-row">
+              <span class="kyusei-combined-row-label">年盤</span>
+              ${yearDirs.length > 0 ? yearDirs.map(d => `<span class="kyusei-good-tag${bestDirs.includes(d) ? " kyusei-good-tag-best" : ""}">${d}</span>`).join("\n") : '<span class="kyusei-combined-none">吉方位なし</span>'}
+            </div>
+            <div class="kyusei-combined-row">
+              <span class="kyusei-combined-row-label">月盤</span>
+              ${monthDirs.length > 0 ? monthDirs.map(d => `<span class="kyusei-good-tag${bestDirs.includes(d) ? " kyusei-good-tag-best" : ""}">${d}</span>`).join("\n") : '<span class="kyusei-combined-none">吉方位なし</span>'}
+            </div>
+            <div class="kyusei-combined-row">
+              <span class="kyusei-combined-row-label">日盤</span>
+              ${dayDirs.length > 0 ? dayDirs.map(d => `<span class="kyusei-good-tag${bestDirs.includes(d) ? " kyusei-good-tag-best" : ""}">${d}</span>`).join("\n") : '<span class="kyusei-combined-none">吉方位なし</span>'}
+            </div>
+          </div>
+        </div>`;
+      })()}
       <div class="kyusei-board-wrap">
         <h4 class="expert-only">${kyuseiResult.adjustedYear}年 年盤</h4>
         <h4 class="simple-only">今年的方位盤</h4>

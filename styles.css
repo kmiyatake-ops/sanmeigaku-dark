@@ -4382,6 +4382,46 @@ button:active {
   border: 1px solid rgba(6, 214, 160, 0.25);
   color: var(--tropical-palm);
 }
+.kyusei-good-tag-best {
+  background: linear-gradient(135deg, rgba(255, 210, 63, 0.20), rgba(255, 159, 28, 0.15));
+  border-color: rgba(255, 210, 63, 0.35);
+  color: var(--tropical-sand);
+  box-shadow: 0 0 8px rgba(255, 210, 63, 0.15);
+}
+.kyusei-combined-summary {
+  margin-bottom: 20px; padding: 16px 18px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(0, 187, 249, 0.06), rgba(199, 125, 255, 0.04));
+  border: 1px solid rgba(0, 187, 249, 0.12);
+}
+.kyusei-combined-title {
+  font-size: 15px; font-weight: 700; color: var(--tropical-teal);
+  margin-bottom: 12px;
+}
+.kyusei-combined-best {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+}
+.kyusei-combined-badge {
+  font-size: 12px; font-weight: 700; color: var(--tropical-sand);
+  white-space: nowrap;
+}
+.kyusei-combined-note {
+  font-size: 12px; color: var(--muted); margin: 4px 0 12px; line-height: 1.5;
+}
+.kyusei-combined-rows {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.kyusei-combined-row {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+}
+.kyusei-combined-row-label {
+  font-size: 12px; font-weight: 700; color: var(--muted);
+  min-width: 48px;
+}
+.kyusei-combined-none {
+  font-size: 12px; color: var(--muted); font-style: italic;
+}
 
 /* === 月盤・日盤サブセクション === */
 .kyusei-sub-section {
