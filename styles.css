@@ -780,58 +780,58 @@ button:active {
   padding: 18px;
   border-left: 3px solid var(--red);
   border-radius: 10px;
-  background: rgba(200, 90, 90, 0.05);
+  background: var(--red-soft);
   line-height: 1.8;
 }
 
 .reading article.is-good {
   border-left-color: var(--blue);
-  background: rgba(107, 164, 201, 0.05);
+  background: var(--blue-soft);
 }
 
 .reading article.is-bad {
   border-left-color: var(--red);
-  background: rgba(200, 90, 90, 0.06);
+  background: var(--red-soft);
 }
 
 .reading article.is-work {
-  border-left-color: #c0a050;
-  background: rgba(200, 160, 80, 0.08);
+  border-left-color: var(--tropical-orange);
+  background: var(--orange-soft);
 }
 
 .reading article.is-love {
-  border-left-color: #e070a0;
-  background: rgba(224, 112, 160, 0.08);
+  border-left-color: var(--tropical-pink);
+  background: rgba(255, 112, 166, 0.08);
 }
 
 .reading article.is-hidden {
-  border-left-color: #9070d0;
-  background: rgba(144, 112, 208, 0.08);
+  border-left-color: var(--tropical-purple);
+  background: rgba(199, 125, 255, 0.08);
 }
 
 .reading article.is-money {
-  border-left-color: #50b070;
-  background: rgba(80, 176, 112, 0.08);
+  border-left-color: var(--tropical-palm);
+  background: var(--green-soft);
 }
 
 .reading article.is-marriage {
-  border-left-color: #60c0d0;
-  background: rgba(96, 192, 208, 0.08);
+  border-left-color: var(--tropical-teal);
+  background: var(--blue-soft);
 }
 
 .reading article.is-social {
-  border-left-color: #d0a060;
-  background: rgba(208, 160, 96, 0.08);
+  border-left-color: var(--tropical-sand);
+  background: var(--gold-soft);
 }
 
 .reading article.is-work-ex {
-  border-left-color: #c0a050;
-  background: rgba(200, 160, 80, 0.12);
+  border-left-color: var(--tropical-orange);
+  background: var(--orange-soft);
 }
 
 .reading article.is-star-detail {
-  border-left-color: #b080e0;
-  background: rgba(176, 128, 224, 0.08);
+  border-left-color: var(--tropical-purple);
+  background: rgba(199, 125, 255, 0.08);
 }
 
 .work-ex-score-wrap {
@@ -844,9 +844,9 @@ button:active {
 .work-ex-score-num {
   font-size: 3.2em;
   font-weight: 800;
-  color: #e0c060;
+  color: var(--tropical-sand);
   line-height: 1;
-  text-shadow: 0 0 20px rgba(224, 192, 96, 0.3);
+  text-shadow: 0 0 20px rgba(255, 210, 63, 0.3);
 }
 
 .work-ex-score-num span {
@@ -875,61 +875,62 @@ button:active {
   margin-bottom: 12px;
 }
 
-.work-ex-bar-fill {
+.work-ex-bar i {
+  display: block;
   height: 100%;
   width: var(--work-ex-width, 0%);
   border-radius: 5px;
-  background: linear-gradient(90deg, #c08040, #e0c060, #f0e080);
+  background: linear-gradient(90deg, var(--tropical-orange), var(--tropical-sand), var(--tropical-sand));
   transition: width 0.8s ease;
-  box-shadow: 0 0 10px rgba(224, 192, 96, 0.4);
+  box-shadow: 0 0 10px rgba(255, 210, 63, 0.4);
 }
 
 .work-ex-detail {
   font-size: 0.9em;
   line-height: 1.7;
-  color: #b0b0c0;
+  color: var(--muted);
   white-space: pre-line;
 }
 
 .reading h4 {
   margin: 0 0 8px;
-  color: #ffb4a8;
+  color: var(--tropical-coral);
 }
 
 .reading article.is-good h4 {
-  color: #8ac4f0;
+  color: var(--tropical-teal);
 }
 
 .reading article.is-work h4 {
-  color: #d4b070;
+  color: var(--tropical-orange);
 }
 
 .reading article.is-love h4 {
-  color: #e890b8;
+  color: var(--tropical-pink);
 }
 
 .reading article.is-hidden h4 {
-  color: #a890d8;
+  color: var(--tropical-purple);
 }
 
 .reading article.is-money h4 {
-  color: #60c080;
+  color: var(--tropical-palm);
 }
 
 .reading article.is-marriage h4 {
-  color: #70d0e0;
+  color: var(--tropical-teal);
 }
 
 .reading article.is-social h4 {
-  color: #e0b070;
+  color: var(--tropical-sand);
 }
 
 .reading article.is-work-ex h4 {
-  color: #e0c060;
+  color: var(--tropical-orange);
 }
 
 .reading article.is-star-detail h4 {
-  color: #c0a0e8;
+  color: var(--tropical-purple);
 }
 
 .reading article div {
@@ -3027,11 +3028,11 @@ button:active {
   }
 
   .input-panel {
-    padding: 10px;
+    padding: 16px;
   }
 
   .result-card {
-    padding: 12px;
+    padding: 16px;
   }
 
   form {
@@ -3043,14 +3044,14 @@ button:active {
   }
 
   .birth-inputs input {
-    width: 34px;
-    font-size: 13px;
+    width: 44px;
+    font-size: 14px;
     min-width: 0;
-    padding: 0 3px;
+    padding: 0 4px;
   }
 
   .birth-inputs input:first-child {
-    width: 48px;
+    width: 56px;
   }
 
   .birth-sep {
