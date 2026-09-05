@@ -6516,7 +6516,8 @@ function render(event) {
           <h4 class="expert-only">吉方位（開運方位）</h4>
           <h4 class="simple-only">運気が上がる方角</h4>
           ${kyuseiResult.goodDirections.length > 0
-            ? `<ul class="kyusei-dir-list">${kyuseiResult.goodDirections.map(g => `<li><b>${g.direction}</b>　${g.star}（${g.relationship}）</li>`).join("")}</ul>
+            ? `<div class="kyusei-good-summary"><span class="kyusei-good-label">吉方位</span> ${kyuseiResult.goodDirections.map(g => `<span class="kyusei-good-tag">${g.direction}</span>`).join("\n")}</div>
+               <ul class="kyusei-dir-list">${kyuseiResult.goodDirections.map(g => `<li><b>${g.direction}</b>　${g.star}（${g.relationship}）</li>`).join("")}</ul>
                <p class="note-text-sm mt-6">引越し・旅行・開運アクションに良い方角です。吉方位への移動は運気上昇の手助けになります。</p>`
             : "<p class='note'>今年は吉方位が少ない年です。無理に移動せず、今の場所で地力を養うのも一手です。</p>"
           }
@@ -6553,7 +6554,8 @@ function render(event) {
             <h4 class="expert-only">今月の吉方位</h4>
             <h4 class="simple-only">今月運気が上がる方角</h4>
             ${kyuseiResult.monthGoodDirections.length > 0
-              ? `<ul class="kyusei-dir-list">${kyuseiResult.monthGoodDirections.map(g => `<li><b>${g.direction}</b>　${g.star}（${g.relationship}）</li>`).join("")}</ul>`
+              ? `<div class="kyusei-good-summary"><span class="kyusei-good-label">今月の吉方位</span> ${kyuseiResult.monthGoodDirections.map(g => `<span class="kyusei-good-tag">${g.direction}</span>`).join("\n")}</div>
+                 <ul class="kyusei-dir-list">${kyuseiResult.monthGoodDirections.map(g => `<li><b>${g.direction}</b>　${g.star}（${g.relationship}）</li>`).join("")}</ul>`
               : "<p class='note'>今月は吉方位が少ない月です。</p>"
             }
           </div>
@@ -6589,7 +6591,8 @@ function render(event) {
             <h4 class="expert-only">今日の吉方位</h4>
             <h4 class="simple-only">今日運気が上がる方角</h4>
             ${kyuseiResult.dayGoodDirections.length > 0
-              ? `<ul class="kyusei-dir-list">${kyuseiResult.dayGoodDirections.map(g => `<li><b>${g.direction}</b>　${g.star}（${g.relationship}）</li>`).join("")}</ul>`
+              ? `<div class="kyusei-good-summary"><span class="kyusei-good-label">今日の吉方位</span> ${kyuseiResult.dayGoodDirections.map(g => `<span class="kyusei-good-tag">${g.direction}</span>`).join("\n")}</div>
+                 <ul class="kyusei-dir-list">${kyuseiResult.dayGoodDirections.map(g => `<li><b>${g.direction}</b>　${g.star}（${g.relationship}）</li>`).join("")}</ul>`
               : "<p class='note'>今日は吉方位が少ない日です。</p>"
             }
           </div>
