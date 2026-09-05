@@ -5343,8 +5343,8 @@ function buildReading(name, pillars, mainStars, energy, counts, tenchusatsu, sei
     { title: "性格の長所", text: `【中心的な性格】${pickByBalance(starP.good, balanceType)}\n【生まれた日の性質】${dayP.good}\n【最も強い要素（${strongest}）】${strongP.good}\n【表に出やすい面】${pickByBalance(northP.good, balanceType)}\n【内面に持っている面】${pickByBalance(southP.good, balanceType)}${seimeiGood ? "\n" + seimeiGood : ""}` },
     { title: "性格の短所（隠さず直視すべき点）", text: `【中心的な性格】${pickByBalance(starP.bad, balanceType)}\n【生まれた日の性質】${dayP.bad}\n【最も強い要素（${strongest}）が強すぎる面】${strongP.bad}\n【足りない要素（${weakest}）の影響】${weakP.bad}${seimeiBad ? "\n" + seimeiBad : ""}` },
     { title: "仕事面での性格", text: pickByBalance(starP.work, balanceType) },
-    { title: "仕事の優秀度", text: `総合仕事優秀度スコア：${workEx.score}点（${workEx.rank}）\n適職傾向：${workEx.jobTendency}\n内訳：${workEx.breakdown}${hasSeimei ? `\n姓名判断の仕事運スコア：${seimei.workFortune}点` : ""}` },
-    { title: "恋愛面での性格", text: `${pickByBalance(starP.love, balanceType)}${hasSeimei ? `\n姓名判断の恋愛運スコアは${seimei.loveFortune}点。${seimei.loveFortune >= 70 ? "姓名判断的にも恋愛運は良好。" : seimei.loveFortune >= 50 ? "姓名判断的には標準的。" : "姓名判断的には恋愛面で波乱あり。"}` : ""}` },
+    { title: "仕事の優秀度", text: `総合仕事優秀度スコア：${workEx.score}点（${workEx.rank}）\n適職傾向：${workEx.jobTendency}\n内訳：${workEx.breakdown}` },
+    { title: "恋愛面での性格", text: pickByBalance(starP.love, balanceType) },
     { title: "金銭感覚とお金の性格", text: pickByBalance(starP.money, balanceType) },
     { title: "結婚観と家庭の性格", text: pickByBalance(starP.marriage, balanceType) },
     { title: "社交性と対人関係の性格", text: pickByBalance(starP.social, balanceType) },
@@ -6989,23 +6989,6 @@ function render(event) {
           </div>
           <p class="note-text-sm mt-6">${r.tenJinRel === "相生" ? "天格から人格へは相生（支え合う）の流れがあり、環境から個人の運への援助が得やすい。" : r.tenJinRel === "相剋" ? "天格から人格へは相剋（ぶつかり合う）の流れがあり、家庭背景と個人の方向性に摩擦が生じやすい。" : "天格と人格は同じ性質（比和）で、安定感がある。"}${r.jinChiRel === "相生" ? "人格から地格へも相生で、内面と行動が一致しやすい。" : r.jinChiRel === "相剋" ? "人格から地格へは相剋で、思っていることと行動にズレが生じやすい。" : "人格と地格も同じ性質（比和）で、内面と外面の調和が取りやすい。"}</p>
         </div>
-        <div class="seimei-fortune-scores">
-          <div class="seimei-fs-item">
-            <div class="seimei-fs-header"><b>金運</b></div>
-            <div class="seimei-fs-bar"><i class="is-money" style="--seimei-width:${r.moneyFortune}%"></i></div>
-            <div class="seimei-fs-num">${r.moneyFortune}点</div>
-          </div>
-          <div class="seimei-fs-item">
-            <div class="seimei-fs-header"><b>恋愛運</b></div>
-            <div class="seimei-fs-bar"><i class="is-love" style="--seimei-width:${r.loveFortune}%"></i></div>
-            <div class="seimei-fs-num">${r.loveFortune}点</div>
-          </div>
-          <div class="seimei-fs-item">
-            <div class="seimei-fs-header"><b>仕事運</b></div>
-            <div class="seimei-fs-bar"><i class="is-work" style="--seimei-width:${r.workFortune}%"></i></div>
-            <div class="seimei-fs-num">${r.workFortune}点</div>
-          </div>
-        </div>
       </div>
       <div class="result-card seimei-card simple-only">
         <h3>名前の運勢（${r.lastName} ${r.firstName}）</h3>
@@ -7041,23 +7024,6 @@ function render(event) {
         </div>
         <div class="info-box is-gold mt-10">
           <p class="info-text"><b>名前の五行バランス（${r.sancai}）</b><br>${simpleBalance}</p>
-        </div>
-        <div class="seimei-fortune-scores">
-          <div class="seimei-fs-item">
-            <div class="seimei-fs-header"><b>金運</b></div>
-            <div class="seimei-fs-bar"><i class="is-money" style="--seimei-width:${r.moneyFortune}%"></i></div>
-            <div class="seimei-fs-num">${r.moneyFortune}点</div>
-          </div>
-          <div class="seimei-fs-item">
-            <div class="seimei-fs-header"><b>恋愛運</b></div>
-            <div class="seimei-fs-bar"><i class="is-love" style="--seimei-width:${r.loveFortune}%"></i></div>
-            <div class="seimei-fs-num">${r.loveFortune}点</div>
-          </div>
-          <div class="seimei-fs-item">
-            <div class="seimei-fs-header"><b>仕事運</b></div>
-            <div class="seimei-fs-bar"><i class="is-work" style="--seimei-width:${r.workFortune}%"></i></div>
-            <div class="seimei-fs-num">${r.workFortune}点</div>
-          </div>
         </div>
       </div>`;
     })()}
