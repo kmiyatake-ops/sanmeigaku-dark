@@ -84,47 +84,6 @@
 
       <section id="compatResult" class="result hidden"></section>
 
-      <section class="panel input-panel section-spaced">
-        <h3 class="panel-title">手相占い</h3>
-        <p class="note">手のひらの写真を撮影またはアップロードするだけで、手相を判定します。左手は生まれ持った素質、右手は現在の運勢を表します。</p>
-
-        <div class="palm-photo-section">
-          <div class="palm-photo-buttons">
-            <button type="button" id="palmCameraBtn" class="palm-photo-btn">📷 カメラで撮影</button>
-            <button type="button" id="palmUploadBtn" class="palm-photo-btn">🖼️ 画像をアップロード</button>
-            <input type="file" id="palmFileInput" accept="image/*" hidden />
-          </div>
-          <div id="palmCameraWrap" class="palm-camera-wrap hidden">
-            <video id="palmVideo" autoplay playsinline></video>
-            <div class="palm-camera-controls">
-              <button type="button" id="palmSnapBtn">撮影する</button>
-              <button type="button" id="palmCameraCancelBtn" class="btn-danger">キャンセル</button>
-            </div>
-            <p class="note">手のひらをカメラに向けてください。明るい場所で撮影すると線が見やすくなります。</p>
-          </div>
-          <div id="palmPhotoPreview" class="palm-photo-preview hidden">
-            <img id="palmPhotoImg" alt="手のひらの写真" />
-            <div class="palm-photo-actions">
-              <button type="button" id="palmRetakeBtn">撮り直す</button>
-              <button type="button" id="palmClearPhotoBtn" class="btn-danger">写真を削除</button>
-            </div>
-          </div>
-        </div>
-
-        <form id="palmistryForm">
-          <div class="palm-section">
-            <label class="palm-label">見る手</label>
-            <div class="palm-hand-select">
-              <label><input type="radio" name="palmHand" value="right" checked /> 右手（現在の運勢）</label>
-              <label><input type="radio" name="palmHand" value="left" /> 左手（先天的な素質）</label>
-            </div>
-          </div>
-          <button type="submit" id="palmSubmitBtn" disabled>写真を撮影またはアップロードしてください</button>
-        </form>
-      </section>
-
-      <section id="palmistryResult" class="result hidden"></section>
-
       <section id="historySection" class="panel input-panel section-spaced">
         <h3 class="panel-title">鑑定記録</h3>
         <div id="historyList"></div>
@@ -133,7 +92,6 @@
     </main>
     <script src="./qrcode.min.js?v=20260724a"></script>
     <script src="./kanji-data.js?v=20260822b"></script>
-    <script src="./palmistry-data.js?v=20260906b"></script>
-    <script src="./app.js?v=20260906j"></script>
+    <script src="./app.js?v=20260906k"></script>
   </body>
 </html>
