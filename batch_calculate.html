@@ -35,6 +35,15 @@
   }
   .done { color: #70d0a0; }
   .error { color: #ff5050; }
+  .progress-bar { width: 100%; height: 24px; background: rgba(0,0,0,0.35); border-radius: 12px; overflow: hidden; margin: 12px 0; border: 1px solid var(--border); }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #4a90d9, #70d0a0); transition: width 0.3s ease; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; font-weight: 600; }
+  .error-list { margin-top: 12px; padding: 12px 16px; border-radius: 10px; background: rgba(255,80,80,0.1); border: 1px solid rgba(255,80,80,0.3); }
+  .error-list h4 { color: #ff5050; margin: 0 0 8px 0; }
+  .error-list ul { margin: 0; padding-left: 20px; font-size: 13px; line-height: 1.8; }
+  .stat-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 16px 0; }
+  .stat-controls select, .stat-controls label { font-size: 14px; }
+  .stat-results { white-space: pre-wrap; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 13px; line-height: 1.7; margin-top: 16px; padding: 16px; border-radius: 14px; background: rgba(0,0,0,0.25); border: 1px solid var(--border); }
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
 </style>
 </head>
 <body>
@@ -50,11 +59,43 @@
     <div class="batch-actions">
       <button id="runBtn">計算実行</button>
       <button id="moteStatsBtn">人気度統計（異性・同性）</button>
+      <button id="statTestBtn">統計検定（Fisher's exact test）</button>
       <button id="downloadBtn" style="display:none">結果をダウンロード</button>
     </div>
-    <p class="note">「計算実行」で全員分の算命学結果を出力。「人気度統計」で異性・同性からの人気度の分布を確認できます。</p>
+    <p class="note">「計算実行」で全員分の算命学結果を出力。「人気度統計」で異性・同性からの人気度の分布を確認。「統計検定」で疾患カテゴリ×算命学因子のFisher's exact testを実行。</p>
+    <div id="progressBar" class="progress-bar" style="display:none"><div id="progressFill" class="progress-fill" style="width:0%">0%</div></div>
     <div id="status" class="batch-status" style="display:none"></div>
+    <div id="errorList" class="error-list" style="display:none"></div>
     <textarea id="output" class="batch-output" style="display:none" readonly></textarea>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="panel input-panel">
+    <h3 class="panel-title">統計検定オプション</h3>
+    <div class="stat-controls">
+      <label>疾患カテゴリ:</label>
+      <select id="illnessFilter">
+        <option value="">全件</option>
+      </select>
+      <label>検定因子:</label>
+      <select id="factorSelect">
+        <option value="main_stars">主星（十大主星）</option>
+        <option value="tenchusatsu">天中殺</option>
+        <option value="balance_type">五行バランスタイプ</option>
+        <option value="day_element">日干五行</option>
+        <option value="strongest_gogyo">最強五行</option>
+        <option value="weakest_gogyo">最弱五行</option>
+      </select>
+      <label>性別フィルタ:</label>
+      <select id="genderFilter">
+        <option value="">全件</option>
+        <option value="male">男性のみ</option>
+        <option value="female">女性のみ</option>
+      </select>
+    </div>
+    <p class="note">計算実行後にボタンを押すと、選択した疾患カテゴリと因子の組み合わせについてOdds Ratio・p値・信頼区間を計算します。</p>
+    <div id="statResults" class="stat-results" style="display:none"></div>
   </section>
 </main>
 
@@ -2248,6 +2289,106 @@ const CELEB_DATA = [
   }
 ];
 
+// === データクリーン関数 ===
+// Wikipedia抽出時に混入したWiki記法の除去、姓名分割の修正、性別誤りの修正、重複データの整理
+function cleanCelebData(data) {
+  const fixes = {
+    42: { last_name: "", first_name: "Eli" },
+    43: { _remove: true, _merge_into: 37, merge_illness: "白血病", merge_onset: 2024 },
+    44: { real_name: "金城敬樹", last_name: "金城", first_name: "敬樹" },
+    46: { last_name: "", first_name: "IWAO" },
+    47: { real_name: "林楡涵", last_name: "林", first_name: "楡涵" },
+    48: { last_name: "", first_name: "SKY-HI" },
+    49: { last_name: "", first_name: "YASS" },
+    53: { real_name: "御法川法男", last_name: "御法川", first_name: "法男" },
+    55: { real_name: "安井かのん", last_name: "安井", first_name: "かのん" },
+    58: { first_name: "ダニエル" },
+    59: { first_name: "ヘヨン" },
+    62: { gender: "male" },
+    64: { real_name: "森田一義", last_name: "森田", first_name: "一義" },
+    65: { last_name: "ダニー", first_name: "チャン" },
+    66: { last_name: "デビー", first_name: "ギブソン" },
+    67: { last_name: "デルタ", first_name: "グッドレム" },
+    68: { real_name: "Charles Weedon Westover", last_name: "", first_name: "" },
+    70: { last_name: "ナンシー", first_name: "関" },
+    71: { first_name: "浩己" },
+    74: { last_name: "マライア", first_name: "キャリー" },
+    75: { last_name: "マリアンヌ", first_name: "フェイスフル" },
+    76: { last_name: "マーヴィン", first_name: "サップ" },
+    77: { last_name: "リンダ", first_name: "ロンシュタット" },
+    80: { real_name: "非公表", last_name: "", first_name: "" },
+    85: { real_name: "前田健", last_name: "前田", first_name: "健" },
+    86: { real_name: "加藤茶", last_name: "加藤", first_name: "茶" },
+    89: { gender: "male" },
+    94: { last_name: "園", first_name: "まり" },
+    95: { last_name: "堀", first_name: "ちえみ" },
+    96: { real_name: "山下羨代", last_name: "山下", first_name: "羨代" },
+    97: { real_name: "大橋巨泉", last_name: "大橋", first_name: "巨泉" },
+    104: { real_name: "寺内武", last_name: "寺内", first_name: "武" },
+    105: { first_name: "雅臣" },
+    109: { _remove: true, _merge_into: 10, merge_illness: "うつ病", merge_onset: 2025 },
+    111: { real_name: "山崎初子", last_name: "山崎", first_name: "初子" },
+    113: { last_name: "山田", first_name: "信夫" },
+    118: { last_name: "嵐", first_name: "ヨシユキ" },
+    120: { last_name: "平", first_name: "浩二" },
+    121: { _remove: true, _merge_into: 18 },
+    123: { first_name: "新吾" },
+    126: { gender: "male" },
+    129: { last_name: "森山", first_name: "加代子" },
+    131: { gender: "male" },
+    132: { last_name: "森田", first_name: "豊" },
+    134: { real_name: "世川武尊", last_name: "世川", first_name: "武尊" },
+    137: { real_name: "池田貴", last_name: "池田", first_name: "貴" },
+    141: { real_name: "生野陽子", last_name: "生野", first_name: "陽子" },
+    143: { _remove: true, _merge_into: 12 },
+    145: { real_name: "町亞聖", last_name: "町", first_name: "亞聖" },
+    148: { gender: "male" },
+    149: { gender: "male" },
+    151: { real_name: "百瀬由一", last_name: "百瀬", first_name: "由一" },
+    152: { last_name: "", first_name: "脳みそ夫" },
+    155: { last_name: "藤", first_name: "あや子" },
+    158: { last_name: "郭", first_name: "書瑤" },
+    160: { last_name: "鈴木", first_name: "美穂" },
+    163: { gender: "male" },
+    166: { gender: "male", last_name: "", first_name: "髭男爵" },
+    167: { gender: "male" },
+  };
+
+  const mergeMap = {};
+  let cleaned = data.map(celeb => {
+    const fix = fixes[celeb.id];
+    if (!fix || fix._remove) return celeb;
+    const c = Object.assign({}, celeb);
+    if (fix.real_name !== undefined) c.real_name = fix.real_name;
+    if (fix.last_name !== undefined) c.last_name = fix.last_name;
+    if (fix.first_name !== undefined) c.first_name = fix.first_name;
+    if (fix.gender !== undefined) c.gender = fix.gender;
+    return c;
+  });
+
+  const toRemove = new Set();
+  Object.entries(fixes).forEach(([id, fix]) => {
+    if (fix._remove) {
+      const idNum = parseInt(id);
+      toRemove.add(idNum);
+      const target = cleaned.find(c => c.id === fix._merge_into);
+      const source = cleaned.find(c => c.id === idNum);
+      if (target && source) {
+        if (fix.merge_illness) {
+          target.illness = target.illness + "・" + fix.merge_illness;
+          target.illness_category = target.illness_category + "・" + source.illness_category;
+          target.notes = target.notes + " " + source.notes;
+        }
+      }
+    }
+  });
+
+  cleaned = cleaned.filter(c => !toRemove.has(c.id));
+  return cleaned;
+}
+
+CELEB_DATA = cleanCelebData(CELEB_DATA);
+
 function calculateSanmeigaku(celeb) {
   const parts = celeb.birth_date.split("-").map(Number);
   const by = parts[0], bm = parts[1], bd = parts[2];
@@ -2424,26 +2565,46 @@ let lastResults = null;
 document.getElementById("runBtn").addEventListener("click", function() {
   const status = document.getElementById("status");
   const output = document.getElementById("output");
+  const progressBar = document.getElementById("progressBar");
+  const progressFill = document.getElementById("progressFill");
+  const errorList = document.getElementById("errorList");
   status.style.display = "block";
   output.style.display = "none";
+  progressBar.style.display = "block";
+  errorList.style.display = "none";
   status.textContent = "計算を開始します...\n";
 
   const results = [];
-  for (const celeb of CELEB_DATA) {
+  const errorEntries = [];
+  const total = CELEB_DATA.length;
+
+  for (let i = 0; i < CELEB_DATA.length; i++) {
+    const celeb = CELEB_DATA[i];
     try {
       const result = calculateSanmeigaku(celeb);
       results.push(result);
       status.textContent += "[" + celeb.id + "] " + celeb.name + " - " + celeb.illness + " (発症:" + celeb.onset_year + "年) -> 完了\n";
     } catch (err) {
       status.textContent += "[" + celeb.id + "] " + celeb.name + " - エラー: " + err.message + "\n";
+      errorEntries.push({ id: celeb.id, name: celeb.name, illness: celeb.illness, error: err.message });
       results.push({ id: celeb.id, name: celeb.name, error: err.message });
     }
+    const pct = Math.round(((i + 1) / total) * 100);
+    progressFill.style.width = pct + "%";
+    progressFill.textContent = pct + "% (" + (i + 1) + "/" + total + ")";
   }
 
   const success = results.filter(r => !r.error).length;
   const errors = results.filter(r => r.error).length;
   status.textContent += "\n計算完了! 成功:" + success + "名 / エラー:" + errors + "名\n";
   status.innerHTML += '<span class="done">結果を下のテキストエリアからコピーするか、ダウンロードボタンで保存してください。</span>';
+
+  if (errorEntries.length > 0) {
+    errorList.style.display = "block";
+    errorList.innerHTML = '<h4>エラー詳細 (' + errorEntries.length + '件)</h4><ul>' +
+      errorEntries.map(e => '<li>[' + e.id + '] ' + e.name + ' (' + e.illness + '): ' + e.error + '</li>').join('') +
+      '</ul>';
+  }
 
   output.value = JSON.stringify(results, null, 2);
   output.style.display = "block";
@@ -2452,6 +2613,7 @@ document.getElementById("runBtn").addEventListener("click", function() {
   dlBtn.style.display = "inline-block";
 
   lastResults = results;
+  populateIllnessFilter(results);
 });
 
 document.getElementById("downloadBtn").addEventListener("click", function() {
@@ -2607,6 +2769,159 @@ document.getElementById("moteStatsBtn").addEventListener("click", function() {
 
   output.value = JSON.stringify(records, null, 2);
   output.style.display = "block";
+});
+
+// === 統計検定機能 ===
+
+function populateIllnessFilter(results) {
+  const select = document.getElementById("illnessFilter");
+  const categories = new Set();
+  results.forEach(r => {
+    if (!r.error && r.illness_category) {
+      r.illness_category.split("・").forEach(c => categories.add(c.trim()));
+    }
+  });
+  const sorted = [...categories].sort();
+  select.innerHTML = '<option value="">全件</option>' +
+    sorted.map(c => '<option value="' + c + '">' + c + '</option>').join('');
+}
+
+function logFactorial(n) {
+  if (n <= 1) return 0;
+  let result = 0;
+  for (let i = 2; i <= n; i++) result += Math.log(i);
+  return result;
+}
+
+function logBinomCoef(n, k) {
+  if (k < 0 || k > n) return -Infinity;
+  return logFactorial(n) - logFactorial(k) - logFactorial(n - k);
+}
+
+function fisherExact(a, b, c, d) {
+  const n = a + b + c + d;
+  const logBase = logBinomCoef(a + b, a) + logBinomCoef(c + d, c) - logBinomCoef(n, a + c);
+  let pValue = 0;
+  const minVal = Math.max(0, (a + c) - (b + d));
+  const maxVal = Math.min(a + c, a + b);
+  for (let i = minVal; i <= maxVal; i++) {
+    const ai = i;
+    const bi = (a + b) - i;
+    const ci = (a + c) - i;
+    const di = (c + d) - (a + c) + i;
+    if (ai < 0 || bi < 0 || ci < 0 || di < 0) continue;
+    const logP = logBinomCoef(a + b, ai) + logBinomCoef(c + d, ci) - logBinomCoef(n, ai + ci);
+    const p = Math.exp(logP);
+    if (p <= Math.exp(logBase)) pValue += p;
+  }
+  const or = (a * d) / (b * c);
+  const seLogOR = Math.sqrt(1 / Math.max(a, 0.5) + 1 / Math.max(b, 0.5) + 1 / Math.max(c, 0.5) + 1 / Math.max(d, 0.5));
+  const ciLow = Math.exp(Math.log(or) - 1.96 * seLogOR);
+  const ciHigh = Math.exp(Math.log(or) + 1.96 * seLogOR);
+  return { or, pValue, ciLow, ciHigh, a, b, c, d };
+}
+
+function extractFactorValues(result, factorType) {
+  const values = new Set();
+  switch (factorType) {
+    case "main_stars":
+      if (result.main_stars) {
+        Object.values(result.main_stars).forEach(s => values.add(s));
+      }
+      break;
+    case "tenchusatsu":
+      if (result.tenchusatsu) result.tenchusatsu.forEach(t => values.add(t));
+      break;
+    case "balance_type":
+      if (result.balance_type) values.add(result.balance_type);
+      break;
+    case "day_element":
+      if (result.day_element) values.add(result.day_element);
+      break;
+    case "strongest_gogyo":
+      if (result.strongest_gogyo) result.strongest_gogyo.forEach(g => values.add(g));
+      break;
+    case "weakest_gogyo":
+      if (result.weakest_gogyo) result.weakest_gogyo.forEach(g => values.add(g));
+      break;
+  }
+  return values;
+}
+
+function hasFactorValue(result, factorType, factorValue) {
+  const vals = extractFactorValues(result, factorType);
+  return vals.has(factorValue);
+}
+
+function hasIllnessCategory(result, category) {
+  if (!category) return true;
+  if (!result.illness_category) return false;
+  return result.illness_category.split("・").map(c => c.trim()).includes(category);
+}
+
+document.getElementById("statTestBtn").addEventListener("click", function() {
+  if (!lastResults) {
+    alert("先に「計算実行」を行ってください。");
+    return;
+  }
+  const illnessCat = document.getElementById("illnessFilter").value;
+  const factorType = document.getElementById("factorSelect").value;
+  const genderFilter = document.getElementById("genderFilter").value;
+  const statResults = document.getElementById("statResults");
+
+  const valid = lastResults.filter(r => !r.error && (!genderFilter || r.gender === genderFilter));
+  if (valid.length === 0) {
+    statResults.style.display = "block";
+    statResults.textContent = "対象データがありません。";
+    return;
+  }
+
+  const allFactorValues = new Set();
+  valid.forEach(r => {
+    extractFactorValues(r, factorType).forEach(v => allFactorValues.add(v));
+  });
+
+  const cases = valid.filter(r => hasIllnessCategory(r, illnessCat));
+  const controls = valid.filter(r => !hasIllnessCategory(r, illnessCat));
+
+  const tests = [];
+  [...allFactorValues].forEach(fv => {
+    const a = cases.filter(r => hasFactorValue(r, factorType, fv)).length;
+    const b = cases.length - a;
+    const c = controls.filter(r => hasFactorValue(r, factorType, fv)).length;
+    const d = controls.length - c;
+    if (a + b < 2 || c + d < 2) return;
+    const result = fisherExact(a, b, c, d);
+    tests.push({ factor: fv, ...result });
+  });
+
+  tests.sort((x, y) => x.pValue - y.pValue);
+
+  const bhCritical = (i, n) => 0.05 * (i + 1) / n;
+  tests.forEach((t, i) => { t.bhSig = t.pValue <= bhCritical(i, tests.length); });
+
+  let out = "";
+  out += "═══ Fisher's exact test 結果 ═══\n";
+  out += `対象: ${valid.length}名（ケース${cases.length}名 / コントロール${controls.length}名）\n`;
+  out += `疾患カテゴリ: ${illnessCat || "全件"} / 因子: ${factorType} / 性別: ${genderFilter || "全件"}\n`;
+  out += `検定数: ${tests.length}件（BH補正 p<0.05閾値で判定）\n\n`;
+
+  out += "因子                   ケース  対照    OR     95%CI            p値     BH判定\n";
+  out += "─".repeat(90) + "\n";
+  tests.forEach(t => {
+    const orStr = isFinite(t.or) ? t.or.toFixed(2) : "∞";
+    const ciStr = isFinite(t.ciLow) && isFinite(t.ciHigh) ? `[${t.ciLow.toFixed(2)}, ${t.ciHigh.toFixed(2)}]` : "[-, -]";
+    const pStr = t.pValue < 0.001 ? t.pValue.toExponential(2) : t.pValue.toFixed(4);
+    const sig = t.bhSig ? " ***" : (t.pValue < 0.05 ? " *" : "");
+    out += `${t.factor.padEnd(22)} ${String(t.a).padStart(4)}/${String(t.a + t.b).padEnd(4)} ${String(t.c).padStart(4)}/${String(t.c + t.d).padEnd(4)} ${orStr.padStart(6)}  ${ciStr.padEnd(18)} ${pStr.padStart(8)}${sig}\n`;
+  });
+
+  out += "\n***: BH補正後有意 / *: 未補正で有意\n";
+  out += "注意: 多重比較の影響を考慮し、Benjamini-Hochberg法で補正判定を表示しています。\n";
+  out += "      サンプルサイズが小さい場合、ORが不安定になるため参考値として扱ってください。\n";
+
+  statResults.style.display = "block";
+  statResults.textContent = out;
 });
 </script>
 </body>
