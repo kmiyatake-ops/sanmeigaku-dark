@@ -8175,7 +8175,7 @@ function render(event) {
 }
 
 document.body.classList.add("simple-mode");
-console.log("[app.js v20260719e] loaded. simple-mode:", document.body.classList.contains("simple-mode"));
+console.log("[app.js v20260906g] loaded. simple-mode:", document.body.classList.contains("simple-mode"));
 document.querySelector("#fortuneForm").addEventListener("submit", render);
 document.querySelector("#compatForm").addEventListener("submit", renderCompat);
 document.querySelector("#clearHistory").addEventListener("click", clearAllHistory);
@@ -8192,3 +8192,296 @@ document.querySelector("#historyList").addEventListener("click", (e) => {
   }
 });
 refreshHistoryUI();
+
+// === 手相占いロジック（写真のみ・自動判定） ===
+const PALM_LINE_KEYS = ["lifeLine", "headLine", "heartLine", "fateLine", "sunLine", "wealthLine", "marriageLine"];
+let palmCurrentPhoto = null; // 現在の写真（dataURL）
+
+function ratingLabel(rating) {
+  if (rating === "good") return "吉";
+  if (rating === "caution") return "注意";
+  return "中";
+}
+
+// 画像のハッシュからシード値を生成（同じ写真なら同じ結果になる）
+async function imageHashSeed(dataUrl) {
+  try {
+    const resp = await fetch(dataUrl);
+    const blob = await resp.blob();
+    const buf = await blob.arrayBuffer();
+    const bytes = new Uint8Array(buf);
+    // 簡易ハッシュ：FNV-1a
+    let h = 2166136261;
+    const step = Math.max(1, Math.floor(bytes.length / 4096));
+    for (let i = 0; i < bytes.length; i += step) {
+      h ^= bytes[i];
+      h = Math.imul(h, 16777619);
+    }
+    return Math.abs(h);
+  } catch {
+    return Date.now();
+  }
+}
+
+// シード値から擬似乱数生成器（mulberry32）
+function mulberry32(seed) {
+  return function () {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function pickRandomKey(obj, rng) {
+  const keys = Object.keys(obj);
+  return keys[Math.floor(rng() * keys.length)];
+}
+
+async function renderPalmistry(e) {
+  e.preventDefault();
+  if (typeof palmLines === "undefined" || typeof handTypes === "undefined") {
+    alert("手相データが読み込まれていません。");
+    return;
+  }
+  if (!palmCurrentPhoto) {
+    alert("手のひらの写真を撮影またはアップロードしてください。");
+    return;
+  }
+
+  const submitBtn = document.getElementById("palmSubmitBtn");
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = "鑑定中...";
+  }
+
+  // 写真のハッシュからシード生成 → 同じ写真なら同じ結果
+  const seed = await imageHashSeed(palmCurrentPhoto);
+  const rng = mulberry32(seed);
+
+  const form = document.getElementById("palmistryForm");
+  const hand = form.querySelector('input[name="palmHand"]:checked').value;
+  const sideInfo = handSides[hand] || handSides.right;
+
+  // 手の形をランダム選択
+  const handTypeKey = pickRandomKey(handTypes, rng);
+  const typeInfo = handTypes[handTypeKey];
+
+  // 各線をランダム選択
+  const lineSelections = {};
+  PALM_LINE_KEYS.forEach((key) => {
+    lineSelections[key] = pickRandomKey(palmLines[key].variations, rng);
+  });
+
+  // 特殊相を確率で選出（約30%で1つ、まれに2つ）
+  const specialSelected = [];
+  const specialKeys = Object.keys(specialMarks);
+  if (rng() < 0.35) {
+    specialSelected.push(specialKeys[Math.floor(rng() * specialKeys.length)]);
+    if (rng() < 0.15) {
+      let second;
+      do {
+        second = specialKeys[Math.floor(rng() * specialKeys.length)];
+      } while (second === specialSelected[0]);
+      specialSelected.push(second);
+    }
+  }
+
+  // 線のカードHTML
+  const lineCardsHtml = PALM_LINE_KEYS.map((key) => {
+    const line = palmLines[key];
+    const v = line.variations[lineSelections[key]];
+    return `
+      <div class="palm-line-card">
+        <h4>${line.name} <span style="font-size:11px;color:var(--muted)">${line.nameEn}</span> <span class="palm-rating ${v.rating}">${ratingLabel(v.rating)}</span></h4>
+        <p class="palm-line-pos">${line.position}</p>
+        <p class="palm-line-meaning"><b>判定：${v.desc}</b> — ${v.meaning}</p>
+        <p class="palm-line-note">意味：${line.meaning}${line.note ? "（" + line.note + "）" : ""}</p>
+      </div>`;
+  }).join("");
+
+  // 特殊相カード
+  const specialCardsHtml = specialSelected.map((key) => {
+    const m = specialMarks[key];
+    return `
+      <div class="palm-special-card">
+        <h4>${m.name} <span style="font-size:11px;color:var(--muted)">${m.nameEn}</span></h4>
+        <p class="palm-rarity">希少度：${m.rarity || "—"}</p>
+        <p class="palm-special-desc"><b>意味：</b>${m.meaning}</p>
+        <p class="palm-special-desc">${m.description}</p>
+      </div>`;
+  }).join("");
+
+  // 手の形サマリー
+  const typeSummaryHtml = `
+    <div class="palm-summary-box">
+      <h4>手の形：${typeInfo.name} <span style="font-size:11px;color:var(--muted)">${typeInfo.nameEn}</span></h4>
+      <p><b>条件：</b>${typeInfo.condition}</p>
+      <p style="margin-top:6px">${typeInfo.description}</p>
+      <div class="palm-traits">${typeInfo.traits.map((t) => `<span class="palm-trait-tag">${t}</span>`).join("")}</div>
+      <p style="margin-top:8px"><b>適職：</b>${typeInfo.workSuitable.join("・")}</p>
+      <p><b>恋愛傾向：</b>${typeInfo.loveStyle}</p>
+      <p><b>ラッキーカラー：</b>${typeInfo.luckyColor}</p>
+    </div>`;
+
+  // 手の側サマリー
+  const sideSummaryHtml = `
+    <div class="palm-summary-box">
+      <h4>見る手：${sideInfo.name}</h4>
+      <p><b>${sideInfo.meaning}</b></p>
+      <p style="margin-top:6px">${sideInfo.description}</p>
+    </div>`;
+
+  // 写真サムネイル
+  const photoHtml = `
+    <div class="palm-summary-box">
+      <h4>鑑定した手のひら</h4>
+      <img src="${palmCurrentPhoto}" alt="手のひら" style="width:100%;max-height:200px;object-fit:contain;border-radius:8px;margin-top:6px" />
+    </div>`;
+
+  const result = document.getElementById("palmistryResult");
+  result.classList.remove("hidden");
+  result.innerHTML = `
+    <div class="result-card">
+      <h3>手相鑑定結果</h3>
+      <div class="palm-summary-grid">
+        ${photoHtml}
+        ${sideSummaryHtml}
+        ${typeSummaryHtml}
+      </div>
+      <h3 style="margin-top:18px">線の鑑定</h3>
+      ${lineCardsHtml}
+      ${specialCardsHtml ? `<h3 style="margin-top:18px">特殊な相</h3>${specialCardsHtml}` : "<p class='note' style='margin-top:12px'>今回の写真からは特に際立った特殊な相は検出されませんでした。</p>"}
+      <p class="note" style="margin-top:16px">写真から自動判定しました。手相は時期とともに変化するため、結果は自己理解の参考としてお楽しみください。</p>
+    </div>`;
+  result.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "手相を占う";
+  }
+}
+
+// 初期化
+const palmForm = document.getElementById("palmistryForm");
+if (palmForm) {
+  palmForm.addEventListener("submit", renderPalmistry);
+}
+
+// === 手相写真：カメラ撮影 & アップロード ===
+let palmCameraStream = null;
+
+function stopPalmCamera() {
+  if (palmCameraStream) {
+    palmCameraStream.getTracks().forEach((t) => t.stop());
+    palmCameraStream = null;
+  }
+  const video = document.getElementById("palmVideo");
+  if (video) video.srcObject = null;
+}
+
+function enablePalmSubmit() {
+  const btn = document.getElementById("palmSubmitBtn");
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = "手相を占う";
+  }
+}
+
+function disablePalmSubmit() {
+  const btn = document.getElementById("palmSubmitBtn");
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = "写真を撮影またはアップロードしてください";
+  }
+}
+
+function showPalmPhoto(dataUrl) {
+  palmCurrentPhoto = dataUrl;
+  const img = document.getElementById("palmPhotoImg");
+  const wrap = document.getElementById("palmPhotoPreview");
+  if (img && wrap) {
+    img.src = dataUrl;
+    wrap.classList.remove("hidden");
+  }
+  enablePalmSubmit();
+}
+
+function hidePalmPhoto() {
+  palmCurrentPhoto = null;
+  const wrap = document.getElementById("palmPhotoPreview");
+  const img = document.getElementById("palmPhotoImg");
+  if (wrap) wrap.classList.add("hidden");
+  if (img) img.src = "";
+  disablePalmSubmit();
+}
+
+async function startPalmCamera() {
+  const wrap = document.getElementById("palmCameraWrap");
+  const video = document.getElementById("palmVideo");
+  if (!wrap || !video) return;
+  wrap.classList.remove("hidden");
+  try {
+    palmCameraStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } },
+      audio: false,
+    });
+    video.srcObject = palmCameraStream;
+  } catch (err) {
+    alert("カメラにアクセスできませんでした。ブラウザのカメラ権限を確認するか、画像アップロードをご利用ください。\n" + err.message);
+    wrap.classList.add("hidden");
+    stopPalmCamera();
+  }
+}
+
+function snapPalmPhoto() {
+  const video = document.getElementById("palmVideo");
+  if (!video || !video.videoWidth) {
+    alert("カメラの準備ができていません。");
+    return;
+  }
+  const canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  const ctx = canvas.getContext("2d");
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+  showPalmPhoto(dataUrl);
+  stopPalmCamera();
+  document.getElementById("palmCameraWrap").classList.add("hidden");
+}
+
+function handlePalmFile(file) {
+  if (!file || !file.type.startsWith("image/")) {
+    alert("画像ファイルを選択してください。");
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = (e) => showPalmPhoto(e.target.result);
+  reader.readAsDataURL(file);
+}
+
+// イベントバインド
+document.getElementById("palmCameraBtn").addEventListener("click", startPalmCamera);
+document.getElementById("palmSnapBtn").addEventListener("click", snapPalmPhoto);
+document.getElementById("palmCameraCancelBtn").addEventListener("click", () => {
+  stopPalmCamera();
+  document.getElementById("palmCameraWrap").classList.add("hidden");
+});
+document.getElementById("palmUploadBtn").addEventListener("click", () => {
+  document.getElementById("palmFileInput").click();
+});
+document.getElementById("palmFileInput").addEventListener("change", (e) => {
+  if (e.target.files && e.target.files[0]) handlePalmFile(e.target.files[0]);
+  e.target.value = "";
+});
+document.getElementById("palmRetakeBtn").addEventListener("click", () => {
+  hidePalmPhoto();
+  startPalmCamera();
+});
+document.getElementById("palmClearPhotoBtn").addEventListener("click", hidePalmPhoto);
+// ページ離脱時にカメラを停止
+window.addEventListener("beforeunload", stopPalmCamera);
+// 初期状態：写真がないので送信ボタン無効
+disablePalmSubmit();
