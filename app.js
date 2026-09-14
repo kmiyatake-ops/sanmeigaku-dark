@@ -507,45 +507,34 @@ const affairYinYangAdjust = {
   "乙": -5, "丁": 3, "己": -8, "辛": -5, "癸": -3
 };
 
-function getAffairRiskScore({ westStar, spouseEnergyName, isDoubleEn, hasAbnormal, hasTopThreeAbnormal, centerStar, northStar, southStar, eastStar, dayStem, gogyoBalance, dayElement, tenchusatsu, topologyNames, weakestGogyo, balanceType, gender }) {
-  let score = affairBaseScore[westStar] ?? 30;
-  score += affairEnergyAdjust[spouseEnergyName] ?? 0;
-  // --- 統計的知見に基づく調整（166名芸能人データ、ロジスティック回帰 AUC=0.79）---
-  // 従来: isDoubleEn +20, hasAbnormal +15 → 統計では保護的（OR<1）
-  if (isDoubleEn) score -= 4;   // OR=0.45, p=0.037 (保護)
-  if (hasAbnormal) score -= 5;  // OR=0.50, p=0.020 (保護、離婚分析)
-  if (hasTopThreeAbnormal) score += 15;  // 传统維持（統計データなし）
-  // 中央（本質）の主星の影響
-  score += affairStarInfluence[centerStar] ?? 0;
-  // 北（表に出やすい面）の主星の影響
-  score += (affairStarInfluence[northStar] ?? 0) * 0.6;
-  // 南（内面）の主星の影響
-  score += (affairStarInfluence[southStar] ?? 0) * 0.5;
-  // 東（行動・外面）の主星の影響
-  score += (affairStarInfluence[eastStar] ?? 0) * 0.7;
-  // 日干の陰陽による調整
-  score += affairYinYangAdjust[dayStem] ?? 0;
-  // 五行バランス: 統計では balance_high が保護的(OR=0.49)、balance_moderate がリスク(OR=5.19)
-  if (gogyoBalance !== undefined && gogyoBalance >= 4) score -= 4;  // balance_high: 保護
-  else if (gogyoBalance !== undefined && gogyoBalance >= 3) score -= 2;  // balance_high寄り: 軽微保護
-  else if (gogyoBalance !== undefined && gogyoBalance <= 1) score -= 5;  // 従来維持
-  // balance_moderate (gogyoBalance=2) はリスク +8
-  if (balanceType === "moderate") score += 8;  // OR=5.19, p<0.001
-  // --- 新規統計パラメータ ---
-  // 日干五行「水」は保護的 (OR=0.28, p=0.004)
-  if (dayElement === "水") score -= 6;
-  // 天中殺「寅卯」はリスク (OR=2.44, p=0.032)
-  if (tenchusatsu === "寅卯") score += 5;
-  // 水が最弱はリスク (OR=2.84, p=0.0004)
-  if (weakestGogyo && weakestGogyo.includes("水")) score += 5;
-  // 生貴刑（南方刑）は保護的 (OR=0.17, p=0.002)
-  if (topologyNames && topologyNames.includes("生貴刑（南方刑）")) score -= 9;
-  // 支合はリスク (OR=2.06, p=0.030)
-  if (topologyNames && topologyNames.includes("支合")) score += 4;
-  // 正規化: 生スコアを0-100スケールに変換
-  const RAW_MIN_A = 5;
-  const RAW_MAX_A = 130;
-  return Math.max(5, Math.min(100, Math.round(((score - RAW_MIN_A) / (RAW_MAX_A - RAW_MIN_A)) * 100)));
+function getAffairRiskScore({ westStar, spouseEnergyName, isDoubleEn, hasAbnormal, hasTopThreeAbnormal, centerStar, northStar, southStar, eastStar, dayStem, gogyoBalance, dayElement, tenchusatsu, topologyNames, weakestGogyo, balanceType, gender, dayYinYang }) {
+  // ベース50点 + 実データ（芸能人166名）で有意性を示した因子を主軸に算出。
+  // 重みは各因子のオッズ比（ln(OR)比例）に基づく。交差検証AUC≈0.63。
+  let score = 50;
+  const topo = topologyNames || [];
+  const weak = weakestGogyo || [];
+  // --- 統計実績因子（不倫+離婚ケース75名 vs 対照91名）---
+  if (balanceType === "moderate") score += 7;                 // OR=2.28
+  if (dayElement === "水") score -= 9;                         // OR=0.33（保護）
+  if (topo.some((n) => n.includes("生貴刑"))) score -= 10;      // OR=0.29（保護）
+  if (eastStar === "車騎星") score -= 5;                       // OR=0.28（保護）
+  if (gender === "male") score -= 7;                           // OR=0.40（保護）
+  if (eastStar === "貫索星") score += 6;                       // OR=2.05
+  if (eastStar === "玉堂星") score += 5;                       // OR=2.43
+  if (northStar === "貫索星") score += 5;                      // OR=2.52
+  if (topo.some((n) => n.includes("半会"))) score += 5;         // OR=1.80
+  if (dayYinYang === "陽") score += 4;                         // OR=1.69
+  if (topo.includes("支合")) score += 3;                        // OR=1.56
+  if (weak.includes("水")) score += 3;                          // OR=1.50
+  if (isDoubleEn) score -= 2;                                   // OR=0.79（弱保護）
+  if (hasAbnormal) score += 2;                                  // OR=1.19（弱）
+  // --- 伝統的鑑定要素（小係数・傾向の個性付け）---
+  score += Math.round(((affairBaseScore[westStar] ?? 45) - 45) * 0.12);
+  score += Math.round((affairEnergyAdjust[spouseEnergyName] ?? 0) * 0.25);
+  score += Math.round((affairStarInfluence[centerStar] ?? 0) * 0.25);
+  score += Math.round((affairStarInfluence[southStar] ?? 0) * 0.15);
+  if (hasTopThreeAbnormal) score += 5;
+  return Math.max(5, Math.min(98, Math.round(score)));
 }
 
 // 結婚適性度のベーススコア（中央＝本質の主星）
@@ -565,35 +554,34 @@ const marriageWestAdjust = {
   司禄星: 12, 車騎星: -8, 牽牛星: 8, 龍高星: -10, 玉堂星: 8
 };
 
-function getMarriageScore({ centerStar, westStar, spouseEnergyName, isDoubleEn, hasAbnormal, hasTopThreeAbnormal, affairScore, gogyoBalance, dayElement, tenchusatsu, topologyNames, weakestGogyo, balanceType, gender }) {
-  let score = marriageBaseScore[centerStar] ?? 50;
-  score += marriageEnergyAdjust[spouseEnergyName] ?? 0;
-  score += marriageWestAdjust[westStar] ?? 0;
-  // --- 統計的知見に基づく調整（166名芸能人データ）---
-  // isDoubleEn は保護的 (OR=0.45, p=0.037) → 結婚適性は上がる
-  if (isDoubleEn) score += 4;
-  // hasAbnormal は保護的 (OR=0.50, p=0.020)
-  if (hasAbnormal) score += 5;
+function getMarriageScore({ centerStar, westStar, spouseEnergyName, isDoubleEn, hasAbnormal, hasTopThreeAbnormal, affairScore, gogyoBalance, dayElement, tenchusatsu, topologyNames, weakestGogyo, balanceType, gender, dayYinYang, eastStar, northStar }) {
+  // ベース55点 + 不倫・離婚の実データ因子を反転適用（保護因子=加点、リスク因子=減点）。
+  let score = 55;
+  const topo = topologyNames || [];
+  const weak = weakestGogyo || [];
+  // --- 統計実績因子（不倫+離婚ケース75名 vs 対照91名の逆適用）---
+  if (balanceType === "moderate") score -= 7;                  // OR=2.28 → リスク減点
+  if (dayElement === "水") score += 9;                          // OR=0.33 → 保護加点
+  if (topo.some((n) => n.includes("生貴刑"))) score += 10;      // OR=0.29 → 保護加点
+  if (eastStar === "車騎星") score += 5;                        // OR=0.28 → 保護加点
+  if (gender === "male") score += 7;                            // OR=0.40 → 保護加点
+  if (eastStar === "貫索星") score -= 6;                        // OR=2.05 → リスク減点
+  if (eastStar === "玉堂星") score -= 5;                        // OR=2.43 → リスク減点
+  if (northStar === "貫索星") score -= 5;                       // OR=2.52 → リスク減点
+  if (topo.some((n) => n.includes("半会"))) score -= 5;          // OR=1.80 → リスク減点
+  if (dayYinYang === "陽") score -= 4;                          // OR=1.69 → リスク減点
+  if (topo.includes("支合")) score -= 3;                         // OR=1.56 → リスク減点
+  if (weak.includes("水")) score -= 3;                           // OR=1.50 → リスク減点
+  if (isDoubleEn) score += 2;                                    // OR=0.79 → 弱保護
+  if (hasAbnormal) score -= 2;                                   // OR=1.19 → 弱リスク
+  // --- 伝統的鑑定要素（小係数・傾向の個性付け）---
+  score += Math.round(((marriageBaseScore[centerStar] ?? 55) - 55) * 0.15);
+  score += Math.round((marriageEnergyAdjust[spouseEnergyName] ?? 0) * 0.25);
+  score += Math.round((marriageWestAdjust[westStar] ?? 0) * 0.25);
   if (hasTopThreeAbnormal) score -= 5;
-  // 浮気リスクが高いほど結婚適性は下がる
-  score += (100 - affairScore) * 0.15;
-  // 五行バランス: balance_high は保護的(OR=0.49)、balance_moderate はリスク(OR=5.19)
-  if (gogyoBalance !== undefined && gogyoBalance >= 4) score += 4;  // balance_high: 保護
-  else if (gogyoBalance !== undefined && gogyoBalance >= 3) score += 2;
-  else if (gogyoBalance !== undefined && gogyoBalance <= 1) score += 6;
-  if (balanceType === "moderate") score -= 8;  // OR=5.19, p<0.001 (リスク)
-  // --- 新規統計パラメータ ---
-  // 日干五行「水」は保護的 (OR=0.28, p=0.004)
-  if (dayElement === "水") score += 6;
-  // 天中殺「寅卯」はリスク (OR=2.44, p=0.032)
-  if (tenchusatsu === "寅卯") score -= 5;
-  // 水が最弱はリスク (OR=2.84, p=0.0004)
-  if (weakestGogyo && weakestGogyo.includes("水")) score -= 5;
-  // 生貴刑（南方刑）は保護的 (OR=0.17, p=0.002)
-  if (topologyNames && topologyNames.includes("生貴刑（南方刑）")) score += 9;
-  // 支合はリスク (OR=2.06, p=0.030)
-  if (topologyNames && topologyNames.includes("支合")) score -= 4;
-  return Math.max(5, Math.min(100, Math.round(score)));
+  // 浮気リスクとの弱い連動
+  score += Math.round((50 - affairScore) * 0.10);
+  return Math.max(5, Math.min(98, Math.round(score)));
 }
 
 function getChongBranch(branch) {
@@ -6363,6 +6351,7 @@ function render(event) {
   const weakestGogyoForScore = gogyoEntriesForScore.filter(([, v]) => v === gogyoMinForScore).map(([k]) => k);
   const topologyNamesForScore = topologyResults.map(r => r.name);
   const dayElementForScore = elements[stems.indexOf(day.stem)];
+  const dayYinYangForScore = yinYang[stems.indexOf(day.stem)];
   const affairScore = getAffairRiskScore({
     westStar: mainStars.west,
     spouseEnergyName: spouseEnergyForScore.name,
@@ -6376,6 +6365,7 @@ function render(event) {
     dayStem: day.stem,
     gogyoBalance: gogyoBalanceForScore,
     dayElement: dayElementForScore,
+    dayYinYang: dayYinYangForScore,
     tenchusatsu,
     topologyNames: topologyNamesForScore,
     weakestGogyo: weakestGogyoForScore,
@@ -6392,6 +6382,9 @@ function render(event) {
     affairScore,
     gogyoBalance: gogyoBalanceForScore,
     dayElement: dayElementForScore,
+    dayYinYang: dayYinYangForScore,
+    eastStar: mainStars.east,
+    northStar: mainStars.north,
     tenchusatsu,
     topologyNames: topologyNamesForScore,
     weakestGogyo: weakestGogyoForScore,
@@ -7640,7 +7633,7 @@ function render(event) {
               <div class="affair-risk-rank-badge affair-risk-rank-${marriageRankClass}">${marriageLevel}</div>
             </div>
             <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${marriageRankClass}" style="--affair-width:${marriageScore}%"></div></div>
-            <div class="note-text-sm mt-6">中央（本質）の主星・西（配偶者との関係）の主星・配偶者宮（日支）の十二大従星・二度縁の型・異常干支・浮気リスク・五行バランス・天中殺・位相 topology から総合的に算出した目安です。166名の芸能人データ（不倫・離婚・安定結婚）の統計分析（ロジスティック回帰 AUC=0.79）に基づく重み付けを反映しています。数値が高いほど結婚に向いている傾向が強いことを示します。</div>
+            <div class="note-text-sm mt-6">166名の芸能人データ（不倫・離婚・安定結婚）で有意性を示した因子（五行バランス・日干五行・位相法・各方位の主星・性別など）を主軸に、伝統的な鑑定要素を加味して算出した目安です。統計的な傾向の参考値であり（実データ検証AUC≈0.63）、個人の将来を断定するものではありません。</div>
           </article>
           <article>
             <h4>恋愛傾向</h4>
@@ -7666,7 +7659,7 @@ function render(event) {
           </article>
           <article>
             <h4>二度の結婚運（二度縁）</h4>
-            <div>${isDoubleEn ? `左手（東・${mainStars.east}）と右手（西・${mainStars.west}）が同じ、または陰陽ペアの関係にあり、二度の結婚運（二度縁）の傾向があります。伝統的には「離婚しても再び縁が巡る」とされますが、166名の芸能人統計分析では二度縁の型はむしろ結婚安定性に寄与する保護因子（OR=0.45, p=0.037）として検出されました。` : "東西の主星に二度縁の型は出ていません。一度の結婚に集中しやすいタイプです。"}</div>
+            <div>${isDoubleEn ? `左手（東・${mainStars.east}）と右手（西・${mainStars.west}）が同じ、または陰陽ペアの関係にあり、二度の結婚運（二度縁）の傾向があります。伝統的には「離婚しても再び縁が巡る」とされます。` : "東西の主星に二度縁の型は出ていません。一度の結婚に集中しやすいタイプです。"}</div>
           </article>
           ${isInheritEn ? `<article><h4>参考：相続の型</h4><div>頭（北・${mainStars.north}）と腹（南・${mainStars.south}）が同じ、または陰陽ペアの関係にあり、これは相続運を示す型です。結婚とは直接関係しませんが、家系・財産の継承に縁が出やすいことを意味します。</div></article>` : ""}
           <article>
@@ -7677,7 +7670,7 @@ function render(event) {
               <div class="affair-risk-rank-badge affair-risk-rank-${affairRankClass}">${affairLevel}</div>
             </div>
             <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${affairRankClass}" style="--affair-width:${affairScore}%"></div></div>
-            <div class="note-text-sm mt-6">全主星（中央・北・南・東・西）の傾向＋配偶者宮（日支）の心の星＋二度縁の型＋特殊な干支＋日干の陰陽＋内面のバランスの偏りから総合的に算出した目安です。166名の芸能人データの統計分析（ロジスティック回帰 AUC=0.79）に基づく重み付けを反映しています。断定ではなく傾向として参考にしてください。</div>
+            <div class="note-text-sm mt-6">166名の芸能人データで有意性を示した因子（五行バランス・日干五行・位相法・各方位の主星・性別など）を主軸に、伝統的な鑑定要素を加味して算出した目安です。統計的な傾向の参考値であり（実データ検証AUC≈0.63）、断定ではなく傾向として参考にしてください。</div>
           </article>
           <article>
             <h4>天中殺と結婚・離婚</h4>
@@ -7686,12 +7679,12 @@ function render(event) {
           <article>
             <h4>結婚に適した時期（結婚年齢）</h4>
             <div>${marriageAgesHtml}</div>
-            <div class="note-text-sm mt-6">大運・年運の支合（日支との引き合い）、三合会局の完成、結婚に良い星（禄存星・司禄星・石門星・玉堂星・牽牛星）の流れに加え、166名の芸能人データの統計分析（ロジスティック回帰 AUC=0.79）に基づく保護・リスク因子（日干五行・五行バランス・二度縁・性別・天中殺）を総合し、天中殺期間を除外した時期を表示しています。断定ではなく目安として参考にしてください。</div>
+            <div class="note-text-sm mt-6">大運・年運の支合（日支との引き合い）、三合会局の完成、結婚に良い星（禄存星・司禄星・石門星・玉堂星・牽牛星）の流れをもとに、天中殺期間を除外した時期を表示しています。断定ではなく目安として参考にしてください。</div>
           </article>
           <article>
             <h4>恋愛しやすい時期</h4>
             <div>${loveAgesHtml}</div>
-            <div class="note-text-sm mt-6">大運・年運の支合、半会・三合会局の強まり、恋愛に良い星（鳳閣星・調舒星・禄存星・車騎星・龍高星・石門星）の流れに加え、166名の芸能人データの統計分析に基づく因子を総合し、天中殺期間を除外した時期を表示しています。</div>
+            <div class="note-text-sm mt-6">大運・年運の支合、半会・三合会局の強まり、恋愛に良い星（鳳閣星・調舒星・禄存星・車騎星・龍高星・石門星）の流れをもとに、天中殺期間を除外した時期を表示しています。</div>
           </article>
           </div>
           <div class="simple-only">

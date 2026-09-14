@@ -2364,21 +2364,6 @@
     "group": "case"
   },
   {
-    "name": "本田美奈子.",
-    "real_name": "本田美奈子.",
-    "last_name": "本田",
-    "first_name": "美奈子.",
-    "birth_date": "1967-07-31",
-    "gender": "female",
-    "illness": "急性骨髄性白血病",
-    "illness_category": "血液疾患",
-    "onset_year": 1986,
-    "notes": "Wikipedia「本田美奈子.」より抽出",
-    "source": "Wikipedia",
-    "id": 181,
-    "group": "case"
-  },
-  {
     "name": "林紀恵",
     "real_name": "林紀恵",
     "last_name": "林",
@@ -2390,7 +2375,7 @@
     "onset_year": 2019,
     "notes": "Wikipedia「林紀恵」より抽出",
     "source": "Wikipedia",
-    "id": 182,
+    "id": 181,
     "group": "case"
   },
   {
@@ -2405,7 +2390,7 @@
     "onset_year": 2018,
     "notes": "Wikipedia「桑原征平」より抽出",
     "source": "Wikipedia",
-    "id": 183,
+    "id": 182,
     "group": "case"
   },
   {
@@ -2420,22 +2405,7 @@
     "onset_year": 2010,
     "notes": "Wikipedia「桑田佳祐」より抽出",
     "source": "Wikipedia",
-    "id": 184,
-    "group": "case"
-  },
-  {
-    "name": "桑田佳祐",
-    "real_name": "桑田佳祐",
-    "last_name": "桑田",
-    "first_name": "佳祐",
-    "birth_date": "1956-02-26",
-    "gender": "male",
-    "illness": "心筋梗塞",
-    "illness_category": "循環器疾患",
-    "onset_year": 1994,
-    "notes": "Wikipedia「桑田佳祐」より抽出",
-    "source": "Wikipedia",
-    "id": 185,
+    "id": 183,
     "group": "case"
   },
   {
@@ -2450,7 +2420,7 @@
     "onset_year": 1998,
     "notes": "Wikipedia「泉アキ」より抽出",
     "source": "Wikipedia",
-    "id": 186,
+    "id": 184,
     "group": "case"
   },
   {
@@ -2465,7 +2435,7 @@
     "onset_year": 2001,
     "notes": "Wikipedia「菊池桃子」より抽出",
     "source": "Wikipedia",
-    "id": 187,
+    "id": 185,
     "group": "case"
   },
   {
@@ -2480,7 +2450,7 @@
     "onset_year": 1990,
     "notes": "Wikipedia「藤波辰爾」より抽出",
     "source": "Wikipedia",
-    "id": 188,
+    "id": 186,
     "group": "case"
   },
   {
@@ -2495,7 +2465,7 @@
     "onset_year": 2022,
     "notes": "Wikipedia「鈴木愛理 (歌手)」より抽出",
     "source": "Wikipedia",
-    "id": 189,
+    "id": 187,
     "group": "case"
   },
   {
@@ -2510,7 +2480,7 @@
     "onset_year": 2000,
     "notes": "Wikipedia「長渕剛」より抽出",
     "source": "Wikipedia",
-    "id": 190,
+    "id": 188,
     "group": "case"
   },
   {
@@ -2525,22 +2495,7 @@
     "onset_year": 2018,
     "notes": "Wikipedia「降谷建志」より抽出",
     "source": "Wikipedia",
-    "id": 191,
-    "group": "case"
-  },
-  {
-    "name": "降谷建志",
-    "real_name": "降谷建志",
-    "last_name": "降谷",
-    "first_name": "建志",
-    "birth_date": "1979-02-09",
-    "gender": "male",
-    "illness": "心不全",
-    "illness_category": "循環器疾患",
-    "onset_year": 2012,
-    "notes": "Wikipedia「降谷建志」より抽出",
-    "source": "Wikipedia",
-    "id": 192,
+    "id": 189,
     "group": "case"
   },
   {
@@ -2555,7 +2510,7 @@
     "onset_year": 2010,
     "notes": "Wikipedia「電気グルーヴ」より抽出",
     "source": "Wikipedia",
-    "id": 193,
+    "id": 190,
     "group": "case"
   },
   {
@@ -2571,7 +2526,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 194
+    "id": 191
   },
   {
     "name": "上地由真",
@@ -2586,7 +2541,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 195
+    "id": 192
   },
   {
     "name": "五十嵐夕紀",
@@ -2601,7 +2556,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 196
+    "id": 193
   },
   {
     "name": "ISSAY",
@@ -2616,7 +2571,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 197
+    "id": 194
   },
   {
     "name": "鵜島仁文",
@@ -2631,7 +2586,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 198
+    "id": 195
   },
   {
     "name": "東まゆみ",
@@ -2646,7 +2601,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 199
+    "id": 196
   },
   {
     "name": "伊藤一朗",
@@ -2661,7 +2616,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 200
+    "id": 197
   },
   {
     "name": "角田晃広",
@@ -2676,7 +2631,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 201
+    "id": 198
   },
   {
     "name": "石塚早織",
@@ -2691,7 +2646,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 202
+    "id": 199
   },
   {
     "name": "髙塚大夢",
@@ -2706,7 +2661,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 203
+    "id": 200
   },
   {
     "name": "千葉涼平",
@@ -2721,7 +2676,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 204
+    "id": 201
   },
   {
     "name": "阿川せんり",
@@ -2736,7 +2691,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 205
+    "id": 202
   },
   {
     "name": "秋元順子",
@@ -2751,7 +2706,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 206
+    "id": 203
   },
   {
     "name": "虻川美穂子",
@@ -2766,7 +2721,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 207
+    "id": 204
   },
   {
     "name": "秋川淳子",
@@ -2781,7 +2736,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 208
+    "id": 205
   },
   {
     "name": "河口純之助",
@@ -2796,7 +2751,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 209
+    "id": 206
   },
   {
     "name": "今田耕司",
@@ -2811,7 +2766,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 210
+    "id": 207
   },
   {
     "name": "岩崎良美",
@@ -2826,7 +2781,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 211
+    "id": 208
   },
   {
     "name": "魚海洋司",
@@ -2841,7 +2796,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 212
+    "id": 209
   },
   {
     "name": "おおはた雄一",
@@ -2856,7 +2811,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 213
+    "id": 210
   },
   {
     "name": "AISHA",
@@ -2871,7 +2826,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 214
+    "id": 211
   },
   {
     "name": "大神いずみ",
@@ -2886,7 +2841,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 215
+    "id": 212
   },
   {
     "name": "Iri",
@@ -2901,7 +2856,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 216
+    "id": 213
   },
   {
     "name": "泉里沙",
@@ -2916,7 +2871,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 217
+    "id": 214
   },
   {
     "name": "小沢章友",
@@ -2931,7 +2886,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 218
+    "id": 215
   },
   {
     "name": "伊東ゆかり",
@@ -2946,7 +2901,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 219
+    "id": 216
   },
   {
     "name": "Elements Garden",
@@ -2961,7 +2916,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 220
+    "id": 217
   },
   {
     "name": "岸田雪子",
@@ -2976,7 +2931,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 221
+    "id": 218
   },
   {
     "name": "伊勢鈴蘭",
@@ -2991,7 +2946,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 222
+    "id": 219
   },
   {
     "name": "唯丸",
@@ -3006,7 +2961,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 223
+    "id": 220
   },
   {
     "name": "石毛礼子",
@@ -3021,7 +2976,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 224
+    "id": 221
   },
   {
     "name": "Ayasa",
@@ -3036,7 +2991,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 225
+    "id": 222
   },
   {
     "name": "奥村野乃花",
@@ -3051,7 +3006,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 226
+    "id": 223
   },
   {
     "name": "朝比美晴",
@@ -3066,7 +3021,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 227
+    "id": 224
   },
   {
     "name": "池永正二",
@@ -3081,7 +3036,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 228
+    "id": 225
   },
   {
     "name": "伊勢美琴",
@@ -3096,7 +3051,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 229
+    "id": 226
   },
   {
     "name": "石野卓球",
@@ -3111,7 +3066,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 230
+    "id": 227
   },
   {
     "name": "井口理",
@@ -3126,7 +3081,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 231
+    "id": 228
   },
   {
     "name": "奥井奈々",
@@ -3141,7 +3096,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 232
+    "id": 229
   },
   {
     "name": "越前谷直樹",
@@ -3156,7 +3111,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 233
+    "id": 230
   },
   {
     "name": "天野涼",
@@ -3171,7 +3126,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 234
+    "id": 231
   },
   {
     "name": "池之上覚皇",
@@ -3186,7 +3141,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 235
+    "id": 232
   },
   {
     "name": "UZA (作曲家)",
@@ -3201,7 +3156,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 236
+    "id": 233
   },
   {
     "name": "ACE (ミュージシャン)",
@@ -3216,7 +3171,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 237
+    "id": 234
   },
   {
     "name": "オクノシゲヒコ",
@@ -3231,7 +3186,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 238
+    "id": 235
   },
   {
     "name": "泉谷しげる",
@@ -3246,7 +3201,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 239
+    "id": 236
   },
   {
     "name": "稲村なおこ",
@@ -3261,7 +3216,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 240
+    "id": 237
   },
   {
     "name": "青木佑磨",
@@ -3276,7 +3231,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 241
+    "id": 238
   },
   {
     "name": "青葉紘季",
@@ -3291,7 +3246,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 242
+    "id": 239
   },
   {
     "name": "渡辺秀吉",
@@ -3306,7 +3261,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 243
+    "id": 240
   },
   {
     "name": "江森陽弘",
@@ -3321,7 +3276,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 244
+    "id": 241
   },
   {
     "name": "尾嶋直哉",
@@ -3336,7 +3291,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 245
+    "id": 242
   },
   {
     "name": "川村虹花",
@@ -3351,7 +3306,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 246
+    "id": 243
   },
   {
     "name": "赤坂七恵",
@@ -3366,7 +3321,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 247
+    "id": 244
   },
   {
     "name": "高城剛",
@@ -3381,7 +3336,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 248
+    "id": 245
   },
   {
     "name": "大郷剛",
@@ -3396,7 +3351,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 249
+    "id": 246
   },
   {
     "name": "あべりつこ",
@@ -3411,7 +3366,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 250
+    "id": 247
   },
   {
     "name": "安部純",
@@ -3426,7 +3381,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 251
+    "id": 248
   },
   {
     "name": "角皆優人",
@@ -3441,7 +3396,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 252
+    "id": 249
   },
   {
     "name": "小山薫堂",
@@ -3456,7 +3411,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 253
+    "id": 250
   },
   {
     "name": "東ユースケ",
@@ -3471,7 +3426,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 254
+    "id": 251
   },
   {
     "name": "天野伊佐子",
@@ -3486,7 +3441,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 255
+    "id": 252
   },
   {
     "name": "落合みつを",
@@ -3501,7 +3456,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 256
+    "id": 253
   },
   {
     "name": "安藤秀樹",
@@ -3516,7 +3471,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 257
+    "id": 254
   },
   {
     "name": "新井ひとみ",
@@ -3531,7 +3486,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 258
+    "id": 255
   },
   {
     "name": "北川剛",
@@ -3546,7 +3501,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 259
+    "id": 256
   },
   {
     "name": "かめりあ (作曲家)",
@@ -3561,7 +3516,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 260
+    "id": 257
   },
   {
     "name": "稲森寿世",
@@ -3576,7 +3531,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 261
+    "id": 258
   },
   {
     "name": "内橋和久",
@@ -3591,7 +3546,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 262
+    "id": 259
   },
   {
     "name": "上野浩司",
@@ -3606,7 +3561,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 263
+    "id": 260
   },
   {
     "name": "奥田民生",
@@ -3621,7 +3576,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 264
+    "id": 261
   },
   {
     "name": "エディ藩",
@@ -3636,7 +3591,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 265
+    "id": 262
   },
   {
     "name": "太田雅友",
@@ -3651,7 +3606,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 266
+    "id": 263
   },
   {
     "name": "安倍なつみ",
@@ -3666,7 +3621,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 267
+    "id": 264
   },
   {
     "name": "安藤和津",
@@ -3681,7 +3636,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 268
+    "id": 265
   },
   {
     "name": "石坂智子",
@@ -3696,7 +3651,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 269
+    "id": 266
   },
   {
     "name": "蒼井里紗",
@@ -3711,7 +3666,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 270
+    "id": 267
   },
   {
     "name": "合田道人",
@@ -3726,7 +3681,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 271
+    "id": 268
   },
   {
     "name": "馬道まさたか",
@@ -3741,7 +3696,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 272
+    "id": 269
   },
   {
     "name": "伊藤洋一",
@@ -3756,7 +3711,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 273
+    "id": 270
   },
   {
     "name": "足立巻一",
@@ -3771,7 +3726,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 274
+    "id": 271
   },
   {
     "name": "橋本真依",
@@ -3786,7 +3741,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 275
+    "id": 272
   },
   {
     "name": "阿木燿子",
@@ -3801,7 +3756,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 276
+    "id": 273
   },
   {
     "name": "田頭信幸",
@@ -3816,7 +3771,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 277
+    "id": 274
   },
   {
     "name": "安納サオリ",
@@ -3831,7 +3786,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 278
+    "id": 275
   },
   {
     "name": "EXILE HIRO",
@@ -3846,7 +3801,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 279
+    "id": 276
   },
   {
     "name": "歌川和彦",
@@ -3861,7 +3816,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 280
+    "id": 277
   },
   {
     "name": "青木愛 (政治家)",
@@ -3876,7 +3831,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 281
+    "id": 278
   },
   {
     "name": "岩尾望",
@@ -3891,7 +3846,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 282
+    "id": 279
   },
   {
     "name": "江上浩太郎",
@@ -3906,7 +3861,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 283
+    "id": 280
   },
   {
     "name": "川端崇文",
@@ -3921,7 +3876,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 284
+    "id": 281
   },
   {
     "name": "伊東真由美",
@@ -3936,7 +3891,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 285
+    "id": 282
   },
   {
     "name": "桜村眞",
@@ -3951,7 +3906,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 286
+    "id": 283
   },
   {
     "name": "竹田太郎",
@@ -3966,7 +3921,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 287
+    "id": 284
   },
   {
     "name": "青樹明子",
@@ -3981,7 +3936,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 288
+    "id": 285
   },
   {
     "name": "秋里和国",
@@ -3996,7 +3951,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 289
+    "id": 286
   },
   {
     "name": "川島弘光",
@@ -4011,7 +3966,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 290
+    "id": 287
   },
   {
     "name": "石井泉羽",
@@ -4026,7 +3981,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 291
+    "id": 288
   },
   {
     "name": "江口貴勅",
@@ -4041,7 +3996,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 292
+    "id": 289
   },
   {
     "name": "いゔどっと",
@@ -4056,7 +4011,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 293
+    "id": 290
   },
   {
     "name": "井手大介",
@@ -4071,7 +4026,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 294
+    "id": 291
   },
   {
     "name": "大平祥生",
@@ -4086,7 +4041,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 295
+    "id": 292
   },
   {
     "name": "ポール岡田",
@@ -4101,7 +4056,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 296
+    "id": 293
   },
   {
     "name": "男澤直樹",
@@ -4116,7 +4071,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 297
+    "id": 294
   },
   {
     "name": "茂森あゆみ",
@@ -4131,7 +4086,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 298
+    "id": 295
   },
   {
     "name": "遠藤幹雄",
@@ -4146,7 +4101,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 299
+    "id": 296
   },
   {
     "name": "あだち理絵子",
@@ -4161,7 +4116,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 300
+    "id": 297
   },
   {
     "name": "あきまん",
@@ -4176,7 +4131,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 301
+    "id": 298
   },
   {
     "name": "市川喜康",
@@ -4191,7 +4146,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 302
+    "id": 299
   },
   {
     "name": "倉本美津留",
@@ -4206,7 +4161,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 303
+    "id": 300
   },
   {
     "name": "世良公則",
@@ -4221,7 +4176,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 304
+    "id": 301
   },
   {
     "name": "遠藤泰子",
@@ -4236,7 +4191,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 305
+    "id": 302
   },
   {
     "name": "伊藤美裕",
@@ -4251,7 +4206,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 306
+    "id": 303
   },
   {
     "name": "浅田好未",
@@ -4266,7 +4221,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 307
+    "id": 304
   },
   {
     "name": "亀田誠治",
@@ -4281,7 +4236,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 308
+    "id": 305
   },
   {
     "name": "磯部悦子",
@@ -4296,7 +4251,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 309
+    "id": 306
   },
   {
     "name": "大久保佳代子",
@@ -4311,7 +4266,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 310
+    "id": 307
   },
   {
     "name": "金平茂紀",
@@ -4326,7 +4281,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 311
+    "id": 308
   },
   {
     "name": "押切蓮介",
@@ -4341,7 +4296,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 312
+    "id": 309
   },
   {
     "name": "EXILE AKIRA",
@@ -4356,7 +4311,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 313
+    "id": 310
   },
   {
     "name": "岡大介 (演歌師)",
@@ -4371,7 +4326,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 314
+    "id": 311
   },
   {
     "name": "市川洋二",
@@ -4386,7 +4341,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 315
+    "id": 312
   },
   {
     "name": "石崎真理",
@@ -4401,7 +4356,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 316
+    "id": 313
   },
   {
     "name": "石塚義之",
@@ -4416,7 +4371,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 317
+    "id": 314
   },
   {
     "name": "上杉洋史",
@@ -4431,7 +4386,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 318
+    "id": 315
   },
   {
     "name": "S-KEN",
@@ -4446,7 +4401,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 319
+    "id": 316
   },
   {
     "name": "太田トラベル",
@@ -4461,7 +4416,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 320
+    "id": 317
   },
   {
     "name": "板谷祐",
@@ -4476,7 +4431,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 321
+    "id": 318
   },
   {
     "name": "梅小鉢",
@@ -4491,7 +4446,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 322
+    "id": 319
   },
   {
     "name": "新間正次",
@@ -4506,7 +4461,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 323
+    "id": 320
   },
   {
     "name": "大谷幸",
@@ -4521,7 +4476,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 324
+    "id": 321
   },
   {
     "name": "伊藤季七子",
@@ -4536,7 +4491,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 325
+    "id": 322
   },
   {
     "name": "板倉俊之",
@@ -4551,7 +4506,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 326
+    "id": 323
   },
   {
     "name": "ENRIQUE",
@@ -4566,7 +4521,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 327
+    "id": 324
   },
   {
     "name": "朝比奈あすか",
@@ -4581,7 +4536,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 328
+    "id": 325
   },
   {
     "name": "池田ひろ子",
@@ -4596,7 +4551,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 329
+    "id": 326
   },
   {
     "name": "伊藤千咲美",
@@ -4611,7 +4566,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 330
+    "id": 327
   },
   {
     "name": "小山田壮平",
@@ -4626,7 +4581,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 331
+    "id": 328
   },
   {
     "name": "立石賢司",
@@ -4641,7 +4596,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 332
+    "id": 329
   },
   {
     "name": "秋山香乃",
@@ -4656,7 +4611,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 333
+    "id": 330
   },
   {
     "name": "坂田敦宏",
@@ -4671,7 +4626,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 334
+    "id": 331
   },
   {
     "name": "大石まどか",
@@ -4686,7 +4641,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 335
+    "id": 332
   },
   {
     "name": "飯田一之",
@@ -4701,7 +4656,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 336
+    "id": 333
   },
   {
     "name": "川人千慧",
@@ -4716,7 +4671,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 337
+    "id": 334
   },
   {
     "name": "浅野裕子",
@@ -4731,7 +4686,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 338
+    "id": 335
   },
   {
     "name": "イノウエタカシ",
@@ -4746,7 +4701,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 339
+    "id": 336
   },
   {
     "name": "Evala",
@@ -4761,7 +4716,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 340
+    "id": 337
   },
   {
     "name": "麻生しおり",
@@ -4776,7 +4731,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 341
+    "id": 338
   },
   {
     "name": "ØMI",
@@ -4791,7 +4746,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 342
+    "id": 339
   },
   {
     "name": "奥山裕次",
@@ -4806,7 +4761,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 343
+    "id": 340
   },
   {
     "name": "あけみみう",
@@ -4821,7 +4776,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 344
+    "id": 341
   },
   {
     "name": "川戸惠子",
@@ -4836,7 +4791,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 345
+    "id": 342
   },
   {
     "name": "愛内里菜",
@@ -4851,7 +4806,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 346
+    "id": 343
   },
   {
     "name": "赤塩正樹",
@@ -4866,7 +4821,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 347
+    "id": 344
   },
   {
     "name": "大袈裟太郎",
@@ -4881,7 +4836,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 348
+    "id": 345
   },
   {
     "name": "稲岡大介",
@@ -4896,7 +4851,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 349
+    "id": 346
   },
   {
     "name": "大友ジュン",
@@ -4911,7 +4866,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 350
+    "id": 347
   },
   {
     "name": "エハラマサヒロ",
@@ -4926,7 +4881,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 351
+    "id": 348
   },
   {
     "name": "春日俊彰",
@@ -4941,7 +4896,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 352
+    "id": 349
   },
   {
     "name": "Ed TSUWAKI",
@@ -4956,7 +4911,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 353
+    "id": 350
   },
   {
     "name": "石川梨華",
@@ -4971,7 +4926,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 354
+    "id": 351
   },
   {
     "name": "上野洋子",
@@ -4986,7 +4941,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 355
+    "id": 352
   },
   {
     "name": "AKINA (1985年生の歌手)",
@@ -5001,7 +4956,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 356
+    "id": 353
   },
   {
     "name": "Akane (振付師)",
@@ -5016,7 +4971,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 357
+    "id": 354
   },
   {
     "name": "塩村文夏",
@@ -5031,7 +4986,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 358
+    "id": 355
   },
   {
     "name": "藍にいな",
@@ -5046,7 +5001,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 359
+    "id": 356
   },
   {
     "name": "ESME MORI",
@@ -5061,7 +5016,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 360
+    "id": 357
   },
   {
     "name": "天使もえ",
@@ -5076,7 +5031,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 361
+    "id": 358
   },
   {
     "name": "井上順",
@@ -5091,7 +5046,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 362
+    "id": 359
   },
   {
     "name": "麻生夏子",
@@ -5106,7 +5061,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 363
+    "id": 360
   },
   {
     "name": "上杉昇",
@@ -5121,7 +5076,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 364
+    "id": 361
   },
   {
     "name": "IZAM",
@@ -5136,7 +5091,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 365
+    "id": 362
   },
   {
     "name": "ウエンツ瑛士",
@@ -5151,7 +5106,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 366
+    "id": 363
   },
   {
     "name": "飛鳥弓樹",
@@ -5166,7 +5121,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 367
+    "id": 364
   },
   {
     "name": "有田哲平",
@@ -5181,7 +5136,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 368
+    "id": 365
   },
   {
     "name": "石川智晶",
@@ -5196,7 +5151,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 369
+    "id": 366
   },
   {
     "name": "片岡飛鳥",
@@ -5211,7 +5166,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 370
+    "id": 367
   },
   {
     "name": "Ayami (アニソン歌手)",
@@ -5226,7 +5181,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 371
+    "id": 368
   },
   {
     "name": "萩原優芽",
@@ -5241,7 +5196,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 372
+    "id": 369
   },
   {
     "name": "B.M.H",
@@ -5256,7 +5211,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 373
+    "id": 370
   },
   {
     "name": "野火杏子",
@@ -5271,7 +5226,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 374
+    "id": 371
   },
   {
     "name": "井倉光一",
@@ -5286,7 +5241,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 375
+    "id": 372
   },
   {
     "name": "加地倫三",
@@ -5301,7 +5256,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 376
+    "id": 373
   },
   {
     "name": "梅林茂",
@@ -5316,7 +5271,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 377
+    "id": 374
   },
   {
     "name": "伊藤敏博",
@@ -5331,7 +5286,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 378
+    "id": 375
   },
   {
     "name": "大島こうすけ",
@@ -5346,7 +5301,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 379
+    "id": 376
   },
   {
     "name": "海汐祐希",
@@ -5361,7 +5316,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 380
+    "id": 377
   },
   {
     "name": "石山愛子",
@@ -5376,7 +5331,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 381
+    "id": 378
   },
   {
     "name": "石田ショーキチ",
@@ -5391,7 +5346,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 382
+    "id": 379
   },
   {
     "name": "大澤幹朗",
@@ -5406,7 +5361,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 383
+    "id": 380
   },
   {
     "name": "貴島誠一郎",
@@ -5421,7 +5376,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 384
+    "id": 381
   },
   {
     "name": "磯崎健史",
@@ -5436,7 +5391,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 385
+    "id": 382
   },
   {
     "name": "荒井優希",
@@ -5451,7 +5406,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 386
+    "id": 383
   },
   {
     "name": "小川たける",
@@ -5466,7 +5421,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 387
+    "id": 384
   },
   {
     "name": "増田セバスチャン",
@@ -5481,7 +5436,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 388
+    "id": 385
   },
   {
     "name": "氏原ワタル",
@@ -5496,7 +5451,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 389
+    "id": 386
   },
   {
     "name": "石井里佳",
@@ -5511,7 +5466,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 390
+    "id": 387
   },
   {
     "name": "江﨑文武",
@@ -5526,7 +5481,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 391
+    "id": 388
   },
   {
     "name": "越智友嗣",
@@ -5541,7 +5496,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 392
+    "id": 389
   },
   {
     "name": "吉澤智子",
@@ -5556,7 +5511,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 393
+    "id": 390
   },
   {
     "name": "仲澤莉南",
@@ -5571,7 +5526,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 394
+    "id": 391
   },
   {
     "name": "傳彩夏",
@@ -5586,7 +5541,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 395
+    "id": 392
   },
   {
     "name": "石井しおり",
@@ -5601,7 +5556,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 396
+    "id": 393
   },
   {
     "name": "EXILE SHOKICHI",
@@ -5616,7 +5571,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 397
+    "id": 394
   },
   {
     "name": "佐伯昭志",
@@ -5631,7 +5586,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 398
+    "id": 395
   },
   {
     "name": "岩垂徳行",
@@ -5646,7 +5601,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 399
+    "id": 396
   },
   {
     "name": "綾小路諒真",
@@ -5661,7 +5616,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 400
+    "id": 397
   },
   {
     "name": "USAO",
@@ -5676,7 +5631,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 401
+    "id": 398
   },
   {
     "name": "尾崎勇一",
@@ -5691,7 +5646,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 402
+    "id": 399
   },
   {
     "name": "尾形大作",
@@ -5706,7 +5661,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 403
+    "id": 400
   },
   {
     "name": "いよわ",
@@ -5721,7 +5676,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 404
+    "id": 401
   },
   {
     "name": "朝井まかて",
@@ -5736,7 +5691,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 405
+    "id": 402
   },
   {
     "name": "阿川泰子",
@@ -5751,7 +5706,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 406
+    "id": 403
   },
   {
     "name": "石岡雅敬",
@@ -5766,7 +5721,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 407
+    "id": 404
   },
   {
     "name": "小鳥遊楓",
@@ -5781,7 +5736,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 408
+    "id": 405
   },
   {
     "name": "石原慎一",
@@ -5796,7 +5751,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 409
+    "id": 406
   },
   {
     "name": "石田ゆり",
@@ -5811,7 +5766,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 410
+    "id": 407
   },
   {
     "name": "伊藤秀志",
@@ -5826,7 +5781,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 411
+    "id": 408
   },
   {
     "name": "新三人娘",
@@ -5841,7 +5796,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 412
+    "id": 409
   },
   {
     "name": "海老原由佳",
@@ -5856,7 +5811,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 413
+    "id": 410
   },
   {
     "name": "大城友弥",
@@ -5871,7 +5826,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 414
+    "id": 411
   },
   {
     "name": "安部友裕",
@@ -5886,7 +5841,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 415
+    "id": 412
   },
   {
     "name": "及川恒平",
@@ -5901,7 +5856,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 416
+    "id": 413
   },
   {
     "name": "青木光一",
@@ -5916,7 +5871,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 417
+    "id": 414
   },
   {
     "name": "石井明美",
@@ -5931,7 +5886,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 418
+    "id": 415
   },
   {
     "name": "片岡達也 (デザイナー)",
@@ -5946,7 +5901,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 419
+    "id": 416
   },
   {
     "name": "遠藤正明",
@@ -5961,7 +5916,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 420
+    "id": 417
   },
   {
     "name": "池田輝郎",
@@ -5976,7 +5931,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 421
+    "id": 418
   },
   {
     "name": "井上陽水",
@@ -5991,7 +5946,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 422
+    "id": 419
   },
   {
     "name": "ウイリー沖山",
@@ -6006,7 +5961,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 423
+    "id": 420
   },
   {
     "name": "秋元玲奈",
@@ -6021,7 +5976,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 424
+    "id": 421
   },
   {
     "name": "宇佐美秀文",
@@ -6036,7 +5991,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 425
+    "id": 422
   },
   {
     "name": "安月名莉子",
@@ -6051,7 +6006,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 426
+    "id": 423
   },
   {
     "name": "安斉かれん",
@@ -6066,7 +6021,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 427
+    "id": 424
   },
   {
     "name": "安藤奈保子",
@@ -6081,7 +6036,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 428
+    "id": 425
   },
   {
     "name": "あずままどか",
@@ -6096,7 +6051,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 429
+    "id": 426
   },
   {
     "name": "海老名淳",
@@ -6111,7 +6066,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 430
+    "id": 427
   },
   {
     "name": "植草克秀",
@@ -6126,7 +6081,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 431
+    "id": 428
   },
   {
     "name": "衛藤幸生",
@@ -6141,7 +6096,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 432
+    "id": 429
   },
   {
     "name": "いちたになな",
@@ -6156,7 +6111,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 433
+    "id": 430
   },
   {
     "name": "大沢伸一",
@@ -6171,7 +6126,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 434
+    "id": 431
   },
   {
     "name": "粋成浩児",
@@ -6186,7 +6141,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 435
+    "id": 432
   },
   {
     "name": "ゆっきゅん",
@@ -6201,7 +6156,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 436
+    "id": 433
   },
   {
     "name": "浅岡雄也",
@@ -6216,7 +6171,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 437
+    "id": 434
   },
   {
     "name": "遠藤章造",
@@ -6231,7 +6186,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 438
+    "id": 435
   },
   {
     "name": "柏田ユウリ",
@@ -6246,7 +6201,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 439
+    "id": 436
   },
   {
     "name": "本多大夢",
@@ -6261,7 +6216,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 440
+    "id": 437
   },
   {
     "name": "上田和寛",
@@ -6276,7 +6231,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 441
+    "id": 438
   },
   {
     "name": "浅倉大介",
@@ -6291,7 +6246,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 442
+    "id": 439
   },
   {
     "name": "H-wonder",
@@ -6306,7 +6261,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 443
+    "id": 440
   },
   {
     "name": "秋野紗良",
@@ -6321,7 +6276,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 444
+    "id": 441
   },
   {
     "name": "伊藤亜和",
@@ -6336,7 +6291,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 445
+    "id": 442
   },
   {
     "name": "岩元駿介",
@@ -6351,7 +6306,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 446
+    "id": 443
   },
   {
     "name": "岩野祐二",
@@ -6366,7 +6321,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 447
+    "id": 444
   },
   {
     "name": "小田切光",
@@ -6381,7 +6336,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 448
+    "id": 445
   },
   {
     "name": "安住紳一郎",
@@ -6396,7 +6351,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 449
+    "id": 446
   },
   {
     "name": "新井愛瞳",
@@ -6411,7 +6366,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 450
+    "id": 447
   },
   {
     "name": "廣田なお",
@@ -6426,7 +6381,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 451
+    "id": 448
   },
   {
     "name": "あらいふとし",
@@ -6441,7 +6396,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 452
+    "id": 449
   },
   {
     "name": "木村英智",
@@ -6456,7 +6411,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 453
+    "id": 450
   },
   {
     "name": "うじきつよし",
@@ -6471,7 +6426,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 454
+    "id": 451
   },
   {
     "name": "青野未来",
@@ -6486,7 +6441,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 455
+    "id": 452
   },
   {
     "name": "藍風くじら",
@@ -6501,7 +6456,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 456
+    "id": 453
   },
   {
     "name": "井上望",
@@ -6516,7 +6471,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 457
+    "id": 454
   },
   {
     "name": "おおくぼ良太",
@@ -6531,7 +6486,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 458
+    "id": 455
   },
   {
     "name": "一瀬貴之",
@@ -6546,7 +6501,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 459
+    "id": 456
   },
   {
     "name": "Arisa (シンガーソングライター)",
@@ -6561,7 +6516,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 460
+    "id": 457
   },
   {
     "name": "石田美穂子",
@@ -6576,7 +6531,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 461
+    "id": 458
   },
   {
     "name": "蒼木るい",
@@ -6591,7 +6546,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 462
+    "id": 459
   },
   {
     "name": "甲斐よしひろ",
@@ -6606,7 +6561,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 463
+    "id": 460
   },
   {
     "name": "東野純直",
@@ -6621,7 +6576,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 464
+    "id": 461
   },
   {
     "name": "青木琴美 (漫画家)",
@@ -6636,7 +6591,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 465
+    "id": 462
   },
   {
     "name": "奥村政佳",
@@ -6651,7 +6606,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 466
+    "id": 463
   },
   {
     "name": "加藤ひさし",
@@ -6666,7 +6621,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 467
+    "id": 464
   },
   {
     "name": "海津信志",
@@ -6681,7 +6636,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 468
+    "id": 465
   },
   {
     "name": "小川コータ",
@@ -6696,7 +6651,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 469
+    "id": 466
   },
   {
     "name": "松原秀樹",
@@ -6711,7 +6666,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 470
+    "id": 467
   },
   {
     "name": "奥山えいじ",
@@ -6726,7 +6681,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 471
+    "id": 468
   },
   {
     "name": "Edison (音楽家)",
@@ -6741,7 +6696,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 472
+    "id": 469
   },
   {
     "name": "岡村聡士",
@@ -6756,7 +6711,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 473
+    "id": 470
   },
   {
     "name": "イクマあきら",
@@ -6771,7 +6726,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 474
+    "id": 471
   },
   {
     "name": "大西洋平 (シンガーソングライター)",
@@ -6786,7 +6741,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 475
+    "id": 472
   },
   {
     "name": "Anchang",
@@ -6801,7 +6756,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 476
+    "id": 473
   },
   {
     "name": "緒方豊和",
@@ -6816,7 +6771,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 477
+    "id": 474
   },
   {
     "name": "オオルタイチ",
@@ -6831,7 +6786,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 478
+    "id": 475
   },
   {
     "name": "太田貴之",
@@ -6846,7 +6801,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 479
+    "id": 476
   },
   {
     "name": "川本勇",
@@ -6861,7 +6816,7 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
-    "id": 480
+    "id": 477
   },
   {
     "name": "天久聖一",
@@ -6876,6 +6831,3746 @@
     "notes": "対照群（病気公表なし）",
     "source": "Wikipedia",
     "group": "control",
+    "id": 478
+  },
+  {
+    "name": "2021年のテレビ (日本)",
+    "real_name": "2021年のテレビ (日本)",
+    "last_name": "2021年のテレビ",
+    "first_name": "(日本)",
+    "birth_date": "1961-08-25",
+    "gender": "female",
+    "illness": "大腸がん",
+    "illness_category": "がん（消化器）",
+    "onset_year": 2013,
+    "notes": "Wikipedia「2021年のテレビ (日本)」より抽出",
+    "source": "Wikipedia",
+    "id": 479
+  },
+  {
+    "name": "2023年のテレビ (日本)",
+    "real_name": "2023年のテレビ (日本)",
+    "last_name": "2023年のテレビ",
+    "first_name": "(日本)",
+    "birth_date": "1963-06-28",
+    "gender": "female",
+    "illness": "胃がん",
+    "illness_category": "がん（消化器）",
+    "onset_year": 2023,
+    "notes": "Wikipedia「2023年のテレビ (日本)」より抽出",
+    "source": "Wikipedia",
+    "id": 480
+  },
+  {
+    "name": "2023年のラジオ (日本)",
+    "real_name": "2023年のラジオ (日本)",
+    "last_name": "2023年のラジオ",
+    "first_name": "(日本)",
+    "birth_date": "1963-06-28",
+    "gender": "female",
+    "illness": "肺がん",
+    "illness_category": "がん（呼吸器）",
+    "onset_year": 2000,
+    "notes": "Wikipedia「2023年のラジオ (日本)」より抽出",
+    "source": "Wikipedia",
     "id": 481
+  },
+  {
+    "name": "Baby KARA",
+    "real_name": "Baby KARA",
+    "last_name": "Baby",
+    "first_name": "KARA",
+    "birth_date": "1994-08-30",
+    "gender": "female",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 2015,
+    "notes": "Wikipedia「Baby KARA」より抽出",
+    "source": "Wikipedia",
+    "id": 482
+  },
+  {
+    "name": "I.B.I",
+    "real_name": "I.B.I",
+    "last_name": "I.",
+    "first_name": "B.I",
+    "birth_date": "1994-07-04",
+    "gender": "female",
+    "illness": "パニック障害",
+    "illness_category": "精神疾患（パニック障害）",
+    "onset_year": 2017,
+    "notes": "Wikipedia「I.B.I」より抽出",
+    "source": "Wikipedia",
+    "id": 483
+  },
+  {
+    "name": "Juice=Juice",
+    "real_name": "Juice=Juice",
+    "last_name": "Ju",
+    "first_name": "ice=Juice",
+    "birth_date": "2001-05-07",
+    "gender": "female",
+    "illness": "パニック障害",
+    "illness_category": "精神疾患（パニック障害）",
+    "onset_year": 2024,
+    "notes": "Wikipedia「Juice=Juice」より抽出",
+    "source": "Wikipedia",
+    "id": 484
+  },
+  {
+    "name": "Misono",
+    "real_name": "Misono",
+    "last_name": "Mi",
+    "first_name": "sono",
+    "birth_date": "1984-10-13",
+    "gender": "female",
+    "illness": "精巣がん",
+    "illness_category": "がん（泌尿器）",
+    "onset_year": 2018,
+    "notes": "Wikipedia「Misono」より抽出",
+    "source": "Wikipedia",
+    "id": 485
+  },
+  {
+    "name": "OCTPATH",
+    "real_name": "OCTPATH",
+    "last_name": "OC",
+    "first_name": "TPATH",
+    "birth_date": "1999-11-06",
+    "gender": "male",
+    "illness": "適応障害",
+    "illness_category": "精神疾患（その他）",
+    "onset_year": 2022,
+    "notes": "Wikipedia「OCTPATH」より抽出",
+    "source": "Wikipedia",
+    "id": 486
+  },
+  {
+    "name": "PRODUCE 101 JAPAN",
+    "real_name": "PRODUCE 101 JAPAN",
+    "last_name": "PRODUCE",
+    "first_name": "101JAPAN",
+    "birth_date": "2001-08-04",
+    "gender": "female",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 2019,
+    "notes": "Wikipedia「PRODUCE 101 JAPAN」より抽出",
+    "source": "Wikipedia",
+    "id": 487
+  },
+  {
+    "name": "SUPER☆GiRLS",
+    "real_name": "SUPER☆GiRLS",
+    "last_name": "SU",
+    "first_name": "PER☆GiRLS",
+    "birth_date": "1998-10-28",
+    "gender": "female",
+    "illness": "適応障害",
+    "illness_category": "精神疾患（その他）",
+    "onset_year": 2019,
+    "notes": "Wikipedia「SUPER☆GiRLS」より抽出",
+    "source": "Wikipedia",
+    "id": 488
+  },
+  {
+    "name": "アシュラシンドローム",
+    "real_name": "アシュラシンドローム",
+    "last_name": "アシ",
+    "first_name": "ュラシンドローム",
+    "birth_date": "1982-04-15",
+    "gender": "female",
+    "illness": "脳腫瘍",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 2021,
+    "notes": "Wikipedia「アシュラシンドローム」より抽出",
+    "source": "Wikipedia",
+    "id": 489
+  },
+  {
+    "name": "アーサー・コンリー",
+    "real_name": "アーサー・コンリー",
+    "last_name": "アー",
+    "first_name": "サー・コンリー",
+    "birth_date": "1946-01-04",
+    "gender": "male",
+    "illness": "大腸がん",
+    "illness_category": "がん（消化器）",
+    "onset_year": 2003,
+    "notes": "Wikipedia「アーサー・コンリー」より抽出",
+    "source": "Wikipedia",
+    "id": 490
+  },
+  {
+    "name": "クロちゃん (お笑い芸人)",
+    "real_name": "黒川 明人（くろかわ あきひと）<ref name=\"プロフィール\">{{Cite web",
+    "last_name": "黒川",
+    "first_name": "明人（くろかわあきひと）<refname=\"プロフィール\">{{Citeweb",
+    "birth_date": "1976-12-10",
+    "gender": "male",
+    "illness": "脳出血",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 2017,
+    "notes": "Wikipedia「クロちゃん (お笑い芸人)」より抽出",
+    "source": "Wikipedia",
+    "id": 491
+  },
+  {
+    "name": "ザ・ドリフターズ",
+    "real_name": "ザ・ドリフターズ",
+    "last_name": "ザ・",
+    "first_name": "ドリフターズ",
+    "birth_date": "1943-03-01",
+    "gender": "female",
+    "illness": "肺がん",
+    "illness_category": "がん（呼吸器）",
+    "onset_year": 2022,
+    "notes": "Wikipedia「ザ・ドリフターズ」より抽出",
+    "source": "Wikipedia",
+    "id": 492
+  },
+  {
+    "name": "ドクターX〜外科医・大門未知子〜",
+    "real_name": "ドクターX〜外科医・大門未知子〜",
+    "last_name": "ドク",
+    "first_name": "ターX〜外科医・大門未知子〜",
+    "birth_date": "1974-01-12",
+    "gender": "female",
+    "illness": "直腸がん",
+    "illness_category": "がん（消化器）",
+    "onset_year": 2021,
+    "notes": "Wikipedia「ドクターX〜外科医・大門未知子〜」より抽出",
+    "source": "Wikipedia",
+    "id": 493
+  },
+  {
+    "name": "ハニースパイスRe.",
+    "real_name": "ハニースパイスRe.",
+    "last_name": "ハニ",
+    "first_name": "ースパイスRe.",
+    "birth_date": "2002-05-17",
+    "gender": "female",
+    "illness": "適応障害",
+    "illness_category": "精神疾患（その他）",
+    "onset_year": 2016,
+    "notes": "Wikipedia「ハニースパイスRe.」より抽出",
+    "source": "Wikipedia",
+    "id": 494
+  },
+  {
+    "name": "ヒロシ",
+    "real_name": "齊藤 健一（さいとう けんいち）",
+    "last_name": "齊藤",
+    "first_name": "健一（さいとうけんいち）",
+    "birth_date": "1972-01-23",
+    "gender": "male",
+    "illness": "パニック障害",
+    "illness_category": "精神疾患（パニック障害）",
+    "onset_year": 2017,
+    "notes": "Wikipedia「ヒロシ」より抽出",
+    "source": "Wikipedia",
+    "id": 495
+  },
+  {
+    "name": "ミュージックステーション",
+    "real_name": "ミュージックステーション",
+    "last_name": "ミュ",
+    "first_name": "ージックステーション",
+    "birth_date": "2017-02-24",
+    "gender": "male",
+    "illness": "食道がん",
+    "illness_category": "がん（頭頸部・消化器）",
+    "onset_year": 2011,
+    "notes": "Wikipedia「ミュージックステーション」より抽出",
+    "source": "Wikipedia",
+    "id": 496
+  },
+  {
+    "name": "ロス・プリモス",
+    "real_name": "ロス・プリモス",
+    "last_name": "ロス",
+    "first_name": "・プリモス",
+    "birth_date": "1953-03-12",
+    "gender": "male",
+    "illness": "心筋梗塞",
+    "illness_category": "循環器疾患",
+    "onset_year": 2007,
+    "notes": "Wikipedia「ロス・プリモス」より抽出",
+    "source": "Wikipedia",
+    "id": 497
+  },
+  {
+    "name": "上沼恵美子",
+    "real_name": "上沼 恵美子<br />（旧姓：{{ruby",
+    "last_name": "上沼",
+    "first_name": "恵美子<br/>（旧姓：{{ruby",
+    "birth_date": "1955-04-13",
+    "gender": "female",
+    "illness": "心不全",
+    "illness_category": "循環器疾患",
+    "onset_year": 2007,
+    "notes": "Wikipedia「上沼恵美子」より抽出",
+    "source": "Wikipedia",
+    "id": 498
+  },
+  {
+    "name": "北斗晶",
+    "real_name": "佐々木 久子（旧姓：宇野）",
+    "last_name": "佐々木",
+    "first_name": "久子（旧姓：宇野）",
+    "birth_date": "1967-07-13",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2015,
+    "notes": "Wikipedia「北斗晶」より抽出",
+    "source": "Wikipedia",
+    "id": 499
+  },
+  {
+    "name": "坂田利夫",
+    "real_name": "地神 利夫<br />（じがみ としお）",
+    "last_name": "地神",
+    "first_name": "利夫<br/>（じがみとしお）",
+    "birth_date": "1941-10-07",
+    "gender": "male",
+    "illness": "パニック障害",
+    "illness_category": "精神疾患（パニック障害）",
+    "onset_year": 2024,
+    "notes": "Wikipedia「坂田利夫」より抽出",
+    "source": "Wikipedia",
+    "id": 500
+  },
+  {
+    "name": "堀江貴文",
+    "real_name": "堀江貴文",
+    "last_name": "堀江",
+    "first_name": "貴文",
+    "birth_date": "1972-10-29",
+    "gender": "male",
+    "illness": "子宮頸がん",
+    "illness_category": "がん（泌尿器）",
+    "onset_year": 2019,
+    "notes": "Wikipedia「堀江貴文」より抽出",
+    "source": "Wikipedia",
+    "id": 501
+  },
+  {
+    "name": "小林アナ",
+    "real_name": "小林 聖子（こばやし せいこ）",
+    "last_name": "小林",
+    "first_name": "聖子（こばやしせいこ）",
+    "birth_date": "1981-12-18",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2013,
+    "notes": "Wikipedia「小林アナ」より抽出",
+    "source": "Wikipedia",
+    "id": 502
+  },
+  {
+    "name": "山口敏太郎",
+    "real_name": "山口敏太郎",
+    "last_name": "山口",
+    "first_name": "敏太郎",
+    "birth_date": "1966-07-20",
+    "gender": "male",
+    "illness": "卵巣がん",
+    "illness_category": "がん（泌尿器）",
+    "onset_year": 2022,
+    "notes": "Wikipedia「山口敏太郎」より抽出",
+    "source": "Wikipedia",
+    "id": 503
+  },
+  {
+    "name": "日村勇紀",
+    "real_name": "ヒムペキ兄さん<ref>TBSラジオ [[JUNK",
+    "last_name": "ヒムペキ兄さん<ref>TBSラジオ",
+    "first_name": "[[JUNK",
+    "birth_date": "1972-05-14",
+    "gender": "female",
+    "illness": "心不全",
+    "illness_category": "循環器疾患",
+    "onset_year": 2012,
+    "notes": "Wikipedia「日村勇紀」より抽出",
+    "source": "Wikipedia",
+    "id": 504
+  },
+  {
+    "name": "週刊文春",
+    "real_name": "週刊文春",
+    "last_name": "週刊",
+    "first_name": "文春",
+    "birth_date": "2014-03-21",
+    "gender": "female",
+    "illness": "膀胱がん",
+    "illness_category": "がん（泌尿器）",
+    "onset_year": 2023,
+    "notes": "Wikipedia「週刊文春」より抽出",
+    "source": "Wikipedia",
+    "id": 505
+  },
+  {
+    "name": "香川恵美子",
+    "real_name": "田口 恵美子（2001年 - ）<br />香川 恵美子（出生名）",
+    "last_name": "田口",
+    "first_name": "恵美子（2001年-）<br/>香川恵美子（出生名）",
+    "birth_date": "1965-10-18",
+    "gender": "female",
+    "illness": "パニック障害",
+    "illness_category": "精神疾患（パニック障害）",
+    "onset_year": 2007,
+    "notes": "Wikipedia「香川恵美子」より抽出",
+    "source": "Wikipedia",
+    "id": 506
+  },
+  {
+    "name": "芦川百々子",
+    "real_name": "芦川 百々子（旧姓：{{ruby",
+    "last_name": "芦川",
+    "first_name": "百々子（旧姓：{{ruby",
+    "birth_date": "1949-11-29",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 507
+  },
+  {
+    "name": "原田泰造",
+    "real_name": "原田 泰造（はらだ たいぞう）",
+    "last_name": "原田",
+    "first_name": "泰造（はらだたいぞう）",
+    "birth_date": "1970-03-24",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 508
+  },
+  {
+    "name": "大森うたえもん",
+    "real_name": "大森 博文（おおもり ひろふみ）",
+    "last_name": "大森",
+    "first_name": "博文（おおもりひろふみ）",
+    "birth_date": "1959-05-15",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 509
+  },
+  {
+    "name": "内山信二",
+    "real_name": "内山 信二<ref>[https://shu-pro.co.jp/talent-list/#uchiyamashinji SHU Promotion  &raquo; Blog Archive   &raquo; 内山信二]</ref>",
+    "last_name": "内山",
+    "first_name": "信二<ref>[https://shu-pro.co.jp/talent-list/#uchiyamashinjiSHUPromotion&raquo;BlogArchive&raquo;内山信二]</ref>",
+    "birth_date": "1981-09-25",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 510
+  },
+  {
+    "name": "青木裕子 (1983年生)",
+    "real_name": "<!-- 矢部に改姓した周知の事実なし、記載する場合は要出典 -->",
+    "last_name": "<!--",
+    "first_name": "矢部に改姓した周知の事実なし、記載する場合は要出典-->",
+    "birth_date": "1983-01-07",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 511
+  },
+  {
+    "name": "おぼたけし",
+    "real_name": "於保 武（おぼ たけし）<ref name=\"声優事典\">{{Cite book",
+    "last_name": "於保",
+    "first_name": "武（おぼたけし）<refname=\"声優事典\">{{Citebook",
+    "birth_date": "1954-10-22",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 512
+  },
+  {
+    "name": "カズレーザー",
+    "real_name": "金子 和令（かねこ かずのり）",
+    "last_name": "金子",
+    "first_name": "和令（かねこかずのり）",
+    "birth_date": "1984-07-04",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 513
+  },
+  {
+    "name": "おいでやす小田",
+    "real_name": "小田 芳裕（おだ よしひろ）",
+    "last_name": "小田",
+    "first_name": "芳裕（おだよしひろ）",
+    "birth_date": "1978-07-25",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 514
+  },
+  {
+    "name": "井手らっきょ",
+    "real_name": "井手 博士（いで ひろし）",
+    "last_name": "井手",
+    "first_name": "博士（いでひろし）",
+    "birth_date": "1959-12-11",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 515
+  },
+  {
+    "name": "井出卓也",
+    "real_name": "井出 卓也<ref name=\"blog\">{{Cite web",
+    "last_name": "井出",
+    "first_name": "卓也<refname=\"blog\">{{Citeweb",
+    "birth_date": "1991-03-12",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 516
+  },
+  {
+    "name": "石田靖",
+    "real_name": "石田 靖（いしだ やすし）",
+    "last_name": "石田",
+    "first_name": "靖（いしだやすし）",
+    "birth_date": "1965-12-10",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 517
+  },
+  {
+    "name": "芦原妃名子",
+    "real_name": "松本 律子（まつもと りつこ）<ref name=\"日テレ\"/>",
+    "last_name": "松本",
+    "first_name": "律子（まつもとりつこ）<refname=\"日テレ\"/>",
+    "birth_date": "1974-01-25",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 518
+  },
+  {
+    "name": "梶原阿貴",
+    "real_name": "<!-- 必ず出典を付ける。 -->",
+    "last_name": "<!--",
+    "first_name": "必ず出典を付ける。-->",
+    "birth_date": "1973-05-10",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 519
+  },
+  {
+    "name": "桂三度",
+    "real_name": "渡邊 鐘（わたなべ あつむ）",
+    "last_name": "渡邊",
+    "first_name": "鐘（わたなべあつむ）",
+    "birth_date": "1969-08-27",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 520
+  },
+  {
+    "name": "大友克洋",
+    "real_name": "<!-- 必ず出典を付ける -->",
+    "last_name": "<!--",
+    "first_name": "必ず出典を付ける-->",
+    "birth_date": "1954-04-14",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 521
+  },
+  {
+    "name": "岡野雄一",
+    "real_name": "岡野 雄一（おかの ゆういち）",
+    "last_name": "岡野",
+    "first_name": "雄一（おかのゆういち）",
+    "birth_date": "1950-01-11",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 522
+  },
+  {
+    "name": "大久保八億",
+    "real_name": "大久保 真言（おおくぼ まこと）",
+    "last_name": "大久保",
+    "first_name": "真言（おおくぼまこと）",
+    "birth_date": "1996-05-10",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 523
+  },
+  {
+    "name": "赤嶺総理",
+    "real_name": "赤嶺 栞（あかみね しおり）",
+    "last_name": "赤嶺",
+    "first_name": "栞（あかみねしおり）",
+    "birth_date": "1991-03-01",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 524
+  },
+  {
+    "name": "ウド鈴木",
+    "real_name": "鈴木 任紀（すずき ひでき）",
+    "last_name": "鈴木",
+    "first_name": "任紀（すずきひでき）",
+    "birth_date": "1970-01-19",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 525
+  },
+  {
+    "name": "泉田行夫",
+    "real_name": "阿部 行夫（あべ ゆきお）",
+    "last_name": "阿部",
+    "first_name": "行夫（あべゆきお）",
+    "birth_date": "1914-05-21",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 526
+  },
+  {
+    "name": "GACKT",
+    "real_name": "GACKT",
+    "last_name": "GA",
+    "first_name": "CKT",
+    "birth_date": "1973-07-04",
+    "gender": "male",
+    "illness": "ALS",
+    "illness_category": "神経疾患",
+    "onset_year": 2009,
+    "notes": "Wikipedia「GACKT」より抽出",
+    "source": "Wikipedia",
+    "id": 527
+  },
+  {
+    "name": "J・K・ローリング",
+    "real_name": "J・K・ローリング",
+    "last_name": "J・",
+    "first_name": "K・ローリング",
+    "birth_date": "1965-07-31",
+    "gender": "female",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 1994,
+    "notes": "Wikipedia「J・K・ローリング」より抽出",
+    "source": "Wikipedia",
+    "id": 528
+  },
+  {
+    "name": "だいたひかる",
+    "real_name": "小泉 ひかる",
+    "last_name": "小泉",
+    "first_name": "ひかる",
+    "birth_date": "1975-05-25",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2019,
+    "notes": "Wikipedia「だいたひかる」より抽出",
+    "source": "Wikipedia",
+    "id": 529
+  },
+  {
+    "name": "もんたよしのり",
+    "real_name": "もんたよしのり",
+    "last_name": "もん",
+    "first_name": "たよしのり",
+    "birth_date": "1951-01-08",
+    "gender": "male",
+    "illness": "大動脈解離",
+    "illness_category": "循環器疾患",
+    "onset_year": 2023,
+    "notes": "Wikipedia「もんたよしのり」より抽出",
+    "source": "Wikipedia",
+    "id": 530
+  },
+  {
+    "name": "キューティー鈴木",
+    "real_name": "原嶋 由美",
+    "last_name": "原嶋",
+    "first_name": "由美",
+    "birth_date": "1969-10-22",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2012,
+    "notes": "Wikipedia「キューティー鈴木」より抽出",
+    "source": "Wikipedia",
+    "id": 531
+  },
+  {
+    "name": "ココ・リー",
+    "real_name": "ココ・リー",
+    "last_name": "ココ",
+    "first_name": "・リー",
+    "birth_date": "1975-01-17",
+    "gender": "female",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 2023,
+    "notes": "Wikipedia「ココ・リー」より抽出",
+    "source": "Wikipedia",
+    "id": 532
+  },
+  {
+    "name": "ザ・リリーズ (女性アイドル)",
+    "real_name": "ザ・リリーズ (女性アイドル)",
+    "last_name": "ザ・リリーズ",
+    "first_name": "(女性アイドル)",
+    "birth_date": "1960-12-07",
+    "gender": "female",
+    "illness": "脳腫瘍",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 2020,
+    "notes": "Wikipedia「ザ・リリーズ (女性アイドル)」より抽出",
+    "source": "Wikipedia",
+    "id": 533
+  },
+  {
+    "name": "ジェリ・ハリウェル",
+    "real_name": "ジェリ・ハリウェル",
+    "last_name": "ジェ",
+    "first_name": "リ・ハリウェル",
+    "birth_date": "1972-08-06",
+    "gender": "female",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 1996,
+    "notes": "Wikipedia「ジェリ・ハリウェル」より抽出",
+    "source": "Wikipedia",
+    "id": 534
+  },
+  {
+    "name": "ジャック・ジョーンズ (歌手)",
+    "real_name": "ジャック・ジョーンズ (歌手)",
+    "last_name": "ジャック・ジョーンズ",
+    "first_name": "(歌手)",
+    "birth_date": "1938-01-14",
+    "gender": "female",
+    "illness": "白血病",
+    "illness_category": "血液疾患",
+    "onset_year": 2024,
+    "notes": "Wikipedia「ジャック・ジョーンズ (歌手)」より抽出",
+    "source": "Wikipedia",
+    "id": 535
+  },
+  {
+    "name": "ステラ・スティーヴンス",
+    "real_name": "Estelle Caro Eggleston",
+    "last_name": "Estelle",
+    "first_name": "CaroEggleston",
+    "birth_date": "1936-10-01",
+    "gender": "female",
+    "illness": "アルツハイマー病",
+    "illness_category": "神経疾患",
+    "onset_year": 1960,
+    "notes": "Wikipedia「ステラ・スティーヴンス」より抽出",
+    "source": "Wikipedia",
+    "id": 536
+  },
+  {
+    "name": "セリーヌ・ディオン",
+    "real_name": "セリーヌ・ディオン",
+    "last_name": "セリ",
+    "first_name": "ーヌ・ディオン",
+    "birth_date": "1968-03-30",
+    "gender": "female",
+    "illness": "咽頭がん",
+    "illness_category": "がん（頭頸部）",
+    "onset_year": 2014,
+    "notes": "Wikipedia「セリーヌ・ディオン」より抽出",
+    "source": "Wikipedia",
+    "id": 537
+  },
+  {
+    "name": "ブラザー・コーン",
+    "real_name": "ブラザー・コーン",
+    "last_name": "ブラ",
+    "first_name": "ザー・コーン",
+    "birth_date": "1955-11-05",
+    "gender": "male",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2023,
+    "notes": "Wikipedia「ブラザー・コーン」より抽出",
+    "source": "Wikipedia",
+    "id": 538
+  },
+  {
+    "name": "ブルース・スプリングスティーン",
+    "real_name": "ブルース・スプリングスティーン",
+    "last_name": "ブル",
+    "first_name": "ース・スプリングスティーン",
+    "birth_date": "1949-09-23",
+    "gender": "female",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 2012,
+    "notes": "Wikipedia「ブルース・スプリングスティーン」より抽出",
+    "source": "Wikipedia",
+    "id": 539
+  },
+  {
+    "name": "メラニー・チズム",
+    "real_name": "メラニー・チズム",
+    "last_name": "メラ",
+    "first_name": "ニー・チズム",
+    "birth_date": "1974-01-12",
+    "gender": "female",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 1999,
+    "notes": "Wikipedia「メラニー・チズム」より抽出",
+    "source": "Wikipedia",
+    "id": 540
+  },
+  {
+    "name": "リンジー・ディ・ポール",
+    "real_name": "リンジー・ディ・ポール",
+    "last_name": "リン",
+    "first_name": "ジー・ディ・ポール",
+    "birth_date": "1948-06-11",
+    "gender": "female",
+    "illness": "脳出血",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 2014,
+    "notes": "Wikipedia「リンジー・ディ・ポール」より抽出",
+    "source": "Wikipedia",
+    "id": 541
+  },
+  {
+    "name": "ロナルド・レーガン",
+    "real_name": "ロナルド・レーガン",
+    "last_name": "ロナ",
+    "first_name": "ルド・レーガン",
+    "birth_date": "1911-02-06",
+    "gender": "female",
+    "illness": "アルツハイマー病",
+    "illness_category": "神経疾患",
+    "onset_year": 1993,
+    "notes": "Wikipedia「ロナルド・レーガン」より抽出",
+    "source": "Wikipedia",
+    "id": 542
+  },
+  {
+    "name": "三笠優子",
+    "real_name": "三笠優子",
+    "last_name": "三笠",
+    "first_name": "優子",
+    "birth_date": "1949-03-10",
+    "gender": "female",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 2014,
+    "notes": "Wikipedia「三笠優子」より抽出",
+    "source": "Wikipedia",
+    "id": 543
+  },
+  {
+    "name": "上柳昌彦",
+    "real_name": "上柳 昌彦",
+    "last_name": "上柳",
+    "first_name": "昌彦",
+    "birth_date": "1957-08-01",
+    "gender": "male",
+    "illness": "前立腺がん",
+    "illness_category": "がん（泌尿器）",
+    "onset_year": 2017,
+    "notes": "Wikipedia「上柳昌彦」より抽出",
+    "source": "Wikipedia",
+    "id": 544
+  },
+  {
+    "name": "中村泰士",
+    "real_name": "中村泰士",
+    "last_name": "中村",
+    "first_name": "泰士",
+    "birth_date": "1939-05-21",
+    "gender": "male",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 1973,
+    "notes": "Wikipedia「中村泰士」より抽出",
+    "source": "Wikipedia",
+    "id": 545
+  },
+  {
+    "name": "亀渕友香",
+    "real_name": "亀渕友香",
+    "last_name": "亀渕",
+    "first_name": "友香",
+    "birth_date": "1944-11-03",
+    "gender": "female",
+    "illness": "肝細胞がん",
+    "illness_category": "がん（消化器）",
+    "onset_year": 2014,
+    "notes": "Wikipedia「亀渕友香」より抽出",
+    "source": "Wikipedia",
+    "id": 546
+  },
+  {
+    "name": "井上ジョー",
+    "real_name": "井上ジョー",
+    "last_name": "井上",
+    "first_name": "ジョー",
+    "birth_date": "1985-08-30",
+    "gender": "male",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 2023,
+    "notes": "Wikipedia「井上ジョー」より抽出",
+    "source": "Wikipedia",
+    "id": 547
+  },
+  {
+    "name": "内藤やす子",
+    "real_name": "内藤やす子",
+    "last_name": "内藤",
+    "first_name": "やす子",
+    "birth_date": "1950-09-28",
+    "gender": "female",
+    "illness": "脳出血",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 2016,
+    "notes": "Wikipedia「内藤やす子」より抽出",
+    "source": "Wikipedia",
+    "id": 548
+  },
+  {
+    "name": "冠二郎",
+    "real_name": "冠二郎",
+    "last_name": "冠二",
+    "first_name": "郎",
+    "birth_date": "1944-04-23",
+    "gender": "male",
+    "illness": "心不全",
+    "illness_category": "循環器疾患",
+    "onset_year": 2016,
+    "notes": "Wikipedia「冠二郎」より抽出",
+    "source": "Wikipedia",
+    "id": 549
+  },
+  {
+    "name": "加藤和彦",
+    "real_name": "加藤和彦",
+    "last_name": "加藤",
+    "first_name": "和彦",
+    "birth_date": "1947-03-21",
+    "gender": "male",
+    "illness": "大腸がん",
+    "illness_category": "がん（消化器）",
+    "onset_year": 2008,
+    "notes": "Wikipedia「加藤和彦」より抽出",
+    "source": "Wikipedia",
+    "id": 550
+  },
+  {
+    "name": "北島三郎",
+    "real_name": "北島三郎",
+    "last_name": "北島",
+    "first_name": "三郎",
+    "birth_date": "1936-10-04",
+    "gender": "male",
+    "illness": "パニック障害",
+    "illness_category": "精神疾患（パニック障害）",
+    "onset_year": 2016,
+    "notes": "Wikipedia「北島三郎」より抽出",
+    "source": "Wikipedia",
+    "id": 551
+  },
+  {
+    "name": "叶修二",
+    "real_name": "叶修二",
+    "last_name": "叶修",
+    "first_name": "二",
+    "birth_date": "1948-01-01",
+    "gender": "male",
+    "illness": "大動脈瘤",
+    "illness_category": "循環器疾患",
+    "onset_year": 2014,
+    "notes": "Wikipedia「叶修二」より抽出",
+    "source": "Wikipedia",
+    "id": 552
+  },
+  {
+    "name": "吉川晃司",
+    "real_name": "吉川晃司",
+    "last_name": "吉川",
+    "first_name": "晃司",
+    "birth_date": "1965-08-18",
+    "gender": "male",
+    "illness": "狭心症",
+    "illness_category": "循環器疾患",
+    "onset_year": 2021,
+    "notes": "Wikipedia「吉川晃司」より抽出",
+    "source": "Wikipedia",
+    "id": 553
+  },
+  {
+    "name": "大仁田厚",
+    "real_name": "大仁田 厚",
+    "last_name": "大仁田",
+    "first_name": "厚",
+    "birth_date": "1957-10-25",
+    "gender": "male",
+    "illness": "大動脈瘤",
+    "illness_category": "循環器疾患",
+    "onset_year": 2023,
+    "notes": "Wikipedia「大仁田厚」より抽出",
+    "source": "Wikipedia",
+    "id": 554
+  },
+  {
+    "name": "大城光恵",
+    "real_name": "大城光恵",
+    "last_name": "大城",
+    "first_name": "光恵",
+    "birth_date": "1965-05-03",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2023,
+    "notes": "Wikipedia「大城光恵」より抽出",
+    "source": "Wikipedia",
+    "id": 555
+  },
+  {
+    "name": "大竹まこと",
+    "real_name": "大竹 真（おおたけ まこと）",
+    "last_name": "大竹",
+    "first_name": "真（おおたけまこと）",
+    "birth_date": "1949-05-22",
+    "gender": "female",
+    "illness": "前立腺がん",
+    "illness_category": "がん（泌尿器）",
+    "onset_year": 2026,
+    "notes": "Wikipedia「大竹まこと」より抽出",
+    "source": "Wikipedia",
+    "id": 556
+  },
+  {
+    "name": "大谷雅恵",
+    "real_name": "大谷雅恵",
+    "last_name": "大谷",
+    "first_name": "雅恵",
+    "birth_date": "1982-02-25",
+    "gender": "female",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 2025,
+    "notes": "Wikipedia「大谷雅恵」より抽出",
+    "source": "Wikipedia",
+    "id": 557
+  },
+  {
+    "name": "小木博明",
+    "real_name": "小木博明",
+    "last_name": "小木",
+    "first_name": "博明",
+    "birth_date": "1971-08-16",
+    "gender": "female",
+    "illness": "腎細胞がん",
+    "illness_category": "がん（泌尿器）",
+    "onset_year": 2020,
+    "notes": "Wikipedia「小木博明」より抽出",
+    "source": "Wikipedia",
+    "id": 558
+  },
+  {
+    "name": "小林麻耶",
+    "real_name": "小林麻耶",
+    "last_name": "小林",
+    "first_name": "麻耶",
+    "birth_date": "1979-07-12",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2014,
+    "notes": "Wikipedia「小林麻耶」より抽出",
+    "source": "Wikipedia",
+    "id": 559
+  },
+  {
+    "name": "山田五郎",
+    "real_name": "山田五郎",
+    "last_name": "山田",
+    "first_name": "五郎",
+    "birth_date": "1958-12-05",
+    "gender": "male",
+    "illness": "食道がん",
+    "illness_category": "がん（頭頸部・消化器）",
+    "onset_year": 2004,
+    "notes": "Wikipedia「山田五郎」より抽出",
+    "source": "Wikipedia",
+    "id": 560
+  },
+  {
+    "name": "岡村孝子",
+    "real_name": "岡村孝子",
+    "last_name": "岡村",
+    "first_name": "孝子",
+    "birth_date": "1962-01-29",
+    "gender": "female",
+    "illness": "白血病",
+    "illness_category": "血液疾患",
+    "onset_year": 2019,
+    "notes": "Wikipedia「岡村孝子」より抽出",
+    "source": "Wikipedia",
+    "id": 561
+  },
+  {
+    "name": "広谷順子",
+    "real_name": "広谷順子",
+    "last_name": "広谷",
+    "first_name": "順子",
+    "birth_date": "1956-10-17",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2020,
+    "notes": "Wikipedia「広谷順子」より抽出",
+    "source": "Wikipedia",
+    "id": 562
+  },
+  {
+    "name": "有賀さつき",
+    "real_name": "有賀さつき",
+    "last_name": "有賀",
+    "first_name": "さつき",
+    "birth_date": "1965-09-09",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2017,
+    "notes": "Wikipedia「有賀さつき」より抽出",
+    "source": "Wikipedia",
+    "id": 563
+  },
+  {
+    "name": "村田英雄",
+    "real_name": "村田英雄",
+    "last_name": "村田",
+    "first_name": "英雄",
+    "birth_date": "1929-01-17",
+    "gender": "male",
+    "illness": "心筋梗塞",
+    "illness_category": "循環器疾患",
+    "onset_year": 2009,
+    "notes": "Wikipedia「村田英雄」より抽出",
+    "source": "Wikipedia",
+    "id": 564
+  },
+  {
+    "name": "松山千春",
+    "real_name": "松山千春",
+    "last_name": "松山",
+    "first_name": "千春",
+    "birth_date": "1955-12-16",
+    "gender": "male",
+    "illness": "狭心症",
+    "illness_category": "循環器疾患",
+    "onset_year": 2008,
+    "notes": "Wikipedia「松山千春」より抽出",
+    "source": "Wikipedia",
+    "id": 565
+  },
+  {
+    "name": "板東英二",
+    "real_name": "板東 英二",
+    "last_name": "板東",
+    "first_name": "英二",
+    "birth_date": "1940-03-31",
+    "gender": "male",
+    "illness": "心不全",
+    "illness_category": "循環器疾患",
+    "onset_year": 2026,
+    "notes": "Wikipedia「板東英二」より抽出",
+    "source": "Wikipedia",
+    "id": 566
+  },
+  {
+    "name": "森進一",
+    "real_name": "森進一",
+    "last_name": "森",
+    "first_name": "進一",
+    "birth_date": "1947-11-18",
+    "gender": "male",
+    "illness": "肺がん",
+    "illness_category": "がん（呼吸器）",
+    "onset_year": 2014,
+    "notes": "Wikipedia「森進一」より抽出",
+    "source": "Wikipedia",
+    "id": 567
+  },
+  {
+    "name": "牧伸二",
+    "real_name": "大井守常",
+    "last_name": "大井",
+    "first_name": "守常",
+    "birth_date": "1934-09-26",
+    "gender": "male",
+    "illness": "脳出血",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 2002,
+    "notes": "Wikipedia「牧伸二」より抽出",
+    "source": "Wikipedia",
+    "id": 568
+  },
+  {
+    "name": "牧村三枝子",
+    "real_name": "牧村三枝子",
+    "last_name": "牧村",
+    "first_name": "三枝子",
+    "birth_date": "1953-12-21",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 1979,
+    "notes": "Wikipedia「牧村三枝子」より抽出",
+    "source": "Wikipedia",
+    "id": 569
+  },
+  {
+    "name": "生田恵子",
+    "real_name": "生田恵子",
+    "last_name": "生田",
+    "first_name": "恵子",
+    "birth_date": "1928-06-20",
+    "gender": "female",
+    "illness": "脳出血",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 1995,
+    "notes": "Wikipedia「生田恵子」より抽出",
+    "source": "Wikipedia",
+    "id": 570
+  },
+  {
+    "name": "真矢 (ドラマー)",
+    "real_name": "真矢 (ドラマー)",
+    "last_name": "真矢",
+    "first_name": "(ドラマー)",
+    "birth_date": "1970-01-13",
+    "gender": "male",
+    "illness": "大腸がん",
+    "illness_category": "がん（消化器）",
+    "onset_year": 2020,
+    "notes": "Wikipedia「真矢 (ドラマー)」より抽出",
+    "source": "Wikipedia",
+    "id": 571
+  },
+  {
+    "name": "矢口真里",
+    "real_name": "矢口真里",
+    "last_name": "矢口",
+    "first_name": "真里",
+    "birth_date": "1983-01-20",
+    "gender": "female",
+    "illness": "ALS",
+    "illness_category": "神経疾患",
+    "onset_year": 2009,
+    "notes": "Wikipedia「矢口真里」より抽出",
+    "source": "Wikipedia",
+    "id": 572
+  },
+  {
+    "name": "石川セリ",
+    "real_name": "石川セリ",
+    "last_name": "石川",
+    "first_name": "セリ",
+    "birth_date": "1952-12-27",
+    "gender": "female",
+    "illness": "大動脈解離",
+    "illness_category": "循環器疾患",
+    "onset_year": 2004,
+    "notes": "Wikipedia「石川セリ」より抽出",
+    "source": "Wikipedia",
+    "id": 573
+  },
+  {
+    "name": "竹下亘",
+    "real_name": "竹下亘",
+    "last_name": "竹下",
+    "first_name": "亘",
+    "birth_date": "1946-11-03",
+    "gender": "female",
+    "illness": "食道がん",
+    "illness_category": "がん（頭頸部・消化器）",
+    "onset_year": 2019,
+    "notes": "Wikipedia「竹下亘」より抽出",
+    "source": "Wikipedia",
+    "id": 574
+  },
+  {
+    "name": "竹原慎二",
+    "real_name": "竹原慎二",
+    "last_name": "竹原",
+    "first_name": "慎二",
+    "birth_date": "1972-01-25",
+    "gender": "male",
+    "illness": "膀胱がん",
+    "illness_category": "がん（泌尿器）",
+    "onset_year": 1988,
+    "notes": "Wikipedia「竹原慎二」より抽出",
+    "source": "Wikipedia",
+    "id": 575
+  },
+  {
+    "name": "美空ひばり",
+    "real_name": "美空ひばり",
+    "last_name": "美空",
+    "first_name": "ひばり",
+    "birth_date": "1937-05-29",
+    "gender": "male",
+    "illness": "脳腫瘍",
+    "illness_category": "脳血管・脳腫瘍",
+    "onset_year": 1980,
+    "notes": "Wikipedia「美空ひばり」より抽出",
+    "source": "Wikipedia",
+    "id": 576
+  },
+  {
+    "name": "華晨宇",
+    "real_name": "華晨宇",
+    "last_name": "華晨",
+    "first_name": "宇",
+    "birth_date": "1990-02-07",
+    "gender": "male",
+    "illness": "うつ病",
+    "illness_category": "精神疾患（うつ・抑うつ）",
+    "onset_year": 2020,
+    "notes": "Wikipedia「華晨宇」より抽出",
+    "source": "Wikipedia",
+    "id": 577
+  },
+  {
+    "name": "蒼井そら",
+    "real_name": "純子{{R",
+    "last_name": "純子",
+    "first_name": "{{R",
+    "birth_date": "1983-11-11",
+    "gender": "female",
+    "illness": "子宮頸がん",
+    "illness_category": "がん（泌尿器）",
+    "onset_year": 2021,
+    "notes": "Wikipedia「蒼井そら」より抽出",
+    "source": "Wikipedia",
+    "id": 578
+  },
+  {
+    "name": "逸見政孝",
+    "real_name": "逸見政孝",
+    "last_name": "逸見",
+    "first_name": "政孝",
+    "birth_date": "1945-02-16",
+    "gender": "female",
+    "illness": "咽頭がん",
+    "illness_category": "がん（頭頸部）",
+    "onset_year": 2009,
+    "notes": "Wikipedia「逸見政孝」より抽出",
+    "source": "Wikipedia",
+    "id": 579
+  },
+  {
+    "name": "香西かおり",
+    "real_name": "香西かおり",
+    "last_name": "香西",
+    "first_name": "かおり",
+    "birth_date": "1963-08-28",
+    "gender": "female",
+    "illness": "乳がん",
+    "illness_category": "がん（乳がん）",
+    "onset_year": 2026,
+    "notes": "Wikipedia「香西かおり」より抽出",
+    "source": "Wikipedia",
+    "id": 580
+  },
+  {
+    "name": "西川きよし",
+    "real_name": "西川 潔（読み同じ）",
+    "last_name": "西川",
+    "first_name": "潔（読み同じ）",
+    "birth_date": "1946-07-02",
+    "gender": "male",
+    "illness": "前立腺がん",
+    "illness_category": "がん（泌尿器）",
+    "onset_year": 2015,
+    "notes": "Wikipedia「西川きよし」より抽出",
+    "source": "Wikipedia",
+    "id": 581
+  },
+  {
+    "name": "枡田絵理奈",
+    "real_name": "枡田絵理奈",
+    "last_name": "枡田",
+    "first_name": "絵理奈",
+    "birth_date": "1985-12-25",
+    "gender": "female",
+    "illness": "ALS",
+    "illness_category": "神経疾患",
+    "onset_year": 2006,
+    "notes": "Wikipedia「枡田絵理奈」より抽出",
+    "source": "Wikipedia",
+    "id": 582
+  },
+  {
+    "name": "桜井センリ",
+    "real_name": "桜井センリ",
+    "last_name": "桜井",
+    "first_name": "センリ",
+    "birth_date": "1926-03-20",
+    "gender": "male",
+    "illness": "狭心症",
+    "illness_category": "循環器疾患",
+    "onset_year": 1996,
+    "notes": "Wikipedia「桜井センリ」より抽出",
+    "source": "Wikipedia",
+    "id": 583
+  },
+  {
+    "name": "ディーン・フジオカ",
+    "real_name": "藤岡 竜雄（ふじおか たつお）",
+    "last_name": "藤岡",
+    "first_name": "竜雄（ふじおかたつお）",
+    "birth_date": "1980-08-19",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 584
+  },
+  {
+    "name": "赤西仁",
+    "real_name": "赤西仁",
+    "last_name": "赤西",
+    "first_name": "仁",
+    "birth_date": "1984-07-04",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 585
+  },
+  {
+    "name": "工藤静香",
+    "real_name": "{{ruby",
+    "last_name": "{{",
+    "first_name": "ruby",
+    "birth_date": "1970-04-14",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 586
+  },
+  {
+    "name": "スガシカオ",
+    "real_name": "スガシカオ",
+    "last_name": "スガ",
+    "first_name": "シカオ",
+    "birth_date": "1966-07-28",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 587
+  },
+  {
+    "name": "秦基博",
+    "real_name": "秦基博",
+    "last_name": "秦基",
+    "first_name": "博",
+    "birth_date": "1980-10-11",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 588
+  },
+  {
+    "name": "平井堅",
+    "real_name": "平井堅",
+    "last_name": "平井",
+    "first_name": "堅",
+    "birth_date": "1972-01-17",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 589
+  },
+  {
+    "name": "稲垣潤一",
+    "real_name": "稲垣潤一",
+    "last_name": "稲垣",
+    "first_name": "潤一",
+    "birth_date": "1953-07-09",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 590
+  },
+  {
+    "name": "杏里",
+    "real_name": "杏里",
+    "last_name": "杏",
+    "first_name": "里",
+    "birth_date": "1961-08-31",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 591
+  },
+  {
+    "name": "畠山美由紀",
+    "real_name": "畠山美由紀",
+    "last_name": "畠山",
+    "first_name": "美由紀",
+    "birth_date": "1972-08-18",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 592
+  },
+  {
+    "name": "相川七瀬",
+    "real_name": "相川七瀬",
+    "last_name": "相川",
+    "first_name": "七瀬",
+    "birth_date": "1975-02-16",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 593
+  },
+  {
+    "name": "宇都宮隆",
+    "real_name": "宇都宮隆",
+    "last_name": "宇都",
+    "first_name": "宮隆",
+    "birth_date": "1957-10-25",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 594
+  },
+  {
+    "name": "松任谷由実",
+    "real_name": "松任谷由実",
+    "last_name": "松任",
+    "first_name": "谷由実",
+    "birth_date": "1954-01-19",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 595
+  },
+  {
+    "name": "五輪真弓",
+    "real_name": "五輪真弓",
+    "last_name": "五輪",
+    "first_name": "真弓",
+    "birth_date": "1951-01-24",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 596
+  },
+  {
+    "name": "早見優",
+    "real_name": "早見優",
+    "last_name": "早見",
+    "first_name": "優",
+    "birth_date": "1966-09-02",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 597
+  },
+  {
+    "name": "南沙織",
+    "real_name": "南沙織",
+    "last_name": "南沙",
+    "first_name": "織",
+    "birth_date": "1954-07-02",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 598
+  },
+  {
+    "name": "小柳ルミ子",
+    "real_name": "小柳ルミ子",
+    "last_name": "小柳",
+    "first_name": "ルミ子",
+    "birth_date": "1952-07-02",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 599
+  },
+  {
+    "name": "城之内早苗",
+    "real_name": "城之内早苗",
+    "last_name": "城之",
+    "first_name": "内早苗",
+    "birth_date": "1968-05-17",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 600
+  },
+  {
+    "name": "島田奈央子",
+    "real_name": "島田奈央子",
+    "last_name": "島田",
+    "first_name": "奈央子",
+    "birth_date": "1971-02-01",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 601
+  },
+  {
+    "name": "細川たかし",
+    "real_name": "細川たかし",
+    "last_name": "細川",
+    "first_name": "たかし",
+    "birth_date": "1950-06-15",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 602
+  },
+  {
+    "name": "天童よしみ",
+    "real_name": "天童よしみ",
+    "last_name": "天童",
+    "first_name": "よしみ",
+    "birth_date": "1954-09-26",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 603
+  },
+  {
+    "name": "大月みやこ",
+    "real_name": "大月みやこ",
+    "last_name": "大月",
+    "first_name": "みやこ",
+    "birth_date": "1946-04-23",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 604
+  },
+  {
+    "name": "川中美幸",
+    "real_name": "川中美幸",
+    "last_name": "川中",
+    "first_name": "美幸",
+    "birth_date": "1955-12-05",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 605
+  },
+  {
+    "name": "島津亜矢",
+    "real_name": "島津亜矢",
+    "last_name": "島津",
+    "first_name": "亜矢",
+    "birth_date": "1971-03-28",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 606
+  },
+  {
+    "name": "三田明",
+    "real_name": "三田明",
+    "last_name": "三田",
+    "first_name": "明",
+    "birth_date": "1947-06-14",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 607
+  },
+  {
+    "name": "野村義男",
+    "real_name": "野村義男",
+    "last_name": "野村",
+    "first_name": "義男",
+    "birth_date": "1964-10-26",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 608
+  },
+  {
+    "name": "南原清隆",
+    "real_name": "南原 清隆",
+    "last_name": "南原",
+    "first_name": "清隆",
+    "birth_date": "1965-02-13",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 609
+  },
+  {
+    "name": "有吉弘行",
+    "real_name": "有吉弘行",
+    "last_name": "有吉",
+    "first_name": "弘行",
+    "birth_date": "1974-05-31",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 610
+  },
+  {
+    "name": "博多大吉",
+    "real_name": "吉岡 廣憲（よしおか ひろのり）<ref>{{Cite web",
+    "last_name": "吉岡",
+    "first_name": "廣憲（よしおかひろのり）<ref>{{Citeweb",
+    "birth_date": "1971-03-10",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 611
+  },
+  {
+    "name": "蛍原徹",
+    "real_name": "蛍原 徹",
+    "last_name": "蛍原",
+    "first_name": "徹",
+    "birth_date": "1968-01-08",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 612
+  },
+  {
+    "name": "塙宣之",
+    "real_name": "塙 宣之",
+    "last_name": "塙",
+    "first_name": "宣之",
+    "birth_date": "1978-03-27",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 613
+  },
+  {
+    "name": "後藤輝基",
+    "real_name": "後藤 輝基",
+    "last_name": "後藤",
+    "first_name": "輝基",
+    "birth_date": "1974-06-18",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 614
+  },
+  {
+    "name": "山崎弘也",
+    "real_name": "山﨑 弘也",
+    "last_name": "山﨑",
+    "first_name": "弘也",
+    "birth_date": "1976-01-14",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 615
+  },
+  {
+    "name": "児嶋一哉",
+    "real_name": "児嶋 一哉",
+    "last_name": "児嶋",
+    "first_name": "一哉",
+    "birth_date": "1972-07-16",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 616
+  },
+  {
+    "name": "渡部建",
+    "real_name": "渡部建",
+    "last_name": "渡部",
+    "first_name": "建",
+    "birth_date": "1972-09-23",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 617
+  },
+  {
+    "name": "秋山竜次",
+    "real_name": "秋山竜次",
+    "last_name": "秋山",
+    "first_name": "竜次",
+    "birth_date": "1978-08-15",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 618
+  },
+  {
+    "name": "馬場裕之",
+    "real_name": "馬場裕之",
+    "last_name": "馬場",
+    "first_name": "裕之",
+    "birth_date": "1979-03-22",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 619
+  },
+  {
+    "name": "長谷川忍",
+    "real_name": "長谷川 忍",
+    "last_name": "長谷川",
+    "first_name": "忍",
+    "birth_date": "1978-08-06",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 620
+  },
+  {
+    "name": "じろう",
+    "real_name": "大河原 次郎（おおかわら じろう）",
+    "last_name": "大河原",
+    "first_name": "次郎（おおかわらじろう）",
+    "birth_date": "1978-07-14",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 621
+  },
+  {
+    "name": "野田クリスタル",
+    "real_name": "{{ruby",
+    "last_name": "{{",
+    "first_name": "ruby",
+    "birth_date": "1986-11-28",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 622
+  },
+  {
+    "name": "盛山晋太郎",
+    "real_name": "盛山 晋太郎",
+    "last_name": "盛山",
+    "first_name": "晋太郎",
+    "birth_date": "1986-01-09",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 623
+  },
+  {
+    "name": "森田哲矢",
+    "real_name": "森田 哲矢",
+    "last_name": "森田",
+    "first_name": "哲矢",
+    "birth_date": "1981-08-23",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 624
+  },
+  {
+    "name": "兼近大樹",
+    "real_name": "兼近 大樹",
+    "last_name": "兼近",
+    "first_name": "大樹",
+    "birth_date": "1991-05-11",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 625
+  },
+  {
+    "name": "せいや",
+    "real_name": "石川 晟也（いしかわ せいや）",
+    "last_name": "石川",
+    "first_name": "晟也（いしかわせいや）",
+    "birth_date": "1992-09-13",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 626
+  },
+  {
+    "name": "川田広樹",
+    "real_name": "川田 広樹",
+    "last_name": "川田",
+    "first_name": "広樹",
+    "birth_date": "1973-02-01",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 627
+  },
+  {
+    "name": "やす",
+    "real_name": "藍木 靖英（あいき やすひで）",
+    "last_name": "藍木",
+    "first_name": "靖英（あいきやすひで）",
+    "birth_date": "1969-11-18",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 628
+  },
+  {
+    "name": "中岡創一",
+    "real_name": "同じ",
+    "last_name": "同",
+    "first_name": "じ",
+    "birth_date": "1977-12-08",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 629
+  },
+  {
+    "name": "平子祐希",
+    "real_name": "平子祐希",
+    "last_name": "平子",
+    "first_name": "祐希",
+    "birth_date": "1978-12-04",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 630
+  },
+  {
+    "name": "岩井勇気",
+    "real_name": "岩井勇気",
+    "last_name": "岩井",
+    "first_name": "勇気",
+    "birth_date": "1986-07-31",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 631
+  },
+  {
+    "name": "西村瑞樹",
+    "real_name": "西村 瑞樹（にしむら みずき）",
+    "last_name": "西村",
+    "first_name": "瑞樹（にしむらみずき）",
+    "birth_date": "1977-04-23",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 632
+  },
+  {
+    "name": "小峠英二",
+    "real_name": "クロヒョウ（めすどり同好会時代）<ref>{{Cite web",
+    "last_name": "クロヒョウ（めすどり同好会時代）<ref>{{Cite",
+    "first_name": "web",
+    "birth_date": "1976-06-06",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 633
+  },
+  {
+    "name": "徳井義実",
+    "real_name": "徳井義実",
+    "last_name": "徳井",
+    "first_name": "義実",
+    "birth_date": "1975-04-16",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 634
+  },
+  {
+    "name": "天野ひろゆき",
+    "real_name": "天野 博之（読み同じ）",
+    "last_name": "天野",
+    "first_name": "博之（読み同じ）",
+    "birth_date": "1970-03-24",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 635
+  },
+  {
+    "name": "藤田憲右",
+    "real_name": "藤田 憲右",
+    "last_name": "藤田",
+    "first_name": "憲右",
+    "birth_date": "1975-12-30",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 636
+  },
+  {
+    "name": "水田信二",
+    "real_name": "水田信二",
+    "last_name": "水田",
+    "first_name": "信二",
+    "birth_date": "1980-04-15",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 637
+  },
+  {
+    "name": "川西賢志郎",
+    "real_name": "川西賢志郎",
+    "last_name": "川西",
+    "first_name": "賢志郎",
+    "birth_date": "1984-01-29",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 638
+  },
+  {
+    "name": "こがけん",
+    "real_name": "古賀 憲太郎（こが けんたろう）",
+    "last_name": "古賀",
+    "first_name": "憲太郎（こがけんたろう）",
+    "birth_date": "1979-02-14",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 639
+  },
+  {
+    "name": "ZAZY",
+    "real_name": "赤井 俊之（あかい としゆき）",
+    "last_name": "赤井",
+    "first_name": "俊之（あかいとしゆき）",
+    "birth_date": "1988-06-27",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 640
+  },
+  {
+    "name": "鷲見玲奈",
+    "real_name": "鷲見玲奈",
+    "last_name": "鷲見",
+    "first_name": "玲奈",
+    "birth_date": "1990-05-12",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 641
+  },
+  {
+    "name": "宇垣美里",
+    "real_name": "宇垣美里",
+    "last_name": "宇垣",
+    "first_name": "美里",
+    "birth_date": "1991-04-16",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 642
+  },
+  {
+    "name": "久慈暁子",
+    "real_name": "久慈暁子",
+    "last_name": "久慈",
+    "first_name": "暁子",
+    "birth_date": "1994-07-13",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 643
+  },
+  {
+    "name": "河野景子",
+    "real_name": "河野 景子",
+    "last_name": "河野",
+    "first_name": "景子",
+    "birth_date": "1964-11-12",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 644
+  },
+  {
+    "name": "高島彩",
+    "real_name": "<!-- 北川に改姓した周知の事実なし、記載する場合は要出典 -->",
+    "last_name": "<!--",
+    "first_name": "北川に改姓した周知の事実なし、記載する場合は要出典-->",
+    "birth_date": "1979-02-18",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 645
+  },
+  {
+    "name": "中野美奈子",
+    "real_name": "{{ruby",
+    "last_name": "{{",
+    "first_name": "ruby",
+    "birth_date": "1979-12-14",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 646
+  },
+  {
+    "name": "永島優美",
+    "real_name": "永島優美",
+    "last_name": "永島",
+    "first_name": "優美",
+    "birth_date": "1991-11-23",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 647
+  },
+  {
+    "name": "久代萌美",
+    "real_name": "久代萌美",
+    "last_name": "久代",
+    "first_name": "萌美",
+    "birth_date": "1989-10-06",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 648
+  },
+  {
+    "name": "葉山エレーヌ",
+    "real_name": "葉山 みゆき エレーヌ",
+    "last_name": "葉山",
+    "first_name": "みゆきエレーヌ",
+    "birth_date": "1982-07-29",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 649
+  },
+  {
+    "name": "本田朋子",
+    "real_name": "五十嵐朋子 （旧姓・本田）",
+    "last_name": "五十嵐朋子",
+    "first_name": "（旧姓・本田）",
+    "birth_date": "1983-08-16",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 650
+  },
+  {
+    "name": "西尾由佳理",
+    "real_name": "西尾由佳理",
+    "last_name": "西尾",
+    "first_name": "由佳理",
+    "birth_date": "1977-07-25",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 651
+  },
+  {
+    "name": "森香澄",
+    "real_name": "森香澄",
+    "last_name": "森",
+    "first_name": "香澄",
+    "birth_date": "1995-06-16",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 652
+  },
+  {
+    "name": "堂真理子",
+    "real_name": "堂真理子",
+    "last_name": "堂真",
+    "first_name": "理子",
+    "birth_date": "1981-09-21",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 653
+  },
+  {
+    "name": "鈴木新彩",
+    "real_name": "鈴木新彩",
+    "last_name": "鈴木",
+    "first_name": "新彩",
+    "birth_date": "2000-03-08",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 654
+  },
+  {
+    "name": "山口智充",
+    "real_name": "山口 智充",
+    "last_name": "山口",
+    "first_name": "智充",
+    "birth_date": "1969-03-14",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 655
+  },
+  {
+    "name": "柳原可奈子",
+    "real_name": "柳原可奈子",
+    "last_name": "柳原",
+    "first_name": "可奈子",
+    "birth_date": "1986-02-03",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 656
+  },
+  {
+    "name": "渡辺直美",
+    "real_name": "渡辺直美",
+    "last_name": "渡辺",
+    "first_name": "直美",
+    "birth_date": "1987-10-23",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 657
+  },
+  {
+    "name": "ゆりやんレトリィバァ",
+    "real_name": "吉田 有里（よしだ ゆり）",
+    "last_name": "吉田",
+    "first_name": "有里（よしだゆり）",
+    "birth_date": "1990-11-01",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 658
+  },
+  {
+    "name": "黒沢かずこ",
+    "real_name": "{{ruby",
+    "last_name": "{{",
+    "first_name": "ruby",
+    "birth_date": "1978-10-17",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 659
+  },
+  {
+    "name": "村上知子",
+    "real_name": "村上知子",
+    "last_name": "村上",
+    "first_name": "知子",
+    "birth_date": "1980-01-02",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 660
+  },
+  {
+    "name": "大島美幸",
+    "real_name": "鈴木 美幸（旧姓：大島）",
+    "last_name": "鈴木",
+    "first_name": "美幸（旧姓：大島）",
+    "birth_date": "1980-01-13",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 661
+  },
+  {
+    "name": "小原正子",
+    "real_name": "鈴木正子",
+    "last_name": "鈴木",
+    "first_name": "正子",
+    "birth_date": "1975-10-23",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 662
+  },
+  {
+    "name": "丸山桂里奈",
+    "real_name": "同じ",
+    "last_name": "同",
+    "first_name": "じ",
+    "birth_date": "1983-03-26",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 663
+  },
+  {
+    "name": "加護亜依",
+    "real_name": "加護亜依",
+    "last_name": "加護",
+    "first_name": "亜依",
+    "birth_date": "1988-02-07",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 664
+  },
+  {
+    "name": "市井紗耶香",
+    "real_name": "市井紗耶香",
+    "last_name": "市井",
+    "first_name": "紗耶香",
+    "birth_date": "1983-12-31",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 665
+  },
+  {
+    "name": "吉澤ひとみ",
+    "real_name": "吉澤ひとみ",
+    "last_name": "吉澤",
+    "first_name": "ひとみ",
+    "birth_date": "1985-04-12",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 666
+  },
+  {
+    "name": "新垣里沙",
+    "real_name": "新垣里沙",
+    "last_name": "新垣",
+    "first_name": "里沙",
+    "birth_date": "1988-10-20",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 667
+  },
+  {
+    "name": "嗣永桃子",
+    "real_name": "嗣永桃子",
+    "last_name": "嗣永",
+    "first_name": "桃子",
+    "birth_date": "1992-03-06",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 668
+  },
+  {
+    "name": "夏焼雅",
+    "real_name": "夏焼雅",
+    "last_name": "夏焼",
+    "first_name": "雅",
+    "birth_date": "1992-08-25",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 669
+  },
+  {
+    "name": "熊井友理奈",
+    "real_name": "熊井友理奈",
+    "last_name": "熊井",
+    "first_name": "友理奈",
+    "birth_date": "1993-08-03",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 670
+  },
+  {
+    "name": "菅谷梨沙子",
+    "real_name": "菅谷梨沙子",
+    "last_name": "菅谷",
+    "first_name": "梨沙子",
+    "birth_date": "1994-04-04",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 671
+  },
+  {
+    "name": "清水佐紀",
+    "real_name": "清水佐紀",
+    "last_name": "清水",
+    "first_name": "佐紀",
+    "birth_date": "1991-11-22",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 672
+  },
+  {
+    "name": "徳永千奈美",
+    "real_name": "徳永千奈美",
+    "last_name": "徳永",
+    "first_name": "千奈美",
+    "birth_date": "1992-05-22",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 673
+  },
+  {
+    "name": "中島早貴",
+    "real_name": "中島早貴",
+    "last_name": "中島",
+    "first_name": "早貴",
+    "birth_date": "1994-02-05",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 674
+  },
+  {
+    "name": "小田さくら",
+    "real_name": "小田さくら",
+    "last_name": "小田",
+    "first_name": "さくら",
+    "birth_date": "1999-03-12",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 675
+  },
+  {
+    "name": "野中美希",
+    "real_name": "野中美希",
+    "last_name": "野中",
+    "first_name": "美希",
+    "birth_date": "1999-10-07",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 676
+  },
+  {
+    "name": "羽賀朱音",
+    "real_name": "羽賀朱音",
+    "last_name": "羽賀",
+    "first_name": "朱音",
+    "birth_date": "2002-03-07",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 677
+  },
+  {
+    "name": "横山玲奈",
+    "real_name": "横山玲奈",
+    "last_name": "横山",
+    "first_name": "玲奈",
+    "birth_date": "2001-02-22",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 678
+  },
+  {
+    "name": "北川莉央",
+    "real_name": "北川莉央",
+    "last_name": "北川",
+    "first_name": "莉央",
+    "birth_date": "2004-03-16",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 679
+  },
+  {
+    "name": "岡村ほまれ",
+    "real_name": "岡村ほまれ",
+    "last_name": "岡村",
+    "first_name": "ほまれ",
+    "birth_date": "2005-05-09",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 680
+  },
+  {
+    "name": "山﨑愛生",
+    "real_name": "山﨑愛生",
+    "last_name": "山﨑",
+    "first_name": "愛生",
+    "birth_date": "2005-06-28",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 681
+  },
+  {
+    "name": "櫻井梨央",
+    "real_name": "櫻井梨央",
+    "last_name": "櫻井",
+    "first_name": "梨央",
+    "birth_date": "2005-11-11",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 682
+  },
+  {
+    "name": "井上春華",
+    "real_name": "井上春華",
+    "last_name": "井上",
+    "first_name": "春華",
+    "birth_date": "2006-05-06",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 683
+  },
+  {
+    "name": "弓桁朱琴",
+    "real_name": "弓桁朱琴",
+    "last_name": "弓桁",
+    "first_name": "朱琴",
+    "birth_date": "2008-07-08",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 684
+  },
+  {
+    "name": "譜久村聖",
+    "real_name": "譜久村聖",
+    "last_name": "譜久",
+    "first_name": "村聖",
+    "birth_date": "1996-10-30",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 685
+  },
+  {
+    "name": "小関舞",
+    "real_name": "小関舞",
+    "last_name": "小関",
+    "first_name": "舞",
+    "birth_date": "2002-02-10",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 686
+  },
+  {
+    "name": "梁川奈々美",
+    "real_name": "梁川奈々美",
+    "last_name": "梁川",
+    "first_name": "奈々美",
+    "birth_date": "2002-01-06",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 687
+  },
+  {
+    "name": "段原瑠々",
+    "real_name": "段原瑠々",
+    "last_name": "段原",
+    "first_name": "瑠々",
+    "birth_date": "2001-05-07",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 688
+  },
+  {
+    "name": "工藤由愛",
+    "real_name": "工藤由愛",
+    "last_name": "工藤",
+    "first_name": "由愛",
+    "birth_date": "2004-09-28",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 689
+  },
+  {
+    "name": "松永里愛",
+    "real_name": "松永里愛",
+    "last_name": "松永",
+    "first_name": "里愛",
+    "birth_date": "2005-07-07",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 690
+  },
+  {
+    "name": "江端妃咲",
+    "real_name": "江端妃咲",
+    "last_name": "江端",
+    "first_name": "妃咲",
+    "birth_date": "2007-01-30",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 691
+  },
+  {
+    "name": "遠藤彩加里",
+    "real_name": "遠藤彩加里",
+    "last_name": "遠藤",
+    "first_name": "彩加里",
+    "birth_date": "2008-04-26",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 692
+  },
+  {
+    "name": "川嶋美楓",
+    "real_name": "川嶋美楓",
+    "last_name": "川嶋",
+    "first_name": "美楓",
+    "birth_date": "2007-12-13",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 693
+  },
+  {
+    "name": "為永幸音",
+    "real_name": "為永幸音",
+    "last_name": "為永",
+    "first_name": "幸音",
+    "birth_date": "2004-02-09",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 694
+  },
+  {
+    "name": "松本わかな",
+    "real_name": "松本わかな",
+    "last_name": "松本",
+    "first_name": "わかな",
+    "birth_date": "2007-09-01",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 695
+  },
+  {
+    "name": "平山遊季",
+    "real_name": "平山遊季",
+    "last_name": "平山",
+    "first_name": "遊季",
+    "birth_date": "2006-07-25",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 696
+  },
+  {
+    "name": "小林萌花",
+    "real_name": "小林萌花",
+    "last_name": "小林",
+    "first_name": "萌花",
+    "birth_date": "2000-08-16",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 697
+  },
+  {
+    "name": "里吉うたの",
+    "real_name": "里吉うたの",
+    "last_name": "里吉",
+    "first_name": "うたの",
+    "birth_date": "2000-09-22",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 698
+  },
+  {
+    "name": "高瀬くるみ",
+    "real_name": "高瀬くるみ",
+    "last_name": "高瀬",
+    "first_name": "くるみ",
+    "birth_date": "1999-03-16",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 699
+  },
+  {
+    "name": "前田こころ",
+    "real_name": "前田こころ",
+    "last_name": "前田",
+    "first_name": "こころ",
+    "birth_date": "2002-06-23",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 700
+  },
+  {
+    "name": "山﨑夢羽",
+    "real_name": "山﨑夢羽",
+    "last_name": "山﨑",
+    "first_name": "夢羽",
+    "birth_date": "2002-11-05",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 701
+  },
+  {
+    "name": "岡村美波",
+    "real_name": "岡村美波",
+    "last_name": "岡村",
+    "first_name": "美波",
+    "birth_date": "2004-10-20",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 702
+  },
+  {
+    "name": "島倉りか",
+    "real_name": "島倉りか",
+    "last_name": "島倉",
+    "first_name": "りか",
+    "birth_date": "2000-08-20",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 703
+  },
+  {
+    "name": "江口紗耶",
+    "real_name": "江口紗耶",
+    "last_name": "江口",
+    "first_name": "紗耶",
+    "birth_date": "2003-08-01",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 704
+  },
+  {
+    "name": "広本瑠璃",
+    "real_name": "広本瑠璃",
+    "last_name": "広本",
+    "first_name": "瑠璃",
+    "birth_date": "2003-06-18",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 705
+  },
+  {
+    "name": "中山夏月姫",
+    "real_name": "中山夏月姫",
+    "last_name": "中山",
+    "first_name": "夏月姫",
+    "birth_date": "2005-07-20",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 706
+  },
+  {
+    "name": "福田真琳",
+    "real_name": "福田真琳",
+    "last_name": "福田",
+    "first_name": "真琳",
+    "birth_date": "2004-10-18",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 707
+  },
+  {
+    "name": "豫風瑠乃",
+    "real_name": "豫風瑠乃",
+    "last_name": "豫風",
+    "first_name": "瑠乃",
+    "birth_date": "2007-12-20",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 708
+  },
+  {
+    "name": "川名凜",
+    "real_name": "川名凜",
+    "last_name": "川名",
+    "first_name": "凜",
+    "birth_date": "2003-12-06",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 709
+  },
+  {
+    "name": "秋山眞緒",
+    "real_name": "秋山眞緒",
+    "last_name": "秋山",
+    "first_name": "眞緒",
+    "birth_date": "2002-07-29",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 710
+  },
+  {
+    "name": "河西結心",
+    "real_name": "河西結心",
+    "last_name": "河西",
+    "first_name": "結心",
+    "birth_date": "2003-07-30",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 711
+  },
+  {
+    "name": "八木栞",
+    "real_name": "八木栞",
+    "last_name": "八木",
+    "first_name": "栞",
+    "birth_date": "2003-09-19",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 712
+  },
+  {
+    "name": "Mariko",
+    "real_name": "Mariko",
+    "last_name": "Ma",
+    "first_name": "riko",
+    "birth_date": "1982-07-14",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 713
+  },
+  {
+    "name": "伊藤賢",
+    "real_name": "伊藤賢",
+    "last_name": "伊藤",
+    "first_name": "賢",
+    "birth_date": "1985-12-14",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 714
+  },
+  {
+    "name": "近衛秀麿",
+    "real_name": "近衛秀麿",
+    "last_name": "近衛",
+    "first_name": "秀麿",
+    "birth_date": "1898-11-18",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 715
+  },
+  {
+    "name": "今西泰彦",
+    "real_name": "今西泰彦",
+    "last_name": "今西",
+    "first_name": "泰彦",
+    "birth_date": "1984-02-10",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 716
+  },
+  {
+    "name": "沖不可止",
+    "real_name": "沖不可止",
+    "last_name": "沖不",
+    "first_name": "可止",
+    "birth_date": "1902-03-06",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 717
+  },
+  {
+    "name": "阿木譲",
+    "real_name": "阿木譲",
+    "last_name": "阿木",
+    "first_name": "譲",
+    "birth_date": "1946-04-14",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 718
+  },
+  {
+    "name": "小名川高弘",
+    "real_name": "小名川高弘",
+    "last_name": "小名",
+    "first_name": "川高弘",
+    "birth_date": "1979-11-30",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 719
+  },
+  {
+    "name": "川人伸二",
+    "real_name": "川人伸二",
+    "last_name": "川人",
+    "first_name": "伸二",
+    "birth_date": "1945-10-07",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 720
+  },
+  {
+    "name": "しもぐち☆雅充",
+    "real_name": "しもぐち☆雅充",
+    "last_name": "しも",
+    "first_name": "ぐち☆雅充",
+    "birth_date": "1971-03-30",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 721
+  },
+  {
+    "name": "岩城直也",
+    "real_name": "岩城直也",
+    "last_name": "岩城",
+    "first_name": "直也",
+    "birth_date": "1993-12-14",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 722
+  },
+  {
+    "name": "藤原ヒロシ",
+    "real_name": "藤原ヒロシ",
+    "last_name": "藤",
+    "first_name": "原ヒロシ",
+    "birth_date": "1964-02-07",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 723
+  },
+  {
+    "name": "中西康晴",
+    "real_name": "中西康晴",
+    "last_name": "中西",
+    "first_name": "康晴",
+    "birth_date": "1958-02-04",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 724
+  },
+  {
+    "name": "イトウシンタロウ",
+    "real_name": "イトウシンタロウ",
+    "last_name": "イト",
+    "first_name": "ウシンタロウ",
+    "birth_date": "1993-07-08",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 725
+  },
+  {
+    "name": "青山隼",
+    "real_name": "青山隼",
+    "last_name": "青山",
+    "first_name": "隼",
+    "birth_date": "1988-01-03",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 726
+  },
+  {
+    "name": "岩崎工",
+    "real_name": "岩崎工",
+    "last_name": "岩崎",
+    "first_name": "工",
+    "birth_date": "1955-09-10",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 727
+  },
+  {
+    "name": "C-Show",
+    "real_name": "C-Show",
+    "last_name": "C-",
+    "first_name": "Show",
+    "birth_date": "1990-03-27",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 728
+  },
+  {
+    "name": "かみむら周平",
+    "real_name": "かみむら周平",
+    "last_name": "かみ",
+    "first_name": "むら周平",
+    "birth_date": "1979-06-14",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 729
+  },
+  {
+    "name": "中島来弥",
+    "real_name": "中島来弥",
+    "last_name": "中島",
+    "first_name": "来弥",
+    "birth_date": "1999-01-24",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 730
+  },
+  {
+    "name": "嵐野英彦",
+    "real_name": "嵐野英彦",
+    "last_name": "嵐野",
+    "first_name": "英彦",
+    "birth_date": "1935-06-06",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 731
+  },
+  {
+    "name": "北舘洋一郎",
+    "real_name": "北舘洋一郎",
+    "last_name": "北舘",
+    "first_name": "洋一郎",
+    "birth_date": "1968-06-06",
+    "gender": "male",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 732
+  },
+  {
+    "name": "美里ウィンチェスター",
+    "real_name": "美里ウィンチェスター",
+    "last_name": "美里",
+    "first_name": "ウィンチェスター",
+    "birth_date": "1997-05-06",
+    "gender": "female",
+    "illness": null,
+    "illness_category": null,
+    "onset_year": null,
+    "notes": "対照群（病気公表なし）",
+    "source": "Wikipedia",
+    "group": "control",
+    "id": 733
   }
 ]
