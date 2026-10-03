@@ -625,18 +625,18 @@ select:focus {
 button {
   cursor: pointer;
   border: none;
-  color: #0d1b2a;
-  background: linear-gradient(135deg, var(--tropical-sand), var(--tropical-orange));
+  color: #fff;
+  background: linear-gradient(135deg, var(--tropical-pink), var(--tropical-purple));
   font-weight: 700;
   padding: 0 28px;
-  border-radius: 12px;
+  border-radius: 14px;
   transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-  box-shadow: 0 2px 12px rgba(255, 159, 28, 0.25);
+  box-shadow: 0 2px 12px rgba(255, 112, 166, 0.30);
 }
 
 button:hover {
-  background: linear-gradient(135deg, #ffe066, var(--tropical-sand));
-  box-shadow: 0 4px 18px rgba(255, 210, 63, 0.35);
+  background: linear-gradient(135deg, #ff9cc0, #d49aff);
+  box-shadow: 0 4px 18px rgba(255, 112, 166, 0.40);
 }
 
 button:active {
@@ -2056,6 +2056,10 @@ button:active {
   line-height: 1;
   color: var(--risk-color, var(--text));
   text-shadow: 0 0 20px rgba(220, 80, 80, 0.3);
+}
+.affair-risk-score-text {
+  font-size: 1.8em;
+  line-height: 1.2;
 }
 
 .affair-risk-score-num span {
@@ -4505,3 +4509,222 @@ button:active {
   .kyusei-directions-sm { grid-template-columns: 1fr; }
   .kyusei-board-sm { max-width: 260px; }
 }
+
+/* === 相性占いタブ・直接入力 === */
+.compat-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.compat-tab {
+  flex: 1;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.compat-tab:hover {
+  background: rgba(255, 112, 166, 0.12);
+  box-shadow: none;
+}
+.compat-tab.is-active {
+  color: #fff;
+  background: linear-gradient(135deg, var(--tropical-pink), var(--tropical-purple));
+  border-color: transparent;
+}
+.direct-partner-box {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255, 112, 166, 0.06);
+  border: 1px solid rgba(255, 112, 166, 0.20);
+}
+.direct-partner-title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tropical-pink);
+}
+@media (max-width: 600px) {
+  .compat-tabs { flex-direction: column; }
+}
+
+/* === 今日のラッキー（かんたん表示のみ） === */
+.lucky-today-card {
+  background: linear-gradient(135deg, rgba(255, 112, 166, 0.10), rgba(199, 125, 255, 0.08));
+  border-color: rgba(255, 112, 166, 0.25);
+}
+.lucky-today-card h3 { margin-top: 0; }
+.lucky-today-dir {
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0 0 8px;
+}
+.lucky-today-action {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--tropical-sand);
+}
+
+/* === かんたん表示の並び順 === */
+.simple-mode .result-header { order: -5; }
+.simple-mode .view-toggle-wrap { order: -4; }
+.simple-mode .lucky-today-card { order: -3; }
+.simple-mode .life-summary-card { order: -2; }
+.simple-mode .love-relations-card,
+.simple-mode .mote-card { order: -1; }
+
+/* === 鑑定中ローディング === */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 27, 42, 0.85);
+  backdrop-filter: blur(6px);
+}
+.loading-inner { text-align: center; }
+.loading-star {
+  font-size: 56px;
+  animation: loadingPulse 1.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(255, 210, 63, 0.6));
+}
+.loading-text {
+  margin-top: 16px;
+  color: var(--text);
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  animation: loadingFade 1.2s ease-in-out infinite;
+}
+@keyframes loadingPulse {
+  0%, 100% { transform: scale(1) rotate(-8deg); opacity: 0.85; }
+  50% { transform: scale(1.15) rotate(8deg); opacity: 1; }
+}
+@keyframes loadingFade {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* === ミニ目次（かんたん表示のみ） === */
+.toc-nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px 4px;
+  position: sticky;
+  top: 8px;
+  z-index: 50;
+  background: rgba(13, 27, 42, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 999px;
+  -webkit-overflow-scrolling: touch;
+}
+.toc-nav::-webkit-scrollbar { display: none; }
+.toc-nav a {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  transition: color 0.2s, background 0.2s;
+}
+.toc-nav a:hover {
+  color: var(--tropical-pink);
+  background: rgba(255, 112, 166, 0.12);
+}
+
+/* === 上に戻るボタン === */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  z-index: 100;
+  width: 48px;
+  height: 48px;
+  min-height: auto;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(255, 112, 166, 0.4);
+}
+html { scroll-behavior: smooth; }
+
+/* === ライトモード（さくらテーマ） === */
+.theme-toggle {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  min-height: auto;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+body.light-mode {
+  color-scheme: light;
+  --bg: #fdf3f7;
+  --panel: rgba(255, 255, 255, 0.92);
+  --panel-strong: #ffedf3;
+  --text: #4a2f3d;
+  --muted: #93707f;
+  --border: rgba(255, 112, 166, 0.25);
+  --border-subtle: rgba(199, 125, 255, 0.15);
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(255, 183, 213, 0.35) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 10%, rgba(199, 125, 255, 0.20) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 60%, rgba(255, 213, 226, 0.30) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(255, 230, 180, 0.30) 0%, transparent 45%),
+    var(--bg);
+}
+body.light-mode input,
+body.light-mode select {
+  background: rgba(74, 47, 61, 0.05);
+  border-color: rgba(74, 47, 61, 0.15);
+}
+body.light-mode .panel,
+body.light-mode .result-card {
+  box-shadow: 0 4px 24px rgba(200, 120, 150, 0.15);
+}
+body.light-mode .theme-toggle {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 112, 166, 0.3);
+}
+body.light-mode .loading-overlay { background: rgba(253, 243, 247, 0.92); }
+body.light-mode .loading-text { color: var(--text); }
+body.light-mode .toc-nav { background: rgba(255, 237, 243, 0.9); }
+body.light-mode .toc-nav a {
+  background: rgba(74, 47, 61, 0.05);
+  border-color: rgba(74, 47, 61, 0.10);
+}
+body.light-mode .compat-tab {
+  background: rgba(74, 47, 61, 0.05);
+  border-color: rgba(74, 47, 61, 0.12);
+}
+body.light-mode .compat-tab.is-active { color: #fff; }
+body.light-mode .direct-partner-box { background: rgba(255, 112, 166, 0.08); }

@@ -5411,6 +5411,8 @@ function refreshHistoryUI() {
   const opts = history.map((h, i) => `<option value="${i}">${h.name}（${h.birthdate}）</option>`).join("");
   personA.innerHTML = '<option value="">-- 記録から選択 --</option>' + opts;
   personB.innerHTML = '<option value="">-- 記録から選択 --</option>' + opts;
+  const personADirect = document.querySelector("#personADirect");
+  if (personADirect) personADirect.innerHTML = '<option value="">-- 記録から選択 --</option>' + opts;
 }
 
 function deleteHistoryItem(idx) {
@@ -5760,9 +5762,10 @@ function renderCompat(event) {
   if (idxA === idxB) return alert("異なる人物を選択してください");
   const a = history[idxA];
   const b = history[idxB];
-  if (a.gender && b.gender && a.gender === b.gender) {
-    // 同性ペアの場合は恋愛相性をスキップし、職場・親子相性のみ表示
-  }
+  showCompatResult(a, b);
+}
+
+function showCompatResult(a, b) {
   const c = calcCompatibility(a, b);
   const wc = calcWorkCompatibility(a, b);
   const pc = calcParentChildCompatibility(a, b);
@@ -5920,115 +5923,396 @@ function renderCompat(event) {
         <div class="note-text-sm mt-4">主星「${c.starBtoA}」が表す${a.name}の存在感</div></article>
       </div>
     </div>
+
+    <div class="result-card">
+      <h3>職場・友人としての相性</h3>
+      <p class="note mb-14">同僚・上司・友達としての付き合いやすさを見ています。恋愛とは別の関係性の相性です。</p>
+      <div class="compat-cat">
+        <div class="compat-cat-head">
+          <h4>仕事・友人相性</h4>
+          <div class="compat-cat-score" style="--score-color:${scoreColor(wc.score)}">${wc.score}<small>%</small><span class="compat-cat-rank">${scoreRank(wc.score)}</span></div>
+        </div>
+        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="--score:${wc.score}%;--score-color:${scoreColor(wc.score)}"></div></div>
+        <p>${wc.advice}</p>
+        <div class="compat-cat-factors">${wc.factors.map(f => `<span class="factor-tag">${f}</span>`).join("")}</div>
+        <p class="note-text-sm mt-10">役割傾向：${a.name}は「${wc.roleA}」、${b.name}は「${wc.roleB}」タイプ</p>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <h3>親子・家族としての相性</h3>
+      <p class="note mb-14">${a.name}を親・${b.name}を子として見た場合の関係性です。家族・目上と目下の付き合い方の参考になります。</p>
+      <div class="compat-cat">
+        <div class="compat-cat-head">
+          <h4>親子相性</h4>
+          <div class="compat-cat-score" style="--score-color:${scoreColor(pc.score)}">${pc.score}<small>%</small><span class="compat-cat-rank">${scoreRank(pc.score)}</span></div>
+        </div>
+        <div class="compat-cat-bar"><div class="compat-cat-bar-fill" style="--score:${pc.score}%;--score-color:${scoreColor(pc.score)}"></div></div>
+        <p>${pc.advice}</p>
+        <div class="compat-cat-factors">${pc.factors.map(f => `<span class="factor-tag">${f}</span>`).join("")}</div>
+      </div>
+    </div>
   `;
   compatResult.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-function buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk, gender) {
+// 生年月日から相性占い用の人物データを生成（記録に残さない直接入力モード用）
+function buildCompatPerson(name, birthYear, birthMonth, birthDay, gender) {
+  const date = new Date(birthYear, birthMonth - 1, birthDay);
+  const year = getYearPillar(date);
+  const month = getMonthPillar(date, stems.indexOf(year.stem));
+  const day = getDayPillar(date);
+  const daysSinceSetsuiri = getDaysSinceSetsuiri(date);
+  const zoukan = {
+    year: getZoukan(year.branch, daysSinceSetsuiri),
+    month: getZoukan(month.branch, daysSinceSetsuiri),
+    day: getZoukan(day.branch, daysSinceSetsuiri)
+  };
+  const mainStars = {
+    north: getMainStar(day.stem, year.stem),
+    south: getMainStar(day.stem, month.stem),
+    east: getMainStar(day.stem, zoukan.year),
+    west: getMainStar(day.stem, zoukan.day),
+    center: getMainStar(day.stem, zoukan.month),
+    companion: getMainStar(day.stem, stems[mod(stems.indexOf(year.stem) + 5, 10)])
+  };
+  const energy = [getEnergyStar(day.stem, year.branch), getEnergyStar(day.stem, month.branch), getEnergyStar(day.stem, day.branch)];
+  return {
+    name: name || "お相手",
+    gender,
+    dayStem: day.stem,
+    dayBranch: day.branch,
+    centerStar: mainStars.center,
+    northStar: mainStars.north,
+    southStar: mainStars.south,
+    eastStar: mainStars.east,
+    westStar: mainStars.west,
+    dayEnergy: energy[2] ? energy[2].name : ""
+  };
+}
+
+function renderCompatDirect(event) {
+  event.preventDefault();
+  const history = loadHistory();
+  const idxA = document.querySelector("#personADirect").value;
+  if (idxA === "") return alert("あなたを記録から選択してください");
+  const a = history[idxA];
+
+  const name = document.querySelector("#directName").value.trim();
+  const y = parseInt(document.querySelector("#directYear").value);
+  const m = parseInt(document.querySelector("#directMonth").value);
+  const d = parseInt(document.querySelector("#directDay").value);
+  const g = document.querySelector("#directGender").value;
+  if (!y || !m || !d || y < 1900 || y > 2100 || m < 1 || m > 12 || d < 1 || d > 31) {
+    return alert("お相手の生年月日を正しく入力してください");
+  }
+  const b = buildCompatPerson(name || "お相手", y, m, d, g);
+  showCompatResult(a, b);
+}
+
+// 西洋星座（太陽星座）
+function getZodiacSign(m, d) {
+  const table = [
+    [1, 20, "みずがめ座", "♒"], [2, 19, "うお座", "♓"], [3, 21, "おひつじ座", "♈"],
+    [4, 20, "おうし座", "♉"], [5, 21, "ふたご座", "♊"], [6, 22, "かに座", "♋"],
+    [7, 23, "しし座", "♌"], [8, 23, "おとめ座", "♍"], [9, 23, "てんびん座", "♎"],
+    [10, 24, "さそり座", "♏"], [11, 23, "いて座", "♐"], [12, 22, "やぎ座", "♑"]
+  ];
+  const key = m * 100 + d;
+  let sign = { name: "やぎ座", symbol: "♑" };
+  for (const [sm, sd, name, symbol] of table) {
+    if (key >= sm * 100 + sd) sign = { name, symbol };
+  }
+  return sign;
+}
+
+function hashSeed(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) { h = (h * 31 + str.charCodeAt(i)) | 0; }
+  return Math.abs(h);
+}
+function pickSeeded(arr, seed, salt) {
+  if (!arr || arr.length === 0) return "";
+  return arr[hashSeed(`${seed}|${salt}`) % arr.length];
+}
+
+function buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk, gender, seed) {
   const gKey = gender === "male" ? "male" : "female";
   const center = mainStars.center;
+  seed = seed || "";
 
-  const starKeyword = {
-    貫索星: "自分の軸をしっかり持って、ぶれない人",
-    石門星: "人と人をつなぐ、ムードメーカー",
-    鳳閣星: "一緒にいるとホッとする、自然体の人",
-    調舒星: "繊細な感性で世界を捉える、アーティスト型",
-    禄存星: "周りを温かく支える、安心感のある人",
-    司禄星: "コツコツ積み重ねて、着実に歩む人",
-    車騎星: "思い立ったら動く、行動力の人",
-    牽牛星: "責任を背負える、頼りがいのある人",
-    龍高星: "常識にとらわれない、自由な発想の人",
-    玉堂星: "知るのが好き、学び続ける知性派"
+  const starKeywords = {
+    貫索星: ["自分の軸をしっかり持って、ぶれない人", "一本筋の通った、折れない意志の人", "周りに流されない、確かな信念の持ち主"],
+    石門星: ["人と人をつなぐ、ムードメーカー", "輪の中心でみんなをまとめる、結び役の人", "協調性に長けた、場を温める人"],
+    鳳閣星: ["一緒にいるとホッとする、自然体の人", "ゆるやかな空気を作る、癒やし系の人", "飾らない素直さで人を引き寄せる人"],
+    調舒星: ["繊細な感性で世界を捉える、アーティスト型", "感受性が鋭い、美意識の人", "細やかに感じ取る、センスの人"],
+    禄存星: ["周りを温かく支える、安心感のある人", "愛情たっぷりに人を包む、世話好きな人", "そばにいると心が安らぐ、温かい人"],
+    司禄星: ["コツコツ積み重ねて、着実に歩む人", "地道な努力を続けられる、堅実な人", "一歩ずつ確実に前に進む、誠実な人"],
+    車騎星: ["思い立ったら動く、行動力の人", "まず体を動かす、スピード感の人", "決断が速い、フットワーク軽めの人"],
+    牽牛星: ["責任を背負える、頼りがいのある人", "役割をまっとうする、信頼感の人", "引き受けたことはやり切る、責任感の人"],
+    龍高星: ["常識にとらわれない、自由な発想の人", "枠を外して考える、クリエイター気質の人", "常に新しい道を探す、開拓者タイプの人"],
+    玉堂星: ["知るのが好き、学び続ける知性派", "知識欲が旺盛な、探究心の人", "深く考えて理解する、学者肌の人"]
   };
+  const kw = pickSeeded(starKeywords[center] || [""], seed, "kw");
 
-  const balanceDesc = {
-    balanced: "心が安定しやすく、どんな状況でもフットワークが軽いタイプ",
-    moderate: "少し偏りはあるけれど、意識すればすぐ整うバランス",
-    imbalanced: "心の波は大きい分、自分を知ることで一番伸びるタイプ"
+  const balanceDescs = {
+    balanced: ["心が安定しやすく、どんな状況でもフットワークが軽いタイプ", "内面のバランスが整い、環境が変わっても崩れにくい安定感", "心の軸が安定していて、多少のことでは揺るがない強さ"],
+    moderate: ["少し偏りはあるけれど、意識すればすぐ整うバランス", "やや偏りはあるものの、自分でコントロールできる範囲", "多少のアンバランスは、個性として武器にできるレベル"],
+    imbalanced: ["心の波は大きい分、自分を知ることで一番伸びるタイプ", "内面の偏りが強い分、そのギャップが爆発力になる人", "波は激しいけれど、自分を理解するほど強くなる人"]
   };
+  const bd = pickSeeded(balanceDescs[balanceType] || [""], seed, "bd");
 
+  const personalityPatterns = [
+    (k, b) => `${k}タイプ。${b}。`,
+    (k, b) => `一言でいうと、${k}タイプ。${b}。`,
+    (k, b) => `${k}タイプの人です。${b}。`,
+    (k, b) => `あなたは${k}タイプ。${b}。`
+  ];
+  const personality = pickSeeded(personalityPatterns, seed, "ppat")(kw, bd);
+
+  const lifeFlowVariants = {
+    5: [
+      "現実と精神が大きく逆回転する型。会社員よりフリーランス、芸術・企画・研究など型破りな道で才能が爆発する。常識に従うと息苦しくなるので、自分の世界を貫くのが開運の鍵。周りと違うことを恐れず、想像力を武器に生きる人。",
+      "現実と精神が大きく逆回転する型。常識の逆を行くほど才能が開く人です。フリーランスや創造的な道で、独自の世界観を貫くと大きく伸びます。",
+      "現実と精神が逆回転する稀有な型。普通の枠には収まらず、違和感こそが才能のサイン。型破りな道を恐れず進むと、大きな可能性が開きます。"
+    ],
+    4: [
+      "現実と精神が大きくズレる型。真面目にやろうとするほど空回りし、周囲の期待に応えられない苦しみがある。人を当てにせず、自分のペースでコツコツ積み上げると運が開く。信仰や哲学など精神の拠り所を持つと心が安定する。",
+      "現実と精神が大きくズレる型。型にはめられない発想の持ち主で、枠組みの外でこそ輝きます。真面目に合わせようとするほど苦しくなるので、自分のやり方を貫くのが正解です。",
+      "内面と現実のギャップが大きい型。空回りしがちなのは「合わせすぎ」が原因。人に頼らず自分の感覚を信じて進むと、型破りな才能が爆発します。"
+    ],
+    3: [
+      "現実と精神が半々の型。サラリーマンにも独立にも適応できる柔軟さがあるが、どちらつかずで迷いやすい。30代までに「安定か挑戦か」を決めると良い。変化の激しい業界（IT・メディア・外食等）に入ると本来の力が出る。",
+      "現実と精神が半々の型。どちらの世界にも適応できる器用さがありますが、迷いやすいのが難点。早めに「安定か挑戦か」を決めると迷いが消えます。",
+      "現実と精神のバランスが半々。安定も挑戦も両方こなせますが、中途半端になりがち。変化の多い環境に身を置くと、本来の柔軟さが武器になります。"
+    ],
+    2: [
+      "現実寄りの型。ルールを守り、信用第一で着実に歩む人生。公務員・大企業・士業など安定した職場で力を発揮する。派手な成功より、確実な実績を積むことで40代以降に安定した地位と収入が築ける。",
+      "現実感覚が少し強い型。ルールと信用を大切にする生き方で、安定した環境で力を発揮します。急な変化よりも、着実な実績作りが人生を開きます。",
+      "現実寄りのバランス型。堅実に積み上げる姿勢が強みで、安定した職場・組織で結果を出しやすい人。40代以降に地位が固まる晩成型です。"
+    ],
+    1: [
+      "精神寄りの型。自分からガンガン攻めるより、信頼できる人についていくことで運が開く。優秀な上司やパートナーに恵まれると伸びるが、自分一人で全部やろうとすると空回りする。組織の中でNo.2として力を発揮するタイプ。",
+      "精神が少し優位な型。自分から前に出すぎず、頼れる人のそばで力を発揮するタイプ。信頼できる人に出会うほど才能が開花するので、人選びが運の分かれ目です。",
+      "少し精神寄りのバランス。ガツガツ攻めるより、支える役・補佐役で実力を出す人。良きリーダーやパートナーにつくと、想像以上の力が出ます。"
+    ],
+    0: [
+      "現実と精神が一致する型。守りを徹底することが最も運を呼ぶ。引越しや転職は最小限にし、年中行事や地域の行事を大切にすると運が安定する。地元で地道に信頼を積み上げるのが最良の生き方。変化より継続が運を開く。",
+      "現実と精神がきれいに一致する型。コツコツ守り続ける生き方が一番運を呼びます。環境を変えずに、今ある場所で信頼を積み上げるのが最善の道。変化より継続があなたの武器。",
+      "現実と精神のズレがない堅実型。冒険より継続、派手さより地道さが合う人。地元や長く続いた環境で着実に信用を築くと、運が安定して開いていきます。"
+    ]
+  };
+  const lifeFlow = pickSeeded(lifeFlowVariants[sanbun.mismatchCount] || [sanbun.mismatchText], seed, "lf");
+
+  const effortTypeSelf = [
+    "自分で道を切り開くタイプ。若い頃は苦労する分、後半に花が開く",
+    "自分の力で切り拓くタイプ。早く咲かなくても、晩年に実りが来る",
+    "自力勝負型。若い頃の苦労が、そのまま財産になる人"
+  ];
+  const effortTypeFate = [
+    "人との縁に恵まれ、周りに引いてもらえるタイプ",
+    "人の縁が運を運んでくるタイプ。素直に受け取るほど開ける",
+    "周りに支えられて伸びるタイプ。出会いを大切にするほど運が上がる"
+  ];
+  const effortTypeBoth = [
+    "努力と運のバランス型。自分で動くことも、人に頼ることも上手",
+    "自力と他力のちょうどいいバランス型。どちらの力も使える人",
+    "頑張るのも任せるのもできる、バランス感覚の人"
+  ];
   const effortType = ishiki.conscious > ishiki.unconscious
-    ? "自分で道を切り開くタイプ。若い頃は苦労する分、後半に花が開く"
+    ? pickSeeded(effortTypeSelf, seed, "eff")
     : ishiki.unconscious > ishiki.conscious
-    ? "人との縁に恵まれ、周りに引いてもらえるタイプ。のびのか咲く"
-    : "努力と運のバランス型。自分で動くことも、人に頼ることも上手"
-  ;
+    ? pickSeeded(effortTypeFate, seed, "eff")
+    : pickSeeded(effortTypeBoth, seed, "eff");
 
   const workRank = workEx.rank || "";
   const workScore = workEx.score || 0;
 
   const marriageLevel = marriageScore >= 80 ? "とても向いている" : marriageScore >= 65 ? "向いている" : marriageScore >= 45 ? "普通" : marriageScore >= 30 ? "少し工夫がいる" : "向いていない";
   const affairLevel = affairScore >= 80 ? "高危険" : affairScore >= 65 ? "要注意" : affairScore >= 45 ? "普通" : affairScore >= 25 ? "低め" : "安心";
+  const marriageSoft = marriageScore >= 80 ? "とても向いています" : marriageScore >= 65 ? "向いています" : marriageScore >= 45 ? "ふつう" : marriageScore >= 30 ? "少し工夫で◎" : "ゆっくり育てるタイプ";
+  const affairSoft = affairScore >= 80 ? "誘惑に注意を" : affairScore >= 65 ? "少し注意" : affairScore >= 45 ? "ふつう" : affairScore >= 25 ? "低めで安心" : "安心です";
+  const workSoft = (workRank || "").replace(/^[A-E]級（(.+)）$/, "$1") || "自分のペースで";
 
   const major = healthRisk.majorDiseaseRisks || [];
   const healthSummary = major.length > 0
-    ? `${major[0].year}年（${major[0].age}歳）頃に${major[0].majorDiseases[0] ? major[0].majorDiseases[0].diseases.split("・")[0] : "健康面"}に気をつけて`
-    : "現時点で大病のサインは出ていません。今のペースで大丈夫";
+    ? pickSeeded([
+        (y, a, d) => `${y}年（${a}歳）頃に${d}に気をつけて`,
+        (y, a, d) => `${a}歳頃（${y}年）は${d}に注意`,
+        (y, a, d) => `${y}年前後は${d}のリスクに気を配って`
+      ], seed, "hlth")(major[0].year, major[0].age, major[0].majorDiseases[0] ? major[0].majorDiseases[0].diseases.split("・")[0] : "健康面")
+    : pickSeeded([
+        "現時点で大病のサインは出ていません。今のペースで大丈夫",
+        "大きな病気のサインは見当たりません。今の生活を継続してOK",
+        "目立った大病の兆しはなし。現状維持で安心です"
+      ], seed, "hlth");
 
   const tpSummary = turningPoints.length > 0
     ? turningPoints.slice(0, 3).map(tp => `${tp.age}歳（${tp.year}年）${tp.type}`).join("、")
-    : "特別大きな転換期は出ていません。日々の積み重ねが花を開かせます";
+    : pickSeeded([
+        "特別大きな転換期は出ていません。日々の積み重ねが花を開かせます",
+        "劇的な転機は少ない人生。淡々と積み上げるほど幸せに",
+        "大きな波は少なめ。安定した歩みがそのまま強みになります"
+      ], seed, "tp");
+
+  const tenchu = pickSeeded([
+    (t) => `${t}天中殺`,
+    (t) => `天中殺は${t}`,
+    (t) => `${t}（天中殺）`
+  ], seed, "tc")(tenchusatsu);
 
   // ワンポイントアドバイス生成
   const adviceParts = [];
 
   // 性格の強みと注意点
   const starAdvice = {
-    貫索星: "ぶれない軸はあなたの魅力。ただ、たまには人に頼ってもいい。周りの声に耳を傾けるだけで、もっと世界が広がります。",
-    石門星: "人と人をつなぐ力は宝物。ただ、全員にいい顔をしなくていい。本当に大切にしたい関係を見極めると、もっと心地よくなります。",
-    鳳閣星: "一緒にいるとホッとする空気感は本物。ただ、いざという時に少し引き締めるだけで、チャンスを逃さずつかめます。",
-    調舒星: "繊細な感性は才能。ただ、感情の波が来たら一歩引いて深呼吸。客観的に見る癖をつけると、感性がもっと生きます。",
-    禄存星: "人を支える温かさは宝。ただ、見返りを求めず、自分も大切にする境界線を引くと、優しさがもっと長続きします。",
-    司禄星: "コツコツ積み重ねる力は確か。ただ、たまには冒険してもいい。小さなリスクが、思いがけない成長を連れてきます。",
-    車騎星: "思い立ったら動く行動力は武器。ただ、一呼吸置いて周りを巻き込むと、成果が倍になります。一人で頑張りすぎないで。",
-    牽牛星: "責任を背負える姿は信頼の源。ただ、たまには素の自分を見せていい。完璧じゃないあなたに、人はもっと惹かれます。",
-    龍高星: "常識にとらわれない発想は才能。ただ、自由と約束のバランスを意識すると、信用を失わずに革新できます。",
-    玉堂星: "知るのが好き、学ぶ力は武器。ただ、理屈より相手の気持ちに寄り添うと、人間関係がぐっと深まります。"
+    貫索星: [
+      "ぶれない軸はあなたの魅力。ただ、たまには人に頼ってもいい。周りの声に耳を傾けるだけで、もっと世界が広がります。",
+      "一本筋の強さが武器。でも意地を張らず、弱さを見せると人がもっと近づいてきます。",
+      "自分を持っているのが強み。ただ時々「他の人はどう思う？」と聞いてみるだけで、判断の精度が上がります。"
+    ],
+    石門星: [
+      "人と人をつなぐ力は宝物。ただ、全員にいい顔をしなくていい。本当に大切にしたい関係を見極めると、もっと心地よくなります。",
+      "みんなをまとめる力は才能。でも、あなた自身の本音も置き去りにしないで。自分を大切にするほど、人付き合いが楽になります。",
+      "つなぐ役が似合う人。ただし誰かのために動きすぎると消耗します。「自分のための時間」を週に一度作ると長続きします。"
+    ],
+    鳳閣星: [
+      "一緒にいるとホッとする空気感は本物。ただ、いざという時に少し引き締めるだけで、チャンスを逃さずつかめます。",
+      "ゆるやかさはあなたの武器。でも「今だけは本気」というスイッチを持つと、周りの見方が変わります。",
+      "自然体でいられること自体が才能。楽しさを追いかけるだけでなく、少しの「ピリッ」を加えるとさらに信頼されます。"
+    ],
+    調舒星: [
+      "繊細な感性は才能。ただ、感情の波が来たら一歩引いて深呼吸。客観的に見る癖をつけると、感性がもっと生きます。",
+      "感じる力が強いあなた。だからこそ疲れたら休んでいい。感情を切り替える練習をすると、感性が武器として使えます。",
+      "細やかなセンスは宝物。ただ、思い込みが激しい時ほど「事実は何？」と自問してみて。それだけで波が穏やかになります。"
+    ],
+    禄存星: [
+      "人を支える温かさは宝。ただ、見返りを求めず、自分も大切にする境界線を引くと、優しさがもっと長続きします。",
+      "尽くす力は本物の愛情。でも全部を背負わなくていい。「これは私の領分？」と線引きをすると、心が軽くなります。",
+      "温かさが魅力の人。ただ、尽くしすぎは相手の成長を奪うことも。見守るだけの愛情も練習してみてください。"
+    ],
+    司禄星: [
+      "コツコツ積み重ねる力は確か。ただ、たまには冒険してもいい。小さなリスクが、思いがけない成長を連れてきます。",
+      "堅実さはあなたの土台。でも「絶対安全」ばかり追うと視野が狭くなります。月に一度、小さな「初めて」を試してみて。",
+      "積み上げる力はあなたの強み。ただ、守りに入りすぎるとチャンスを逃します。7割の確信で動く練習をすると良いです。"
+    ],
+    車騎星: [
+      "思い立ったら動く行動力は武器。ただ、一呼吸置いて周りを巻き込むと、成果が倍になります。一人で頑張りすぎないで。",
+      "スピード感が強み。でも走る前に「誰と行く？」と考えるだけで、摩擦が減って成果が増えます。",
+      "行動が速いのは素晴らしい。ただ、勢いだけで決めると後始末に苦労します。24時間寝かせてから決断する習慣を。"
+    ],
+    牽牛星: [
+      "責任を背負える姿は信頼の源。ただ、たまには素の自分を見せていい。完璧じゃないあなたに、人はもっと惹かれます。",
+      "引き受ける力が強み。でも全部一人で抱え込むと潰れます。「手伝って」と言うのも責任感の一つです。",
+      "信頼される人であることは価値。ただ、期待に応え続けると心が擦り減ります。たまには「できません」と言う練習を。"
+    ],
+    龍高星: [
+      "常識にとらわれない発想は才能。ただ、自由と約束のバランスを意識すると、信用を失わずに革新できます。",
+      "枠を外す発想が武器。ただ、壊すだけだと人はついてきません。「なぜ変えるのか」を言葉にすると理解者が増えます。",
+      "自由な感性があなたの強み。でも飽きっぽさには注意。続ける工夫をするだけで、才能が実を結びます。"
+    ],
+    玉堂星: [
+      "知るのが好き、学ぶ力は武器。ただ、理屈より相手の気持ちに寄り添うと、人間関係がぐっと深まります。",
+      "探究心は宝物。でも正しさだけを追うと孤独になります。「正しいか」より「相手は何を求めてる？」を一度考えてみて。",
+      "学び続ける姿勢があなたの強み。ただ、知識は使ってこそ価値になります。学んだら人に伝える練習を。"
+    ]
   };
-  if (starAdvice[center]) adviceParts.push(starAdvice[center]);
+  if (starAdvice[center]) adviceParts.push(pickSeeded(starAdvice[center], seed, "sa"));
 
   // バランス
-  if (balanceType === "imbalanced") adviceParts.push("心の波は大きい分、自分を知ることが開運の鍵。不足している性質を日常にちょっと取り入れるだけで、心が軽くなります。");
+  if (balanceType === "imbalanced") adviceParts.push(pickSeeded([
+    "心の波は大きい分、自分を知ることが開運の鍵。不足している性質を日常にちょっと取り入れるだけで、心が軽くなります。",
+    "内面の偏りは弱点ではなく個性。足りない要素を意識して補うと、ギャップが魅力に変わります。",
+    "気持ちの振れ幅が大きいのは才能の裏返し。自分のパターンを知って対策を立てると、波が穏やかになります。"
+  ], seed, "bal"));
 
   // 努力タイプ
-  if (ishiki.conscious > ishiki.unconscious) adviceParts.push("自分で道を切り開くタイプ。若い頃の苦労は、将来の財産になります。諦めずに経験を積み重ねていってください。");
-  else if (ishiki.unconscious > ishiki.conscious) adviceParts.push("人との縁に恵まれるタイプ。周りに助けてもらった恩を忘れず、お返ししていくことで、運がさらに開いていきます。");
+  if (ishiki.conscious > ishiki.unconscious) adviceParts.push(pickSeeded([
+    "自分で道を切り開くタイプ。若い頃の苦労は、将来の財産になります。諦めずに経験を積み重ねていってください。",
+    "自力で勝負する人生。苦しい時期こそ成長の証拠。乗り越えた先に、誰にも奪えない実力が残ります。",
+    "あなたの運は「自分で作る」タイプ。早い成功を求めず、じっくり基盤を作ると後半で一気に花開きます。"
+  ], seed, "ish"));
+  else if (ishiki.unconscious > ishiki.conscious) adviceParts.push(pickSeeded([
+    "人との縁に恵まれるタイプ。周りに助けてもらった恩を忘れず、お返ししていくことで、運がさらに開いていきます。",
+    "誰かが運を運んでくれる人生。素直に「ありがとう」と受け取り、恩返しの循環を回すと運気がどんどん上がります。",
+    "あなたは「引いてもらう」運の持ち主。出会いを大切に、人の紹介や誘いを断らずに受け入れると道が開きます。"
+  ], seed, "ish"));
 
   // 結婚・浮気
-  if (marriageScore < 45) adviceParts.push(`結婚には少し工夫がいる傾向。でも、焦らなくて大丈夫。自分を高めながら、本当に合う人をゆっくり見極めていってください。`);
-  if (marriageScore >= 65) adviceParts.push(`結婚に向いている時期がしっかりあります。タイミングを逃さず、安心できるパートナーシップを築いてください。`);
-  if (affairScore >= 65) adviceParts.push("浮気リスクが高め。誘惑に気をつけ、パートナーとの信頼関係を意識的に育てることが大切です。");
+  if (marriageScore < 45) adviceParts.push(pickSeeded([
+    "結婚には少し工夫がいる傾向。でも、焦らなくて大丈夫。自分を高めながら、本当に合う人をゆっくり見極めていってください。",
+    "結婚は「合う人」を見つけるのに時間がかかるタイプ。急がずじっくり関係を育てるのが近道です。",
+    "結婚運はおだやか。だからこそ人柄を見て選ぶと、時間をかけた分だけ深い絆ができます。"
+  ], seed, "mar"));
+  if (marriageScore >= 65) adviceParts.push(pickSeeded([
+    "結婚に向いている時期がしっかりあります。タイミングを逃さず、安心できるパートナーシップを築いてください。",
+    "結婚運は良好。良い縁に恵まれやすい時期が来るので、覚悟を決めたら勢いで進んで大丈夫です。",
+    "パートナー運は上々。支え合える関係を築きやすい運なので、良い人に出会ったら大切に育ててください。"
+  ], seed, "mar"));
+  if (affairScore >= 65) adviceParts.push(pickSeeded([
+    "浮気リスクが高め。誘惑に気をつけ、パートナーとの信頼関係を意識的に育てることが大切です。",
+    "誘惑に流されやすい傾向あり。だからこそ「一線は越えない」と自分ルールを決めておくと安心です。",
+    "モテゆえに誘惑も多い運。楽しい気持ちは大切にしつつ、家庭との境界線を意識すると関係が長続きします。"
+  ], seed, "aff"));
 
   // 健康
-  if (major.length > 0) adviceParts.push(`${major[0].year}年（${major[0].age}歳）頃は健康面に気をつけて。早めに定期健診を受けて、生活習慣を少し整えるだけで、不安が安心に変わります。`);
-  else adviceParts.push(`今のところ大きな健康リスクは出ていませんが、日々の小さなケアが未来の健康を守ります。`);
+  if (major.length > 0) adviceParts.push(pickSeeded([
+    (y, a) => `${y}年（${a}歳）頃は健康面に気をつけて。早めに定期健診を受けて、生活習慣を少し整えるだけで、不安が安心に変わります。`,
+    (y, a) => `${a}歳前後は体に無理をかけないで。今のうちに睡眠と食事を整えておくと、その先がずっと楽になります。`,
+    (y, a) => `${y}年頃は体調の変化に注意を。早期発見が最大の武器なので、検診だけは欠かさないでください。`
+  ], seed, "hadv")(major[0].year, major[0].age));
+  else adviceParts.push(pickSeeded([
+    "今のところ大きな健康リスクは出ていませんが、日々の小さなケアが未来の健康を守ります。",
+    "大きな病気の兆しは見えません。でも「健康な今」こそ予防する絶好の時期です。",
+    "健康面は安心できる傾向。ただ、今の状態を維持するには規則正しい生活が欠かせません。"
+  ], seed, "hadv"));
 
   // 仕事・収入
-  if (workScore >= 70) adviceParts.push(`仕事運は良好。今の調子でスキルを積み上げれば、さらに可能性が広がります。`);
-  else if (workScore < 45) adviceParts.push(`仕事面では少し工夫がいる時期。焦らず、自分のペースで確実に力をつけていきましょう。`);
+  if (workScore >= 70) adviceParts.push(pickSeeded([
+    "仕事運は良好。今の調子でスキルを積み上げれば、さらに可能性が広がります。",
+    "仕事面は順調な傾向。得意を伸ばしつつ、人に頼る勇気を持つとさらに上にいけます。",
+    "仕事はあなたの強みが出やすい分野。継続して力を磨くと、やがて大きな評価につながります。"
+  ], seed, "wk"));
+  else if (workScore < 45) adviceParts.push(pickSeeded([
+    "仕事面では少し工夫がいる時期。焦らず、自分のペースで確実に力をつけていきましょう。",
+    "仕事は得意分野を見極める時期。合わないと思ったら環境を変えるのも立派な戦略です。",
+    "仕事運はこれから育てていくタイプ。今の努力は無駄にならないので、コツコツ続けてください。"
+  ], seed, "wk"));
 
   // ターニングポイント
   if (turningPoints.length > 0) {
     const firstTP = turningPoints[0];
-    adviceParts.push(`${firstTP.age}歳（${firstTP.year}年）の「${firstTP.type}」が最初の大きな転機。この時期は準備と勇気を持って変化を受け入れることで、次のステージへ進めます。`);
+    adviceParts.push(pickSeeded([
+      (a, y, t) => `${a}歳（${y}年）の「${t}」が最初の大きな転機。この時期は準備と勇気を持って変化を受け入れることで、次のステージへ進めます。`,
+      (a, y, t) => `${a}歳頃は人生の分かれ道。「${t}」のタイミングに流されず、自分の意思で選ぶと後悔が減ります。`,
+      (a, y, t) => `最初の大きな転機は${a}歳（${y}年）の「${t}」。その時に向けて今から準備を進めると、動きが格段に軽くなります。`
+    ], seed, "tpadv")(firstTP.age, firstTP.year, firstTP.type));
   }
 
   // 天中殺
-  adviceParts.push(`${tenchusatsu}天中殺の期間は、大きな決断は少し待って。整理と準備に徹する時間と思えば、無駄にならない静かな充電期間になります。`);
+  adviceParts.push(pickSeeded([
+    (t) => `${t}天中殺の期間は、大きな決断は少し待って。整理と準備に徹する時間と思えば、無駄にならない静かな充電期間になります。`,
+    (t) => `${t}天中殺の時期は「動くな」ではなく「整えろ」のサイン。部屋と心を片付ける時間が、次の跳躍を支えます。`,
+    (t) => `天中殺（${t}）の期間は決断より見直しを。棚卸ししておくと、運が戻った時にスッと動き出せます。`
+  ], seed, "tcadv")(tenchusatsu));
 
   const onePointAdvice = adviceParts.join("\n\n");
 
   return {
-    personality: `${starKeyword[center] || ""}タイプ。${balanceDesc[balanceType]}。`,
-    lifeFlow: sanbun.mismatchText,
+    personality,
+    lifeFlow,
     effortType,
     work: `${workRank}（${workScore}点）`,
+    workSimple: workSoft,
     marriage: `${marriageLevel}（${marriageScore}点）`,
+    marriageSimple: marriageSoft,
     affair: `${affairLevel}（${affairScore}点）`,
+    affairSimple: affairSoft,
     popularity: `異性から${mote.oppositeRank.rank}・同性から${mote.sameRank.rank}（異性${mote.oppositeScore}点・同性${mote.sameScore}点）`,
+    popularitySimple: `異性からは${mote.oppositeRank.rank}、同性からは${mote.sameRank.rank}くらいの印象`,
     health: healthSummary,
     turningPoints: tpSummary,
-    tenchu: `${tenchusatsu}天中殺`,
+    tenchu,
     onePointAdvice
   };
 }
@@ -6082,6 +6366,7 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
     .sort((a, b) => b.riskScore - a.riskScore)
     .slice(0, 3);
 
+  let hardMarryShown = false;
   taiun.periods.forEach((p, idx) => {
     if (p.age >= 90) return;
     const ageFrom = p.age;
@@ -6169,7 +6454,17 @@ function buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, af
           }
         }
       } else {
-        events.push({ icon: "heart", text: "結婚は縁遠い時期。趣味や仕事に打ち込み、自分の時間を大切にするのが吉" });
+        const hardMarry = marriageScore < 30 || (moteScore < 25 && marriageScore < 40);
+        if (hardMarry) {
+          if (!hardMarryShown) {
+            events.push({ icon: "alert", text: "結婚はかなり難しい運。無理に縁を追うより、結婚しない生き方も選択肢に入れて、自分らしい幸せを設計するのが吉" });
+            hardMarryShown = true;
+          } else {
+            events.push({ icon: "heart", text: "結婚より自分の道を優先する時期。仲間や趣味との絆を深めると心が満たされる" });
+          }
+        } else {
+          events.push({ icon: "heart", text: "結婚は縁遠い時期。趣味や仕事に打ち込み、自分の時間を大切にするのが吉" });
+        }
       }
     }
 
@@ -6391,7 +6686,7 @@ function render(event) {
     balanceType,
     gender
   });
-  const lifeSummary = buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk, gender);
+  const lifeSummary = buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk, gender, `${birthdateDisplay}|${name}`);
   const lifeChronology = buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, affairScore, workEx, seimeiResult, tenchusatsu, birthYear, gender, day, currentAge, mote, isDoubleEnForScore);
   const kyuseiResult = analyzeKyuseiDirections(date, new Date());
 
@@ -6403,7 +6698,7 @@ function render(event) {
         <h2>${name}さんの鑑定結果</h2>
         <div class="result-version">v2.0.1</div>
         <p class="expert-only">${birthdateDisplay} 生まれ / ${tenchusatsu}天中殺 / 日干 ${day.stem}（${elements[stems.indexOf(day.stem)]}・${yinYang[stems.indexOf(day.stem)]}）</p>
-        <p class="simple-only">${birthdateDisplay} 生まれ / ${gender === "male" ? "男性" : "女性"}</p>
+        <p class="simple-only">${birthdateDisplay} 生まれ / ${gender === "male" ? "男性" : "女性"} / ${(() => { const z = getZodiacSign(birthMonth, birthDay); return `${z.symbol} ${z.name}`; })()}</p>
       </div>
     </div>
     <div class="view-toggle-wrap">
@@ -6416,7 +6711,54 @@ function render(event) {
       <p class="view-toggle-hint expert-only">専門用語を含む詳細表示中。切り替えると分かりやすい表示になります。</p>
       <p class="view-toggle-hint simple-only">分かりやすい表示中。切り替えると専門的な詳細が見られます。</p>
     </div>
-    <div class="result-card life-summary-card">
+    <nav class="simple-only toc-nav">
+      <a href="#sec-summary">ざっくり</a>
+      <a href="#sec-love">恋愛・結婚</a>
+      <a href="#sec-mote">人気度</a>
+      <a href="#sec-chronology">人生年表</a>
+      <a href="#sec-fortune">今年の運勢</a>
+      <a href="#sec-health">健康</a>
+    </nav>
+    ${(() => {
+      const today = new Date();
+      const dateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+      const dirs = kyuseiResult.dayGoodDirections.map(g => g.direction);
+      const dirActions = {
+        "北": "北の方角へお出かけ。静かなカフェや水辺でゆっくりすると運気アップ",
+        "北東": "北東の方角へのお出かけが吉。新しい場所の開拓に向いています",
+        "東": "東の方角へ散歩やお買い物。朝の光を浴びると気分が上がります",
+        "南東": "南東の方角のお店や公園へ。おしゃれな場所で気分転換を",
+        "南": "南の方角にお出かけ。人に会う予定は南側の場所ですると◎",
+        "南西": "南西の方角でゆったり過ごすと心が整います",
+        "西": "西の方角にお出かけ。ご褒美スイーツや買い物にぴったり",
+        "北西": "北西の方角への移動が吉。大切な話は北西側の場所で"
+      };
+      const luckyActions = [
+        "いつもと違う道を歩いてみると、小さな発見がありそう",
+        "大切な人に「ありがとう」と連絡してみると、関係が深まります",
+        "身の回りをひとつ片付けると、心もすっきりします",
+        "好きな飲み物でひと息つく時間を作ると、運が整います",
+        "ゆっくりお風呂に入って疲れを流すと、明日が軽くなります",
+        "気になっていたことを始めるのに良い日。小さな一歩でOK",
+        "美味しいもので自分にご褒美。心が満たされる日です",
+        "お気に入りの音楽をかけて、気分を上げましょう",
+        "窓を開けて新しい空気を入れると、気の巡りが良くなります",
+        "植物に水をあげたり緑に触れると、心が落ち着きます",
+        "言いたかったことをやさしく伝えるのに良い日です",
+        "いい香りのアロマやお香で、部屋を整えると吉"
+      ];
+      const action = pickSeeded(luckyActions, `${dateKey}|${name}`, "lucky");
+      const mainDir = dirs[0] || "";
+      const dirText = dirs.length > 0
+        ? `今日の吉方位は「${dirs.join("・")}」。${dirActions[mainDir] || `${mainDir}の方角へ出かけると運気が上がります`}`
+        : "今日は吉方位が少ない日。家でゆっくり過ごすのが吉です";
+      return `<div class="result-card simple-only lucky-today-card">
+        <h3>🌟 今日のラッキー</h3>
+        <p class="lucky-today-dir">${dirText}</p>
+        <p class="lucky-today-action">${action}</p>
+      </div>`;
+    })()}
+    <div class="result-card life-summary-card" id="sec-summary">
       <h3 class="expert-only">総合人生鑑定</h3>
       <h3 class="simple-only">あなたの人生、ざっくりいうと</h3>
       <div class="info-box is-gold">
@@ -6425,10 +6767,10 @@ function render(event) {
       </div>
       <div class="life-summary-grid">
         <div class="life-summary-item"><b>運の掴み方</b><span>${lifeSummary.effortType}</span></div>
-        <div class="life-summary-item"><b>仕事の向き</b><span>${lifeSummary.work}</span></div>
-        <div class="life-summary-item"><b>結婚の向き</b><span>${lifeSummary.marriage}</span></div>
-        <div class="life-summary-item"><b>浮気の傾向</b><span>${lifeSummary.affair}</span></div>
-        <div class="life-summary-item"><b>人気度</b><span>${lifeSummary.popularity}</span></div>
+        <div class="life-summary-item"><b>仕事の向き</b><span class="expert-only">${lifeSummary.work}</span><span class="simple-only">${lifeSummary.workSimple}</span></div>
+        <div class="life-summary-item"><b>結婚の向き</b><span class="expert-only">${lifeSummary.marriage}</span><span class="simple-only">${lifeSummary.marriageSimple}</span></div>
+        <div class="life-summary-item"><b class="expert-only">浮気の傾向</b><b class="simple-only">浮気の心配</b><span class="expert-only">${lifeSummary.affair}</span><span class="simple-only">${lifeSummary.affairSimple}</span></div>
+        <div class="life-summary-item"><b>人気度</b><span class="expert-only">${lifeSummary.popularity}</span><span class="simple-only">${lifeSummary.popularitySimple}</span></div>
         <div class="life-summary-item"><b>健康</b><span>${lifeSummary.health}</span></div>
         <div class="life-summary-item"><b>人生の転機</b><span>${lifeSummary.turningPoints}</span></div>
         <div class="life-summary-item"><b>天中殺</b><span>${lifeSummary.tenchu}</span></div>
@@ -6439,7 +6781,7 @@ function render(event) {
         <div class="life-advice-text">${lifeSummary.onePointAdvice.split("\n\n").map(p => `<p>${p}</p>`).join("")}</div>
       </div>
     </div>
-    <div class="result-card life-chronology-card">
+    <div class="result-card life-chronology-card" id="sec-chronology">
       <h3 class="expert-only">自分年表（姓名判断×算命学 総合人生予測）</h3>
       <h3 class="simple-only">あなたの人生年表</h3>
       <p class="expert-only note mb-14">大運（10年周期）の星・天中殺・ターニングポイント・健康リスク・姓名判断の各格の影響を統合し、年代別に具体的にどんなことが起きるかを表示します。</p>
@@ -6461,7 +6803,7 @@ function render(event) {
         `).join("")}
       </div>
     </div>
-    <div class="result-card kyusei-card">
+    <div class="result-card kyusei-card expert-only">
       <h3 class="expert-only">九星気学 方位判定（${kyuseiResult.adjustedYear}年 ${kyuseiResult.yearBranch}年）</h3>
       <h3 class="simple-only">九星気学で見る開運方位</h3>
       <p class="expert-only note mb-14">九星気学は算命学とは別の体系で、生年月日の九星と方位盤から吉凶方位を導きます。引越し・旅行・開運方位の参考にしてください。</p>
@@ -6630,7 +6972,7 @@ function render(event) {
     </div>
     <div class="section-group-header expert-only">運勢の全体像<span class="sg-sub">今年の運勢・開運アクション</span></div>
     <div class="section-group-header simple-only">今年の運勢<span class="sg-sub">何に気をつけて、何をすればいい？</span></div>
-    <div class="result-card yearly-fortune-card">
+    <div class="result-card yearly-fortune-card" id="sec-fortune">
       <h3 class="expert-only">${yearlyFortune.thisYear}年の総合運勢（大運×年運 統合判定）</h3>
       <h3 class="simple-only">${yearlyFortune.thisYear}年、あなたの運勢</h3>
       <div class="yearly-summary expert-only info-box is-gold">${buildYearlySummary(yearlyFortune, false)}</div>
@@ -6829,7 +7171,7 @@ function render(event) {
     <div class="section-group-header simple-only">あなたの性格と才能<span class="sg-sub">本質を知って、もっと生きやすく</span></div>
     <div class="result-card reading">
       <h3>性格</h3>
-      ${reading.map((item) => { const isDetailOnly = item.title.includes("詳細") || item.title.includes("タイミング") || item.title.includes("エネルギー傾向") || item.title.includes("バランスと課題") || item.title.includes("注意が必要な時期") || item.title.includes("長所") || item.title.includes("短所"); const cls = (item.title.includes("長所") ? "is-good" : item.title.includes("短所") ? "is-bad" : item.title.includes("優秀度") ? "is-work-ex" : item.title.includes("仕事") ? "is-work" : item.title.includes("恋愛") ? "is-love" : item.title.includes("金銭") ? "is-money" : item.title.includes("結婚") ? "is-marriage" : item.title.includes("社交") ? "is-social" : item.title.includes("×日干") ? "is-star-detail" : item.title.includes("裏の") ? "is-hidden" : "") + (isDetailOnly ? " expert-only" : ""); const isWorkEx = item.title.includes("優秀度"); const scoreMatch = item.text.match(/スコア：(\d+)点/); const scoreNum = scoreMatch ? parseInt(scoreMatch[1]) : 0; const rankMatch = item.text.match(/（(.+?)）/); const rankText = rankMatch ? rankMatch[1] : ""; const detailText = item.text.replace(/総合仕事優秀度スコア：\d+点（.+?）\n/, ""); return `<article class="${cls}"><h4>${item.title}</h4><div>${isWorkEx && scoreNum ? `<div class="work-ex-score-wrap"><div class="work-ex-score-num">${scoreNum}<span>点</span></div><div class="work-ex-rank-badge">${rankText}</div></div><div class="work-ex-bar"><div class="work-ex-bar-fill" style="--work-ex-width:${scoreNum}%"></div></div><div class="work-ex-detail">${detailText}</div>` : item.text}</div></article>`; }).join("")}
+      ${reading.map((item) => { const isDetailOnly = item.title.includes("詳細") || item.title.includes("タイミング") || item.title.includes("エネルギー傾向") || item.title.includes("バランスと課題") || item.title.includes("注意が必要な時期") || item.title.includes("長所") || item.title.includes("短所") || item.title.includes("内面の構造") || item.title.includes("仕事のバランス"); const cls = (item.title.includes("長所") ? "is-good" : item.title.includes("短所") ? "is-bad" : item.title.includes("優秀度") ? "is-work-ex" : item.title.includes("仕事") ? "is-work" : item.title.includes("恋愛") ? "is-love" : item.title.includes("金銭") ? "is-money" : item.title.includes("結婚") ? "is-marriage" : item.title.includes("社交") ? "is-social" : item.title.includes("×日干") ? "is-star-detail" : item.title.includes("裏の") ? "is-hidden" : "") + (isDetailOnly ? " expert-only" : ""); const isWorkEx = item.title.includes("優秀度"); const scoreMatch = item.text.match(/スコア：(\d+)点/); const scoreNum = scoreMatch ? parseInt(scoreMatch[1]) : 0; const rankMatch = item.text.match(/（(.+?)）/); const rankText = rankMatch ? rankMatch[1] : ""; const detailText = item.text.replace(/総合仕事優秀度スコア：\d+点（.+?）\n/, ""); return `<article class="${cls}"><h4>${item.title}</h4><div>${isWorkEx && scoreNum ? `<div class="work-ex-score-wrap"><div class="work-ex-score-num">${scoreNum}<span>点</span></div><div class="work-ex-rank-badge">${rankText}</div></div><div class="work-ex-bar"><div class="work-ex-bar-fill" style="--work-ex-width:${scoreNum}%"></div></div><div class="work-ex-detail">${detailText}</div>` : item.text}</div></article>`; }).join("")}
     </div>
     <div class="result-card">
       <h3 class="expert-only">適職の具体化（職業名・働き方）</h3>
@@ -7595,7 +7937,7 @@ function render(event) {
       </div>`;
     })()}
     <div class="section-group-header expert-only">恋愛・対人関係<span class="sg-sub">恋愛傾向・結婚適性度・モテ度分析</span></div>
-    <div class="result-card reading">
+    <div class="result-card reading love-relations-card" id="sec-love">
       <h3 class="expert-only">恋愛・結婚・離婚・浮気（不倫）傾向</h3>
       <h3 class="simple-only">恋愛・結婚の傾向</h3>
       ${(() => {
@@ -7689,13 +8031,12 @@ function render(event) {
           </div>
           <div class="simple-only">
           <article>
-            <h4>結婚適性度</h4>
+            <h4>結婚の向き不向き</h4>
             <div class="affair-risk-score-wrap">
-              <div class="affair-risk-score-num" style="--risk-color:${marriageScoreColor}">${marriageScore}<span>点</span></div>
-              <div class="affair-risk-rank-badge affair-risk-rank-${marriageRankClass}">${marriageSimpleLevel}</div>
+              <div class="affair-risk-score-num affair-risk-score-text" style="--risk-color:${marriageScoreColor}">${marriageSimpleLevel}</div>
             </div>
             <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${marriageRankClass}" style="--affair-width:${marriageScore}%"></div></div>
-            <div class="note-text-sm mt-6">星の配置や性格のバランスから算出した、結婚に向いている度合いの目安です。</div>
+            <div class="note-text-sm mt-6">星の配置や性格のバランスからみた、結婚への向き不向きの目安です。点数ではなく傾向として読んでくださいね。</div>
           </article>
           <article>
             <h4>恋愛のしかた</h4>
@@ -7724,14 +8065,13 @@ function render(event) {
             <div>${isDoubleEn ? "再婚の縁が巡りやすいタイプです。離婚しても再び結婚のチャンスが訪れやすい傾向があります。" : "一度の結婚に集中しやすいタイプです。"}</div>
           </article>
           <article>
-            <h4>浮気・不倫の傾向</h4>
+            <h4>浮気の心配</h4>
             <div>${pickByBalance(affairTendencyTexts[mainStars.west], balanceType)}</div>
             <div class="affair-risk-score-wrap">
-              <div class="affair-risk-score-num" style="--risk-color:${affairScoreColor}">${affairScore}<span>点</span></div>
-              <div class="affair-risk-rank-badge affair-risk-rank-${affairRankClass}">${simpleAffairLevel}</div>
+              <div class="affair-risk-score-num affair-risk-score-text" style="--risk-color:${affairScoreColor}">${simpleAffairLevel}</div>
             </div>
             <div class="affair-risk-bar"><div class="affair-risk-bar-fill ${affairRankClass}" style="--affair-width:${affairScore}%"></div></div>
-            <div class="note-text-sm mt-6">全体的な性格・家庭運・結婚運・生まれ持った性質のバランスから総合的に算出した目安です。</div>
+            <div class="note-text-sm mt-6">性格・家庭運・生まれ持った性質のバランスからみた傾向の目安です。決めつけではなく、関係を大切にするヒントとして読んでください。</div>
           </article>
           <article>
             <h4>結婚に適した時期</h4>
@@ -7745,7 +8085,7 @@ function render(event) {
         `;
       })()}
     </div>
-    <div class="result-card mote-card">
+    <div class="result-card mote-card" id="sec-mote">
       <h3 class="expert-only">モテ度分析（異性から・同性から）</h3>
       <h3 class="simple-only">人気度チェック（異性から・同性から）</h3>
       <p class="expert-only note mb-14">性格を表す星の魅力・内面のバランス・日干の陰陽・心の星のエネルギー・特殊な干支を総合して算出しています。あくまで宿命的な素質の目安です。</p>
@@ -7944,7 +8284,7 @@ function render(event) {
         })()}
       </div>
     </div>
-    <div class="result-card health-card">
+    <div class="result-card health-card" id="sec-health">
       <h3 class="expert-only">病気リスク分析</h3>
       <h3 class="simple-only">健康の傾向</h3>
       <div class="health-constitution">
@@ -8169,9 +8509,61 @@ function render(event) {
 
 document.body.classList.add("simple-mode");
 console.log("[app.js v20260906g] loaded. simple-mode:", document.body.classList.contains("simple-mode"));
-document.querySelector("#fortuneForm").addEventListener("submit", render);
+if ("serviceWorker" in navigator && location.protocol !== "file:") {
+  navigator.serviceWorker.register("./sw.js").catch(() => {});
+}
+document.querySelector("#fortuneForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const y = document.querySelector("#birthYear").value;
+  const mo = document.querySelector("#birthMonth").value;
+  const d = document.querySelector("#birthDay").value;
+  const overlay = document.querySelector("#loadingOverlay");
+  if (!y || !mo || !d || !overlay) { render(e); return; }
+  overlay.classList.remove("hidden");
+  setTimeout(() => {
+    try { render(e); } finally { overlay.classList.add("hidden"); }
+  }, 1500);
+});
 document.querySelector("#compatForm").addEventListener("submit", renderCompat);
+const compatDirectForm = document.querySelector("#compatDirectForm");
+if (compatDirectForm) compatDirectForm.addEventListener("submit", renderCompatDirect);
+const compatTabHistory = document.querySelector("#compatTabHistory");
+const compatTabDirect = document.querySelector("#compatTabDirect");
+if (compatTabHistory && compatTabDirect) {
+  compatTabHistory.addEventListener("click", () => {
+    compatTabHistory.classList.add("is-active");
+    compatTabDirect.classList.remove("is-active");
+    document.querySelector("#compatForm").classList.remove("hidden");
+    compatDirectForm.classList.add("hidden");
+  });
+  compatTabDirect.addEventListener("click", () => {
+    compatTabDirect.classList.add("is-active");
+    compatTabHistory.classList.remove("is-active");
+    document.querySelector("#compatForm").classList.add("hidden");
+    compatDirectForm.classList.remove("hidden");
+  });
+}
 document.querySelector("#clearHistory").addEventListener("click", clearAllHistory);
+const themeToggleBtn = document.querySelector("#themeToggle");
+if (themeToggleBtn) {
+  const applyThemeIcon = () => { themeToggleBtn.textContent = document.body.classList.contains("light-mode") ? "🌙" : "☀️"; };
+  if (localStorage.getItem("theme") === "light") document.body.classList.add("light-mode");
+  applyThemeIcon();
+  themeToggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+    localStorage.setItem("theme", document.body.classList.contains("light-mode") ? "light" : "dark");
+    applyThemeIcon();
+  });
+}
+const backToTopBtn = document.querySelector("#backToTop");
+if (backToTopBtn) {
+  window.addEventListener("scroll", () => {
+    backToTopBtn.classList.toggle("hidden", window.scrollY < 600);
+  });
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
 document.querySelector("#historyList").addEventListener("click", (e) => {
   if (e.target.classList.contains("history-del")) {
     e.stopPropagation();

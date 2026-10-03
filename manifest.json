@@ -1,0 +1,19 @@
+{
+  "name": "占いの館M",
+  "short_name": "占いの館M",
+  "description": "生年月日でひもとく、あなただけの物語。恋愛・結婚・仕事・人生の波を占います。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d1b2a",
+  "theme_color": "#ff70a6",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

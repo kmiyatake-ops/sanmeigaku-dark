@@ -7,9 +7,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=20260906d" />
+    <link rel="stylesheet" href="./styles.css?v=20261003a" />
     <link rel="icon" type="image/svg+xml" href="./icon.svg" />
     <link rel="apple-touch-icon" href="./icon.svg" />
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#ff70a6" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="占いの館M" />
     <!-- Google Analytics 4 - 測定IDを取得後に G-XXXXXXXXXX を実際のIDに置き換えてください -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -22,9 +27,9 @@
   <body>
     <main class="app">
       <section class="hero">
-        <div class="badge">🌴 東洋運命学・算命学鑑定</div>
+        <div class="badge">� 東洋運命学・算命学鑑定</div>
         <h1>占いの館M</h1>
-        <p>生年月日から、あなたの本質・恋愛の傾向・仕事の適性・人生の波を紐解きます。30代・40代の悩みに寄り添う、東洋運命学にもとづく鑑定。</p>
+        <p>生年月日でひもとく、あなただけの物語。恋愛・結婚・仕事・人生の波を、やさしい言葉でお伝えします。</p>
       </section>
 
       <section class="panel input-panel">
@@ -32,11 +37,11 @@
           <div class="name-row">
             <label>
               姓（苗字）
-              <input id="lastName" type="text" placeholder="例：山田" autocomplete="family-name" />
+              <input id="lastName" type="text" placeholder="例：佐藤" autocomplete="family-name" />
             </label>
             <label>
               名（下の名前）
-              <input id="firstName" type="text" placeholder="例：太郎" autocomplete="given-name" />
+              <input id="firstName" type="text" placeholder="例：花子" autocomplete="given-name" />
             </label>
           </div>
           <div class="birth-row">
@@ -55,19 +60,23 @@
           <label>
             性別
             <select id="gender">
-              <option value="male">男性</option>
               <option value="female">女性</option>
+              <option value="male">男性</option>
             </select>
           </label>
           <button type="submit">鑑定する</button>
         </form>
-        <p class="note">簡易実装のため節入り時刻・出生時刻・流派差は補正していません。結果は自己理解を深めるための参考として、楽しくお読みください。</p>
+        <p class="note">入力した名前・生年月日はあなたの端末にのみ保存され、外部に送信されません。簡易実装のため節入り時刻・出生時刻・流派差は補正していません。結果は自己理解を深めるための参考として、楽しくお読みください。</p>
       </section>
 
       <section id="result" class="result hidden"></section>
 
       <section class="panel input-panel section-spaced">
         <h3 class="panel-title">相性占い</h3>
+        <div class="compat-tabs">
+          <button type="button" id="compatTabHistory" class="compat-tab is-active">記録から選ぶ</button>
+          <button type="button" id="compatTabDirect" class="compat-tab">お相手を直接入力</button>
+        </div>
         <form id="compatForm">
           <label>
             人物A
@@ -79,7 +88,39 @@
           </label>
           <button type="submit">相性を占う</button>
         </form>
-        <p class="note">鑑定した人物が記録に保存されます。2人以上鑑定すると相性占いが使えます。</p>
+        <form id="compatDirectForm" class="hidden">
+          <label>
+            あなた
+            <select id="personADirect" required><option value="">-- 記録から選択 --</option></select>
+          </label>
+          <div class="direct-partner-box">
+            <p class="direct-partner-title">気になるお相手・推し（記録には残りません）</p>
+            <label>
+              お相手の名前（任意）
+              <input id="directName" type="text" placeholder="例：推しの名前" />
+            </label>
+            <label>
+              お相手の生年月日
+              <div class="birth-inputs">
+                <input id="directYear" type="number" inputmode="numeric" placeholder="1990" min="1900" max="2100" required />
+                <span class="birth-sep">年</span>
+                <input id="directMonth" type="number" inputmode="numeric" placeholder="1" min="1" max="12" required />
+                <span class="birth-sep">月</span>
+                <input id="directDay" type="number" inputmode="numeric" placeholder="1" min="1" max="31" required />
+                <span class="birth-sep">日</span>
+              </div>
+            </label>
+            <label>
+              お相手の性別
+              <select id="directGender">
+                <option value="male">男性</option>
+                <option value="female">女性</option>
+              </select>
+            </label>
+          </div>
+          <button type="submit">相性を占う</button>
+        </form>
+        <p class="note">鑑定した人物が記録に保存されます。「お相手を直接入力」なら記録に残さず、こっそり相性を占えます。</p>
       </section>
 
       <section id="compatResult" class="result hidden"></section>
@@ -90,8 +131,16 @@
         <button id="clearHistory" class="btn-danger">記録を全削除</button>
       </section>
     </main>
+    <button id="themeToggle" class="theme-toggle" title="表示テーマを切り替え">☀️</button>
+    <button id="backToTop" class="back-to-top hidden" title="上に戻る">↑</button>
+    <div id="loadingOverlay" class="loading-overlay hidden">
+      <div class="loading-inner">
+        <div class="loading-star">🌙</div>
+        <p class="loading-text">あなたの星を読んでいます…</p>
+      </div>
+    </div>
     <script src="./qrcode.min.js?v=20260724a"></script>
     <script src="./kanji-data.js?v=20260822b"></script>
-    <script src="./app.js?v=20260906m"></script>
+    <script src="./app.js?v=20261003a"></script>
   </body>
 </html>
