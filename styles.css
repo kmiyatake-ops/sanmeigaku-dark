@@ -4842,3 +4842,93 @@ body.light-mode .fc-grid { stroke: rgba(74, 47, 61, 0.10); }
 body.light-mode .ranking-box { background: rgba(255, 112, 166, 0.06); }
 body.light-mode .ranking-item { background: rgba(255, 255, 255, 0.7); }
 body.light-mode .ranking-mini-bar { background: rgba(74, 47, 61, 0.10); }
+
+/* === 相性：宿命の縁カード === */
+.fate-bond-card {
+  border-color: rgba(255, 112, 166, 0.30);
+}
+.fate-main {
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-subtle);
+}
+.fate-main.is-fate-strong {
+  background: linear-gradient(135deg, rgba(255, 112, 166, 0.14), rgba(199, 125, 255, 0.10));
+  border-color: rgba(255, 112, 166, 0.45);
+}
+.fate-main.is-fate-good {
+  background: rgba(109, 214, 160, 0.10);
+  border-color: rgba(109, 214, 160, 0.35);
+}
+.fate-main.is-fate-mid {
+  background: rgba(224, 192, 96, 0.08);
+  border-color: rgba(224, 192, 96, 0.30);
+}
+.fate-main.is-fate-hard {
+  background: rgba(255, 122, 122, 0.08);
+  border-color: rgba(255, 122, 122, 0.35);
+}
+.fate-main-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.fate-main-note {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--tropical-sand);
+}
+.fate-bond-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.fate-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+}
+.fate-tag.fate-strong { background: rgba(255, 112, 166, 0.15); border-color: rgba(255, 112, 166, 0.4); color: var(--tropical-pink); }
+.fate-tag.fate-good { background: rgba(109, 214, 160, 0.12); border-color: rgba(109, 214, 160, 0.35); }
+.fate-tag.fate-mid { background: rgba(224, 192, 96, 0.12); border-color: rgba(224, 192, 96, 0.3); }
+.fate-tag.fate-hard { background: rgba(255, 122, 122, 0.12); border-color: rgba(255, 122, 122, 0.35); }
+.fate-stars {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.fate-star-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.fate-star-row b { font-size: 12px; color: var(--muted); }
+.fate-spouse p {
+  margin: 6px 0;
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(244, 201, 93, 0.08);
+  border: 1px solid rgba(244, 201, 93, 0.25);
+}
+.fate-warn {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.7;
+  background: rgba(255, 122, 122, 0.10);
+  border: 1px solid rgba(255, 122, 122, 0.30);
+}
+body.light-mode .fate-star-row { background: rgba(255, 255, 255, 0.6); }
+body.light-mode .fate-main-note { color: #7a5563; }

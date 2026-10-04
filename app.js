@@ -5726,7 +5726,132 @@ const compatTexts = {
   反剋: { good: "一方的に鍛えられる関係。我慢が効く間は成長するが、限界を超えると感情が麻痺しやすくなる。", bad: "一方的に削られる関係。耐えているうちはいいが、限界を超えると感情が麻痺し、ある日突然冷める。撤退のタイミングを見極めないと深傷を負う。" }
 };
 
+// === 算命学：宿命レベルの縁分析 ===
+// 日干支の組み合わせ（律音・天地徳合・干合・支合・対冲・害・刑・破・半会・納音・天剋地冲）と
+// 天中殺の縁・配偶者星・配偶者の座を総合判定する
+function analyzeFatedBond(a, b) {
+  const sa = a.dayStem, ba = a.dayBranch;
+  const sb = b.dayStem, bb = b.dayBranch;
+  const sameStem = sa === sb;
+  const sameBranch = ba === bb;
+  const isKangou = kangouPairs[sa] === sb;
+  const isShigou = shigouPair[ba] === bb;
+  const isChong = chongPairMap[ba] === bb;
+  const isGai = gaiPair[ba] === bb;
+  const isHa = haPair[ba] === bb;
+  const isKei = !sameBranch && keiGroups.some((g) => g.branches.includes(ba) && g.branches.includes(bb));
+  const isJikei = sameBranch && jikeiBranches.includes(ba);
+  const isHankai = !sameBranch && isHanKaiPair(ba, bb);
+  const isChokuPair = isSameParityOvercome(sa, sb) || isSameParityOvercome(sb, sa);
+
+  const bonds = [];
+  let loveMod = 0, sexMod = 0, marriageMod = 0;
+  let mainBond = null;
+
+  const add = (type, cls, title, note, l, s, m) => {
+    bonds.push({ type, cls, title, note });
+    loveMod += l; sexMod += s; marriageMod += m;
+    if (!mainBond) mainBond = { type, cls, title, note };
+  };
+
+  // 日干支の関係分類（強いもの優先）
+  if (sameStem && sameBranch) {
+    add("律音", "fate-strong", "律音（りっちん）— 一心同体の絆", "二人の日干支が全く同じ。同じ感覚・価値観を持つ「もう一人の自分」のような縁。深く理解し合える一方、似た者同士で欠点も増幅しやすい。", 15, 8, 15);
+  } else if (isKangou && isShigou) {
+    add("天地徳合", "fate-strong", "天地徳合（干合＋支合）— 宿命級の縁", "干（考え方）も支（行動）も互いに引き寄せ合う、算命学で最も縁が強い組み合わせの一つ。出会うべくして出会った相手。", 18, 10, 18);
+  } else if (isChokuPair && isChong) {
+    add("天剋地冲", "fate-hard", "天剋地冲（てんこくちちゅう）— 強い刺激と摩擦", "上の文字同士がぶつかり、下の文字も正面衝突。強く意識し合うが価値観の対立も激しい、波乱の多い縁。距離感とルール作りが鍵。", -14, 12, -16);
+  } else if (sameStem && isChong) {
+    add("納音", "fate-mid", "納音（なっちん）— 似た感性で正反対の行動", "考え方は似ているのに行動が真逆。意気投合しつつ「なぜそうするの？」とすれ違う面白い縁。役割を分けると上手くいく。", 5, 6, 4);
+  } else if (isKangou) {
+    add("干合", "fate-strong", "干合（かんごう）— 引き寄せ合う縁", "日の干同士が干合（甲↔己など五つの特別なペア）。出会った瞬間から「なぜか気になる」強い引き寄せの縁です。", 12, 8, 14);
+  }
+  if (!mainBond && isShigou) {
+    add("支合", "fate-good", "支合（しごう）— 行動パターンがかみ合う", "生活リズムや行動が自然にかみ合う関係。一緒にいて居心地が良く、家庭を築く相性として優れています。", 8, 6, 10);
+  } else if (!mainBond && isChong) {
+    add("対冲", "fate-hard", "対冲（たいちゅう）— 正反対のエネルギー", "真逆の性質がぶつかる関係。刺激的で新しい発見もあるが、長く一緒にいるとすれ違いや衝突も起きやすい。", -8, 10, -10);
+  } else if (!mainBond && isGai) {
+    add("害", "fate-hard", "害（がい）— 見えない摩擦", "表立たないがジワジワ摩擦が起きやすい地支の関係。小さな不満を溜めず、早めに言葉にして共有するのが鍵。", -8, -4, -8);
+  } else if (!mainBond && isKei) {
+    add("刑", "fate-hard", "刑（けい）— こじれやすい関係", "一度こじれると長引きやすい組み合わせ。感情的になったら一度距離を置き、冷静になってから話し合うと吉。", -9, -4, -9);
+  } else if (!mainBond && isHa) {
+    add("破", "fate-mid", "破（は）— 小さなひずみ", "単独では影響は軽いが、他の摩擦要素と重なるとひずみが広がりやすい関係。思い込みで相手を決めつけないこと。", -4, -2, -4);
+  } else if (!mainBond && isJikei) {
+    add("自刑", "fate-mid", "自刑 — 同じ性質のぶつかり合い", "同じ地支同士（辰・午・酉・亥）で、似ているからこそ譲れない部分がぶつかる。適度な距離と個人時間を確保すると良い。", -5, 0, -5);
+  } else if (!mainBond && isHankai) {
+    add("半会", "fate-good", "半会（はんかい）— 協力し合える縁", "三合の2要素が揃う関係。お互いの足りない部分を補い合え、一緒にいると目標に向かって進みやすい。", 5, 4, 5);
+  }
+
+  // 天中殺の縁（tenchusatsuは "申酉" のような文字列または配列）
+  const toTenArr = (t) => Array.isArray(t) ? t : String(t || "").split("");
+  const aTen = toTenArr(a.tenchusatsu);
+  const bTen = toTenArr(b.tenchusatsu);
+  const bInATenchu = aTen.includes(b.dayBranch);
+  const aInBTenchu = bTen.includes(a.dayBranch);
+  if (bInATenchu && aInBTenchu) {
+    add("相互天中殺", "fate-hard", "相互天中殺 — 深いが波乱のある縁", "お互いの天中殺の干支を持ち合う関係。強く惹かれ合うが、一緒にいるとお互いの運気が不安定になりやすい。良い時期に深め、無理な時期は距離を取るバランスが大切。", -8, 4, -10);
+  } else {
+    if (bInATenchu) {
+      add("天中殺の縁", "fate-hard", `${b.name}は${a.name}の天中殺の干支`, `${b.name}の生まれ支（${b.dayBranch}）が${a.name}の天中殺（${aTen.join("・")}）に入っています。強く惹かれる反面、${a.name}側が振り回されたり運気が乱れやすい『天中殺の縁』。ゆっくり関係を深めるのが安全です。`, -6, 2, -6);
+    }
+    if (aInBTenchu) {
+      add("天中殺の縁", "fate-hard", `${a.name}は${b.name}の天中殺の干支`, `${a.name}の生まれ支（${a.dayBranch}）が${b.name}の天中殺（${bTen.join("・")}）に入っています。${b.name}側にとって『天中殺の縁』。一緒にいると${b.name}の運気が揺れやすいので、関係のペースは相手に合わせるのが吉。`, -6, 2, -6);
+    }
+  }
+
+  // 配偶者星（あなたにとって相手が「夫星・妻星」か）
+  const starAtoB = getMainStar(a.dayStem, b.dayStem);
+  const starBtoA = getMainStar(b.dayStem, a.dayStem);
+  const isSpouseStar = (gender, star) =>
+    gender === "male" ? ["司禄星", "禄存星"].includes(star) : ["牽牛星", "車騎星"].includes(star);
+  const spouseNotes = [];
+  if (a.gender && isSpouseStar(a.gender, starAtoB)) {
+    spouseNotes.push(`${b.name}は${a.name}にとって「配偶者の星」（${starAtoB}）。運命の結婚相手として意識しやすい相手です`);
+    loveMod += 6; marriageMod += 10;
+  }
+  if (b.gender && isSpouseStar(b.gender, starBtoA)) {
+    spouseNotes.push(`${a.name}は${b.name}にとって「配偶者の星」（${starBtoA}）。${b.name}が運命の相手として意識しやすい関係です`);
+    loveMod += 6; marriageMod += 10;
+  }
+
+  // 配偶者の座（日支蔵干に相手の日干が入るか）
+  if (a.zoukan && a.zoukan.day === b.dayStem) {
+    spouseNotes.push(`${b.name}は${a.name}の配偶者の座（日支蔵干）にいる人。${a.name}の人生に「本来いるべき人」として現れた縁`);
+    loveMod += 4; marriageMod += 8;
+  }
+  if (b.zoukan && b.zoukan.day === a.dayStem) {
+    spouseNotes.push(`${a.name}は${b.name}の配偶者の座（日支蔵干）にいる人。${b.name}の人生に「本来いるべき人」として現れた縁`);
+    loveMod += 4; marriageMod += 8;
+  }
+
+  const starMeaning = {
+    "貫索星": "あなたを守り、共に歩んでくれる存在",
+    "石門星": "協力してくれる仲間・同志のような存在",
+    "鳳閣星": "一緒にいると楽しい、癒やしの存在",
+    "調舒星": "刺激的で憧れる存在。少し振り回されることも",
+    "禄存星": "愛情を注いでくれる、大切にしたい存在",
+    "司禄星": "安心感をくれる、堅実で頼れる存在",
+    "車騎星": "背中を押してくれる、エネルギーのある存在",
+    "牽牛星": "導いてくれる、尊敬できる存在",
+    "龍高星": "あなたの世界を広げてくれる存在",
+    "玉堂星": "知恵や学びをもたらしてくれる存在"
+  };
+
+  return {
+    bonds, mainBond, loveMod, sexMod, marriageMod,
+    starAtoB, starBtoA,
+    starAtoBMeaning: starMeaning[starAtoB] || "",
+    starBtoAMeaning: starMeaning[starBtoA] || "",
+    spouseNotes,
+    bInATenchu, aInBTenchu,
+    pillarA: `${sa}${ba}`, pillarB: `${sb}${bb}`
+  };
+}
+
 function calcCompatibility(a, b) {
+  a = enrichCompatPerson(a);
+  b = enrichCompatPerson(b);
+  const bond = analyzeFatedBond(a, b);
   const elA = elements[stems.indexOf(a.dayStem)];
   const elB = elements[stems.indexOf(b.dayStem)];
   const relation = gogyoRelation[elA][elB];
@@ -5769,6 +5894,8 @@ function calcCompatibility(a, b) {
   const starLovePt = loveStarBonus[centerA] && loveStarBonus[centerA][centerB] !== undefined ? loveStarBonus[centerA][centerB] : 0;
   loveScore += starLovePt * 1.5;
   if (starLovePt) loveFactors.push(`主星(${centerA}×${centerB})${starLovePt > 0 ? "+" : ""}${Math.round(starLovePt * 1.5)}`);
+  if (bond.loveMod) loveFactors.push(`宿命の縁(${bond.bonds.map((x) => x.type).join("/")})${bond.loveMod > 0 ? "+" : ""}${bond.loveMod}`);
+  loveScore += bond.loveMod;
   loveScore = Math.max(5, Math.min(98, loveScore));
 
   // --- SEXの相性 ---
@@ -5795,6 +5922,8 @@ function calcCompatibility(a, b) {
   const sexStarPt = Math.round((sexPtA + sexPtB) / 2);
   sexScore += sexStarPt;
   if (sexStarPt) sexFactors.push(`主星の情熱度+${sexStarPt}`);
+  if (bond.sexMod) sexFactors.push(`宿命の縁${bond.sexMod > 0 ? "+" : ""}${bond.sexMod}`);
+  sexScore += bond.sexMod;
   sexScore = Math.max(5, Math.min(98, sexScore));
 
   // --- 結婚後の相性 ---
@@ -5819,6 +5948,8 @@ function calcCompatibility(a, b) {
   if (marStarPt) marriageFactors.push(`主星の結婚適性+${marStarPt}`);
   // 同陰陽は安定感がある
   if (sameYinYang) { marriageScore += 8; marriageFactors.push("同陰陽(安定)+8"); }
+  if (bond.marriageMod) marriageFactors.push(`宿命の縁${bond.marriageMod > 0 ? "+" : ""}${bond.marriageMod}`);
+  marriageScore += bond.marriageMod;
   marriageScore = Math.max(5, Math.min(98, marriageScore));
 
   // 総合スコア
@@ -5902,7 +6033,7 @@ function calcCompatibility(a, b) {
   if (sameYinYang) { divorceRisk -= 8; divorceFactors.push("同陰陽(安定)-8"); }
   divorceRisk = Math.max(5, Math.min(98, divorceRisk));
 
-  return { relation, starAtoB, starBtoA, branchHarmony, score, elA, elB, loveScore, sexScore, marriageScore, loveFactors, sexFactors, marriageFactors, centerA, centerB, affairRiskA, affairRiskB, affairRisk, affairFactors, divorceRisk, divorceFactors };
+  return { relation, starAtoB, starBtoA, branchHarmony, score, elA, elB, loveScore, sexScore, marriageScore, loveFactors, sexFactors, marriageFactors, centerA, centerB, affairRiskA, affairRiskB, affairRisk, affairFactors, divorceRisk, divorceFactors, bond };
 }
 
 function renderCompat(event) {
@@ -5918,7 +6049,10 @@ function renderCompat(event) {
 }
 
 function showCompatResult(a, b) {
+  a = enrichCompatPerson(a);
+  b = enrichCompatPerson(b);
   const c = calcCompatibility(a, b);
+  const bond = c.bond;
   const wc = calcWorkCompatibility(a, b);
   const pc = calcParentChildCompatibility(a, b);
   const severity = c.score < 40 ? "bad" : "good";
@@ -5970,11 +6104,38 @@ function showCompatResult(a, b) {
         <div class="score-circle"><span>${c.score}</span><small>/100</small></div>
       </div>
       <div class="compat-detail">
+        <div class="compat-row"><b>日干支</b><span>${a.name}：${bond.pillarA} × ${b.name}：${bond.pillarB}</span></div>
         <div class="compat-row"><b>相性の関係</b><span>${c.elA}（${a.name}）× ${c.elB}（${b.name}）= <strong>${c.relation}</strong></span></div>
         <div class="compat-row"><b>${a.name}→${b.name}</b><span>${c.starAtoB}（${a.name}から見た${b.name}の存在）</span></div>
         <div class="compat-row"><b>${b.name}→${a.name}</b><span>${c.starBtoA}（${b.name}から見た${a.name}の存在）</span></div>
         <div class="compat-row"><b>地支関係</b><span>${c.branchHarmony}</span></div>
       </div>
+    </div>
+
+    <div class="result-card fate-bond-card">
+      <h3>二人のご縁（宿命レベル）</h3>
+      ${bond.mainBond ? `
+        <div class="fate-main ${bond.mainBond.cls ? "is-" + bond.mainBond.cls : ""}">
+          <div class="fate-main-title">${bond.mainBond.title || bond.mainBond.type}</div>
+          <p class="fate-main-note">${bond.mainBond.note}</p>
+        </div>` : `
+        <div class="fate-main is-fate-mid">
+          <div class="fate-main-title">素直な縁</div>
+          <p class="fate-main-note">干支に強い特徴はありませんが、それだけに日常的な関わり方次第で良くも悪くもなる関係。スコアの個別項目を参考に接し方を調整すると◎。</p>
+        </div>`}
+      ${bond.bonds.length > 1 ? `<div class="fate-bond-tags">${bond.bonds.map((x) => `<span class="fate-tag ${x.cls}">${x.type}</span>`).join("")}</div>` : ""}
+      <div class="fate-stars">
+        <div class="fate-star-row">
+          <b>${a.name}にとっての${b.name}</b>
+          <span>${bond.starAtoB} — ${bond.starAtoBMeaning}</span>
+        </div>
+        <div class="fate-star-row">
+          <b>${b.name}にとっての${a.name}</b>
+          <span>${bond.starBtoA} — ${bond.starBtoAMeaning}</span>
+        </div>
+      </div>
+      ${bond.spouseNotes.length ? `<div class="fate-spouse">${bond.spouseNotes.map((n) => `<p>💍 ${n}</p>`).join("")}</div>` : ""}
+      ${(bond.bInATenchu || bond.aInBTenchu) ? `<div class="fate-warn">⚠ 天中殺の縁が含まれています。縁は強い反面、波乱も起きやすい組み合わせ。ゆっくり時間をかけて関係を築くのがおすすめです。</div>` : ""}
     </div>
 
     <div class="result-card compat-cats">
@@ -6132,25 +6293,44 @@ function buildCompatPerson(name, birthYear, birthMonth, birthDay, gender) {
   return {
     name: name || "お相手",
     gender,
+    pillars: { year, month, day },
+    zoukan,
+    yearStem: year.stem,
+    yearBranch: year.branch,
+    monthStem: month.stem,
+    monthBranch: month.branch,
     dayStem: day.stem,
     dayBranch: day.branch,
+    dayIndex: day.index,
+    dayElement: elements[stems.indexOf(day.stem)],
+    dayYinYang: yinYang[stems.indexOf(day.stem)],
+    tenchusatsu: getTenchusatsu(day.index),
     centerStar: mainStars.center,
     northStar: mainStars.north,
     southStar: mainStars.south,
     eastStar: mainStars.east,
     westStar: mainStars.west,
-    dayEnergy: energy[2] ? energy[2].name : ""
+    dayEnergy: energy[2] ? energy[2].name : "",
+    energyNames: energy.map((e) => e ? e.name : "")
   };
+}
+
+// 履歴・入力どちらの形でも命式フル情報を持つ人物オブジェクトに正規化
+function enrichCompatPerson(p) {
+  if (!p) return p;
+  if (p.tenchusatsu && p.zoukan && p.pillars) return p;
+  let y = p.birthYear, m = p.birthMonth, d = p.birthDay;
+  if (!y && p.birthdate) {
+    const parts = p.birthdate.split("-");
+    y = parseInt(parts[0], 10); m = parseInt(parts[1], 10); d = parseInt(parts[2], 10);
+  }
+  if (!y || !m || !d) return p;
+  return Object.assign(buildCompatPerson(p.name, y, m, d, p.gender), p);
 }
 
 // 履歴エントリから相性計算用の人物オブジェクトを組み立て
 function historyToPerson(h) {
-  let y = h.birthYear, m = h.birthMonth, d = h.birthDay;
-  if (!y && h.birthdate) {
-    const parts = h.birthdate.split("-");
-    y = parseInt(parts[0], 10); m = parseInt(parts[1], 10); d = parseInt(parts[2], 10);
-  }
-  return buildCompatPerson(h.name, y, m, d, h.gender);
+  return enrichCompatPerson(h);
 }
 
 // 記録全員との相性ランキング
@@ -8755,7 +8935,7 @@ function render(event) {
 }
 
 document.body.classList.add("simple-mode");
-console.log("[app.js v20261007b] loaded. simple-mode:", document.body.classList.contains("simple-mode"));
+console.log("[app.js v20261007c] loaded. simple-mode:", document.body.classList.contains("simple-mode"));
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   navigator.serviceWorker.register("./sw.js").catch(() => {});
 }
