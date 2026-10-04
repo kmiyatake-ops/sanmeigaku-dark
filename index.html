@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=20261007a" />
+    <link rel="stylesheet" href="./styles.css?v=20261007b" />
     <link rel="icon" type="image/svg+xml" href="./icon.svg" />
     <link rel="apple-touch-icon" href="./icon.svg" />
     <link rel="manifest" href="./manifest.json" />
@@ -120,6 +120,15 @@
           </div>
           <button type="submit">相性を占う</button>
         </form>
+        <div class="ranking-box">
+          <p class="direct-partner-title">💞 相性ランキング</p>
+          <p class="ranking-note">記録した人の中で、あなたと一番相性が良いのは誰？</p>
+          <div class="ranking-controls">
+            <select id="rankingBase"><option value="">-- あなたを選択 --</option></select>
+            <button type="button" id="rankingBtn" class="btn-secondary">ランキングを見る</button>
+          </div>
+          <div id="rankingResult"></div>
+        </div>
         <p class="note">鑑定した人物が記録に保存されます。「お相手を直接入力」なら記録に残さず、こっそり相性を占えます。</p>
       </section>
 
@@ -141,6 +150,6 @@
     </div>
     <script src="./qrcode.min.js?v=20260724a"></script>
     <script src="./kanji-data.js?v=20260822b"></script>
-    <script src="./app.js?v=20261007a"></script>
+    <script src="./app.js?v=20261007b"></script>
   </body>
 </html>

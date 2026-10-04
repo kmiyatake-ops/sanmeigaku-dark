@@ -4728,3 +4728,117 @@ body.light-mode .compat-tab {
 }
 body.light-mode .compat-tab.is-active { color: #fff; }
 body.light-mode .direct-partner-box { background: rgba(255, 112, 166, 0.08); }
+
+/* === 月別運気カレンダー === */
+.month-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+.mc-cell {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+}
+.mc-cell.is-current {
+  border-color: rgba(255, 112, 166, 0.55);
+  box-shadow: 0 0 0 1px rgba(255, 112, 166, 0.25), 0 4px 14px rgba(255, 112, 166, 0.12);
+}
+.mc-cell.is-tenchu { background: rgba(255, 93, 115, 0.06); }
+.mc-head { display: flex; justify-content: space-between; align-items: baseline; }
+.mc-month { font-weight: 700; font-size: 14px; }
+.mc-mark { font-size: 18px; font-weight: 700; }
+.mc-best .mc-mark { color: #ff70a6; }
+.mc-good .mc-mark { color: #6dd6a0; }
+.mc-normal .mc-mark { color: #e0c060; }
+.mc-caution .mc-mark { color: #ff7a7a; }
+.mc-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.mc-meta { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.6; }
+.mc-tip { font-size: 12px; line-height: 1.6; margin-top: 6px; color: var(--tropical-sand); }
+body.light-mode .mc-cell { background: rgba(255, 255, 255, 0.65); }
+body.light-mode .mc-tip { color: #7a5563; }
+
+/* === 運気曲線グラフ === */
+.fortune-curve-wrap { overflow-x: auto; }
+.fortune-curve-svg { width: 100%; min-width: 560px; height: auto; display: block; }
+.fc-grid { stroke: rgba(255, 255, 255, 0.08); stroke-width: 1; }
+.fc-ytext, .fc-xtext { fill: var(--muted); font-size: 11px; }
+.fc-line { fill: none; stroke: #ff70a6; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+.fc-tenchu-band { fill: rgba(255, 93, 115, 0.10); }
+.fc-current-line { stroke: rgba(244, 201, 93, 0.5); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.fc-current-dot { fill: #f4c95d; stroke: #1a0f14; stroke-width: 1.5; }
+.fc-tp-dot { fill: #ffd23f; stroke: rgba(0,0,0,0.4); stroke-width: 1; }
+.fc-best-dot { fill: #6dd6a0; }
+.fc-worst-dot { fill: #ff7a7a; }
+.fc-label { fill: var(--text); font-size: 11px; font-weight: 600; }
+.fc-label.fc-best { fill: #6dd6a0; }
+.fc-label.fc-worst { fill: #ff7a7a; }
+.fortune-curve-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.fortune-curve-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.fortune-curve-legend i { display: inline-block; width: 18px; height: 8px; border-radius: 4px; }
+.fc-lg-line { background: #ff70a6; height: 3px !important; }
+.fc-lg-dot { background: #ffd23f; width: 8px !important; border-radius: 50%; }
+.fc-lg-band { background: rgba(255, 93, 115, 0.25); }
+.fc-lg-now { background: #f4c95d; height: 3px !important; }
+body.light-mode .fc-ytext, body.light-mode .fc-xtext { fill: #93707f; }
+body.light-mode .fc-label { fill: #4a2f3d; }
+body.light-mode .fc-grid { stroke: rgba(74, 47, 61, 0.10); }
+
+/* === 相性ランキング === */
+.ranking-box {
+  grid-column: 1 / -1;
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255, 112, 166, 0.05);
+  border: 1px solid rgba(255, 112, 166, 0.18);
+}
+.ranking-note { margin: 4px 0 12px; font-size: 12px; color: var(--muted); }
+.ranking-controls { display: flex; gap: 10px; flex-wrap: wrap; }
+.ranking-controls select { flex: 1; min-width: 200px; }
+.btn-secondary {
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: rgba(255, 112, 166, 0.15);
+  border: 1px solid rgba(255, 112, 166, 0.35);
+  color: var(--text);
+  font-weight: 600;
+}
+.ranking-list { margin-top: 14px; display: grid; gap: 10px; }
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+}
+.ranking-item.is-top {
+  border-color: rgba(255, 112, 166, 0.5);
+  background: linear-gradient(135deg, rgba(255, 112, 166, 0.10), rgba(199, 125, 255, 0.06));
+}
+.ranking-medal { font-size: 20px; min-width: 34px; text-align: center; font-weight: 700; }
+.ranking-info { flex: 1; min-width: 0; }
+.ranking-name { font-weight: 700; font-size: 14px; }
+.ranking-birth { font-weight: 400; font-size: 11px; color: var(--muted); margin-left: 8px; }
+.ranking-comment { font-size: 12px; color: var(--tropical-pink); margin-top: 2px; }
+.ranking-minis { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+.ranking-mini { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+.ranking-mini-bar { width: 56px; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+.ranking-mini-bar i { display: block; height: 100%; background: linear-gradient(90deg, #ff70a6, #c77dff); border-radius: 3px; }
+.ranking-mini b { color: var(--text); font-size: 11px; }
+.ranking-score { font-size: 24px; font-weight: 700; }
+.ranking-score small { font-size: 11px; font-weight: 400; color: var(--muted); }
+body.light-mode .ranking-box { background: rgba(255, 112, 166, 0.06); }
+body.light-mode .ranking-item { background: rgba(255, 255, 255, 0.7); }
+body.light-mode .ranking-mini-bar { background: rgba(74, 47, 61, 0.10); }

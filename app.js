@@ -2303,6 +2303,207 @@ function analyzeYearlyFortune(day, pillars, taiun, currentAge, thisYear, balance
 }
 
 // === 今日の運勢・今月の運勢 ===
+// 金運・恋愛運・仕事運ドメインの重み（日運・月運・月別カレンダー共通）
+const starDomainWeights = {
+  "貫索星": { money: 22, love: -8, work: 18 },
+  "石門星": { money: 12, love: 18, work: 14 },
+  "鳳閣星": { money: -6, love: 25, work: -10 },
+  "調舒星": { money: -12, love: 20, work: -14 },
+  "禄存星": { money: 16, love: 22, work: 8 },
+  "司禄星": { money: 24, love: -4, work: 20 },
+  "車騎星": { money: 6, love: 18, work: 16 },
+  "牽牛星": { money: 18, love: -10, work: 24 },
+  "龍高星": { money: -14, love: 22, work: -16 },
+  "玉堂星": { money: 14, love: 6, work: 22 }
+};
+const energyDomainWeights = {
+  "天貴星": { money: 12, love: 6, work: 14 },
+  "天南星": { money: 8, love: 14, work: 10 },
+  "天禄星": { money: 16, love: 8, work: 12 },
+  "天将星": { money: 14, love: 10, work: 16 },
+  "天堂星": { money: 10, love: 16, work: 6 },
+  "天印星": { money: 4, love: 12, work: 6 },
+  "天報星": { money: -12, love: -6, work: -10 },
+  "天胡星": { money: -8, love: -14, work: -8 },
+  "天極星": { money: -10, love: -8, work: -14 },
+  "天馳星": { money: -6, love: -12, work: -10 },
+  "天庫星": { money: 14, love: 4, work: 12 },
+  "天恍星": { money: -4, love: -8, work: -6 }
+};
+
+// スコア計算（年運と同じロジックを縮小適用）
+function calcScore(star, energyName, rel, isTenchu, topo) {
+  let money = 50, love = 50, work = 50;
+  const sw = starDomainWeights[star] || { money: 0, love: 0, work: 0 };
+  money += sw.money; love += sw.love; work += sw.work;
+  if (rel === "相生") { money += 12; love += 20; work += 14; }
+  else if (rel === "比和") { money += 6; love += 4; work += 8; }
+  else if (rel === "相剋") { money -= 18; love -= 14; work -= 12; }
+  else if (rel === "反剋") { money -= 8; love -= 12; work -= 14; }
+  const ew = energyDomainWeights[energyName] || { money: 0, love: 0, work: 0 };
+  money += ew.money; love += ew.love; work += ew.work;
+  if (isTenchu) { money -= 16; love -= 28; work -= 14; }
+  const goCount = topo.filter(r => r.group === "合法").length;
+  const sanCount = topo.filter(r => r.group === "散法").length;
+  money += goCount * 10 - sanCount * 6;
+  love += goCount * 12 - sanCount * 10;
+  work += goCount * 8 - sanCount * 8;
+  return {
+    money: Math.max(5, Math.min(98, money)),
+    love: Math.max(5, Math.min(98, love)),
+    work: Math.max(5, Math.min(98, work))
+  };
+}
+
+// 今年の月別運気カレンダー
+function analyzeMonthCalendar(day, pillars, tenchusatsu, year) {
+  const dayEl = elements[stems.indexOf(day.stem)];
+  const months = [];
+  for (let m = 1; m <= 12; m++) {
+    const d = new Date(year, m - 1, 10);
+    const yp = getYearPillar(d);
+    const mp = getMonthPillar(d, stems.indexOf(yp.stem));
+    const star = getMainStar(day.stem, mp.stem);
+    const energyStar = getEnergyStar(day.stem, mp.branch);
+    const rel = gogyoRelation[dayEl][elements[stems.indexOf(mp.stem)]];
+    const isTenchu = isTenchusatsuYear(mp.branch, tenchusatsu);
+    const topo = analyzeBranchTopology(mp.branch, pillars, mp.stem);
+    const scores = calcScore(star, energyStar.name, rel, isTenchu, topo);
+    const overall = Math.round((scores.money + scores.love + scores.work) / 3);
+    const entries = [["money", "金運"], ["love", "恋愛運"], ["work", "仕事運"]];
+    const best = entries.reduce((a, b) => scores[b[0]] > scores[a[0]] ? b : a);
+    const worst = entries.reduce((a, b) => scores[b[0]] < scores[a[0]] ? b : a);
+    months.push({
+      month: m,
+      pillar: mp,
+      star,
+      energy: energyStar.name,
+      rel,
+      isTenchu,
+      scores,
+      overall,
+      best: best[1],
+      bestScore: scores[best[0]],
+      worst: worst[1],
+      worstScore: scores[worst[0]]
+    });
+  }
+  return months;
+}
+
+// 人生の運気曲線（年運55%×大運45%のブレンド）
+function buildFortuneCurve(day, pillars, taiun, tenchusatsu, birthYear, currentAge) {
+  const dayEl = elements[stems.indexOf(day.stem)];
+  const goodStars = ["貫索星", "石門星", "禄存星", "司禄星", "牽牛星", "玉堂星"];
+  const badStars = ["調舒星", "龍高星", "車騎星"];
+  const goodEnergy = ["天貴星", "天南星", "天禄星", "天将星", "天堂星"];
+  const badEnergy = ["天報星", "天胡星", "天極星", "天馳星"];
+
+  function scorePillar(stem, branch) {
+    const star = getMainStar(day.stem, stem);
+    const eStar = getEnergyStar(day.stem, branch);
+    const rel = gogyoRelation[dayEl][elements[stems.indexOf(stem)]];
+    const isTenchu = isTenchusatsuYear(branch, tenchusatsu);
+    const topo = analyzeBranchTopology(branch, pillars, stem);
+    let s = 50;
+    if (goodStars.includes(star)) s += 10;
+    if (badStars.includes(star)) s -= 8;
+    if (rel === "相生") s += 8;
+    else if (rel === "比和") s += 3;
+    else if (rel === "相剋") s -= 8;
+    else if (rel === "反剋") s -= 5;
+    if (goodEnergy.includes(eStar.name)) s += 5;
+    if (badEnergy.includes(eStar.name)) s -= 5;
+    if (isTenchu) s -= 10;
+    s += topo.filter(r => r.group === "合法").length * 4 - topo.filter(r => r.group === "散法").length * 4;
+    return Math.max(10, Math.min(95, s));
+  }
+
+  const taiunScoreByAge = {};
+  (taiun.periods || []).forEach((p) => {
+    const s = scorePillar(p.stem, p.branch);
+    for (let a = p.age; a <= p.ageTo; a++) taiunScoreByAge[a] = s;
+  });
+
+  const maxAge = 90;
+  const points = [];
+  for (let age = 0; age <= maxAge; age++) {
+    const yp = getYearPillarForYear(birthYear + age);
+    const ys = scorePillar(yp.stem, yp.branch);
+    const ts = taiunScoreByAge[age] !== undefined ? taiunScoreByAge[age] : 50;
+    points.push({
+      age,
+      year: birthYear + age,
+      score: Math.round(ys * 0.55 + ts * 0.45),
+      isTenchu: isTenchusatsuYear(yp.branch, tenchusatsu)
+    });
+  }
+  return points;
+}
+
+// 運気曲線をSVGグラフに描画
+function buildFortuneCurveSVG(points, currentAge, turningPoints) {
+  const W = 760, H = 230, PL = 38, PR = 14, PT = 18, PB = 30;
+  const iw = W - PL - PR, ih = H - PT - PB;
+  const maxAge = points[points.length - 1].age || 90;
+  const x = (age) => PL + (age / maxAge) * iw;
+  const y = (score) => PT + (1 - score / 100) * ih;
+
+  const path = points.map((p, i) => `${i === 0 ? "M" : "L"}${x(p.age).toFixed(1)},${y(p.score).toFixed(1)}`).join(" ");
+  const area = `${path} L${x(maxAge).toFixed(1)},${(PT + ih).toFixed(1)} L${PL},${(PT + ih).toFixed(1)} Z`;
+
+  const grid = [25, 50, 75].map((v) =>
+    `<line x1="${PL}" y1="${y(v)}" x2="${W - PR}" y2="${y(v)}" class="fc-grid"/><text x="${PL - 6}" y="${y(v) + 4}" class="fc-ytext" text-anchor="end">${v}</text>`
+  ).join("");
+  const xlabels = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90].filter(a => a <= maxAge).map((a) =>
+    `<text x="${x(a)}" y="${H - 8}" class="fc-xtext" text-anchor="middle">${a}歳</text>`
+  ).join("");
+
+  // 天中殺の年を帯で表示
+  let tenchuBands = "";
+  let bandStart = null;
+  points.forEach((p, i) => {
+    if (p.isTenchu && bandStart === null) bandStart = p.age;
+    const isLast = i === points.length - 1;
+    if (bandStart !== null && (!p.isTenchu || isLast)) {
+      const endAge = p.isTenchu ? p.age + 1 : p.age;
+      tenchuBands += `<rect x="${x(bandStart)}" y="${PT}" width="${x(endAge) - x(bandStart)}" height="${ih}" class="fc-tenchu-band"/>`;
+      bandStart = null;
+    }
+  });
+
+  // 現在位置・最高・最低・転機
+  const cur = points[Math.min(currentAge, maxAge)];
+  const best = points.reduce((a, b) => b.score > a.score ? b : a);
+  const worst = points.reduce((a, b) => b.score < a.score ? b : a);
+  const markers = (turningPoints || []).filter(tp => tp.age >= 0 && tp.age <= maxAge).map((tp) => {
+    const p = points[tp.age];
+    return `<circle cx="${x(tp.age)}" cy="${y(p.score)}" r="4" class="fc-tp-dot"><title>${tp.age}歳（${tp.year}年）${tp.type}</title></circle>`;
+  }).join("");
+
+  return `<svg viewBox="0 0 ${W} ${H}" class="fortune-curve-svg" role="img" aria-label="人生の運気曲線">
+    <defs>
+      <linearGradient id="fcArea" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ff70a6" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#ff70a6" stop-opacity="0.02"/>
+      </linearGradient>
+    </defs>
+    ${tenchuBands}
+    ${grid}
+    <path d="${area}" fill="url(#fcArea)"/>
+    <path d="${path}" class="fc-line"/>
+    ${markers}
+    <line x1="${x(cur.age)}" y1="${PT}" x2="${x(cur.age)}" y2="${PT + ih}" class="fc-current-line"/>
+    <circle cx="${x(cur.age)}" cy="${y(cur.score)}" r="5" class="fc-current-dot"/>
+    <text x="${x(cur.age)}" y="${y(cur.score) - 10}" class="fc-label" text-anchor="middle">現在（${cur.age}歳）</text>
+    <circle cx="${x(best.age)}" cy="${y(best.score)}" r="4" class="fc-best-dot"/>
+    <text x="${Math.max(PL + 20, Math.min(W - PR - 40, x(best.age)))}" y="${Math.max(PT + 4, y(best.score) - 10)}" class="fc-label fc-best" text-anchor="middle">◎ ${best.age}歳</text>
+    <circle cx="${x(worst.age)}" cy="${y(worst.score)}" r="4" class="fc-worst-dot"/>
+    <text x="${Math.max(PL + 20, Math.min(W - PR - 40, x(worst.age)))}" y="${Math.min(PT + ih - 2, y(worst.score) + 16)}" class="fc-label fc-worst" text-anchor="middle">▲ ${worst.age}歳</text>
+    ${xlabels}
+  </svg>`;
+}
+
 function analyzeDailyMonthlyFortune(day, pillars, tenchusatsu, balanceType) {
   const now = new Date();
   const todayPillar = getDayPillar(now);
@@ -2329,57 +2530,6 @@ function analyzeDailyMonthlyFortune(day, pillars, tenchusatsu, balanceType) {
   // 位相法
   const dayTopo = analyzeBranchTopology(todayPillar.branch, pillars, todayPillar.stem);
   const monthTopo = analyzeBranchTopology(monthPillar.branch, pillars, monthPillar.stem);
-
-  // スコア計算（年運と同じロジックを縮小適用）
-  const starDomainWeights = {
-    "貫索星": { money: 22, love: -8, work: 18 },
-    "石門星": { money: 12, love: 18, work: 14 },
-    "鳳閣星": { money: -6, love: 25, work: -10 },
-    "調舒星": { money: -12, love: 20, work: -14 },
-    "禄存星": { money: 16, love: 22, work: 8 },
-    "司禄星": { money: 24, love: -4, work: 20 },
-    "車騎星": { money: 6, love: 18, work: 16 },
-    "牽牛星": { money: 18, love: -10, work: 24 },
-    "龍高星": { money: -14, love: 22, work: -16 },
-    "玉堂星": { money: 14, love: 6, work: 22 }
-  };
-  const energyDomainWeights = {
-    "天貴星": { money: 12, love: 6, work: 14 },
-    "天南星": { money: 8, love: 14, work: 10 },
-    "天禄星": { money: 16, love: 8, work: 12 },
-    "天将星": { money: 14, love: 10, work: 16 },
-    "天堂星": { money: 10, love: 16, work: 6 },
-    "天印星": { money: 4, love: 12, work: 6 },
-    "天報星": { money: -12, love: -6, work: -10 },
-    "天胡星": { money: -8, love: -14, work: -8 },
-    "天極星": { money: -10, love: -8, work: -14 },
-    "天馳星": { money: -6, love: -12, work: -10 },
-    "天庫星": { money: 14, love: 4, work: 12 },
-    "天恍星": { money: -4, love: -8, work: -6 }
-  };
-
-  function calcScore(star, energyName, rel, isTenchu, topo) {
-    let money = 50, love = 50, work = 50;
-    const sw = starDomainWeights[star] || { money: 0, love: 0, work: 0 };
-    money += sw.money; love += sw.love; work += sw.work;
-    if (rel === "相生") { money += 12; love += 20; work += 14; }
-    else if (rel === "比和") { money += 6; love += 4; work += 8; }
-    else if (rel === "相剋") { money -= 18; love -= 14; work -= 12; }
-    else if (rel === "反剋") { money -= 8; love -= 12; work -= 14; }
-    const ew = energyDomainWeights[energyName] || { money: 0, love: 0, work: 0 };
-    money += ew.money; love += ew.love; work += ew.work;
-    if (isTenchu) { money -= 16; love -= 28; work -= 14; }
-    const goCount = topo.filter(r => r.group === "合法").length;
-    const sanCount = topo.filter(r => r.group === "散法").length;
-    money += goCount * 10 - sanCount * 6;
-    love += goCount * 12 - sanCount * 10;
-    work += goCount * 8 - sanCount * 8;
-    return {
-      money: Math.max(5, Math.min(98, money)),
-      love: Math.max(5, Math.min(98, love)),
-      work: Math.max(5, Math.min(98, work))
-    };
-  }
 
   const dayScores = calcScore(dayStar, dayEnergy.name, dayRel, isDayTenchu, dayTopo);
   const monthScores = calcScore(monthStar, monthEnergy.name, monthRel, isMonthTenchu, monthTopo);
@@ -5413,6 +5563,8 @@ function refreshHistoryUI() {
   personB.innerHTML = '<option value="">-- 記録から選択 --</option>' + opts;
   const personADirect = document.querySelector("#personADirect");
   if (personADirect) personADirect.innerHTML = '<option value="">-- 記録から選択 --</option>' + opts;
+  const rankingBase = document.querySelector("#rankingBase");
+  if (rankingBase) rankingBase.innerHTML = '<option value="">-- あなたを選択 --</option>' + opts;
 }
 
 function deleteHistoryItem(idx) {
@@ -5989,6 +6141,56 @@ function buildCompatPerson(name, birthYear, birthMonth, birthDay, gender) {
     westStar: mainStars.west,
     dayEnergy: energy[2] ? energy[2].name : ""
   };
+}
+
+// 履歴エントリから相性計算用の人物オブジェクトを組み立て
+function historyToPerson(h) {
+  let y = h.birthYear, m = h.birthMonth, d = h.birthDay;
+  if (!y && h.birthdate) {
+    const parts = h.birthdate.split("-");
+    y = parseInt(parts[0], 10); m = parseInt(parts[1], 10); d = parseInt(parts[2], 10);
+  }
+  return buildCompatPerson(h.name, y, m, d, h.gender);
+}
+
+// 記録全員との相性ランキング
+function renderRanking() {
+  const history = loadHistory();
+  const target = document.querySelector("#rankingResult");
+  const idx = document.querySelector("#rankingBase").value;
+  if (idx === "") return alert("あなたを記録から選択してください");
+  if (history.length < 2) {
+    target.innerHTML = '<p class="note">2人以上鑑定を記録するとランキングが作れます。</p>';
+    return;
+  }
+  const me = historyToPerson(history[idx]);
+  const rows = history
+    .map((h, i) => ({ h, i }))
+    .filter(({ i }) => i !== parseInt(idx, 10))
+    .map(({ h }) => {
+      const person = historyToPerson(h);
+      const c = calcCompatibility(me, person);
+      return { name: h.name, birthdate: h.birthdate, score: c.score, love: c.loveScore, marriage: c.marriageScore, work: calcWorkCompatibility(me, person).score };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  const medals = ["🥇", "🥈", "🥉"];
+  const scoreColor = (s) => s >= 70 ? "#ff70a6" : s >= 55 ? "#e0c060" : s >= 40 ? "#80b0d0" : "#9090a0";
+  const bar = (label, val) => `<div class="ranking-mini"><span>${label}</span><div class="ranking-mini-bar"><i style="width:${val}%"></i></div><b>${val}</b></div>`;
+  target.innerHTML = `
+    <div class="ranking-list">
+      ${rows.map((r, i) => `
+        <div class="ranking-item${i === 0 ? " is-top" : ""}">
+          <span class="ranking-medal">${medals[i] || `${i + 1}位`}</span>
+          <div class="ranking-info">
+            <div class="ranking-name">${r.name}<span class="ranking-birth">${r.birthdate}</span></div>
+            ${i === 0 ? '<div class="ranking-comment">今のあなたと一番相性が良い人です</div>' : ''}
+            <div class="ranking-minis">${bar("恋愛", r.love)}${bar("結婚", r.marriage)}${bar("仕事", r.work)}</div>
+          </div>
+          <span class="ranking-score" style="color:${scoreColor(r.score)}">${r.score}<small>点</small></span>
+        </div>
+      `).join("")}
+    </div>`;
 }
 
 function renderCompatDirect(event) {
@@ -6688,6 +6890,8 @@ function render(event) {
   });
   const lifeSummary = buildLifeSummary(mainStars, energy, counts, balanceType, tenchusatsu, ishiki, sanbun, mote, workEx, marriageScore, affairScore, turningPoints, healthRisk, gender, `${birthdateDisplay}|${name}`);
   const lifeChronology = buildLifeChronology(taiun, turningPoints, healthRisk, marriageScore, affairScore, workEx, seimeiResult, tenchusatsu, birthYear, gender, day, currentAge, mote, isDoubleEnForScore);
+  const monthCalendar = analyzeMonthCalendar(day, pillars, tenchusatsu, thisYear);
+  const fortuneCurve = buildFortuneCurve(day, pillars, taiun, tenchusatsu, birthYear, currentAge);
   const kyuseiResult = analyzeKyuseiDirections(date, new Date());
 
   result.classList.remove("hidden");
@@ -6715,6 +6919,7 @@ function render(event) {
       <a href="#sec-summary">ざっくり</a>
       <a href="#sec-love">恋愛・結婚</a>
       <a href="#sec-mote">人気度</a>
+      <a href="#sec-graph">運気曲線</a>
       <a href="#sec-chronology">人生年表</a>
       <a href="#sec-fortune">今年の運勢</a>
       <a href="#sec-health">健康</a>
@@ -6779,6 +6984,18 @@ function render(event) {
         <h4 class="expert-only">人生のワンポイントアドバイス</h4>
         <h4 class="simple-only">あなたへのメッセージ</h4>
         <div class="life-advice-text">${lifeSummary.onePointAdvice.split("\n\n").map(p => `<p>${p}</p>`).join("")}</div>
+      </div>
+    </div>
+    <div class="result-card fortune-curve-card" id="sec-graph">
+      <h3 class="expert-only">運気曲線（年運×大運 0〜90歳）</h3>
+      <h3 class="simple-only">あなたの人生の運気曲線</h3>
+      <p class="simple-only note mb-14">一生の運気の波をグラフにしました。山が高い時期は積極的に、低い時期は無理せず準備に回ると◎。金色の点は人生の転機、薄い赤の帯は天中殺の年です。</p>
+      <div class="fortune-curve-wrap">${buildFortuneCurveSVG(fortuneCurve, currentAge, turningPoints)}</div>
+      <div class="fortune-curve-legend">
+        <span><i class="fc-lg-line"></i>運気</span>
+        <span><i class="fc-lg-dot"></i>転機</span>
+        <span><i class="fc-lg-band"></i>天中殺の年</span>
+        <span><i class="fc-lg-now"></i>現在</span>
       </div>
     </div>
     <div class="result-card life-chronology-card" id="sec-chronology">
@@ -7128,6 +7345,36 @@ function render(event) {
         return compactRow("今月", m.month, m.isTenchu, { label: bestMonth.label, val: bestMonth.m }, { label: worstMonth.label, val: worstMonth.m }, m.pillar, m.star, m.energy, m.rel, m.advice)
              + compactRow("今日", t.date, t.isTenchu, { label: bestToday.label, val: bestToday.t }, { label: worstToday.label, val: worstToday.t }, t.pillar, t.star, t.energy, t.rel, t.advice);
       })()}
+    </div>
+    <div class="result-card month-calendar-card">
+      <h3 class="expert-only">${thisYear}年 月運カレンダー</h3>
+      <h3 class="simple-only">${thisYear}年、月ごとの運気</h3>
+      <p class="simple-only note mb-14">◎の月は積極的に動くのが吉、▲の月は無理せず準備に。いつ動くべきかの目安にしてください。</p>
+      <div class="month-calendar-grid">
+        ${(() => {
+          const nowMonth = new Date().getMonth() + 1;
+          const ratingOf = (o) => o >= 68 ? { mark: "◎", cls: "mc-best", label: "とても良い月" }
+            : o >= 56 ? { mark: "○", cls: "mc-good", label: "良い月" }
+            : o >= 44 ? { mark: "△", cls: "mc-normal", label: "ふつう" }
+            : { mark: "▲", cls: "mc-caution", label: "注意の月" };
+          return monthCalendar.map((mc) => {
+            const r = ratingOf(mc.overall);
+            const tip = mc.isTenchu
+              ? "天中殺の月。大きな決断は待って、整理と準備に"
+              : mc.overall >= 68 ? `${mc.best}が特に好調。攻めるならこの月`
+              : mc.overall >= 56 ? `${mc.best}に追い風。前向きに動いてOK`
+              : mc.overall >= 44 ? `波は穏やか。${mc.worst}は少し慎重に`
+              : `${mc.worst}に注意。守りと準備の月`;
+            return `<div class="mc-cell ${r.cls}${mc.month === nowMonth ? " is-current" : ""}${mc.isTenchu ? " is-tenchu" : ""}">
+              <div class="mc-head"><span class="mc-month">${mc.month}月</span><span class="mc-mark">${r.mark}</span></div>
+              <div class="mc-label simple-only">${mc.isTenchu ? "準備の月" : r.label}</div>
+              <div class="mc-meta expert-only">${mc.pillar.stem}${mc.pillar.branch}・${mc.star}<br>${mc.overall}点${mc.isTenchu ? ' <span class="tenchu-badge">天中殺</span>' : ''}</div>
+              <div class="mc-tip">${tip}</div>
+            </div>`;
+          }).join("");
+        })()}
+      </div>
+      <p class="note mt-14 expert-only">月運は月の干支（節入りベース）の主星・従星・五行関係・位相法から金運・恋愛運・仕事運を推定した参考値です。</p>
     </div>
     <div class="result-card">
       <h3 class="expert-only">開運アクション・ラッキーアドバイス</h3>
@@ -8508,7 +8755,7 @@ function render(event) {
 }
 
 document.body.classList.add("simple-mode");
-console.log("[app.js v20260906g] loaded. simple-mode:", document.body.classList.contains("simple-mode"));
+console.log("[app.js v20261007b] loaded. simple-mode:", document.body.classList.contains("simple-mode"));
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   navigator.serviceWorker.register("./sw.js").catch(() => {});
 }
@@ -8527,6 +8774,8 @@ document.querySelector("#fortuneForm").addEventListener("submit", (e) => {
 document.querySelector("#compatForm").addEventListener("submit", renderCompat);
 const compatDirectForm = document.querySelector("#compatDirectForm");
 if (compatDirectForm) compatDirectForm.addEventListener("submit", renderCompatDirect);
+const rankingBtn = document.querySelector("#rankingBtn");
+if (rankingBtn) rankingBtn.addEventListener("click", renderRanking);
 const compatTabHistory = document.querySelector("#compatTabHistory");
 const compatTabDirect = document.querySelector("#compatTabDirect");
 if (compatTabHistory && compatTabDirect) {
