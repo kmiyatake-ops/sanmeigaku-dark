@@ -4763,7 +4763,7 @@ body.light-mode .mc-tip { color: #7a5563; }
 .fortune-curve-wrap { overflow-x: auto; }
 .fortune-curve-svg { width: 100%; min-width: 560px; height: auto; display: block; }
 .fc-grid { stroke: rgba(255, 255, 255, 0.08); stroke-width: 1; }
-.fc-ytext, .fc-xtext { fill: var(--muted); font-size: 11px; }
+.fc-ytext, .fc-xtext { fill: var(--muted); font-size: 12px; }
 .fc-line { fill: none; stroke: #ff70a6; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
 .fc-tenchu-band { fill: rgba(255, 93, 115, 0.10); }
 .fc-current-line { stroke: rgba(244, 201, 93, 0.5); stroke-width: 1.5; stroke-dasharray: 4 4; }
@@ -4771,7 +4771,7 @@ body.light-mode .mc-tip { color: #7a5563; }
 .fc-tp-dot { fill: #ffd23f; stroke: rgba(0,0,0,0.4); stroke-width: 1; }
 .fc-best-dot { fill: #6dd6a0; }
 .fc-worst-dot { fill: #ff7a7a; }
-.fc-label { fill: var(--text); font-size: 11px; font-weight: 600; }
+.fc-label { fill: var(--text); font-size: 13px; font-weight: 600; }
 .fc-label.fc-best { fill: #6dd6a0; }
 .fc-label.fc-worst { fill: #ff7a7a; }
 .fortune-curve-legend {
@@ -4932,3 +4932,26 @@ body.light-mode .ranking-mini-bar { background: rgba(74, 47, 61, 0.10); }
 }
 body.light-mode .fate-star-row { background: rgba(255, 255, 255, 0.6); }
 body.light-mode .fate-main-note { color: #7a5563; }
+
+/* === モバイル横スクロール対策 === */
+html, body { overflow-x: clip; }
+@supports not (overflow: clip) {
+  html, body { overflow-x: hidden; }
+}
+img, svg, video, canvas { max-width: 100%; height: auto; }
+.comparison-table, .inyou-table { display: block; overflow-x: auto; }
+
+@media (max-width: 600px) {
+  .history-item { grid-template-columns: 1fr auto; }
+  .nenun-row { grid-template-columns: 1fr; gap: 8px; }
+  .six-parents-row { grid-template-columns: 1fr; gap: 4px; }
+  .ryudo-item { grid-template-columns: 1fr 1fr; }
+  .mote-charm-list { grid-template-columns: 1fr; }
+  .guardian-row b { min-width: 0; white-space: normal; }
+  .sekishoku-star { min-width: 0; }
+  .kizu-bar-row span { min-width: 0; }
+  .month-calendar-grid { grid-template-columns: repeat(2, 1fr); }
+  .fortune-curve-svg { min-width: 0; }
+  .ranking-item { flex-wrap: wrap; }
+  .ranking-score { margin-left: auto; }
+}

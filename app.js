@@ -8935,7 +8935,7 @@ function render(event) {
 }
 
 document.body.classList.add("simple-mode");
-console.log("[app.js v20261007c] loaded. simple-mode:", document.body.classList.contains("simple-mode"));
+console.log("[app.js v20261007d] loaded. simple-mode:", document.body.classList.contains("simple-mode"));
 if ("serviceWorker" in navigator && location.protocol !== "file:") {
   navigator.serviceWorker.register("./sw.js").catch(() => {});
 }
